@@ -2,6 +2,7 @@
 
 const logger = require("../../config/logger");
 const UserStorage = require("../../models/UserStorage");
+const Laundry = require("../../models/Laundry");
 const User = require("../../models/User");
 
 
@@ -54,23 +55,13 @@ const output ={
 
 
     //세탁신청 기능 - 아직 개발중 오류떠염
-    laundryDetail: (req, res) => {
+    laundryDetail: async(req, res) => {
         logger.info(`GET /laundry/detail 304 "세탁신청 세부 화면으로 이동`);
-       //  res.render("home/laundryDetail");
-        // 괄호 안에 디비에서 뽑아온 아이디 
-        // model 폴더 안에 있는 laudrydetailnumber한테서 받아와야함
-        //디비에서 아이디 찾아서 home.ctrl 한테 전달 
-         res.render("home/laundryDetail", {데이터 : resutlt});
-        // db.query("USE capstone", (err, result) => {
-             const query = "SELECT * FROM STORE where S_ID = ?;";
-             if (err) reject(err);
-             db.query(query, [req.params.S_ID], (err, data) => {
-                 if (err) reject(err);
-                 else {
-                     res.render("home/laundryDetail", {데이터 : resutlt});
-                 }
-             });
-        }
+        const laundry = new Laundry(req.params.id);
+        //db에서 찾아오기
+        const response = await laundry.showDetail();
+        res.render("home/LaundryDetail", {laundryDetail : result});
+    }
 };
 
 const process = {
@@ -100,6 +91,7 @@ const process = {
         return res.status(url.status).json(response);
 
     },
+
 
     // 필요시 작성
     // laundry: async (req, res) => {
