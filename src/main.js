@@ -3,23 +3,22 @@ import App from './App.vue'
 import router from './router'
 import axios from 'axios'
 
-import "bootstrap"; 
+import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-// import vuetify from './plugins/vuetify'
-// import 'vuetify/styles'
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
+import vuetify from './plugins/vuetify'
+import { loadFonts } from './plugins/webfontloader'
+//import axios from 'axios'
 
+loadFonts()
 
-const vuetify = createVuetify({
-    components,
-    directives,
-})
-
-// createApp(App).use(router).mount('#app')
-const app = createApp(App).use(router);
+// createApp(App)
+//   .use(router)
+//   .use(vuetify)
+//   .mount('#app')
+const app = createApp(App)
+app.use(router);
+app.use(vuetify)       
 app.config.globalProperties.axios = axios;
-app.use(vuetify)        // vuetify 가져오기
+
 app.mount('#app');
