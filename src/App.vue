@@ -1,49 +1,48 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <!-- <header class="head">
+    <app-bar />
+  </header> -->
+  <v-app>
+    <!-- 상단 Appbar -->
+    <v-app-bar :elevation="2">
+      <template v-slot:prepend>
+        <v-app-bar-nav-icon></v-app-bar-nav-icon>
+      </template>
+      <v-app-bar-title>WW</v-app-bar-title>
 
+      <v-spacer></v-spacer>
+
+      <template v-slot:append>
+        <v-btn icon="mdi-magnify"></v-btn>
+        <v-btn icon="mdi-dots-vertical"></v-btn>
+      </template>
+    </v-app-bar>
+
+    <!-- 메인 화면 라우터 -->
+    <v-main>
+      <router-view />
+    </v-main>
+  </v-app>
+
+  <!-- 하단 navbar -->
   <footer>
-    <bottom-nav-bar/>
+    <bottom-nav-bar />
   </footer>
 </template>
 
 <script>
-//import { defineComponent } from '@vue/composition-api'
+// import AppBar from './components/AppBar.vue'
 import BottomNavBar from './components/BottomNavBar.vue'
 
-export default ({
-  components: { BottomNavBar },
-  setup() {
-    
-  },
-})
+export default {
+  components: { BottomNavBar, },
+  name: 'App',
+
+  data: () => ({
+
+  }),
+}
 </script>
 
-
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
-
-@import '~vuetify/dist/vuetify.min.css';
 </style>
