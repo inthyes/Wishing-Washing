@@ -53,15 +53,15 @@ const output ={
         res.render("home/userManagement");
     },
 
-
-    //세탁신청 기능 - 아직 개발중 오류떠염
+    // 세탁소 세부페이지 
     laundryDetail: async(req, res) => {
-        logger.info(`GET /laundry/detail/ 304 "세탁신청 세부 화면으로 이동`);
+        logger.info(`GET /laundry/detail/id 304 "세탁신청 세부 화면으로 이동`);
         const laundry = new Laundry(req.params.id);
-        //db에서 찾아오기
+        
+        //db에서 찾아온 내용 보여주기.
+        // response로 json 형태로 데이터가 전달.
         const response = await laundry.showDetail();
-        res.render("home/LaundryDetail");
-        // 랜더링 구현, {laundryDetail : result}
+        res.render("home/LaundryDetail", {laundryDetail : response});
     }
 };
 
