@@ -1,28 +1,32 @@
 <template>
-    <v-layout class="overflow-visible" style="height: 56px;">
+    <v-layout class="overflow-visible" style="height: 60px;">
         <v-bottom-navigation v-model="value" color="teal" mode="shift">
             <v-btn>
-                <v-icon>mdi-heart</v-icon>
-
-                홈
+                <v-icon>mdi-home</v-icon>
+                <router-link to="/">
+                    <span>홈</span>
+                </router-link>
             </v-btn>
 
             <v-btn>
-                <v-icon>mdi-heart</v-icon>
-
-                세탁신청
+                <v-icon>mdi-washing-machine</v-icon>
+                <router-link to="/laundarylist">
+                    <span>세탁신청</span>
+                </router-link>
             </v-btn>
 
             <v-btn>
-                <v-icon>mdi-heart</v-icon>
-
-                이용내역
+                <v-icon>mdi-format-list-bulleted</v-icon>
+                <router-link to="/usagehistory">
+                    <span>이용내역</span>
+                </router-link>
             </v-btn>
 
             <v-btn>
-                <v-icon>mdi-heart</v-icon>
-
-                MyPage
+                <v-icon>mdi-account-outline</v-icon>
+                <router-link to="/mypage">
+                    <span>마이페이지</span>
+                </router-link>
             </v-btn>
         </v-bottom-navigation>
     </v-layout>
@@ -30,6 +34,10 @@
 
 <script>
 export default {
-    data: () => ({ value: 1 }),
+    data: () => ({ value: null }),
 }
 </script>
+
+<style scoped>
+a {text-decoration:none; color:black}
+</style>
