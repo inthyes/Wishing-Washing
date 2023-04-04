@@ -56,11 +56,12 @@ const output ={
 
     //세탁신청 기능 - 아직 개발중 오류떠염
     laundryDetail: async(req, res) => {
-        logger.info(`GET /laundry/detail 304 "세탁신청 세부 화면으로 이동`);
+        logger.info(`GET /laundry/detail/ 304 "세탁신청 세부 화면으로 이동`);
         const laundry = new Laundry(req.params.id);
         //db에서 찾아오기
         const response = await laundry.showDetail();
-        res.render("home/LaundryDetail", {laundryDetail : result});
+        res.render("home/LaundryDetail");
+        // 랜더링 구현, {laundryDetail : result}
     }
 };
 

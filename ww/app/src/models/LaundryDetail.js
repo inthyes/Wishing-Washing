@@ -1,6 +1,4 @@
 "use strict";
-
-const {response} = require("express");
 const db = require("../config/db");
 
 class LaundryDetail {
@@ -9,7 +7,7 @@ class LaundryDetail {
 
     //런더리 디테일을 db에서 찾아오는...
     static getLaundryDetail(id) {
-        return new promise ((resolve, reject) => {
+        return new Promise ((resolve, reject) => {
         db.query("USE capstone", (err, result) => {
             const query = "SELECT * FROM STORE where S_ID = ?;";
             if (err) reject(err);
