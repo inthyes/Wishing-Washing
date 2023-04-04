@@ -4,6 +4,7 @@ const logger = require("../../config/logger");
 const UserStorage = require("../../models/UserStorage");
 const Laundry = require("../../models/Laundry");
 const User = require("../../models/User");
+const Product = require("../../models/Product");
 
 
 const output ={
@@ -57,11 +58,17 @@ const output ={
     laundryDetail: async(req, res) => {
         logger.info(`GET /laundry/detail/id 304 "세탁신청 세부 화면으로 이동`);
         const laundry = new Laundry(req.params.id);
+        const product = new Product(req.params.id);
         
         //db에서 찾아온 내용 보여주기.
         // response로 json 형태로 데이터가 전달.
-        const response = await laundry.showDetail();
-        res.render("home/LaundryDetail", {laundryDetail : response});
+        const laundryDetailRes = await laundry.showDetail();
+        const productDetailRes = await product.showDetail();
+        res.render("home/LaundryDetail", 
+        {
+            laundryDetail : laundryDetailRes,
+            productDetail : productDetailRes
+        });
     }
 };
 

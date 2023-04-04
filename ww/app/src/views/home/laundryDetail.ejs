@@ -15,5 +15,9 @@
 
     <h2>판매상품</h2>
 
+    <% for (var i = 0; i < productDetail.length; i++) { %>
+        <p><%= productDetail[i].PRODUCT_NAME %><%= productDetail[i].PRODUCT_PRICE %></p>
+    <% } %>
+
 </body>
 </html>

@@ -10,6 +10,7 @@ class LaundryDetail {
         return new Promise ((resolve, reject) => {
         db.query("USE capstone", (err, result) => {
             const query = "SELECT * FROM STORE where S_ID = ?;";
+            const query2 = "SELECT * FROM PRODUCT WHERE S_ID =?;"
             if (err) reject(err);
             db.query(query, [id], (err, data) => {
                 if (err) reject(err);
