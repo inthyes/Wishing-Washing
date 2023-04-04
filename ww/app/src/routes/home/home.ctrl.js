@@ -51,6 +51,26 @@ const output ={
         logger.info(`GET /home/myPage/userManagement 304 "탈퇴/로그아웃 화면으로 이동`);
         res.render("home/userManagement");
     },
+
+
+    //세탁신청 기능 - 아직 개발중 오류떠염
+    laundryDetail: (req, res) => {
+        logger.info(`GET /laundry/detail 304 "세탁신청 세부 화면으로 이동`);
+       //  res.render("home/laundryDetail");
+        // 괄호 안에 디비에서 뽑아온 아이디 
+        // model 폴더 안에 있는 laudrydetailnumber한테서 받아와야함
+        //디비에서 아이디 찾아서 home.ctrl 한테 전달 
+         res.render("home/laundryDetail", {데이터 : resutlt});
+        // db.query("USE capstone", (err, result) => {
+             const query = "SELECT * FROM STORE where S_ID = ?;";
+             if (err) reject(err);
+             db.query(query, [req.params.S_ID], (err, data) => {
+                 if (err) reject(err);
+                 else {
+                     res.render("home/laundryDetail", {데이터 : resutlt});
+                 }
+             });
+        }
 };
 
 const process = {
