@@ -4,7 +4,24 @@
     <router-link to="/about">About</router-link>
   </nav>
   <router-view/>
+
+  <footer>
+    <bottom-nav-bar/>
+  </footer>
 </template>
+
+<script>
+//import { defineComponent } from '@vue/composition-api'
+import BottomNavBar from './components/BottomNavBar.vue'
+
+export default ({
+  components: { BottomNavBar },
+  setup() {
+    
+  },
+})
+</script>
+
 
 <style>
 #app {
@@ -27,4 +44,6 @@ nav a {
 nav a.router-link-exact-active {
   color: #42b983;
 }
+
+@import '~vuetify/dist/vuetify.min.css';
 </style>
