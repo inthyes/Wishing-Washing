@@ -1,32 +1,24 @@
 <template>
     <v-layout class="overflow-visible" style="height: 60px;">
-        <v-bottom-navigation v-model="value" color="teal" mode="shift">
-            <v-btn>
+        <v-bottom-navigation v-model="value" color="teal" mode="shift" >
+            <v-btn router-link to="/">
                 <v-icon>mdi-home</v-icon>
-                <router-link to="/">
-                    <span>홈</span>
-                </router-link>
+                    <span>HOME</span>
             </v-btn>
 
-            <v-btn>
+            <v-btn to="/laundarylist">
                 <v-icon>mdi-washing-machine</v-icon>
-                <router-link to="/laundarylist">
                     <span>세탁신청</span>
-                </router-link>
             </v-btn>
 
-            <v-btn>
+            <v-btn to="/usagehistory">
                 <v-icon>mdi-format-list-bulleted</v-icon>
-                <router-link to="/usagehistory">
                     <span>이용내역</span>
-                </router-link>
             </v-btn>
 
-            <v-btn>
+            <v-btn to="/mypage">
                 <v-icon>mdi-account-outline</v-icon>
-                <router-link to="/mypage">
-                    <span>마이페이지</span>
-                </router-link>
+                    <span>MY</span>
             </v-btn>
         </v-bottom-navigation>
     </v-layout>
@@ -39,5 +31,10 @@ export default {
 </script>
 
 <style scoped>
-a {text-decoration:none; color:black}
+/* Add custom styles to adjust spacing */
+.v-btn {
+    margin: 0;
+    padding: 0;
+    /* Add any other custom styles as needed */
+}
 </style>
