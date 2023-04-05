@@ -4,6 +4,7 @@ import LaundryListVue from '@/views/LaundryList.vue'
 import UsageHistoryVue from '@/views/UsageHistory.vue'
 import MyPageVue from '@/views/MyPage.vue'
 import LoginFormVue from '@/views/LoginForm.vue'
+import SignUpFormVue from '@/views/SignUpForm.vue'
 
 const routes = [
   {
@@ -31,6 +32,11 @@ const routes = [
     path: '/login',
     name: 'login',
     component: LoginFormVue
+  },
+  {
+    path: '/signup',
+    name: 'signup',
+    component: SignUpFormVue
   },
 ]
 
