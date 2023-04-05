@@ -8,7 +8,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import vuetify from './plugins/vuetify'
 import { loadFonts } from './plugins/webfontloader'
-//import axios from 'axios'
 
 loadFonts()
 
@@ -17,7 +16,7 @@ loadFonts()
 //   .use(vuetify)
 //   .mount('#app')
 const app = createApp(App)
-app.use(router);
+app.use(router)
 app.use(vuetify)       
 app.config.globalProperties.axios = axios;
 
