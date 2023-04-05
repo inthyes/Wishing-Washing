@@ -1,11 +1,7 @@
 <template>
-  <!-- <header class="head">
-    <app-bar />
-  </header> -->
-
   <v-app>
     <!-- 상단 Appbar -->
-    <v-app-bar :elevation="2">
+    <v-app-bar :elevation="1">
       <template v-slot:prepend>
         <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer">
         </v-app-bar-nav-icon>
@@ -21,17 +17,17 @@
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" location="left" temporary>
-      <v-list :items="items"></v-list>
+      <v-list>
+      <v-list-item router-link to="/login"> <!-- Add router link to Login -->
+        <v-list-item-title>로그인</v-list-item-title>
+      </v-list-item>
+      <v-list-item router-link to="/signup"> <!-- Add router link to Sign Up -->
+        <v-list-item-title>회원가입</v-list-item-title>
+      </v-list-item>
+    </v-list>
     </v-navigation-drawer>
 
-    <!-- <v-navigation-drawer v-model="drawer"
-          temporary>
-        <v-list>
-          <v-list-item title="Navigation drawer"></v-list-item>
-        </v-list>
-      </v-navigation-drawer> -->
-
-    <!-- 메인 화면 라우터 -->
+    <!-- 홈화면 라우터 -->
     <v-main>
       <router-view />
     </v-main>
@@ -54,16 +50,7 @@ export default {
   data: () => ({
     drawer: false,
     group: null,
-    items: [
-      {
-        title: '로그인',
-        value: '로그인',
-      },
-      {
-        title: '회원가입',
-        value: '회원가입',
-      },
-    ],
+ 
   }),
   watch: {
     group() {
@@ -73,4 +60,5 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+</style>
