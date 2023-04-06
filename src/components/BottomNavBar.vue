@@ -1,5 +1,5 @@
 <template>
-    <v-layout class="overflow-visible" style="height: 60px;">
+    
         <v-bottom-navigation v-model="value" color="teal" mode="shift" >
             <v-btn router-link to="/">
                 <v-icon>mdi-home</v-icon>
@@ -21,7 +21,6 @@
                     <span>MY</span>
             </v-btn>
         </v-bottom-navigation>
-    </v-layout>
 </template>
 
 <script>
