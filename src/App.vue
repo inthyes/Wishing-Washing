@@ -31,13 +31,13 @@
     <v-main>
       <router-view />
     </v-main>
-    
+    <!-- 하단 navbar -->
+    <v-footer class="fixed-bottom">
+      <bottom-nav-bar />
+    </v-footer>
   </v-app>
 
-  <!-- 하단 navbar -->
-  <footer>
-    <bottom-nav-bar />
-  </footer>
+  
 </template>
 
 <script>
@@ -62,4 +62,10 @@ export default {
 </script>
 
 <style>
+.fixed-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
 </style>
