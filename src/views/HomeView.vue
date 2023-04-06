@@ -1,14 +1,26 @@
 <template>
-  <div class="container">
     <div class="wrapper">
       <div class="content">
+        <v-carousel cycle height="250" hide-delimiter-background show-arrows="hover">
+          <v-carousel-item v-for="(slide, i) in slides" :key="i">
+            <v-sheet :color="colors[i]" height="100%">
+              <div class="d-flex fill-height justify-center align-center">
+                <div class="text-h2">
+                  {{ slide }} Slide
+                </div>
+              </div>
+            </v-sheet>
+          </v-carousel-item>
+        </v-carousel>
 
+        <!--주소-->
         <div class="address">
           <span><img id="locateIcon" src="./assets/locateIcon.png"></span>
           <span>경기 성남시 분당구 불정로 6 그린팩토리</span>
           <span><img id="arrowIcon" src="./assets/arrowIcon.png"></span>
         </div>
 
+        <!--추천 세탁소-->
         <div class="recommend">
           <p style="font-size: 18px;"><b>이 세탁소는 어떠세요 ?</b></p>
           <p style="font-size: 9px; margin-top: -3%;">저희가 추천해드릴게요.</p>
@@ -19,6 +31,7 @@
           </div>
         </div>
 
+        <!--세탁 Tip-->
         <div class="washingTip">
           <p style="font-size: 18px;"><b>생활 속 세탁 TIP !</b></p>
           <p style="font-size: 9px; margin-top: -3%;">집에서도 옷을 잘 관리할 수 있게 도와드릴게요.</p>
@@ -32,34 +45,36 @@
 
       </div>
     </div>
-  </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      colors: [
+        'indigo',
+        'warning',
+        'pink darken-2',
+        'red lighten-1',
+        'deep-purple accent-4',
+      ],
+      slides: [
+        'First',
+        'Second',
+        'Third',
+        'Fourth',
+        'Fifth',
+      ],
+    }
+  },
 }
 </script>
 
 <style>
-.container {
-  width: 370px;
-  height: 650px;
-  background-color: #f0f0f0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
-.wrapper {
-  width: 370px;
-  height: 650px;
-  background-color: #fff;
-  box-shadow: 0 0 4px rgba(0.2, 0, 0, 0.5);
-  overflow: hidden;
-}
+
 
 .address {
-  width: 340px;
   height: 30px;
   background-color: rgba(228, 227, 227, 0.728);
   border-radius: 20px;
@@ -67,6 +82,7 @@ export default {
   text-align: center;
   justify-content: center;
   margin-left: 4%;
+  margin-right: 4%;
   margin-top: 7%;
   margin-bottom: 7%;
   font-size: 10px;
@@ -93,23 +109,21 @@ export default {
 }
 
 .recommend {
-  margin-left: 5.2%;
+  margin: 5.2%;
 }
 
 .popularLaundry {
-  width: 330px;
   height: 170px;
   background-color: rgba(228, 227, 227, 0.728);
   border-radius: 20px;
 }
 
 .washingTip {
-  margin-left: 5.2%;
+  margin: 5.2%;
   margin-top: 7%;
 }
 
 .dryCleaning {
-  width: 330px;
   height: 170px;
   background-color: rgba(228, 227, 227, 0.728);
   border-radius: 20px;
@@ -129,47 +143,5 @@ export default {
   margin-top: -2%;
   margin-bottom: 30%;
 }
-
-/* navbar */
-.bar {
-  width: 332px;
-  height: 100px;
-  background-color: #fff;
-  margin-top: 4%;
-  padding: 5%;
-  box-shadow: 0 0 4px rgba(0.2, 0, 0, 0.5);
-  border-radius: 20px;
-}
-
-#home {
-  width: 34px;
-  height: 43px;
-  margin-top: -3%;
-  margin-left: 4.5%;
-  margin-right: 15%;
-  margin-bottom: 9%;
-}
-
-#request {
-  width: 31px;
-  height: 40px;
-  margin-top: -5%;
-  margin-right: 15.6%;
-  margin-bottom: 9%;
-}
-
-#history {
-  width: 28px;
-  height: 40px;
-  margin-top: -5%;
-  margin-right: 15.2%;
-  margin-bottom: 9%;
-}
-
-#my {
-  width: 36px;
-  height: 43px;
-  margin-top: -3%;
-  margin-bottom: 8.7%;
-}</style>
+</style>
 
