@@ -27,10 +27,11 @@
     </v-list>
     </v-navigation-drawer>
 
-    <!-- 홈화면 라우터 -->
+    <!-- 메인 -->
     <v-main>
       <router-view />
     </v-main>
+    
   </v-app>
 
   <!-- 하단 navbar -->
