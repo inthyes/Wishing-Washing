@@ -1,8 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
+
 import HomeView from '../views/HomeView.vue'
-import LaundryListVue from '@/views/LaundryList.vue'
+import AroundLaundryVue from '@/views/AroundLaundry.vue'
 import UsageHistoryVue from '@/views/UsageHistory.vue'
 import MyPageVue from '@/views/MyPage.vue'
+
 import LoginFormVue from '@/views/LoginForm.vue'
 import SignUpFormVue from '@/views/SignUpForm.vue'
 
@@ -13,9 +15,9 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/laundarylist',
-    name: 'laundary',
-    component: LaundryListVue
+    path: '/aroundlaundary',
+    name: 'aroundlaundary',
+    component: AroundLaundryVue
   },
   {
     path: '/usagehistory',

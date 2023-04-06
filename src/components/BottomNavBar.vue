@@ -6,9 +6,9 @@
                     <span>HOME</span>
             </v-btn>
 
-            <v-btn to="/laundarylist">
+            <v-btn to="/aroundlaundary">
                 <v-icon>mdi-washing-machine</v-icon>
-                    <span>세탁신청</span>
+                    <span>주변세탁소</span>
             </v-btn>
 
             <v-btn to="/usagehistory">
