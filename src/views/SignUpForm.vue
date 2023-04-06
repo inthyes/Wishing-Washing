@@ -1,25 +1,26 @@
 <template>
     <v-card class="mx-auto" max-width="344" title="회원가입">
         <v-container>
-            <v-text-field v-model="name" :rules="[rules.required]" color="blue" label="Name" placeholder="이름을 입력하세요"
+            <v-text-field v-model="name" :rules="[rules.required]" color="blue" label="이름" placeholder="이름을 입력하세요"
                 variant="underlined"></v-text-field>
 
-            <v-text-field v-model="id" :rules="[rules.required]" color="blue" label="ID" placeholder="아이디를 입력하세요"
-                variant="underlined"></v-text-field>
-
-            <v-text-field v-model="phone" :rules="[rules.required, rules.phone]" color="blue" label="Phone"
-                placeholder="휴대폰 번호를 입력하세요" variant="underlined"></v-text-field>
-
-            <v-text-field v-model="email" :rules="[rules.required, rules.email]" color="blue" label="Email"
+            <v-text-field v-model="email" :rules="[rules.required, rules.email]" color="blue" label="이메일"
                 placeholder="이메일을 입력하세요" variant="underlined"></v-text-field>
 
+
+            <v-text-field v-model="id" :rules="[rules.required]" color="blue" label="닉네임" placeholder="닉네임을 입력하세요"
+                variant="underlined"></v-text-field>
+
+            <v-text-field v-model="phone" :rules="[rules.required, rules.phone]" color="blue" label="연락처"
+                placeholder="연락처를 입력하세요" variant="underlined"></v-text-field>
+
             <v-text-field v-model="password" :rules="[rules.required, rules.min]" :type="show1 ? 'text' : 'password'"
-                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" @click:append="show1 = !show1" color="blue"
-                label="Password" placeholder="비밀번호를 입력하세요" variant="underlined"></v-text-field>
+                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" @click:append="show1 = !show1" color="blue" label="비밀번호"
+                placeholder="비밀번호를 입력하세요" variant="underlined"></v-text-field>
 
             <v-text-field v-model="PasswordCheck" :rules="[rules.required]" :type="show2 ? 'text' : 'password'"
-                :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'" @click:append="show2 = !show2" color="blue"
-                label="Password Check" placeholder="한번 더 비밀번호를 입력하세요" variant="underlined"></v-text-field>
+                :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'" @click:append="show2 = !show2" color="blue" label="비밀번호 확인"
+                placeholder="한번 더 비밀번호를 입력하세요" variant="underlined"></v-text-field>
 
             <v-checkbox v-model="terms" color="secondary" label="동의합니다"></v-checkbox>
         </v-container>
@@ -30,7 +31,7 @@
             <v-spacer></v-spacer>
 
             <v-btn color="success">
-                Create Account
+                가입 완료
 
                 <v-icon icon="mdi-chevron-right" end></v-icon>
             </v-btn>
