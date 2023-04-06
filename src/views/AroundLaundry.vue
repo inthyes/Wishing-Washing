@@ -1,7 +1,6 @@
 <!--세탁 신청-->
 <template>
-  
-    <div class="lund-list">
+    <div id="lund-list">
         <v-card class="mx-5 my-5">
             <v-img class="align-end text-white" height="150" src="https://cdn.vuetifyjs.com/images/cards/docks.jpg" cover>
                 <v-card-title>@@ 세탁소</v-card-title>
@@ -21,7 +20,7 @@
         </v-card>
     </div>
 
-    <div class="lund-list">
+    <div id="lund-list">
         <v-card class="mx-5 my-5" color="white" theme="dark">
             <div class="d-flex flex-no-wrap align-items-center">
                 <div class="ms-3">
