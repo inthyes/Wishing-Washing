@@ -5,6 +5,9 @@ import AroundLaundryVue from '@/views/AroundLaundry.vue'
 import UsageHistoryVue from '@/views/UsageHistory.vue'
 import MyPageVue from '@/views/MyPage.vue'
 
+import LaundryDetailVue from '@/views/LaundryDetail.vue'
+import SubmitLaundry from '@/views/SubmitLaundry.vue'
+
 import LoginFormVue from '@/views/LoginForm.vue'
 import SignUpFormVue from '@/views/SignUpForm.vue'
 
@@ -15,8 +18,8 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/aroundlaundary',
-    name: 'aroundlaundary',
+    path: '/aroundlaundry',
+    name: 'aroundlaundry',
     component: AroundLaundryVue
   },
   {
@@ -28,6 +31,17 @@ const routes = [
     path: '/mypage',
     name: 'mypage',
     component: MyPageVue
+  },
+  {
+    path: '/laundrydetail',  // 매개변수 id의 동적 경로
+    name: 'laundrydetail',
+    component: LaundryDetailVue,
+    props: true
+  },
+  {
+    path: '/submitlaundry',
+    name: 'submitlaundry',
+    component: SubmitLaundry
   },
 
   {
