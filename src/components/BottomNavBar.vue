@@ -6,7 +6,7 @@
                     <span>HOME</span>
             </v-btn>
 
-            <v-btn to="/aroundlaundary">
+            <v-btn to="/aroundlaundry">
                 <v-icon>mdi-washing-machine</v-icon>
                     <span>주변세탁소</span>
             </v-btn>
