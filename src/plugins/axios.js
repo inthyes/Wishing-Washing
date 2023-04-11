@@ -9,8 +9,8 @@ export default {
       posts: []
     }
   },
-  mounted() {
-    axios.get('https://jsonplaceholder.typicode.com/posts')
+  async mounted() {
+    axios.get('http://localhost:3000/laundrys')
       .then(response => {
         this.posts = response.data;
       })
@@ -19,3 +19,4 @@ export default {
       });
   }
 }
+

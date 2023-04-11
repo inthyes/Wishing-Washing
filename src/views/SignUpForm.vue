@@ -30,7 +30,7 @@
         <v-card-actions>
             <v-spacer></v-spacer>
 
-            <v-btn color="success">
+            <v-btn color="success" @click="submitForm">
                 가입 완료
 
                 <v-icon icon="mdi-chevron-right" end></v-icon>
@@ -41,28 +41,44 @@
 
 <script>
 export default {
-    data: () => ({
-        name: null,
-        id: null,
-        phone: null,
-        email: null,
-        password: null,
-        PasswordCheck: null,
-        terms: false,
-        show1: false,
-        show2: false,
-        rules: {
-            required: value => !!value || '반드시 입력하세요',
-            phone: value => {
-                const pattern = /^(\+)?([0-9]{3})?[-]?([0-9]{3,4})?[-]?([0-9]{4})$/
-                return pattern.test(value) || '번호를 정확히 입력하세요'
-            },
-            email: value => {
-                const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                return pattern.test(value) || '이메일 형식으로 입력하세요'
-            },
-            min: v => v.length >= 8 || '8자 이상 입력하세요',
+    data() {
+        return {
+
+            name: null,
+            id: null,
+            phone: null,
+            email: null,
+            password: null,
+            PasswordCheck: null,
+
+            terms: false,
+            show1: false,
+            show2: false,
+            rules: {
+                required: value => !!value || '반드시 입력하세요',
+                phone: value => {
+                    const pattern = /^(\+)?([0-9]{3})?[-]?([0-9]{3,4})?[-]?([0-9]{4})$/
+                    return pattern.test(value) || '번호를 정확히 입력하세요'
+                },
+                email: value => {
+                    const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                    return pattern.test(value) || '이메일 형식으로 입력하세요'
+                },
+                min: v => v.length >= 8 || '8자 이상 입력하세요',
+            }
         }
-    }),
-}
+
+    },
+    methods: {
+        createPost() {
+            this.$axios
+                .get('https://jsonplaceholder.typicode.com/posts/')
+                .then((response) => console.log(response))
+                .catch((error) => console.log(error))
+        }
+
+    }
+};
+
+
 </script>

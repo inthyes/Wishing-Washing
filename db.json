@@ -1,0 +1,16 @@
+{
+    "token": {
+        "access_token": "9k3kljnslkdj_34lk2j34lks09sv",
+        "userId": 123
+    },
+    "laundrys": [
+        {
+            "id": 1,
+            "title": "@@ 세탁소",
+            "subtitle" : "세탁소 서브 타이틀",
+            "address" : "경기 성남시 분당구 불정로 6 그린팩토리",
+            "info" : "간단한 세탁소 정보"
+        }
+        
+    ]
+}
