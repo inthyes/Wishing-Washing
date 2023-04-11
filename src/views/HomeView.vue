@@ -15,9 +15,7 @@
 
         <!--주소-->
         <div class="address">
-          <span><img id="locateIcon" src="./assets/locateIcon.png"></span>
           <span>경기 성남시 분당구 불정로 6 그린팩토리</span>
-          <span><img id="arrowIcon" src="./assets/arrowIcon.png"></span>
         </div>
 
         <!--추천 세탁소-->
@@ -27,7 +25,6 @@
           <div class="popularLaundry">
             <p style="font-size: 15px; padding: 8%; padding-top: 6%;"><b>우리 동네 인기 세탁소</b></p>
             <p style="font-size: 6px; padding-left: 10%; margin-top: -11%; margin-bottom: -1%;">주변에서 인기 있는 세탁소예요!</p>
-            <img id="map" src="./assets/map.png">
           </div>
         </div>
 
@@ -39,7 +36,6 @@
             <p style="font-size: 15px; padding: 8%; padding-top: 6%;"><b>드라이클리닝</b></p>
             <p style="font-size: 3px; padding-left: 10%; margin-top: -11%;">
               손 많이 가는 드라이클리닝 의류, <br>&nbsp; 집에서 어떻게 관리해야 할까 ?</p>
-            <img id="drycleaning" src="./assets/drycleaning.png">
           </div>
         </div>
 
@@ -89,24 +85,8 @@ export default {
   padding-bottom: 3%;
 }
 
-#locateIcon {
-  width: 18px;
-  height: 20px;
-  margin-top: 2%;
-  margin-left: -12%;
-  margin-right: 4%;
-  padding-top: 1.4%;
-  margin-bottom: -1.4%;
-}
 
-#arrowIcon {
-  width: 18px;
-  height: 20px;
-  margin-left: 5%;
-  margin-right: -13%;
-  padding-top: 1%;
-  margin-bottom: -1.2%;
-}
+
 
 .recommend {
   margin: 5.2%;
@@ -129,19 +109,6 @@ export default {
   border-radius: 20px;
 }
 
-#map {
-  width: 250px;
-  height: 120px;
-  margin-left: 12%;
-  margin-bottom: 20%;
-}
 
-#drycleaning {
-  width: 200px;
-  height: 100px;
-  margin-left: 39%;
-  margin-top: -2%;
-  margin-bottom: 30%;
-}
 </style>
 
