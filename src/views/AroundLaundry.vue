@@ -2,7 +2,7 @@
 
 <template>
     <div id="laund-list">
-        <v-card class="mx-auto my-5" max-width="500" v-for="laundry in laundrys" :key="laundry.id">
+        <v-card class="mx-auto my-5" max-width="500" v-for="laundry in laundrys" :key="laundry.id" elevation="0">
             <v-img class="align-end text-white" id="laund-img" height="150"
                 src="https://cdn.vuetifyjs.com/images/cards/docks.jpg" cover>
                 <v-card-title id="laund-title">{{ laundry.title }}</v-card-title>
@@ -21,6 +21,9 @@
                     <v-btn color="orange">상세정보</v-btn>
                 </router-link>
             </v-card-actions>
+
+            <v-divider class="mx-1 mb-1"></v-divider>
+
         </v-card>
     </div>
 </template>
