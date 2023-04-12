@@ -1,5 +1,5 @@
 <template>
-    <v-card class="mx-auto" max-width="344" title="회원가입">
+    <v-card class="mx-auto my-5" max-width="400" title="회원가입" elevation="0">
         <v-container>
             <v-text-field v-model="name" :rules="[rules.required]" color="blue" label="이름" placeholder="이름을 입력하세요"
                 variant="underlined"></v-text-field>
