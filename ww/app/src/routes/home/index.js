@@ -18,9 +18,4 @@ router.get('/myPage', ctrl.output.myPage);
 router.use("/myPage", require("./myPage"));
 router.use("/laundry", require("./laundry"));
 
-router.post("/login", ctrl.process.login);
-router.post("/register", ctrl.process.register);
-
-
-
 module.exports = router; //웹으로 내보내기

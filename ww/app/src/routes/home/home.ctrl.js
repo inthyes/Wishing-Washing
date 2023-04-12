@@ -1,9 +1,7 @@
 "use strict";
 
 const logger = require("../../config/logger");
-const UserStorage = require("../../models/UserStorage");
 const Laundry = require("../../models/Laundry");
-const User = require("../../models/User");
 const Product = require("../../models/Product");
 
 
@@ -73,63 +71,11 @@ const output ={
 };
 
 const process = {
-    login : async (req, res) => {
-        const user = new User(req.body); //여기서의 body가 User클래스의 body로 들어감
-        const response = await user.login();
-
-        const url = {
-            method: "POST",
-            path: "/login",
-            status: response.err ? 400 : 200,
-        };
-        log(response, url);
-        return res.status(url.status).json(response);
-    },
-    register: async (req, res) => {
-        const user = new User(req.body); //여기서의 body가 User클래스의 body로 들어감
-        const response = await user.register();
-
-        const url = {
-            method: "POST",
-            path: "/register",
-            status: response.err ? 400 : 201,
-        };
-
-        log(response, url);
-        return res.status(url.status).json(response);
-
-    },
-
-
-    // 필요시 작성
-    // laundry: async (req, res) => {
-   
-    // },
-    // histoy: async (req, res) => {
-   
-    // },
-
-    // myPage: async (req, res) => {
-   
-    // },
-    // profileEdit: async (req, res) => {
-   
-    // },
-    // favoriteList: async (req, res) => {
-   
-    // },
-    // customerService: async (req, res) => {
-   
-    // },
-    // userManagement: async (req, res) => {
-   
-    // },
-
 };
 
 module.exports = {
     output,
-    process,
+    // process,
 };
 
 const log = (response, url) =>{
