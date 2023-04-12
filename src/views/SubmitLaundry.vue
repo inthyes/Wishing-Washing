@@ -1,27 +1,33 @@
 <template>
-    <h1>세탁신청</h1>
-    <v-card class="mx-auto my-5" max-width="500" prepend-icon="mdi-calendar">
-        <template v-slot:title>
-            날짜선택
-        </template>
+    <v-card class="mx-auto my-5" max-width="450">
+        <v-card-title>날짜선택</v-card-title>
 
         <v-card-item>
             <div class="scrollable">
-                <v-row no-gutters>
-                    <v-col cols="12">
-                        <div class="d-flex flex-row">
-                            <v-col cols="auto">
-                                <!--현재 날짜로부터 2주간의 날짜만 나타낸다-->
-                                <v-btn height="60" width="50" v-for="(date, index) in getDateRange(14)" :key="index"
-                                    rounded>
-                                    <div v-html="formatDate(date)"></div>
-                                </v-btn>
-                            </v-col>
-                        </div>
-                    </v-col>
-                </v-row>
+
+                <!--현재 날짜로부터 2주간의 날짜만 나타낸다-->
+                <v-btn height="70" width="50" v-for="(date, index) in getDateRange(14)" :key="index" rounded>
+                    <div v-html="formatDate(date)"></div>
+                </v-btn>
+
             </div>
         </v-card-item>
+
+                <v-divider class="mx-4 mb-1"></v-divider>
+
+                
+        <v-card-title>시간선택</v-card-title>
+        <div class="px-4">
+            <v-chip-group v-model="selection">
+                <v-chip>5:30PM</v-chip>
+
+                <v-chip>7:30PM</v-chip>
+
+                <v-chip>8:00PM</v-chip>
+
+                <v-chip>9:00PM</v-chip>
+            </v-chip-group>
+        </div>
     </v-card>
 </template>
 
