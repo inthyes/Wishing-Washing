@@ -1,6 +1,6 @@
 <!--개별 세탁소-->
 <template>
-    <v-card :loading="loading" class="mx-auto my-5" max-width="500">
+    <v-card :loading="loading" class="mx-auto my-0" max-width="400" elevation="0">
         <template v-slot:loader="{ isActive }">
             <v-progress-linear :active="isActive" color="deep-purple" height="4" indeterminate></v-progress-linear>
         </template>
@@ -18,12 +18,13 @@
         </v-card-item>
 
         <v-card-text>
+            <!--별점(리뷰수)-->
             <v-row align="center" class="mx-0">
-                <v-rating :model-value="4.5" color="amber" density="compact" half-increments readonly
-                    size="small"></v-rating>
+                <v-rating :model-value=laundry.stars color="amber" density="compact" half-increments readonly
+                    size="normal"></v-rating>
 
-                <div class="text-grey ms-4">
-                    4.5 (413)
+                <div class="text-grey ms-2">
+                    {{ laundry.stars }} (413)
                 </div>
             </v-row>
 
@@ -36,21 +37,31 @@
 
         <v-divider class="mx-4 mb-1"></v-divider>
 
-        <v-card-title>예약하기</v-card-title>
+        <v-tabs class="mx-4" v-model="tab" align-tabs="center" stacked grow>
+            <v-tab value="tab-1">세탁/수선</v-tab>
+            <v-tab value="tab-2">리뷰</v-tab>
+        </v-tabs>
 
-        <div class="px-4">
-            <v-chip-group v-model="selection">
-                <v-chip>5:30PM</v-chip>
+        <v-window v-model="tab">
+            <v-window-item value="tab-1">
+                <v-card>
+                    <v-card-text>{{ laundry.menu }}</v-card-text>
+                </v-card>
+            </v-window-item>
+            <v-window-item value="tab-2">
+                <v-card>
+                    <v-card-text>{{ laundry.reviews }}</v-card-text>
+                </v-card>
+            </v-window-item>
+        </v-window>
 
-                <v-chip>7:30PM</v-chip>
+        <v-divider class="mx-4 mb-1"></v-divider>
 
-                <v-chip>8:00PM</v-chip>
-
-                <v-chip>9:00PM</v-chip>
-            </v-chip-group>
-        </div>
 
         <v-card-actions>
+            <v-btn icon @click="toggleWish">
+                <v-icon :color="isWished ? 'red' : ''">{{ isWished ? 'mdi-heart' : 'mdi-heart-outline' }}</v-icon>
+            </v-btn>
             <v-btn to="/submitlaundry" color="deep-purple-lighten-2" variant="text" @click="reserve">
                 세탁신청
             </v-btn>
@@ -65,7 +76,14 @@ export default {
     data: () => ({
         loading: false,
         selection: 1,
-        laundry: {}
+
+        laundry: {},        // laundrys.json
+
+        tab: 'Appetizers',  // 세탁/수선 & 리뷰 탭
+        isWished: false,    // 찜버튼
+
+
+
     }),
     async created() {
         try {
@@ -82,6 +100,10 @@ export default {
 
             setTimeout(() => (this.loading = false), 2000)
         },
+        toggleWish() {
+            this.isWished = !this.isWished;
+        },
     },
 }
 </script>
+
