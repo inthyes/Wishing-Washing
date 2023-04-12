@@ -33,7 +33,7 @@ const routes = [
     component: MyPageVue
   },
   {
-    path: '/laundrydetail',  // 매개변수 id의 동적 경로
+    path: '/laundrydetail/:id', 
     name: 'laundrydetail',
     component: LaundryDetailVue,
     props: true

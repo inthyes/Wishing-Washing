@@ -8,10 +8,10 @@
         <v-img cover height="250" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
 
         <v-card-item>
-            <v-card-title>@@ 세탁소</v-card-title>
+            <v-card-title>{{ laundry.title }}</v-card-title>
 
             <v-card-subtitle>
-                <span class="me-1">세탁소 서브 타이틀</span>
+                <span class="me-1">{{ laundry.subtitle }}</span>
 
                 <v-icon color="error" icon="mdi-fire-circle" size="small"></v-icon>
             </v-card-subtitle>
@@ -28,10 +28,10 @@
             </v-row>
 
             <div class="my-4 text-subtitle-1">
-                세탁소 주소
+                {{ laundry.address }}
             </div>
 
-            <div>간단한 세탁소 정보</div>
+            <div>{{ laundry.info }}</div>
         </v-card-text>
 
         <v-divider class="mx-4 mb-1"></v-divider>
@@ -59,12 +59,23 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     data: () => ({
         loading: false,
         selection: 1,
+        laundry: {}
     }),
-
+    async created() {
+        try {
+            const id = this.$route.params.id;
+            const res = await axios.get(`http://localhost:3000/laundrys/${id}`);
+            this.laundry = res.data;
+        } catch (e) {
+            console.error(e);
+        }
+    },
     methods: {
         reserve() {
             this.loading = true

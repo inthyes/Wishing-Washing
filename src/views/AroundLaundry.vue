@@ -5,7 +5,7 @@
         <v-card class="mx-auto my-5" max-width="500" v-for="laundry in laundrys" :key="laundry.id">
             <v-img class="align-end text-white" id="laund-img" height="150"
                 src="https://cdn.vuetifyjs.com/images/cards/docks.jpg" cover>
-                <v-card-title id="laund-title" >{{ laundry.title }}</v-card-title>
+                <v-card-title id="laund-title">{{ laundry.title }}</v-card-title>
             </v-img>
 
             <v-card-subtitle class="pt-3" id="laund-sub-title">{{ laundry.subtitle }}</v-card-subtitle>
@@ -17,8 +17,9 @@
 
             <v-card-actions>
                 <v-btn color="orange">찜하기</v-btn>
-                <v-btn color="orange" to="/laundrydetail">상세정보</v-btn>
-
+                <router-link :to="{ name: 'laundrydetail', params: { id: laundry.id } }">
+                    <v-btn color="orange">상세정보</v-btn>
+                </router-link>
             </v-card-actions>
         </v-card>
     </div>
