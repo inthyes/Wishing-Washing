@@ -18,9 +18,17 @@
                 :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" @click:append="show1 = !show1" color="blue" label="비밀번호"
                 placeholder="비밀번호를 입력하세요" variant="underlined"></v-text-field>
 
-            <v-text-field v-model="PasswordCheck" :rules="[rules.required]" :type="show2 ? 'text' : 'password'"
-                :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'" @click:append="show2 = !show2" color="blue" label="비밀번호 확인"
-                placeholder="한번 더 비밀번호를 입력하세요" variant="underlined"></v-text-field>
+            <v-text-field 
+                v-model="PasswordCheck" 
+                :rules="[rules.required, rules.passwordMatch]" 
+                :type="show2 ? 'text' : 'password'"
+                :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'" 
+                @click:append="show2 = !show2" 
+                color="blue" 
+                label="비밀번호 확인"
+                placeholder="한번 더 비밀번호를 입력하세요" 
+                variant="underlined">
+            </v-text-field>
 
             <v-checkbox v-model="terms" color="secondary" label="동의합니다"></v-checkbox>
         </v-container>
@@ -65,6 +73,7 @@ export default {
                     return pattern.test(value) || '이메일 형식으로 입력하세요'
                 },
                 min: v => v.length >= 8 || '8자 이상 입력하세요',
+                passwordMatch: v => v === this.password || '비밀번호가 일치하지 않습니다',
             }
         }
 
