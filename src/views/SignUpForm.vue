@@ -18,15 +18,9 @@
                 :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" @click:append="show1 = !show1" color="blue" label="비밀번호"
                 placeholder="비밀번호를 입력하세요" variant="underlined"></v-text-field>
 
-            <v-text-field 
-                v-model="PasswordCheck" 
-                :rules="[rules.required, rules.passwordMatch]" 
-                :type="show2 ? 'text' : 'password'"
-                :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'" 
-                @click:append="show2 = !show2" 
-                color="blue" 
-                label="비밀번호 확인"
-                placeholder="한번 더 비밀번호를 입력하세요" 
+            <v-text-field v-model="PasswordCheck" :rules="[rules.required, rules.passwordMatch]"
+                :type="show2 ? 'text' : 'password'" :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+                @click:append="show2 = !show2" color="blue" label="비밀번호 확인" placeholder="한번 더 비밀번호를 입력하세요"
                 variant="underlined">
             </v-text-field>
 
@@ -38,7 +32,7 @@
         <v-card-actions>
             <v-spacer></v-spacer>
 
-            <v-btn color="success" @click="submitForm">
+            <v-btn color="success" @click="addUsers">
                 가입 완료
 
                 <v-icon icon="mdi-chevron-right" end></v-icon>
@@ -48,10 +42,12 @@
 </template>
 
 <script>
+import axios from 'axios';
+const baseURL = "http://localhost:3001/users";
+
 export default {
     data() {
         return {
-
             name: null,
             id: null,
             phone: null,
@@ -62,6 +58,8 @@ export default {
             terms: false,
             show1: false,
             show2: false,
+
+            users:[],
             rules: {
                 required: value => !!value || '반드시 입력하세요',
                 phone: value => {
@@ -74,20 +72,27 @@ export default {
                 },
                 min: v => v.length >= 8 || '8자 이상 입력하세요',
                 passwordMatch: v => v === this.password || '비밀번호가 일치하지 않습니다',
-            }
+            },
         }
-
     },
     methods: {
-        createPost() {
-            this.$axios
-                .get('https://jsonplaceholder.typicode.com/posts/')
-                .then((response) => console.log(response))
-                .catch((error) => console.log(error))
+        async addUsers() {
+            try {
+                const res = await axios.post(baseURL, {
+                    name: this.name,
+                    id: this.id,
+                    phone: this.phone,
+                    email: this.email,
+                    password: this.password,
+                });
+
+                this.users = [...this.users, res.data];
+            } catch (e) {
+                console.error(e);
+            }
         }
 
     }
 };
-
 
 </script>
