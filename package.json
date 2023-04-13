@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "start": "json-server --watch laundrys.json --port 3000"
+    "start": "json-server --watch laundrys.json --port 3000",
+    "users": "json-server --watch users.json --port 3001"
   },
   "dependencies": {
     "@mdi/font": "5.9.55",
