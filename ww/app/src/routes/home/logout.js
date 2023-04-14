@@ -25,7 +25,9 @@ router.post("/", (req, res) => {
         message : "로그아웃 되었습니다." 
       }
       return res.status(200).send(json);
+      
     });
+
   });
 
 module.exports = router;
