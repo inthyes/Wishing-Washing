@@ -1,3 +1,4 @@
+<!-- 사용안하는 컴포넌트
 <template>
     <v-card max-width="448" class="mx-auto" color="primary">
         <v-layout>
@@ -25,4 +26,4 @@
             
         </v-layout>
     </v-card>
-</template>
+</template> -->
