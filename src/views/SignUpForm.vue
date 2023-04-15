@@ -63,7 +63,7 @@ export default {
             show2: false,
 
             users: [],
-            rules: {
+            rules: {    // 유효성 검사 규칙
                 required: value => !!value || '반드시 입력하세요',
                 phoneRules: value => {
                     const pattern = /^(\+)?([0-9]{3})?[-]?([0-9]{3,4})?[-]?([0-9]{4})$/
@@ -76,6 +76,7 @@ export default {
                 minRules: value => value.length >= 8 || '8자 이상 입력하세요',
                 passwordMatch: value => value === this.password || '비밀번호가 일치하지 않습니다',
             },
+            
         }
     },
     methods: {
@@ -98,11 +99,9 @@ export default {
             } catch (e) {
                 console.error(e);
             }
-
-
-        }
-
-    }
+        },
+    },
+    
 };
 
 </script>
