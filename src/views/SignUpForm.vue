@@ -81,24 +81,29 @@ export default {
     },
     methods: {
         async addUsers() {
-            const isValid = await this.$refs.form.validate();
-            if (!isValid) {
-                return;
-            }
+            if (
+            this.rules.required(this.name) === true && 
+            this.rules.required(this.id) === true && 
+            this.rules.phoneRules(this.phone) === true && 
+            this.rules.emailRules(this.email) === true && 
+            this.rules.minRules(this.password) === true && 
+            this.rules.passwordMatch(this.PasswordCheck) === true
+            ) {
+                try {
+                    const res = await axios.post(baseURL, {
+                        name: this.name,
+                        id: this.id,
+                        phone: this.phone,
+                        email: this.email,
+                        password: this.password,
+                    });
 
-            try {
-                const res = await axios.post(baseURL, {
-                    name: this.name,
-                    id: this.id,
-                    phone: this.phone,
-                    email: this.email,
-                    password: this.password,
-                });
-
-                this.users = [...this.users, res.data];
-            } catch (e) {
-                console.error(e);
+                    this.users = [...this.users, res.data];
+                } catch (e) {
+                    console.error(e);
+                }
             }
+            
         },
     },
     
