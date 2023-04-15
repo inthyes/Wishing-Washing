@@ -35,6 +35,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     data() {
         return {
@@ -44,7 +46,10 @@ export default {
     },
     methods: {
         login() {
-            // Perform login logic here
+            axios.post('http://localhost:3000/users', {
+        username: this.username,
+        password: this.password
+      })
         },
     },
 };
