@@ -1,5 +1,4 @@
 <template>
-    
         <v-bottom-navigation v-model="value" color="teal" mode="shift" >
             <v-btn router-link to="/">
                 <v-icon>mdi-home</v-icon>
@@ -28,7 +27,7 @@ export default {
     data: () => ({ value: null }),
 }
 </script>
-
+<!-- 
 <style scoped>
 /* Add custom styles to adjust spacing */
 .v-btn {
@@ -36,4 +35,4 @@ export default {
     padding: 0;
     /* Add any other custom styles as needed */
 }
-</style>
+</style> -->

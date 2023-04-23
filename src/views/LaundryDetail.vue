@@ -1,4 +1,5 @@
 <!--개별 세탁소-->
+
 <template>
     <v-card :loading="loading" class="mx-auto my-0" max-width="400" elevation="0">
         <template v-slot:loader="{ isActive }">

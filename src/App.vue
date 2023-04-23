@@ -31,6 +31,7 @@
     <v-main>
       <router-view />
     </v-main>
+    
     <!-- 하단 navbar -->
     <v-footer class="fixed-bottom">
       <bottom-nav-bar />

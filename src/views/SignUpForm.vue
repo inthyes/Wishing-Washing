@@ -1,3 +1,5 @@
+<!-- 회원가입 -->
+
 <template>
     <v-card class="mx-auto my-5" max-width="400" title="회원가입" elevation="0">
         <v-container>
