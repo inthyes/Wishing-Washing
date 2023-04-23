@@ -1,30 +1,33 @@
 <template>
     <v-card class="mx-auto my-5" max-width="450">
+
+        <v-divider class="mx-4 mb-1"></v-divider>
+
         <v-card-title>날짜선택</v-card-title>
 
-        <v-card-item>
-            <div class="scrollable">
+        <v-sheet class="mx-auto" max-width="600">
+            <v-slide-group show-arrows>
+                <v-slide-group-item v-for="(date, index) in getDateRange(14)" :key="index" v-slot="{ isSelected }">
+                    <v-btn class="ma-2" :color="isSelected ? 'primary' : undefined" rounded @click="toggle(index)">
+                        <div v-html="formatDate(date)"></div>
+                    </v-btn>
+                </v-slide-group-item>
+            </v-slide-group>
+        </v-sheet>
+    </v-card>
 
-                <!--현재 날짜로부터 2주간의 날짜만 나타낸다-->
-                <v-btn height="70" width="50" v-for="(date, index) in getDateRange(14)" :key="index" rounded>
-                    <div v-html="formatDate(date)"></div>
-                </v-btn>
 
-            </div>
-        </v-card-item>
+    <v-card class="mx-auto my-5" max-width="450">
 
-                <v-divider class="mx-4 mb-1"></v-divider>
+        <v-divider class="mx-4 mb-1"></v-divider>
 
-                
         <v-card-title>시간선택</v-card-title>
+
         <div class="px-4">
             <v-chip-group v-model="selection">
                 <v-chip>5:30PM</v-chip>
-
                 <v-chip>7:30PM</v-chip>
-
                 <v-chip>8:00PM</v-chip>
-
                 <v-chip>9:00PM</v-chip>
             </v-chip-group>
         </div>
@@ -35,7 +38,7 @@
 export default {
     data() {
         const options = { weekday: 'long', day: 'numeric' };
-        return { options };
+        return { options, selectedDate: null };
     },
     methods: {
         formatDate(date) {
@@ -51,17 +54,18 @@ export default {
             }
             return dates;
         },
+        toggle(index) {
+            this.selectedDate = index;
+        },
+    },
+    computed: {
+        selectedDateString() {
+            if (this.selectedDate !== null) {
+                const selectedDate = this.getDateRange(14)[this.selectedDate];
+                return selectedDate.toLocaleDateString(undefined, this.options);
+            }
+            return '';
+        },
     },
 };
 </script>
-<style scoped>
-.scrollable {
-    overflow-x: auto;
-    white-space: nowrap;
-}
-
-.scrollable::-webkit-scrollbar {
-    width: 0em;
-    height: 0em;
-}
-</style>
