@@ -2,7 +2,6 @@
 
 <template>
     <div class="container" id="app">
-        <router-view></router-view>
         <div class="wrapper">
 
             <div class="mypage">
@@ -34,7 +33,7 @@
                         </span>
                     </div>
                     <span>
-                        <div class="buyingCash" @click="goToHome">
+                        <div class="buyingCash">
                             <a>충전</a>
                         </div>
                     </span>
@@ -94,15 +93,13 @@
 
             </div>
 
-            <!--<router-link to="/home" exact active-class="active" tag="button">Home 페이지로 이동</router-link>-->
-
-            <!-- 넷바는 따로 컴포넌트를 만들어서 App.vue에 적용했기때문에 주석처리 했습니다 -->
-            <!-- <div class="nav">
+        <!-- 넷바는 따로 컴포넌트를 만들어서 App.vue에 적용했기때문에 주석처리 했습니다 -->
+        <!-- <div class="nav">
                 <span><img id="home" src="./assets/home.png"></span>
                 <span><img id="request" src="./assets/request.png"></span>
                 <span><img id="history" src="./assets/history.png"></span>
-                <span><img id="mypage" src="./assets/my.png"></span>
-            </div> -->
+                    <span><img id="mypage" src="./assets/my.png"></span>
+                </div> -->
 
         </div>
 
@@ -416,19 +413,9 @@
 }
 </style>
 
-<!-- 스크립트 중복 오류로 주석처리했습니다 -->
-
-<!-- <script>
-export default {
-    name: 'Mypage'  // 이건 뭘까요??? 오류나서 일단 주석처리했습니다
-}
-</script> -->
-
 <!--통신-->
-<!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
-<script>
+<!--
+<script src="https://unpkg.com/axios/dist/axios.min.js">
 
   import axios from 'axios';
 
@@ -441,15 +428,5 @@ export default {
       console.log(error);
     });
 
-</script> -->
-
-<script>
-export default {
-    methods: {
-        goToHome() {
-            this.$router.push('/'); // '/home' 경로로 이동 
-            // 이거 제꺼 home 경로는 /로 해놔서 수정했는데 home화면으로 이동하는 이유가 있을까요?
-        }
-    }
-}
 </script>
+-->
