@@ -4,7 +4,7 @@
     <div class="wrapper">
       <div class="content">
         <v-carousel cycle height="10" hide-delimiter-background show-arrows="hover"></v-carousel>
-            <div class="myWashing">
+            <div class="banner">
                 <b>내 세탁물</b>
             </div>
             <hr id="divisionLine">
@@ -38,7 +38,7 @@
 </template>
 
 <style>
-.myWashing {
+.banner {
     margin-top: 20px;
     font-size: 18px;
     text-align: center;
