@@ -1,0 +1,18 @@
+{
+    "mypage": [
+        {
+            "id": 1,
+            "userName": "XXX 고객님",
+            "userAddr": "경기도 수원시",
+            "countHistory": "32",
+            "countReview": "11",
+            "countQnA": "2",
+            "laundryName": "XX 세탁소",
+            "laundryAddr": "경기도 수원시",
+            "operatingHour": "11:00 - 18:00",
+            "dayOff": "공휴일 휴무",
+            "laundryNumber": "031-123-777",
+            "stars": 4.5
+        }
+    ]
+}
