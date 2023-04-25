@@ -23,22 +23,22 @@ import NoticeDetail2Vue from '@/views/NoticeDetail2.vue'
 const routes = [
   {
     path: '/',
-    name: 'home',
+    name: 'WW',
     component: HomeView
   },
   {
     path: '/aroundlaundry',
-    name: 'aroundlaundry',
+    name: '주변세탁소',
     component: AroundLaundryVue
   },
   {
     path: '/usagehistory',
-    name: 'usage',
+    name: '이용내역',
     component: UsageHistoryVue
   },
   {
     path: '/mypage',
-    name: 'mypage',
+    name: 'Mypage',
     component: MyPageVue
   },
   {
