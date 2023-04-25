@@ -37,7 +37,7 @@
     </div>
 </template>
 
-<style>
+<style scoped>
 .banner {
     margin-top: 20px;
     font-size: 18px;
