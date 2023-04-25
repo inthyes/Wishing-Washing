@@ -6,9 +6,8 @@
         <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer">
         </v-app-bar-nav-icon>
       </template>
-      <v-app-bar-title>WW</v-app-bar-title>
+      <v-app-bar-title>{{ $route.name }}</v-app-bar-title>
 
-      <v-spacer></v-spacer>
 
       <template v-slot:append>
         <v-btn icon="mdi-magnify"></v-btn>
@@ -36,6 +35,7 @@
     <v-footer class="fixed-bottom">
       <bottom-nav-bar />
     </v-footer>
+
   </v-app>
 
   
