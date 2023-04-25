@@ -2,10 +2,11 @@
 
 <template>
     <div id="laund-list">
-         <div class="banner">
-                <b>주변세탁소</b>
-            </div>
-            <hr id="divisionLine">
+        <div class="banner">
+            <b>주변세탁소</b>
+        </div>
+        <hr id="divisionLine">
+        
         <v-card class="mx-auto my-5" max-width="500" v-for="laundry in laundrys" :key="laundry.id" elevation="0">
             <v-img class="align-end text-white" id="laund-img" height="150"
                 src="https://cdn.vuetifyjs.com/images/cards/docks.jpg" cover>
@@ -43,6 +44,8 @@ export default {
     async created() {
         try {
             const res = await axios.get('http://localhost:3000/laundrys');
+            // const res = await axios.get('https://8701-118-217-221-198.jp.ngrok.io/laundrys');    // 실제서버주소로 테스트할때
+
             this.laundrys = res.data;
         } catch (e) {
             console.error(e);
