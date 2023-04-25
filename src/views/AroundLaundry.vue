@@ -1,13 +1,10 @@
 <!-- 주변 세탁소 -->
 
 <template>
-    <div id="laund-list">
-        <div class="banner">
-            <b>주변세탁소</b>
-        </div>
-        <hr id="divisionLine">
+    <div id="laund-list" >
         
-        <v-card class="mx-auto my-5" max-width="500" v-for="laundry in laundrys" :key="laundry.id" elevation="0">
+        <v-card class="mx-auto my-5" max-width="400" v-for="laundry in laundrys" :key="laundry.id" elevation="0">
+
             <v-img class="align-end text-white" id="laund-img" height="150"
                 src="https://cdn.vuetifyjs.com/images/cards/docks.jpg" cover>
                 <v-card-title id="laund-title">{{ laundry.title }}</v-card-title>
