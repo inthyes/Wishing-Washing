@@ -1,9 +1,9 @@
 <!-- 회원가입 -->
 
 <template>
-    <v-card class="mx-auto my-5" max-width="400" elevation="0">
-        <v-container>
-            <v-form ref="form" v-model="form" class="pa-4 pt-6">
+    <v-card class="mx-auto" max-width="400" elevation="0">
+        <v-container >
+            <v-form ref="form" v-model="form" class="pa-4 pt-10">
                 <v-text-field v-model="name" :rules="[rules.required]" color="blue" label="이름" placeholder="이름을 입력하세요"
                     variant="underlined"></v-text-field>
 
@@ -29,9 +29,6 @@
 
                 <v-checkbox v-model="terms" :rules="[rules.agree]" color="secondary" label="약관동의"></v-checkbox>
             </v-form>
-
-
-
         </v-container>
 
         <v-divider></v-divider>
