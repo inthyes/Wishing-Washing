@@ -131,7 +131,7 @@ export default {
                 this.rules.passwordMatch(this.PasswordCheck) === true &&
 
                 await this.rules.emailDuplicate(this.email) &&
-                await this.rules.emailDuplicate(this.id)
+                await this.rules.ID_Duplicate(this.id)
             ) {
                 try {
                     const res = await axios.post(baseURL, {
