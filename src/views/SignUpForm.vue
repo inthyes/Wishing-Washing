@@ -37,7 +37,8 @@
 
             <v-spacer></v-spacer>
 
-            <v-btn color="success" :disabled="!form" :loading="isLoading" @click="addUsers">
+            <!-- 버튼 클릭 -> 회원가입 완료 후 로그인 페이지로 이동 -->
+            <v-btn to="/login" color="success" :disabled="!form" :loading="isLoading" @click="addUsers">
                 가입 완료
                 <v-icon icon="mdi-chevron-right" end></v-icon>
             </v-btn>
@@ -117,9 +118,6 @@ export default {
             },
         }
     },
-
-
-
     // 회원가입 저장
     methods: {
         async addUsers() {
