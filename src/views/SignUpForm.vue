@@ -7,7 +7,7 @@
                 <v-text-field v-model="name" :rules="[rules.required]" color="blue" label="이름" placeholder="이름을 입력하세요"
                     variant="underlined"></v-text-field>
 
-                <v-text-field v-model="email" :rules="[rules.required, rules.emailRules]" color="blue" label="이메일"
+                <v-text-field v-model="email" :rules="[rules.required, rules.emailRules, rules.emailDuplicate]"  color="blue" label="이메일"
                     placeholder="이메일을 입력하세요" variant="underlined"></v-text-field>
 
                 <v-text-field v-model="id" :rules="[rules.required]" color="blue" label="닉네임" placeholder="닉네임을 입력하세요"
@@ -28,7 +28,7 @@
                 </v-text-field>
             </v-form>
 
-            <v-checkbox v-model="terms" color="secondary" label="동의합니다"></v-checkbox>
+            <v-checkbox v-model="terms" color="secondary" label="약관동의"></v-checkbox>
 
         </v-container>
 
@@ -69,7 +69,10 @@ export default {
             // isLoading: false,
 
             users: [],
-            rules: {    // 유효성 검사 규칙
+            
+            
+            rules: {    
+                // 회원가입 유효성 검사
                 required: value => !!value || '반드시 입력하세요',
                 phoneRules: value => {
                     const pattern = /^(\+)?([0-9]{3})?[-]?([0-9]{3,4})?[-]?([0-9]{4})$/
@@ -81,10 +84,28 @@ export default {
                 },
                 minRules: value => value.length >= 8 || '8자 이상 입력하세요',
                 passwordMatch: value => value === this.password || '비밀번호가 일치하지 않습니다',
-            },
 
+                // 회원가입 이메일 중복검사
+                emailDuplicate: async (value) => {
+                    try {
+                        const res = await axios.get(`${baseURL}?email=${value}`);
+                        if (res.data.length > 0) {
+                            return '이미 사용중인 이메일입니다';
+                        } else {
+                            return true;
+                        }
+                    } catch (e) {
+                        console.error(e);
+                        return 'Error checking email duplication.';
+                    }
+                },
+            },
         }
     },
+    
+   
+
+    // 회원가입 저장
     methods: {
         async addUsers() {
             if (
@@ -93,7 +114,9 @@ export default {
                 this.rules.phoneRules(this.phone) === true &&
                 this.rules.emailRules(this.email) === true &&
                 this.rules.minRules(this.password) === true &&
-                this.rules.passwordMatch(this.PasswordCheck) === true
+                this.rules.passwordMatch(this.PasswordCheck) === true &&
+
+                await this.rules.emailDuplicate(this.email)
             ) {
                 try {
                     const res = await axios.post(baseURL, {
@@ -109,10 +132,7 @@ export default {
                     console.error(e);
                 }
             }
-
         },
     },
-
 };
-
 </script>
