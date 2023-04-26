@@ -10,7 +10,7 @@
                 <v-text-field v-model="email" :rules="[rules.required, rules.emailRules, rules.emailDuplicate]"  color="blue" label="이메일"
                     placeholder="이메일을 입력하세요" variant="underlined"></v-text-field>
 
-                <v-text-field v-model="id" :rules="[rules.required]" color="blue" label="닉네임" placeholder="닉네임을 입력하세요"
+                <v-text-field v-model="id" :rules="[rules.required, rules.ID_Duplicate]" color="blue" label="닉네임" placeholder="닉네임을 입력하세요"
                     variant="underlined"></v-text-field>
 
                 <v-text-field v-model="phone" :rules="[rules.required, rules.phoneRules]" color="blue" label="연락처"
@@ -99,6 +99,20 @@ export default {
                         return 'Error checking email duplication.';
                     }
                 },
+                // 회원가입 닉네임 중복검사
+                ID_Duplicate: async (value) => {
+                    try {
+                        const res = await axios.get(`${baseURL}?id=${value}`);
+                        if (res.data.length > 0) {
+                            return '이미 사용중인 닉네임입니다';
+                        } else {
+                            return true;
+                        }
+                    } catch (e) {
+                        console.error(e);
+                        return 'Error checking id duplication.';
+                    }
+                },
             },
         }
     },
@@ -116,7 +130,8 @@ export default {
                 this.rules.minRules(this.password) === true &&
                 this.rules.passwordMatch(this.PasswordCheck) === true &&
 
-                await this.rules.emailDuplicate(this.email)
+                await this.rules.emailDuplicate(this.email) &&
+                await this.rules.emailDuplicate(this.id)
             ) {
                 try {
                     const res = await axios.post(baseURL, {
