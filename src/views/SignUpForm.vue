@@ -7,11 +7,11 @@
                 <v-text-field v-model="name" :rules="[rules.required]" color="blue" label="이름" placeholder="이름을 입력하세요"
                     variant="underlined"></v-text-field>
 
-                <v-text-field v-model="email" :rules="[rules.required, rules.emailRules, rules.emailDuplicate]"  color="blue" label="이메일"
-                    placeholder="이메일을 입력하세요" variant="underlined"></v-text-field>
+                <v-text-field v-model="email" :rules="[rules.required, rules.emailRules, rules.emailDuplicate]" color="blue"
+                    label="이메일" placeholder="이메일을 입력하세요" variant="underlined"></v-text-field>
 
-                <v-text-field v-model="id" :rules="[rules.required, rules.ID_Duplicate]" color="blue" label="닉네임" placeholder="닉네임을 입력하세요"
-                    variant="underlined"></v-text-field>
+                <v-text-field v-model="id" :rules="[rules.required, rules.ID_Duplicate]" color="blue" label="닉네임"
+                    placeholder="닉네임을 입력하세요" variant="underlined"></v-text-field>
 
                 <v-text-field v-model="phone" :rules="[rules.required, rules.phoneRules]" color="blue" label="연락처"
                     placeholder="연락처를 입력하세요" variant="underlined"></v-text-field>
@@ -26,9 +26,11 @@
                     @click:append="show2 = !show2" color="blue" label="비밀번호 확인" placeholder="한번 더 비밀번호를 입력하세요"
                     variant="underlined">
                 </v-text-field>
+
+                <v-checkbox v-model="terms" :rules="[rules.agree]" color="secondary" label="약관동의"></v-checkbox>
             </v-form>
 
-            <v-checkbox v-model="terms" color="secondary" label="약관동의"></v-checkbox>
+
 
         </v-container>
 
@@ -66,12 +68,12 @@ export default {
             show2: false,
 
             form: false,
-            // isLoading: false,
+            isLoading: false,
 
             users: [],
-            
-            
-            rules: {    
+
+
+            rules: {
                 // 회원가입 유효성 검사
                 required: value => !!value || '반드시 입력하세요',
                 phoneRules: value => {
@@ -113,11 +115,13 @@ export default {
                         return 'Error checking id duplication.';
                     }
                 },
+                // 약관동의
+                agree: value => !!value || '약관에 동의해야 합니다'
             },
         }
     },
-    
-   
+
+
 
     // 회원가입 저장
     methods: {
