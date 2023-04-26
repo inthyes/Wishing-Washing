@@ -49,18 +49,18 @@ const routes = [
   },
   {
     path: '/submitlaundry',
-    name: 'submitlaundry',
+    name: '세탁신청',
     component: SubmitLaundry
   },
 
   {
     path: '/login',
-    name: 'login',
+    name: '로그인',
     component: LoginFormVue
   },
   {
     path: '/signup',
-    name: 'signup',
+    name: '회원가입',
     component: SignUpFormVue
   },
   {
