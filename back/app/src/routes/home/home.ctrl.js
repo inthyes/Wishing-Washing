@@ -3,6 +3,13 @@
 const logger = require("../../config/logger");
 const Laundry = require("../../models/Laundry");
 const Product = require("../../models/Product");
+const Cart = require("../../models/Cart");
+const Likes = require("../../models/Likes");
+const LaundryOrder = require("../../models/LaundryOrder");
+const MyPage = require("../../models/Mypage");
+const jwt = require('jsonwebtoken');
+const router = require(".");
+
 
 
 const output ={
@@ -32,8 +39,42 @@ const output ={
     },
     favoriteList : (req, res) => {
         logger.info(`GET /myPage/favoriteList 304 "프로필편집 화면으로 이동"`);
-        //실제 경로 , 라우팅 경로 : myPage/favoriteList
         res.render("home/favoriteList");
+        //실제 경로 , 라우팅 경로 : myPage/favoriteList
+        /* var user;
+         //클라이언트가 HTTP요청 헤더에 토큰 받아서 보낼거임
+        const token = req.headers.authorization.split(" ")[1];
+        jwt.verify(token, "secretKey", (err, decoded) => {
+          if (err) {
+            console.log("토큰 만료 오류");
+            const json = {
+              code : 401,
+              message : "로그인 후 이용해주세요." 
+            }
+            return res.status(401).send(json);
+          }
+          try {
+            // JWT 토큰 검증을 수행한다.
+            const decoded = jwt.verify(token, 'secretKey');
+            // 검증이 완료된 경우, 요청 객체에 인증 정보를 추가한다.
+            //디코드한 유저를 변수로 저장.
+            console.log(decoded);
+           user = decoded.id;
+          } catch (err) {
+            // JWT 토큰 검증 실패 시, 403 Forbidden 에러를 반환한다.
+            const json = {
+              code: 403,
+              message: '잘못된 인증 정보입니다.'
+            };
+            return res.status(403).send(json);
+          }
+        }); */
+        //토큰 받아오면 하드코딩 해제
+        const favorite = new MyPage("yuze");
+
+        const response = favorite.showFavoriteList();
+        //const response1 = await cart.addOrderList();
+        console.log(response);
     },
     //myPage 하위 기능
     profileEdit : (req, res) => {
@@ -71,16 +112,66 @@ const output ={
     upload : async(req, res) =>{
         logger.info(`GET /home/upload 304 "upload 화면으로 이동`);
         res.render('home/upload');
-    }
-    
+    },
 };
 
 const process = {
+    addCart: async (req, res) => {
+        // var user;
+        //  //클라이언트가 HTTP요청 헤더에 토큰 받아서 보낼거임
+        // const token = req.headers.authorization.split(" ")[1];
+        // jwt.verify(token, "secretKey", (err, decoded) => {
+        //   if (err) {
+        //     console.log("토큰 만료 오류");
+        //     const json = {
+        //       code : 401,
+        //       message : "로그인 후 이용해주세요." 
+        //     }
+        //     return res.status(401).send(json);
+        //   }
+        //   try {
+        //     // JWT 토큰 검증을 수행한다.
+        //     const decoded = jwt.verify(token, 'secretKey');
+        //     // 검증이 완료된 경우, 요청 객체에 인증 정보를 추가한다.
+        //     //디코드한 유저를 변수로 저장.
+        //     console.log(decoded);
+        //    user = decoded.id;
+        //   } catch (err) {
+        //     // JWT 토큰 검증 실패 시, 403 Forbidden 에러를 반환한다.
+        //     const json = {
+        //       code: 403,
+        //       message: '잘못된 인증 정보입니다.'
+        //     };
+        //     return res.status(403).send(json);
+        //  }
+     //   });
+        //토큰 받아오면 하드코딩 해제
+        const cart = new Cart(req.body, "yuze"/*user*/);
+        const response = await cart.add();
+        const data = response;
+        const orderNum = data.orderNumber;
+        const laundryOrder = new LaundryOrder(orderNum);
+        const cartRes = await laundryOrder.showCart();
+        console.log(cartRes);
+        res.render("home/laundryOrder", 
+        {
+            cartRes : cartRes
+        });
+    },
+
+    like: async (req,res) => {
+        //req.body -> 1과 0 리턴 
+        console.log(req.body,"yuze");
+        const like = new Likes(req.body, "yuze");
+        const response = await like.insert();
+        
+        return true;
+    }
 };
 
 module.exports = {
     output,
-    // process,
+    process,
 };
 
 const log = (response, url) =>{

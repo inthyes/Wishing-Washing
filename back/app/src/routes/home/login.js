@@ -35,7 +35,7 @@ router.post("/", (req, res) => {
     console.log("DB 연결 성공");
 
     const exec = conn.query(
-      "select salt, psword from users where id='" + id + "';",
+      "select salt, U_PW from users where U_ID='" + id + "';",
       (err, data) => {
         console.log("실행된 SQL: " + exec.sql);
         // sql 오류
@@ -58,7 +58,7 @@ router.post("/", (req, res) => {
             // 동일한 id 가 있으면 비밀번호 일치 확인
             console.log("아이디 존재");
             var salt = data[0].salt;
-            var psword_db = data[0].psword;
+            var psword_db = data[0].U_PW;
             console.log("data[0].salt",data[0].salt);
             console.log("data[0].psword",data[0].psword);
             const hash = crypto
