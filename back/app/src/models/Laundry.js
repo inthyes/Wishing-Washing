@@ -13,6 +13,7 @@ class Laundry {
       async showDetail() {
         const laundry = this.body;
         const detail = await LaundryDetail.getLaundryDetail(laundry);
+
         //detail에는 db에서 가져온 세탁소의 id와 name이 포함.
 
         if(detail) {

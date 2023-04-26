@@ -39,7 +39,7 @@ router.post('/', upload.single('imgUpload'), (req, res) => {
     const imageBuffer = Buffer.from(image);
 
   
-    const query = 'INSERT INTO image (name, data) VALUES (?, ?)';
+    const query = 'INSERT INTO IMAGE (I_NAME, I_DATA) VALUES (?, ?)';
     db.query(query, [filename, imageBuffer], (err, results, fields) => {
       if (err) {
         console.log(err);

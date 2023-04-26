@@ -42,8 +42,9 @@ router.post("/api/users", (req, res) => {
     // sql 연결 성공 시
     console.log("데이터베이스 연결");
     // sql qeury문 삽입 -> ?에 순서대로 대괄호 안의 내용이 삽입됨
+    // 디비 쿼리 고쳐야함
     const exec = conn.query(
-      "insert into USERS (id, mail, name, phone, psword, salt) values (?, ?, ?, ?, ?, ?);",
+      "insert into USERS (U_ID, U_EMAIL, U_NAME, U_PHONE, U_PW, SALT) values (?, ?, ?, ?, ?, ?);",
       [paramId, parammail, paramName,paramPhone, hashPsword, salt],
       //sql query 실행 실패, 혹은 성공할 경우에 대한 코드
       (err, result) => {

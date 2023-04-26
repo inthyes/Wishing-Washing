@@ -4,14 +4,24 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link script = ""> 
     <title>Document</title>
 </head>
 <body>
-    세탁신청 backend테스트용
-    <!-- <a href="/login">login</a>
-    <a href="/register">register</a>
-    <a href="/laundry">세탁신청</a>
-    <a href="/history">이용내역</a>
-    <a href="/myPage">마이페이지</a> -->
+  <form action="/search"> 
+    <input name='search' type="text" placeholder="검색">
+    <input  type='submit' value='검색하기'>
+    
+</form>
+<% if(locals.data) {%> 
+<ul>
+<% for (let result of data) { %>
+<li><%= result.S_NAME %> - <%= result.S_ADDR %></li>
+<form action="/laundry" method="post">
+    <input type="hidden" name="store_id" value="<%= result.S_ID %>">
+    <a href="/laundry/detail/<%= result.S_ID %>">신청하기</a>
+<% } %>
+</ul>
+<%}%>
 </body>
 </html>
