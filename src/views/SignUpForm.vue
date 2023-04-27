@@ -5,26 +5,26 @@
         <v-container >
             <v-form ref="form" v-model="form" class="pa-4 pt-10">
                 <v-text-field v-model="name" :rules="[rules.required]" color="blue" label="이름" placeholder="이름을 입력하세요"
-                    variant="underlined"></v-text-field>
+                    variant="underlined" clearable></v-text-field>
 
                 <v-text-field v-model="email" :rules="[rules.required, rules.emailRules, rules.emailDuplicate]" color="blue"
-                    label="이메일" placeholder="이메일을 입력하세요" variant="underlined"></v-text-field>
+                    label="이메일" placeholder="이메일을 입력하세요" variant="underlined" clearable></v-text-field>
 
                 <v-text-field v-model="id" :rules="[rules.required, rules.ID_Duplicate]" color="blue" label="닉네임"
-                    placeholder="닉네임을 입력하세요" variant="underlined"></v-text-field>
+                    placeholder="닉네임을 입력하세요" variant="underlined" clearable></v-text-field>
 
                 <v-text-field v-model="phone" :rules="[rules.required, rules.phoneRules]" color="blue" label="연락처"
-                    placeholder="연락처를 입력하세요" variant="underlined"></v-text-field>
+                    placeholder="연락처를 입력하세요" variant="underlined" clearable></v-text-field>
 
                 <v-text-field v-model="password" :rules="[rules.required, rules.minRules]"
                     :type="show1 ? 'text' : 'password'" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                     @click:append="show1 = !show1" color="blue" label="비밀번호" placeholder="비밀번호를 입력하세요"
-                    variant="underlined"></v-text-field>
+                    variant="underlined" clearable></v-text-field>
 
                 <v-text-field v-model="PasswordCheck" :rules="[rules.required, rules.passwordMatch]"
                     :type="show2 ? 'text' : 'password'" :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
                     @click:append="show2 = !show2" color="blue" label="비밀번호 확인" placeholder="한번 더 비밀번호를 입력하세요"
-                    variant="underlined">
+                    variant="underlined" clearable>
                 </v-text-field>
 
                 <v-checkbox v-model="terms" :rules="[rules.agree]" color="secondary" label="약관동의"></v-checkbox>
