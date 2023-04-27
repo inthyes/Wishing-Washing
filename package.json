@@ -6,10 +6,12 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "start": "json-server --watch laundrys.json --port 3000",
+    "laundrys": "json-server --watch laundrys.json --port 3000",
     "users": "json-server --watch users.json --port 3001",
     "historys": "json-server --watch historys.json --port 3002",
-    "mypage": "json-server --watch mypage.json --port 3003"
+    "mypage": "json-server --watch mypage.json --port 3003",
+
+    "dev": "concurrently \"json-server --watch laundrys.json --port 3000\" \"json-server --watch users.json --port 3001\" \"json-server --watch historys.json --port 3002\" \"json-server --watch mypage.json --port 3003\""
   },
   "dependencies": {
     "@mdi/font": "5.9.55",
