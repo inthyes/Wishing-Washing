@@ -2,7 +2,7 @@
 
 <template>
     <v-card class="mx-auto" max-width="400" elevation="0">
-        <v-container >
+        <v-container>
             <v-form ref="form" v-model="form" class="pa-4 pt-10">
                 <v-text-field v-model="name" :rules="[rules.required]" color="blue" label="이름" placeholder="이름을 입력하세요"
                     variant="underlined" clearable></v-text-field>
@@ -18,8 +18,8 @@
 
                 <v-text-field v-model="password" :rules="[rules.required, rules.minRules]"
                     :type="show1 ? 'text' : 'password'" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                    @click:append="show1 = !show1" color="blue" label="비밀번호" placeholder="비밀번호를 입력하세요"
-                    variant="underlined" clearable></v-text-field>
+                    @click:append="show1 = !show1" color="blue" label="비밀번호" placeholder="비밀번호를 입력하세요" variant="underlined"
+                    clearable></v-text-field>
 
                 <v-text-field v-model="PasswordCheck" :rules="[rules.required, rules.passwordMatch]"
                     :type="show2 ? 'text' : 'password'" :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
@@ -29,21 +29,22 @@
 
                 <v-checkbox v-model="terms" :rules="[rules.agree]" color="secondary" label="약관동의"></v-checkbox>
             </v-form>
+            <v-divider></v-divider>
+
+            <v-card-actions>
+
+                <v-spacer></v-spacer>
+
+                <!-- 버튼 클릭 -> 회원가입 완료 후 로그인 페이지로 이동 -->
+                <v-btn to="/login" color="success" :disabled="!form" :loading="isLoading" @click="addUsers">
+                    가입 완료
+                    <v-icon icon="mdi-chevron-right" end></v-icon>
+                </v-btn>
+
+            </v-card-actions>
         </v-container>
 
-        <v-divider></v-divider>
 
-        <v-card-actions>
-
-            <v-spacer></v-spacer>
-
-            <!-- 버튼 클릭 -> 회원가입 완료 후 로그인 페이지로 이동 -->
-            <v-btn to="/login" color="success" :disabled="!form" :loading="isLoading" @click="addUsers">
-                가입 완료
-                <v-icon icon="mdi-chevron-right" end></v-icon>
-            </v-btn>
-
-        </v-card-actions>
     </v-card>
 </template>
 
