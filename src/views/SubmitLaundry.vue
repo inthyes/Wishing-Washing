@@ -57,7 +57,7 @@ export default {
             selectedDate: null,
             selectedClothes: 'Shirt',
             selectedItems: 1,
-            clothes: ['Shirt', 'Pants', 'Socks', 'Underwear', 'Towel']
+            clothes: ['셔츠', '바지', '코트', '패딩', '신발']
         };
 
     },
