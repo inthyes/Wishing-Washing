@@ -1,44 +1,65 @@
 <template>
-    <v-card class="mx-auto my-5" max-width="450">
+    <v-container>
+        <v-card class="pa-4 mx-auto" max-width="400">
+            <v-form @submit.prevent="submit">
+                <v-row>
+                    <v-col cols="12">
+                        <p class="mb-4">날짜 선택</p>
+                        <v-slide-group> <!-- show-arrows -->
+                            <v-slide-group-item v-for="(date, index) in getDateRange(14)" :key="index"
+                                v-slot="{ isSelected }">
+                                <v-btn class="ma-0" :color="isSelected ? 'primary' : undefined" rounded
+                                    @click="toggle(index)" elevation="0">
+                                    <div v-html="formatDate(date)"></div>
+                                </v-btn>
+                            </v-slide-group-item>
+                        </v-slide-group>
+                    </v-col>
+                </v-row>
+                <v-divider></v-divider>
+                <v-row>
 
-        <v-divider class="mx-4 mb-1"></v-divider>
+                    <v-col cols="12">
+                        <p class="mb-4">시간 선택</p>
+                        <v-chip-group v-model="selection">
+                            <v-chip>5:30</v-chip>
+                            <v-chip>7:30</v-chip>
+                            <v-chip>8:00</v-chip>
+                            <v-chip>9:00</v-chip>
+                            <v-chip>10:00</v-chip>
+                        </v-chip-group>
+                    </v-col>
+                </v-row>
 
-        <v-card-title>날짜선택</v-card-title>
+                <v-row>
+                    <v-col cols="12" md="6">
+                        <v-select v-model="selectedClothes" :items="clothes" label="의류선택" required></v-select>
+                    </v-col>
 
-        <v-sheet class="mx-auto" max-width="600">
-            <v-slide-group show-arrows>
-                <v-slide-group-item v-for="(date, index) in getDateRange(14)" :key="index" v-slot="{ isSelected }">
-                    <v-btn class="ma-2" :color="isSelected ? 'primary' : undefined" rounded @click="toggle(index)">
-                        <div v-html="formatDate(date)"></div>
-                    </v-btn>
-                </v-slide-group-item>
-            </v-slide-group>
-        </v-sheet>
-    </v-card>
+                    <v-col cols="12" md="6">
+                        <v-text-field v-model="selectedItems" label="수량" type="number" min="1"
+                            required></v-text-field>
+                    </v-col>
+                </v-row>
 
-
-    <v-card class="mx-auto my-5" max-width="450">
-
-        <v-divider class="mx-4 mb-1"></v-divider>
-
-        <v-card-title>시간선택</v-card-title>
-
-        <div class="px-4">
-            <v-chip-group v-model="selection">
-                <v-chip>5:30PM</v-chip>
-                <v-chip>7:30PM</v-chip>
-                <v-chip>8:00PM</v-chip>
-                <v-chip>9:00PM</v-chip>
-            </v-chip-group>
-        </div>
-    </v-card>
+                <v-btn type="submit" color="primary" class="mt-4">Request</v-btn>
+            </v-form>
+        </v-card>
+    </v-container>
 </template>
 
 <script>
 export default {
     data() {
         const options = { weekday: 'long', day: 'numeric' };
-        return { options, selectedDate: null };
+        return {
+            options,
+            selectedDate: null,
+            selectedClothes: 'Shirt',
+            selectedItems: 1,
+            clothes: ['Shirt', 'Pants', 'Socks', 'Underwear', 'Towel']
+        };
+
     },
     methods: {
         formatDate(date) {
@@ -57,6 +78,20 @@ export default {
         toggle(index) {
             this.selectedDate = index;
         },
+        submit() {
+            const laundryRequest = {
+                date: this.selectedDate,
+                time: this.selectedTime,
+                clothes: this.selectedClothes,
+                items: this.selectedItems
+            }
+            console.log(laundryRequest) // Replace with your own logic to handle the laundry request
+            // Clear form inputs
+            this.selectedDate = ''
+            this.selectedTime = ''
+            this.selectedClothes = 'Shirt'
+            this.selectedItems = 1
+        }
     },
     computed: {
         selectedDateString() {
