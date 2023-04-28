@@ -7,6 +7,7 @@ const Cart = require("../../models/Cart");
 const Likes = require("../../models/Likes");
 const LaundryOrder = require("../../models/LaundryOrder");
 const MyPage = require("../../models/Mypage");
+const Search = require("../../models/Search");
 const jwt = require('jsonwebtoken');
 const router = require(".");
 
@@ -113,6 +114,16 @@ const output ={
         logger.info(`GET /home/upload 304 "upload 화면으로 이동`);
         res.render('home/upload');
     },
+    search : async (req, res) => {
+        const search = new Search(req.query);
+        //console.log('search');
+        //console.log('Param: ' + req.query.search);
+        let data = await search.getLaundryInfo();
+        //console.log(data);
+        res.render("home/laundry", {
+            data
+          });
+    },
 };
 
 const process = {
@@ -157,6 +168,7 @@ const process = {
         {
             cartRes : cartRes
         });
+        
     },
 
     like: async (req,res) => {
