@@ -2,9 +2,8 @@
 
 <template>
     <div class="wrapper">
-      <div class="content">
-        <v-carousel cycle height="10" hide-delimiter-background show-arrows="hover"></v-carousel>
-            <div class="banner">
+        <v-card class="mx-auto my-5" max-width="500" elevation="0">
+            <div class="myWashing">
                 <b>내 세탁물</b>
             </div>
             <hr id="divisionLine">
@@ -33,24 +32,25 @@
                 </v-card>
             </div>
             <br>
-        </div>
+        </v-card>
     </div>
 </template>
 
-<style scoped>
-.banner {
+<style>
+.myWashing {
     margin-top: 20px;
     font-size: 18px;
     text-align: center;
 }
 
 #divisionLine {
-  margin-left: 5%;
-  margin-right: 5%;
-  margin-top: 20px;
-  margin-bottom: 10px;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
-#divisionLine2 { 
+
+#divisionLine2 {
     width: 70%;
     margin-left: 95px;
     margin-top: 10px;
@@ -59,7 +59,7 @@
 
 .date {
     margin-top: 40px;
-    margin-left: 6%;
+    margin-left: 4%;
     font-size: 15px;
 }
 
@@ -70,8 +70,6 @@
     background-color: white;
     border: 1px solid gainsboro;
     font-display: center;
-    margin-left: 5%;
-    margin-right: 5%;
     margin-bottom: 5px;
     margin-top: 10px;
     white-space: nowrap;
@@ -82,19 +80,24 @@
 #name {
     margin-bottom: 3px;
 }
+
 #cost {
     margin-bottom: 3px;
 }
+
 #requirement {
     margin-bottom: 3px;
 }
+
 #laundryName {
     margin-left: 4px;
 }
+
 #reviewBtn {
     width: 10px;
     height: 24px;
-    background-color: gainsboro;
+    background-color: #5E5A80;
+    color: white;
     border-radius: 10px;
     margin-top: 1px;
     box-shadow: none;

@@ -1,10 +1,9 @@
-<!-- 리뷰리스트 -->
-<!--내가 쓴 리뷰들-->
+<!-- 리뷰리스트 --> <!--내가 쓴 리뷰들-->
 
 <template>
     <div class="wrapper">
         <div class="content">
-            <v-carousel cycle height="10" hide-delimiter-background show-arrows="hover"></v-carousel>
+            <!-- <v-carousel cycle height="10" hide-delimiter-background show-arrows="hover"></v-carousel> -->
             <div class="myWashing">
                 <b>내가 쓴 리뷰</b>
             </div>
@@ -37,7 +36,7 @@
     </div>
 </template>
 
-<style>
+<style scoped>
 .myWashing {
     margin-top: 20px;
     font-size: 18px;
