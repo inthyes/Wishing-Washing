@@ -85,7 +85,7 @@ const routes = [
   },
   {
     path: '/qna',
-    name: 'qna',
+    name: 'Q&A',
     component: QnAVue
   },
   {
