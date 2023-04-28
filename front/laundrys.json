@@ -1,0 +1,34 @@
+{
+    "laundrys": [
+        {
+            "id": 1,
+            "title": "AA세탁소",
+            "subtitle" : "AA세탁소 서브 타이틀",
+            "address" : "경기 성남시 분당구 불정로 6 그린팩토리",
+            "info" : "간단한 AA 세탁소 정보",
+            "stars": 4.5,
+            "menu": "셔츠",
+            "reviews": "정말 좋아요"
+        },
+        {
+            "id": 2,
+            "title": "BB세탁소",
+            "subtitle": "BB세탁소 서브 타이틀",
+            "address": "경기도 수원시 장안구",
+            "info": "간단한 BB세탁소 정보... 안녕하세요~",
+            "stars": 3.5,
+            "menu": "바지",
+            "reviews": "별로에요.."
+        },
+        {
+            "id": 3,
+            "title": "CC세탁소",
+            "subtitle": "CC세탁소 서브 타이틀",
+            "address": "경기도 안양시 만안구",
+            "info": "간단한 CC세탁소 정보... 안녕하세요~",
+            "stars": 4.0,
+            "menu": "코트",
+            "reviews": "괜찮아요"
+        }
+    ]
+}

@@ -1,0 +1,75 @@
+<!-- laundryDetail.ejs -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>세탁신청</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    <h1>세탁신청</h1>
+    <h2>세탁소</h2>
+    <p>세탁소 ID: <%= laundryDetail.id %></p>
+    <p>세탁소 이름: <%= laundryDetail.name %></p>
+    <button id="likeButton">관심있어요</button>
+
+    <h2>판매상품</h2>
+
+    <form id="cartForm" method="POST" action="/cart">
+        <input type="hidden" name="laundryId" value="<%= laundryDetail.id %>">
+        <table>
+            <thead>
+                <tr>
+                    <th>상품명</th>
+                    <th>가격</th>
+                    <th>개수</th>
+                    <th>합계</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for (var i = 0; i < productDetail.length; i++) { %>
+                    <tr>
+                        <td><%= productDetail[i].PRODUCT_NAME %></td>
+                        <td><%= productDetail[i].PRODUCT_PRICE %></td>
+                        <td><input type="number" name="<%= productDetail[i].PRODUCT_ID %>" class="quantity" min="0" value="0" data-price="<%= productDetail[i].PRODUCT_PRICE %>"></td>
+                        <td class="subtotal">0</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    
+        <button type="submit">주문하기</button>
+    </form>
+    
+    <script>
+        $(document).ready(function() {
+            $('.quantity').on('input', function() {
+                var price = $(this).data('price');
+                var quantity = $(this).val();
+                var subtotal = price * quantity;
+                $(this).closest('tr').find('.subtotal').text(subtotal);
+            });
+        });
+
+        $(document).ready(function() {
+          $('#likeButton').click(likeButtonClickHandler);
+
+        function likeButtonClickHandler() {
+        var laundryId = '<%= laundryDetail.id %>';
+        var like = $('#likeButton').text() === '관심있어요' ? 1 : 0;
+        $.post('/like', { laundryId: laundryId, like: like }, function(data) {
+        if (data.success) {
+        $('#likeButton').text(like ? '관심없어요' : '관심있어요');
+      }
+    });
+  }
+});
+
+    </script>
+
+   
+
+</body>
+</html>
