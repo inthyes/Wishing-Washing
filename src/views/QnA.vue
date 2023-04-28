@@ -1,9 +1,9 @@
 <template>
-    <div class="QnA">
         <!-- <v-carousel cycle height="20" hide-delimiter-background show-arrows="hover"></v-carousel> -->
         <v-container>
-            <div class="myWashing">
-                <b class="title">자주 묻는 질문들</b>
+               <div class="myWashing">
+                    <b>자주 묻는 질문들</b>
+                </div> 
                 <hr id="divisionLine">
                 <br>
                 <br>
@@ -20,9 +20,7 @@
                         </v-card>
                     </v-col>
                 </v-row>
-            </div>
         </v-container>
-    </div>
 </template>
 
 <script>

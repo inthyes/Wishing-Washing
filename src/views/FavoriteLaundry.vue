@@ -2,7 +2,7 @@
 
 <template>
     <div id="laund-list">
-        <div class="banner">
+        <div class="myWashing">
             <b>관심 세탁소</b>
         </div>
         <hr id="divisionLine">
