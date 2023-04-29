@@ -8,6 +8,7 @@ const Likes = require("../../models/Likes");
 const LaundryOrder = require("../../models/LaundryOrder");
 const MyPage = require("../../models/Mypage");
 const Search = require("../../models/Search");
+const LaundryOrderComplete = require("../../models/LaundryOrderComplete");
 const jwt = require('jsonwebtoken');
 const router = require(".");
 const express = require("express");
@@ -123,19 +124,19 @@ const output ={
             data
           });
     },
-    // orderpage : async (req, res) => {
-    //       const laundryOrder = new LaundryOrder(orderNum);
-    //       const cartRes = await laundryOrder.showCart();
-    //       console.log(cartRes);
-    //       res.render("home/laundryOrder", 
-    //       {
-    //           cartRes : cartRes
-    //       });
-    // },
-    orderpage : async (req, res) => {
+    orderPage : async (req, res) => {
         const cookieValue = req.cookies.response;
-        console.log(cookieValue);
+        const orderNum = JSON.parse(cookieValue).orderNumber; 
+        const laundryOrder = new LaundryOrder(orderNum);
+        const cartRes = await laundryOrder.showCart();
+        console.log(cartRes);
+        logger.info(`GET /home/laundryOrder 304 " 장바구니 화면으로 이동`);
+        res.render("home/laundryOrder", 
+        {
+            cartRes : cartRes
+        });
     },
+    
 };
 
 const process = {
@@ -171,15 +172,10 @@ const process = {
         //토큰 받아오면 하드코딩 해제
         const cart = new Cart(req.body, "yuze"/*user*/);
         const response = await cart.add();
-        // const data = response;
-        // const orderNum = data.orderNumber;
-        
         const cookieName = 'response';
         const cookieValue =  JSON.stringify(response);
         res.cookie(cookieName, cookieValue);
         res.status(200).json({ message: 'Cookie created successfully' });
-      
-        return response;
     },
 
     like: async (req,res) => {
@@ -189,6 +185,12 @@ const process = {
         const response = await like.insert();
         
         return true;
+    },
+    orderComplete: async (req, res) => {
+        const cookieValue = req.cookies.response;
+        const orderNum = JSON.parse(cookieValue).orderNumber; 
+        const orderComplete = new LaundryOrderComplete(req.body, orderNum);
+        const orderRes = await orderComplete.addOrderComplete();
     }
 };
 

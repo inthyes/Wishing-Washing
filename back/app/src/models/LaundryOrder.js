@@ -28,6 +28,7 @@ class LaundryOrder {
         });
     }
 
+
     //프론트에서 계산 다 하고 여기로 넘겨줌
     async calculatePrice() {
         const orderNum = this.body;
