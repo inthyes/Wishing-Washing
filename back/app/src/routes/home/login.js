@@ -71,7 +71,7 @@ router.post("/", (req, res) => {
             if (psword_db == hash) {
               var token = jwt.sign(
                 {
-                  id: id, 
+                  id: id
                 },
                 "secretKey", 
                 {
