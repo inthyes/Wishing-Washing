@@ -7,7 +7,7 @@ const crypto = require("crypto");
 router.use(express.json());
 router.use(express.urlencoded({ extended: false }));
 
-router.post("/api/users", (req, res) => {
+router.post("/", (req, res) => {
   console.log("/members/new 호출됨", req.url, req.method);
 
   const paramId = req.body.id;
