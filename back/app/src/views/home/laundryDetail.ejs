@@ -17,7 +17,7 @@
 
     <h2>판매상품</h2>
 
-    <form id="cartForm" method="POST" action="/cart">
+    <form id="cartForm" method="POST" action="<%=laundryDetail.id %>/order">
         <input type="hidden" name="laundryId" value="<%= laundryDetail.id %>">
         <table>
             <thead>
