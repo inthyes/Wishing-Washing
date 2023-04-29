@@ -30,23 +30,26 @@ router.post('/', upload.single('imgUpload'), (req, res) => {
         console.log("DB 연결 성공");
     })    
     
-    const { filename, destination } = req.file;
+    const { fileid, filename, destination } = req.file;
     const { subject } = req.body;
     const filePath = `/${filename}`;
+    
   
     const imagePath = path.join(destination, filename);  // 파일 경로를 지정합니다.
     const image = fs.readFileSync(imagePath);
     const imageBuffer = Buffer.from(image);
 
   
-    const query = 'INSERT INTO IMAGE (I_NAME, I_DATA) VALUES (?, ?)';
-    db.query(query, [filename, imageBuffer], (err, results, fields) => {
+    const query = 'INSERT INTO IMAGE (I_ID, I_NAME, I_DATA) VALUES (?, ?, ?)';
+    db.query(query, [fileid, filename, imageBuffer], (err, results, fields) => {
       if (err) {
         console.log(err);
         res.sendStatus(500);
         return;
       }
-      console.log(results);
+      // console.log(results);
+      // console.log(fileid);
+      // console.log(req.file);
       const data = { subject, filePath };
       board.push(data);
       console.log(board);

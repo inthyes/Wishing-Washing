@@ -1,5 +1,7 @@
 "use strict";
 
+const express = require("express");
+
 const logger = require("../../config/logger");
 const Laundry = require("../../models/Laundry");
 const Product = require("../../models/Product");
@@ -7,13 +9,31 @@ const Cart = require("../../models/Cart");
 const Likes = require("../../models/Likes");
 const LaundryOrder = require("../../models/LaundryOrder");
 const MyPage = require("../../models/Mypage");
-const jwt = require('jsonwebtoken');
-const router = require(".");
+const Search = require("../../models/Search");
+// const router = require(".");
+const router = express.Router();
 
+const jwt = require("jsonwebtoken");
 
+function Vtoken(token) {
+  try {
+    var check = jwt.verify(token, "secretKey");
+    if (check) {
+      console.log("token 검증", check.user_id);
+      return check.user_id;
+    }
+  } catch {
+    console.log("token 검증 오류");
+  }
+}
 
 const output ={
     home : (req, res) =>{
+        const token = req.query.token;
+        const user_id = Vtoken(token);  // 토큰 검증
+        console.log("토큰확인: " + token);
+        console.log("user_id: " + user_id);
+
         logger.info(`GET / 304 "홈 화면으로 이동"`);
         res.render("home/index");
     },
@@ -26,18 +46,37 @@ const output ={
         res.render("home/register");
     },
     laundry : (req, res) => {
+        const token = req.query.token;
+        const user_id = Vtoken(token);  // 토큰 검증
+        console.log("토큰확인: " + token);
+        console.log("user_id: " + user_id);
         logger.info(`GET /laundry 304 "세탁신청 화면으로 이동"`);
         res.render("home/laundry");
     },
     history : (req, res) => {
+        const token = req.query.token;
+        const user_id = Vtoken(token);  // 토큰 검증
+        console.log("토큰확인: " + token);
+        console.log("user_id: " + user_id);
+
         logger.info(`GET /history 304 "이용내역 화면으로 이동"`);
         res.render("home/history");
     },
     myPage : (req, res) => {
+        const token = req.query.token;
+        const user_id = Vtoken(token);  // 토큰 검증
+        console.log("토큰확인: " + token);
+        console.log("user_id: " + user_id);
+
         logger.info(`GET /home/myPage 304 "마이페이지 화면으로 이동`);
         res.render("home/myPage");
     },
     favoriteList : (req, res) => {
+        const token = req.query.token;
+        const user_id = Vtoken(token);  // 토큰 검증
+        console.log("토큰확인: " + token);
+        console.log("user_id: " + user_id);
+
         logger.info(`GET /myPage/favoriteList 304 "프로필편집 화면으로 이동"`);
         res.render("home/favoriteList");
         //실제 경로 , 라우팅 경로 : myPage/favoriteList
@@ -77,7 +116,13 @@ const output ={
         console.log(response);
     },
     //myPage 하위 기능
-    profileEdit : (req, res) => {
+    profileEdit : (req, res) => 
+    {
+        const token = req.query.token;
+        const user_id = Vtoken(token);  // 토큰 검증
+        console.log("토큰확인: " + token);
+        console.log("user_id: " + user_id);
+
         logger.info(`GET /myPage/profileEdit 304 "프로필편집 화면으로 이동"`);
         //실제 경로 , 라우팅 경로 : myPage/profileEdit
         res.render("home/profileEdit");
@@ -85,16 +130,31 @@ const output ={
    
 
     customerService : (req, res) => {
+        const token = req.query.token;
+        const user_id = Vtoken(token);  // 토큰 검증
+        console.log("토큰확인: " + token);
+        console.log("user_id: " + user_id);
+
         logger.info(`GET /home/myPage/customerService 304 "고객센터 화면으로 이동`);
         res.render("home/customerService");
     },
     userManagement : (req, res) => {
+        const token = req.query.token;
+        const user_id = Vtoken(token);  // 토큰 검증
+        console.log("토큰확인: " + token);
+        console.log("user_id: " + user_id);
+
         logger.info(`GET /home/myPage/userManagement 304 "탈퇴/로그아웃 화면으로 이동`);
         res.render("home/userManagement");
     },
 
     // 세탁소 세부페이지 
     laundryDetail: async(req, res) => {
+        const token = req.query.token;
+        const user_id = Vtoken(token);  // 토큰 검증
+        console.log("토큰확인: " + token);
+        console.log("user_id: " + user_id);
+
         logger.info(`GET /laundry/detail/id 304 "세탁신청 세부 화면으로 이동`);
         const laundry = new Laundry(req.params.id);
         const product = new Product(req.params.id);
@@ -109,9 +169,26 @@ const output ={
             productDetail : productDetailRes
         });
     },
+
+    //사장님 기능 & 리뷰 사진 올릴 때 사용
     upload : async(req, res) =>{
         logger.info(`GET /home/upload 304 "upload 화면으로 이동`);
         res.render('home/upload');
+    },
+    search : async (req, res) => {
+        const token = req.query.token;
+        const user_id = Vtoken(token);  // 토큰 검증
+        console.log("토큰확인: " + token);
+        console.log("user_id: " + user_id);
+
+        const search = new Search(req.query);
+        //console.log('search');
+        //console.log('Param: ' + req.query.search);
+        let data = await search.getLaundryInfo();
+        //console.log(data);
+        res.render("home/laundry", {
+            data
+          });
     },
 };
 
@@ -157,6 +234,7 @@ const process = {
         {
             cartRes : cartRes
         });
+        
     },
 
     like: async (req,res) => {

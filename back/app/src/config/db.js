@@ -1,5 +1,5 @@
-const mysql = require("mysql2");
-// const mysql = require("mysql");
+// const mysql = require("mysql2");
+const mysql = require("mysql");
 
 const db = mysql.createPool({
     // host : process.env.DB_HOST,
@@ -8,6 +8,7 @@ const db = mysql.createPool({
     // database:  process.env.DB_DATABASE
     host : "localhost",
     user : "root",
+    // password: "1234",
     password: "0000",
     database:  "CAPSTONE"
 });

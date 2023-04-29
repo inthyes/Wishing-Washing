@@ -19,9 +19,8 @@ router.get('/upload', ctrl.output.upload);
 
 router.use("/myPage", require("./myPage"));
 router.use("/laundry", require("./laundry"));
-router.use("/search", require("./search"));
+// router.use("/search", require("./search"));
 
-router.post("/cart", ctrl.process.addCart);
 router.post("/like", ctrl.process.like);
 
 module.exports = router; //웹으로 내보내기
