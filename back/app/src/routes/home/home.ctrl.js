@@ -10,6 +10,8 @@ const MyPage = require("../../models/Mypage");
 const Search = require("../../models/Search");
 const jwt = require('jsonwebtoken');
 const router = require(".");
+const express = require("express");
+
 
 
 
@@ -83,8 +85,6 @@ const output ={
         //실제 경로 , 라우팅 경로 : myPage/profileEdit
         res.render("home/profileEdit");
     },
-   
-
     customerService : (req, res) => {
         logger.info(`GET /home/myPage/customerService 304 "고객센터 화면으로 이동`);
         res.render("home/customerService");
@@ -93,7 +93,6 @@ const output ={
         logger.info(`GET /home/myPage/userManagement 304 "탈퇴/로그아웃 화면으로 이동`);
         res.render("home/userManagement");
     },
-
     // 세탁소 세부페이지 
     laundryDetail: async(req, res) => {
         logger.info(`GET /laundry/detail/id 304 "세탁신청 세부 화면으로 이동`);
@@ -123,6 +122,19 @@ const output ={
         res.render("home/laundry", {
             data
           });
+    },
+    // orderpage : async (req, res) => {
+    //       const laundryOrder = new LaundryOrder(orderNum);
+    //       const cartRes = await laundryOrder.showCart();
+    //       console.log(cartRes);
+    //       res.render("home/laundryOrder", 
+    //       {
+    //           cartRes : cartRes
+    //       });
+    // },
+    orderpage : async (req, res) => {
+        const cookieValue = req.cookies.response;
+        console.log(cookieValue);
     },
 };
 
@@ -159,16 +171,15 @@ const process = {
         //토큰 받아오면 하드코딩 해제
         const cart = new Cart(req.body, "yuze"/*user*/);
         const response = await cart.add();
-        const data = response;
-        const orderNum = data.orderNumber;
-        const laundryOrder = new LaundryOrder(orderNum);
-        const cartRes = await laundryOrder.showCart();
-        console.log(cartRes);
-        res.render("home/laundryOrder", 
-        {
-            cartRes : cartRes
-        });
+        // const data = response;
+        // const orderNum = data.orderNumber;
         
+        const cookieName = 'response';
+        const cookieValue =  JSON.stringify(response);
+        res.cookie(cookieName, cookieValue);
+        res.status(200).json({ message: 'Cookie created successfully' });
+      
+        return response;
     },
 
     like: async (req,res) => {

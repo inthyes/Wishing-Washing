@@ -16,7 +16,6 @@ router.get('/history', ctrl.output.history);
 router.get('/myPage', ctrl.output.myPage);
 router.get('/upload', ctrl.output.upload);
 
-
 router.use("/myPage", require("./myPage"));
 router.use("/laundry", require("./laundry"));
 // router.use("/search", require("./search"));
