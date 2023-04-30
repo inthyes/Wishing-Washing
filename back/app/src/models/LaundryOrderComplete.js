@@ -10,7 +10,7 @@ class LaundryOrderComplete {
         this.orderNum = orderNum;  
       }
 
-    async addOrderComplete() {
+    async addOrderList() {
         const orderNum = this.orderNum;
         const request = this.body.request;
         const date = this.body.date;
@@ -35,6 +35,30 @@ class LaundryOrderComplete {
                                             resolve({success : true});
                                         }
                                     });
+                            }
+                        })
+                    }
+                });
+            })
+        });
+    }
+    async addOrderCompleteList() {
+        const orderNum = this.orderNum;
+        let query = "INSERT INTO ORDER_COMPLETE (O_NUM, S_ID, U_ID, O_DAY, U_PHONE, O_REQUEST, DELEVERY_ADDRESS)\
+        SELECT O_NUM, S_ID, U_ID, O_DAY, U_PHONE, O_REQUEST, DELEVERY_ADDRESS\
+        FROM ORDER_LIST\
+        WHERE O_NUM = ?;";
+        let query1 = "UPDATE ORDER_COMPLETE SET DELEVERY_STATE = ? WHERE O_NUM = ?;";
+
+        return new Promise ((resolve, reject) => {
+        db.query("USE CAPSTONE", (err, result) => {
+            db.query(query, orderNum, (err, data) => {
+                if (err) reject(err);
+                else {  
+                        db.query(query1, [0, orderNum], (err, data) => {
+                            if (err) reject(err);
+                            else {
+                                resolve({ success: true }); 
                             }
                         })
                     }

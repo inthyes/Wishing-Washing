@@ -190,8 +190,9 @@ const process = {
         const cookieValue = req.cookies.response;
         const orderNum = JSON.parse(cookieValue).orderNumber; 
         const orderComplete = new LaundryOrderComplete(req.body, orderNum);
-        const orderRes = await orderComplete.addOrderComplete();
-    }
+        const orderListRes = await orderComplete.addOrderList();
+        const orderCompleteRes = await orderComplete.addOrderCompleteList();
+    },
 };
 
 module.exports = {
