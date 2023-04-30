@@ -9,6 +9,7 @@ var express = require("express");
 var router = express.Router();
 const { upload } = require('../../config/multer.js');
 
+
 const board = [];
 
 router.post('/', upload.single('imgUpload'), (req, res) => {
@@ -30,8 +31,8 @@ router.post('/', upload.single('imgUpload'), (req, res) => {
         console.log("DB 연결 성공");
     })    
     
-    const { fileid, filename, destination } = req.file;
-    const { subject } = req.body;
+    const { filename, destination } = req.file;
+    const s_id = 1; //client에게 받아와야함
     const filePath = `/${filename}`;
     
   
@@ -40,17 +41,15 @@ router.post('/', upload.single('imgUpload'), (req, res) => {
     const imageBuffer = Buffer.from(image);
 
   
-    const query = 'INSERT INTO IMAGE (I_ID, I_NAME, I_DATA) VALUES (?, ?, ?)';
-    db.query(query, [fileid, filename, imageBuffer], (err, results, fields) => {
+   
+    const query = "UPDATE store SET i_name = ?, i_data = ? WHERE s_id = ?";
+    db.query(query, [filename, imageBuffer, s_id], (err, results, fields) => {
       if (err) {
         console.log(err);
         res.sendStatus(500);
         return;
       }
-      // console.log(results);
-      // console.log(fileid);
-      // console.log(req.file);
-      const data = { subject, filePath };
+      const data = { s_id, filePath };
       board.push(data);
       console.log(board);
       /*다음 페이지로 라우팅을 의미, but 현재 라우팅 페이지 구현 안해놨기 때문에 can not get상태
