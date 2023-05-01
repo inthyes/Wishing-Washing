@@ -159,8 +159,10 @@ ALTER TABLE IMAGE COMMENT 'IMAGE';
 
 show tables;
 
-        
-
+--store에 image 관련 디비 삽입        
+ALTER TABLE store 
+ADD COLUMN I_NAME VARCHAR(255) NULL,
+ADD COLUMN I_DATA LONGBLOB NULL;
 
 
 
