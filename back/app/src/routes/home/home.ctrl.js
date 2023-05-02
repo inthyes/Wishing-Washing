@@ -8,6 +8,7 @@ const Likes = require("../../models/Likes");
 const LaundryOrder = require("../../models/LaundryOrder");
 const MyPage = require("../../models/Mypage");
 const Search = require("../../models/Search");
+const Address = require("../../models/Address");
 const LaundryOrderComplete = require("../../models/LaundryOrderComplete");
 const jwt = require('jsonwebtoken');
 const router = require(".");
@@ -183,7 +184,6 @@ const process = {
         console.log(req.body,"yuze");
         const like = new Likes(req.body, "yuze");
         const response = await like.insert();
-        
         return true;
     },
     orderComplete: async (req, res) => {
@@ -192,6 +192,15 @@ const process = {
         const orderComplete = new LaundryOrderComplete(req.body, orderNum);
         const orderListRes = await orderComplete.addOrderList();
         const orderCompleteRes = await orderComplete.addOrderCompleteList();
+        res.clearCookie('response').redirect('/');
+    },
+    //home 화면에서 쿠키로 주소설정.
+    searchAddress: async (req, res) => {
+        const address = new Address(req.body);
+        const cookieName = 'address';
+        const cookieValue =  JSON.stringify(address);
+        res.cookie(cookieName, cookieValue);
+        res.redirect('/');
     },
 };
 

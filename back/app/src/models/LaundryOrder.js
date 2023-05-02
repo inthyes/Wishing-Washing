@@ -9,8 +9,6 @@ class LaundryOrder {
     constructor(body) {
         this.body = body;
       }
-      // 해당 주문번호 관련된 것을 db에서 뽑아옴
-      // PRODUCT랑 매치시키기. . . 
       async showCart() {
         const orderNum = this.body;
         return new Promise ((resolve, reject) => {

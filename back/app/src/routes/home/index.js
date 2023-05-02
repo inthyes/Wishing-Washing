@@ -2,6 +2,7 @@
 
 const express = require("express");
 const router = express.Router();
+const cookieParser = require('cookie-parser');
 
 // const router = require("../")
 
@@ -18,8 +19,10 @@ router.get('/upload', ctrl.output.upload);
 
 router.use("/myPage", require("./myPage"));
 router.use("/laundry", require("./laundry"));
+router.use(cookieParser());
 // router.use("/search", require("./search"));
 
 router.post("/like", ctrl.process.like);
+router.post("/search", ctrl.process.searchAddress);
 
 module.exports = router; //웹으로 내보내기
