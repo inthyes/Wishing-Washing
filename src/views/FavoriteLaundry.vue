@@ -2,10 +2,6 @@
 
 <template>
     <div id="laund-list">
-        <div class="myWashing">
-            <b>관심 세탁소</b>
-        </div>
-        <hr id="divisionLine">
         <v-card class="mx-auto my-5" max-width="500" v-for="laundry in laundrys" :key="laundry.id" elevation="0">
             <v-img class="align-end text-white" id="laund-img" height="150"
                 src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA5MjRfMTQ3%2FMDAxNjY0MDA4MTk4MzAz.BwhTgWGfyhuJY0X5BwkEBx-MCnAp1AiontZ8lctUZcog.p1YZYnoJbu2O6wimUoYzP6ZSLj8UdUW6POKhIBcJtTMg.JPEG.sol_ji1%2FIMG_2992.jpg&type=sc960_832"
@@ -34,7 +30,6 @@
 
 <script>
 import axios from "axios";
-
 export default {
     data: () => ({
         show: false,
