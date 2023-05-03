@@ -6,12 +6,12 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "laundrys": "json-server --watch laundrys.json --port 3000",
-    "users": "json-server --watch users.json --port 3001",
+    "dev": "concurrently \"json-server --watch laundrys.json --port 3000\" \"json-server --watch users.json --port 3001\" \"json-server --watch historys.json --port 3002\" \"json-server --watch mypage.json --port 3003\" \"json-server --watch mypage.json --port 3004\"",
     "historys": "json-server --watch historys.json --port 3002",
+    "laundrys": "json-server --watch laundrys.json --port 3000",
     "mypage": "json-server --watch mypage.json --port 3003",
     "reviews": "json-server --watch mypage.json --port 3004",
-    "dev": "concurrently \"json-server --watch laundrys.json --port 3000\" \"json-server --watch users.json --port 3001\" \"json-server --watch historys.json --port 3002\" \"json-server --watch mypage.json --port 3003\" \"json-server --watch mypage.json --port 3004\""
+    "users": "json-server --watch users.json --port 3001"
   },
   "dependencies": {
     "@mdi/font": "5.9.55",
@@ -36,6 +36,7 @@
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-plugin-vuex": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
