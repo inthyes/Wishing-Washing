@@ -1,9 +1,9 @@
 <!-- 주변 세탁소 -->
 
 <template>
-    <div id="laund-list" >
+    <div id="laund-list" class="px-2">
         
-        <v-card class="mx-auto my-5" max-width="400" v-for="laundry in laundrys" :key="laundry.id" elevation="0">
+        <v-card class="mx-auto mt-4" max-width="400" v-for="laundry in laundrys" :key="laundry.id" elevation="0">
 
             <v-img class="align-end text-white" id="laund-img" height="150"
                 src="https://cdn.vuetifyjs.com/images/cards/docks.jpg" cover>
@@ -24,7 +24,7 @@
                 </router-link>
             </v-card-actions>
 
-            <v-divider class="mx-1 mb-1"></v-divider>
+            <v-divider></v-divider>
 
         </v-card>
     </div>
