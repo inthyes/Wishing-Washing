@@ -1,73 +1,89 @@
 <!--개별 세탁소-->
 
 <template>
-    <v-card :loading="loading" class="mx-auto my-0" max-width="400" elevation="0">
-        <template v-slot:loader="{ isActive }">
-            <v-progress-linear :active="isActive" color="deep-purple" height="4" indeterminate></v-progress-linear>
-        </template>
+    <div id="laund-list" class="px-0">
 
-        <v-img cover height="250" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
+        <v-card :loading="loading" class="mx-auto my-0" max-width="500" elevation="0">
+            <template v-slot:loader="{ isActive }">
+                <v-progress-linear :active="isActive" color="deep-purple" height="4" indeterminate></v-progress-linear>
+            </template>
 
-        <v-card-item>
-            <v-card-title>{{ laundry.title }}</v-card-title>
+            <v-img cover height="250" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
 
-            <v-card-subtitle>
-                <span class="me-1">{{ laundry.subtitle }}</span>
+            <v-card-item>
+                <v-card-title>{{ laundry.title }}</v-card-title>
 
-                <v-icon color="error" icon="mdi-fire-circle" size="small"></v-icon>
-            </v-card-subtitle>
-        </v-card-item>
+                <v-card-subtitle>
+                    <span class="me-1">{{ laundry.subtitle }}</span>
 
-        <v-card-text>
-            <!--별점(리뷰수)-->
-            <v-row align="center" class="mx-0">
-                <v-rating :model-value=laundry.stars color="amber" density="compact" half-increments readonly
-                    size="normal"></v-rating>
+                    <v-icon color="error" icon="mdi-fire-circle" size="small"></v-icon>
+                </v-card-subtitle>
+            </v-card-item>
 
-                <div class="text-grey ms-2">
-                    {{ laundry.stars }} (413)
+            <v-card-text>
+                <!--별점(리뷰수)-->
+                <v-row align="center" class="mx-0">
+                    <v-rating :model-value=laundry.stars color="amber" density="compact" half-increments readonly
+                        size="normal"></v-rating>
+
+                    <div class="text-grey ms-2">
+                        {{ laundry.stars }} (413)
+                    </div>
+                </v-row>
+
+                <div class="my-4 text-subtitle-1">
+                    {{ laundry.address }}
                 </div>
-            </v-row>
 
-            <div class="my-4 text-subtitle-1">
-                {{ laundry.address }}
-            </div>
+                <div>{{ laundry.info }}</div>
+            </v-card-text>
 
-            <div>{{ laundry.info }}</div>
-        </v-card-text>
+            <v-divider class="mx-4 mb-1"></v-divider>
 
-        <v-divider class="mx-4 mb-1"></v-divider>
+            <v-tabs class="mx-4" v-model="tab" align-tabs="center" stacked grow>
+                <v-tab value="tab-1">세탁/수선</v-tab>
+                <v-tab value="tab-2">&nbsp;&nbsp;&nbsp;리뷰&nbsp;&nbsp;&nbsp;</v-tab>
+            </v-tabs>
 
-        <v-tabs class="mx-4" v-model="tab" align-tabs="center" stacked grow>
-            <v-tab value="tab-1">세탁/수선</v-tab>
-            <v-tab value="tab-2">리뷰</v-tab>
-        </v-tabs>
+            <v-window v-model="tab">
+                <v-window-item value="tab-1">
+                    <v-list class="mx-1">
+                        <v-list-item v-for="(item, index) in laundry.items" :key="index">
+                            <v-list-item-content class="d-flex justify-space-between">
+                                <div>{{ item.name }}</div>
+                                <div>{{ item.price }}원&nbsp;&nbsp;&nbsp;
+                                        <v-icon color="deep-purple-lighten-2" @click="decrement">mdi-minus</v-icon>
+                                        <span>{{ quantity }}</span>
+                                        <v-icon color="deep-purple-lighten-2" @click="increment">mdi-plus</v-icon>
+                                </div>
+                            </v-list-item-content>
 
-        <v-window v-model="tab">
-            <v-window-item value="tab-1">
-                <v-card>
-                    <v-card-text>{{ laundry.menu }}</v-card-text>
-                </v-card>
-            </v-window-item>
-            <v-window-item value="tab-2">
-                <v-card>
-                    <v-card-text>{{ laundry.reviews }}</v-card-text>
-                </v-card>
-            </v-window-item>
-        </v-window>
+                        </v-list-item>
+                    </v-list>
+                </v-window-item>
+                <v-window-item value="tab-2">
+                    <div class="text-black mx-6 mt-2">
+                        {{ laundry.reviews }}
+                    </div>
+                </v-window-item>
+            </v-window>
 
-        <v-divider class="mx-4 mb-1"></v-divider>
+            <v-divider class="mx-1 mb-1"></v-divider>
 
 
-        <v-card-actions>
-            <v-btn icon @click="toggleWish">
-                <v-icon :color="isWished ? 'red' : ''">{{ isWished ? 'mdi-heart' : 'mdi-heart-outline' }}</v-icon>
-            </v-btn>
-            <v-btn to="/submitlaundry" color="deep-purple-lighten-2" variant="text" @click="reserve">
-                세탁신청
-            </v-btn>
-        </v-card-actions>
-    </v-card>
+            <v-card-actions>
+                <v-btn icon @click="toggleWish">
+                    <v-icon :color="isWished ? 'red' : ''">{{ isWished ? 'mdi-heart' : 'mdi-heart-outline' }}</v-icon>
+                </v-btn>
+                <v-btn to="/submitlaundry" color="deep-purple-lighten-2" variant="text" @click="reserve">
+                    세탁신청
+                </v-btn>
+                <!-- <router-link :to="{ name: 'submitlaundry', params: { id: laundry.id } }">
+                <v-btn color="deep-purple-lighten-2">신청하기</v-btn>
+                </router-link> -->
+            </v-card-actions>
+        </v-card>
+    </div>
 </template>
 
 <script>
@@ -78,12 +94,12 @@ export default {
         loading: false,
         selection: 1,
 
+        quantity: 0,
+
         laundry: {},        // laundrys.json
 
         tab: 'Appetizers',  // 세탁/수선 & 리뷰 탭
         isWished: false,    // 찜버튼
-
-
 
     }),
     async created() {
@@ -91,6 +107,18 @@ export default {
             const id = this.$route.params.id;
             const res = await axios.get(`http://localhost:3000/laundrys/${id}`);
             this.laundry = res.data;
+        } catch (e) {
+            console.error(e);
+        }
+    },
+    async submitData() {
+       try {
+            const res2 = await axios.post("http://localhost:3005/submits", {
+                itemId: this.selectedItem.id,
+                quantity: this.quantity,
+            });
+
+            this.submits = [...this.submits, res2.data];
         } catch (e) {
             console.error(e);
         }
@@ -103,6 +131,14 @@ export default {
         },
         toggleWish() {
             this.isWished = !this.isWished;
+        },
+        increment() {
+            this.quantity++
+        },
+        decrement() {
+            if (this.quantity > 0) {
+                this.quantity--
+            }
         },
     },
 }
