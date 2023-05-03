@@ -28,6 +28,9 @@
         <v-list-item router-link to="/signup"> <!-- Add router link to Sign Up -->
           <v-list-item-title>회원가입</v-list-item-title>
         </v-list-item>
+        <v-list-item router-link to="/signup2"> <!-- Add router link to Sign Up -->
+          <v-list-item-title>회원가입2</v-list-item-title>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
