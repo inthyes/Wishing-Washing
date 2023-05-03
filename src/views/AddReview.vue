@@ -2,10 +2,7 @@
 
 <template>
     <div class="add-review-container">
-        <h2 class="add-review-title">
-            리뷰 작성
-            <hr id="divisionLine">
-
+        <div class="add-review-title">
             <form class="add-review-form" @submit.prevent="submitReview">
                 <div class="add-review-input-container">
                     <label class="add-review-label" for="title">
@@ -24,19 +21,22 @@
                     <label class="add-review-label" for="rating">
                         별점
                     </label>
-                    <select class="add-review-input" id="rating" v-model.number="review.rating" required>
-                        <option value="" disabled>
+                    <div class="add-review-input" id="rating" required>
+                        <!-- <option value="" disabled>
                             별점 선택
                         </option>
-                        <option v-for="i in 5" :key="i" :value="i">{{ i }}점</option>
-                    </select>
+                        <option v-for="i in 5" :key="i" :value="i">{{ i }}점</option> -->
+                        <v-rating v-model="rating" color="yellow-accent-4" active-color="yellow-accent-4" size="x-large"
+                            half-increments></v-rating>
+                        <pre>{{ rating }}</pre>
+                    </div>
+
                 </div>
                 <div class="add-review-btn-container">
                     <button class="add-review-submit-btn" type="submit">작성 완료</button>
                 </div>
             </form>
-
-        </h2>
+        </div>
     </div>
 </template>
 
@@ -48,8 +48,9 @@ export default {
             review: {
                 title: '',
                 content: '',
-                rating: 0
-            }
+                //rating: 0
+            },
+            rating: 0,
         };
     },
     methods: {
@@ -87,7 +88,7 @@ export default {
     max-width: 500px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #f5f5f5;
+    background-color: #ffffff;
     border-radius: 10px;
 }
 
@@ -144,4 +145,5 @@ export default {
 
 .add-review-submit-btn:hover {
     background-color: #222;
-}</style>
+}
+</style>
