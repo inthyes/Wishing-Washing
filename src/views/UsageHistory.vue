@@ -4,7 +4,7 @@
     <div class="wrapper">
         <v-card class="mx-auto my-5" max-width="500" elevation="0">
             <div class="myWashing">
-                <b>내 세탁물</b>
+                <a>내 세탁물</a>
             </div>
             <hr id="divisionLine">
 
@@ -26,7 +26,7 @@
                             <div id="requirement">요청사항&nbsp;|&nbsp;&nbsp;{{ h.requirement }}</div>
                             <v-divider id="divisionLine2"></v-divider>
                             <a id="laundryName">{{ h.laundryName }}</a>&nbsp;
-                            <v-btn id="reviewBtn" to="addreview">리뷰</v-btn>
+                            <v-btn id="reviewBtn" v-bind:to="`/addreview/${h.id}`">리뷰</v-btn>
                         </v-card-text>
                     </div>
                 </v-card>
@@ -121,7 +121,6 @@
 
 <script>
 import axios from "axios";
-
 export default {
     data: () => ({
         show: false,
