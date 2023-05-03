@@ -6,12 +6,12 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "dev": "concurrently \"json-server --watch laundrys.json --port 3000\" \"json-server --watch users.json --port 3001\" \"json-server --watch historys.json --port 3002\" \"json-server --watch mypage.json --port 3003\" \"json-server --watch mypage.json --port 3004\"",
-    "historys": "json-server --watch historys.json --port 3002",
+    "dev": "concurrently \"npm run laundrys\" \"npm run users\" \"npm run historys\" \"npm run mypage\" \"npm run reviews\"",
     "laundrys": "json-server --watch laundrys.json --port 3000",
+    "users": "json-server --watch users.json --port 3001",
+    "historys": "json-server --watch historys.json --port 3002",
     "mypage": "json-server --watch mypage.json --port 3003",
-    "reviews": "json-server --watch mypage.json --port 3004",
-    "users": "json-server --watch users.json --port 3001"
+    "reviews": "json-server --watch reviews.json --port 3004"
   },
   "dependencies": {
     "@mdi/font": "5.9.55",
@@ -38,6 +38,7 @@
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-plugin-vuex": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
+    "concurrently": "^8.0.1",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
     "faker": "^6.6.6",
