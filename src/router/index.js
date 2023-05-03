@@ -10,6 +10,7 @@ import SubmitLaundry from '@/views/SubmitLaundry.vue'
 
 import LoginFormVue from '@/views/LoginForm.vue'
 import SignUpFormVue from '@/views/SignUpForm.vue'
+import SignUpForm2Vue from '@/views/SignUpForm2.vue'
 
 import AddReviewVue from '@/views/AddReview.vue'
 import ReviewListVue from '@/views/ReviewList.vue'
@@ -43,14 +44,14 @@ const routes = [
   },
   {
     path: '/laundrydetail/:id',
-    name: 'laundrydetail',
+    name: '상세정보',
     component: LaundryDetailVue,
-    props: true
+    // props: true
   },
   {
     path: '/submitlaundry',
     name: '세탁신청',
-    component: SubmitLaundry
+    component: SubmitLaundry,
   },
 
   {
@@ -64,23 +65,28 @@ const routes = [
     component: SignUpFormVue
   },
   {
-    path: '/addreview',
-    name: 'addreview',
+    path: '/signup2',
+    name: '회원가입2',
+    component: SignUpForm2Vue
+  },
+  {
+    path: '/addreview/:id',
+    name: '리뷰작성',
     component: AddReviewVue
   },
   {
     path: '/reviewlist',
-    name: 'reviewlist',
+    name: '작성 리뷰',
     component: ReviewListVue
   },
   {
     path: '/editprofile',
-    name: 'editprofile',
+    name: '프로필 편집',
     component: EditProfileVue
   },
   {
     path: '/favoritelaundry',
-    name: 'favoritelaundry',
+    name: '관심 세탁소',
     component: FavoriteLaundryVue
   },
   {
@@ -90,7 +96,7 @@ const routes = [
   },
   {
     path: '/wwnotice',
-    name: 'wwnotice',
+    name: '공지사항',
     component: WWNoticeVue
   },
   {
