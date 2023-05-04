@@ -11,17 +11,22 @@
   <form action="/laundry/search" method="get"> 
     <input name='search' type="text" placeholder="검색">
     <input  type='submit' value='검색하기'>
-    
 </form>
-<% if(locals.data) {%> 
-<ul>
-<% for (let result of data) { %>
-<li><%= result.S_NAME %> - <%= result.S_ADDR %></li>
-<form action="/laundry" method="post">
-    <input type="hidden" name="store_id" value="<%= result.S_ID %>">
-    <a href="/laundry/detail/<%= result.S_ID %>">신청하기</a>
-<% } %>
-</ul>
-<%}%>
+
+
+
+    <h1>주변세탁소</h1>
+    <ul>
+        <% for(let i=0; i<laundryListRes.length; i++) { %>
+            <li>
+                <h2><%= laundryListRes[i].S_NAME %></h2>
+                <p><%= laundryListRes[i].S_ADDR2 %></p>
+                <p><%= laundryListRes[i].S_PHONE %></p>
+                <a href="/laundry/detail/<%= laundryListRes[i].S_ID %>">신청하기</a>
+            </li>
+        <% } %>
+    </ul>
+
+
 </body>
 </html>

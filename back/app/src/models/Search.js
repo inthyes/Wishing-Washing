@@ -1,6 +1,9 @@
 "use strict";
 const db = require("../config/db");
 
+
+//이름으로 변경(세탁소)
+
 class Search {
     constructor(body) {
         this.body = body;

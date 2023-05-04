@@ -10,6 +10,7 @@ const MyPage = require("../../models/Mypage");
 const Search = require("../../models/Search");
 const Address = require("../../models/Address");
 const LaundryOrderComplete = require("../../models/LaundryOrderComplete");
+const LaundryList = require("../../models/LaundryList");
 const jwt = require('jsonwebtoken');
 const router = require(".");
 const express = require("express");
@@ -31,7 +32,7 @@ const output ={
         logger.info(`GET /register 304 "회원가입 화면으로 이동"`);
         res.render("home/register");
     },
-    laundry : (req, res) => {
+    laundry : async (req, res) => {
         logger.info(`GET /laundry 304 "세탁신청 화면으로 이동"`);
         //home 화면에서 쿠키로 주소설정.
         //여기서 쿠키 뺴와서 함수 부르기
@@ -45,12 +46,15 @@ const output ={
         const deliveryAddress1 = matches[1];
         const deliveryAddress2 = matches[2];
         
-        console.log(deliveryAddress1);
-        console.log(deliveryAddress2);
-        
+        const laundryList = new LaundryList(deliveryAddress1, deliveryAddress2);
+        const laundryListRes = await laundryList.getLaundryInfo();
+    
 
-        res.render("home/laundry");
+        res.render("home/laundry", {
+            laundryListRes
+          });
     },
+
     history : (req, res) => {
         logger.info(`GET /history 304 "이용내역 화면으로 이동"`);
         res.render("home/history");
