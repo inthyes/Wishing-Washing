@@ -271,6 +271,8 @@ const process = {
     like: async (req,res) => {
         //req.body -> 1과 0 리턴 
         const like = new Likes(req.body, "codus");
+        
+        console.log(req.body,"yuze");
         const response = await like.insert();
         
         return true;

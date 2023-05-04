@@ -17,15 +17,22 @@ router.get("/", async (req, res) => {
 function getLaundryInfo(ro) {
     return new Promise((resolve, reject) => {
       db.query("USE CAPSTONE", (err, result) => {
-        const query = "SELECT * FROM STORE where S_ADDRESS LIKE '%" + ro + "%';";
+        const query = "SELECT * ,HEX(i_data) AS hex_data FROM STORE where S_ADDRESS LIKE '%" + ro + "%';";
         //const query = "SELECT * FROM store_list;";
         //console.log(query);
         if (err) reject(err);
         db.query(query, [ro], (err, data) => {
           if (err) reject(err);
+          //이미지 관련 코드
           else {
-            resolve(data);
+            for (let i = 0; i < data.length; i++) {
+              const hexData = data[i].hex_data;
+              data[i].i_data = Buffer.from(hexData, "hex");
+              console.log(data[i].i_data);
+
+            
           }
+          resolve(data);}
         });
       });
     });
