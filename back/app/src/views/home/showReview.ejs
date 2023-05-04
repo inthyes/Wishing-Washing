@@ -17,20 +17,7 @@
             <td>리뷰내용 : <%= RV[i].REVIEW_TEXT %></td>
             <td>사용자ID : <%= RV[i].U_ID %></td>
         </tr>
-        <tr>
-            <td colspan="4">
-                <!-- <% if (RV[i].REPLY) { %>
-                    <p>답글 : <%= RV[i].REPLY %></p>
-                <% }  -->
-                else { %>
-                    <form action="/laundry/addReviewReply" method="POST">
-                        <input type="hidden" name="reviewId" value="<%= RV[i].REVIEW_ID %>">
-                        <input type="text" name="replyText" placeholder="답글을 입력하세요">
-                        <button type="submit">추가</button>
-                    </form>
-                <% } %>
-            </td>
-        </tr>
+        <br>
     <% } %>
 </body>
 </html>
