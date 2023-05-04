@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리뷰관리</title>
+</head>
+<body>
+    여기는 리뷰관리 입니다
+    세탁소 <%= RV[0].S_ID %>번의 리뷰리스트
+    <br>
+    <% for (var i = 0; i < RV.length; i++) { %>
+        <tr>
+            <td>주문ID : <%= RV[i].O_NUM %></td>
+            <td>세탁소ID : <%= RV[i].S_ID %></td>
+            <td>리뷰내용 : <%= RV[i].REVIEW_TEXT %></td>
+            <td>사용자ID : <%= RV[i].U_ID %></td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <!-- <% if (RV[i].REPLY) { %>
+                    <p>답글 : <%= RV[i].REPLY %></p>
+                <% }  -->
+                else { %>
+                    <form action="/laundry/addReviewReply" method="POST">
+                        <input type="hidden" name="reviewId" value="<%= RV[i].REVIEW_ID %>">
+                        <input type="text" name="replyText" placeholder="답글을 입력하세요">
+                        <button type="submit">추가</button>
+                    </form>
+                <% } %>
+            </td>
+        </tr>
+    <% } %>
+</body>
+</html>
