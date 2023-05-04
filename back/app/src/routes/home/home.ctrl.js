@@ -10,6 +10,9 @@ const Likes = require("../../models/Likes");
 const LaundryOrder = require("../../models/LaundryOrder");
 const MyPage = require("../../models/Mypage");
 const Search = require("../../models/Search");
+const MyPageEdit = require("../../models/MyPageEdit");
+const History = require("../../models/History");
+const Review = require("../../models/Review");
 // const router = require(".");
 const router = express.Router();
 
@@ -53,14 +56,42 @@ const output ={
         logger.info(`GET /laundry 304 "세탁신청 화면으로 이동"`);
         res.render("home/laundry");
     },
-    history : (req, res) => {
+    review : (req, res) => {
+        logger.info(`GET /laundry 304 "review 화면으로 이동"`);
+        const S_ID = req.params.S_ID;
+        const O_NUM = req.params.O_NUM;
+        res.render("home/review", {S_ID : S_ID, O_NUM : O_NUM});
+    },
+    showReview : async (req, res) => {
+        logger.info(`GET /laundry 304 "showreview 화면으로 이동"`);
+        const S_ID = req.params.id; //세탁소아이디 불러옴
+        //console.log(req.params.id);
+        const review = new Review(S_ID, "codus");
+        const RV = await review.showReview();
+        console.log("RV:");
+        console.log(RV);
+        res.render("home/showReview",
+        {
+                RV
+        });
+    },
+    history : async (req, res) => {
         const token = req.query.token;
         const user_id = Vtoken(token);  // 토큰 검증
         console.log("토큰확인: " + token);
         console.log("user_id: " + user_id);
 
         logger.info(`GET /history 304 "이용내역 화면으로 이동"`);
-        res.render("home/history");
+        const history = new History("codus"); //아이디토큰 받아오기
+
+        const {completeList, notCompleteList} = await history.showHistory();
+        //const response1 = await cart.addOrderList();
+        console.log(completeList, notCompleteList);
+        res.render("home/history", 
+        {
+            completeList : completeList, 
+            notCompleteList : notCompleteList
+        });
     },
     myPage : (req, res) => {
         const token = req.query.token;
@@ -109,7 +140,7 @@ const output ={
           }
         }); */
         //토큰 받아오면 하드코딩 해제
-        const favorite = new MyPage("yuze");
+        const favorite = new MyPage("codus");
 
         const response = favorite.showFavoriteList();
         //const response1 = await cart.addOrderList();
@@ -223,7 +254,7 @@ const process = {
         //  }
      //   });
         //토큰 받아오면 하드코딩 해제
-        const cart = new Cart(req.body, "yuze"/*user*/);
+        const cart = new Cart(req.body, "codus"/*user*/);
         const response = await cart.add();
         const data = response;
         const orderNum = data.orderNumber;
@@ -239,11 +270,24 @@ const process = {
 
     like: async (req,res) => {
         //req.body -> 1과 0 리턴 
+        const like = new Likes(req.body, "codus");
+        
         console.log(req.body,"yuze");
-        const like = new Likes(req.body, "2");
         const response = await like.insert();
         
         return true;
+    },
+    edit : async (req,res) => {
+        console.log(req.body);
+        const Edit = new MyPageEdit(req.body, "codus");
+        const response = await Edit.update();
+        return response;
+    },
+    review : async (req,res) => {
+        console.log(req.body);
+        const review = new Review(req.body, "codus");
+        const response = await review.update();
+        res.render("home/myPage",);
     }
 };
 

@@ -15,12 +15,13 @@ router.get('/laundry', ctrl.output.laundry);
 router.get('/history', ctrl.output.history);
 router.get('/myPage', ctrl.output.myPage);
 router.get('/upload', ctrl.output.upload);
-
+router.get('/history/review/:S_ID/:O_NUM', ctrl.output.review);
 
 router.use("/myPage", require("./myPage"));
 router.use("/laundry", require("./laundry"));
 // router.use("/search", require("./search"));
 
 router.post("/like", ctrl.process.like);
+router.post("/review", ctrl.process.review);
 
 module.exports = router; //웹으로 내보내기

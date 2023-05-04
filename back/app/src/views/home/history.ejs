@@ -8,10 +8,37 @@
 </head>
 <body>
     이용내역 backend테스트용
-    <!-- <a href="/login">login</a>
-    <a href="/register">register</a>
-    <a href="/laundry">세탁신청</a>
-    <a href="/history">이용내역</a>
-    <a href="/myPage">마이페이지</a> -->
+    배송중인거, 배송완료인거 나눠서 출력
+    <p>O_NUM: <%= completeList[0].O_NUM %></p>
+    <p>S_ID: <%= completeList[0].S_ID %></p>
+    <p>주문날짜: <%= completeList[0].O_DAY %></p>
+    <p>DELEVERY_STATE: <%= completeList[0].DELEVERY_STATE %></p>
+    <p>결제총가격: <%= completeList[0].O_PRICE %></p>
+    
+    <% for (var i = 0; i < completeList.length; i++) { %>
+        <tr>
+            <td>주문ID : <%= completeList[i].O_NUM %></td>
+            <td>세탁소ID : <%= completeList[i].S_ID %></td>
+            <td>주문날짜 : <%= completeList[i].O_DAY %></td>
+            <td>결제총가격 : <%= completeList[i].O_PRICE %></td>
+            <a href="/history/review/<%= completeList[i].S_ID %>/<%= completeList[i].O_NUM %>">review</a>
+            
+        </tr>
+        <br>
+    <% } %>
+        
+        <% for (var i = 0; i < notCompleteList.length; i++) { %>
+            <tr>
+                <td>주문ID : <%= notCompleteList[i].O_NUM %></td>
+                <td>세탁소ID : <%= notCompleteList[i].S_ID %></td>
+                <td>주문날짜 : <%= notCompleteList[i].O_DAY %></td>
+                <td>결제총가격 : <%= notCompleteList[i].O_PRICE %></td>
+                <a href="/history/review/<%= notCompleteList[i].S_ID %>/<%= notCompleteList[i].O_NUM %>">review</a>
+                
+            </tr>
+            <br>
+        <% } %>
+        
+      </form>
 </body>
 </html>
