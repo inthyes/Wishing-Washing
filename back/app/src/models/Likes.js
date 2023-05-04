@@ -65,6 +65,25 @@ class Likes {
           })
     });
 }
+//상점별 like개수
+static async getLikedStore() {
+  return new Promise((resolve, reject) => {
+    db.query("USE CAPSTONE", (err, result) => {
+      if (err) reject(err);
+      const query = `
+        SELECT S_ID, COUNT(U_ID) as like_count
+        FROM LIKES
+        GROUP BY S_ID
+        ORDER BY like_count DESC;
+      `;
+      db.query(query, (err, data) => {
+        if (err) reject(err);
+        else resolve(data);
+      });
+    });
+  });
+}
+
     
       
 }

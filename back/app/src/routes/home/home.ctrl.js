@@ -240,7 +240,7 @@ const process = {
     like: async (req,res) => {
         //req.body -> 1과 0 리턴 
         console.log(req.body,"yuze");
-        const like = new Likes(req.body, "yuze");
+        const like = new Likes(req.body, "2");
         const response = await like.insert();
         
         return true;

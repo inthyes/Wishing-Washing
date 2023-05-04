@@ -119,7 +119,7 @@ const crypto = require("crypto");
 router.use(express.json());
 router.use(express.urlencoded({ extended: false }));
 
-router.post("/api/users", (req, res) => {
+router.post("/", (req, res) => {
   console.log(req.url, req.method);
 
   const paramId = req.body.id;
@@ -127,7 +127,7 @@ router.post("/api/users", (req, res) => {
   const paramPsword = req.body.psword;
   const paramPswordCheck = req.body.confirmPsword;
   const paramPhone = req.body.phone;
-  const paramMail = req.body.mail;
+  const paramMail = req.body.email;
   console.log("받은 데이터 : ", paramId,paramName,paramPsword, paramPswordCheck);
 
   //패스워드 암호화
