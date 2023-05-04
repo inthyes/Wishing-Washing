@@ -10,24 +10,24 @@
             "items": [
                 {   "id": 1,
                     "name": "셔츠",
-                    "price": 10.99,
+                    "price": 6000,
                     "quantity": 0
                 },
                 {
                     "id": 2,
                     "name": "바지",
-                    "price": 8.99,
+                    "price": 6000,
                     "quantity": 0
                 },
                 {   "id": 3,
                     "name": "코트",
-                    "price": 12.99,
+                    "price": 12900,
                     "quantity": 0
                 },
                 {
                     "id": 4,
                     "name": "스커트",
-                    "price": 5.99,
+                    "price": 6000,
                     "quantity": 0
                 }
             ],
@@ -44,12 +44,14 @@
                 {
                     "id": 1,
                     "name": "코트",
-                    "price": 12.99
+                    "price": 12.99,
+                    "quantity": 0
                 },
                 {
                     "id": 2,
                     "name": "스커트",
-                    "price": 5.99
+                    "price": 5.99,
+                    "quantity": 0
                 }
             ],
             "reviews": "별로에요.."
@@ -65,12 +67,14 @@
                 {
                     "id": 1,
                     "name": "패딩",
-                    "price": 6.99
+                    "price": 6.99,
+                    "quantity": 0
                 },
                 {
                     "id": 2,
                     "name": "신발",
-                    "price": 12.99
+                    "price": 12.99,
+                    "quantity": 0
                 }
             ],
             "reviews": "괜찮아요"

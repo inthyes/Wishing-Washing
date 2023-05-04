@@ -1,6 +1,28 @@
 {
-  "submit": {
-    "itemId": 1,
-    "quantity": 0
-  }
+  "submits": [
+    {
+      "title": "AA세탁소",
+      "itemName": "셔츠",
+      "quantity": 1,
+      "id": 1
+    },
+    {
+      "title": "AA세탁소",
+      "itemName": "바지",
+      "quantity": 1,
+      "id": 2
+    },
+    {
+      "title": "BB세탁소",
+      "itemName": "코트",
+      "quantity": 2,
+      "id": 3
+    },
+    {
+      "title": "BB세탁소",
+      "itemName": "스커트",
+      "quantity": 1,
+      "id": 4
+    }
+  ]
 }

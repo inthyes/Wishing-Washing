@@ -2,7 +2,6 @@
 
 <template>
     <div id="laund-list" class="px-0">
-
         <v-card :loading="loading" class="mx-auto my-0" max-width="500" elevation="0">
             <template v-slot:loader="{ isActive }">
                 <v-progress-linear :active="isActive" color="deep-purple" height="4" indeterminate></v-progress-linear>
@@ -75,7 +74,7 @@
                 <v-btn icon @click="toggleWish">
                     <v-icon :color="isWished ? 'red' : ''">{{ isWished ? 'mdi-heart' : 'mdi-heart-outline' }}</v-icon>
                 </v-btn>
-                <v-btn to="/submitlaundry" color="deep-purple-lighten-2" variant="text" @click="reserve">
+                <v-btn to="/submitlaundry" color="deep-purple-lighten-2" variant="text" @click="submitData">
                     세탁신청
                 </v-btn>
                 <!-- <router-link :to="{ name: 'submitlaundry', params: { id: laundry.id } }">
@@ -113,12 +112,12 @@ export default {
     },
     // async submitData() {
     //    try {
-    //         const res2 = await axios.post("http://localhost:3005/submits", {
+    //         const res = await axios.post("http://localhost:3005/submits", {
     //             itemId: this.selectedItem.id,
     //             quantity: this.quantity,
     //         });
 
-    //         this.submits = [...this.submits, res2.data];
+    //         this.submits = [...this.submits, res.data];
     //     } catch (e) {
     //         console.error(e);
     //     }
@@ -140,7 +139,28 @@ export default {
                 item.quantity--
             }
         },
+        async submitData() {
+            try {
+                const selectedItems = this.laundry.items.filter(item => item.quantity > 0);
+                // 초기에 submits 변수가 배열이 아닐 경우 빈 배열로 초기화해줍니다.
+                this.submits = this.submits || [];
+
+                for (const item of selectedItems) {
+                    const res = await axios.post("http://localhost:3005/submits", {
+                        title: this.laundry.title,
+                        itemName: item.name,
+                        quantity: item.quantity,
+                    });
+
+                    // 기존 submits 배열에 추가하는 대신, 새로운 배열로 대체합니다.
+                    this.submits = [...this.submits, res.data];
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
     },
-}
+
+};
 </script>
 
