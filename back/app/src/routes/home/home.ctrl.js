@@ -13,6 +13,7 @@ const LaundryOrderComplete = require("../../models/LaundryOrderComplete");
 const jwt = require('jsonwebtoken');
 const router = require(".");
 const express = require("express");
+const { Console } = require("winston/lib/winston/transports");
 
 
 
@@ -32,6 +33,22 @@ const output ={
     },
     laundry : (req, res) => {
         logger.info(`GET /laundry 304 "세탁신청 화면으로 이동"`);
+        //home 화면에서 쿠키로 주소설정.
+        //여기서 쿠키 뺴와서 함수 부르기
+        // db 사용
+        //쿠키에서 주소 읽어오기 function
+        const cookieValue = req.headers.cookie;
+        //쿠키 URL 디코드
+        const decodedValue = decodeURIComponent(cookieValue);
+
+        const matches = decodedValue.match(/deliveryAddress1="([^"]+)";\s*deliveryAddress2="([^"]+)"/);
+        const deliveryAddress1 = matches[1];
+        const deliveryAddress2 = matches[2];
+        
+        console.log(deliveryAddress1);
+        console.log(deliveryAddress2);
+        
+
         res.render("home/laundry");
     },
     history : (req, res) => {
@@ -193,14 +210,6 @@ const process = {
         const orderListRes = await orderComplete.addOrderList();
         const orderCompleteRes = await orderComplete.addOrderCompleteList();
         res.clearCookie('response').redirect('/');
-    },
-    //home 화면에서 쿠키로 주소설정.
-    searchAddress: async (req, res) => {
-        const address = new Address(req.body);
-        const cookieName = 'address';
-        const cookieValue =  JSON.stringify(address);
-        res.cookie(cookieName, cookieValue);
-        res.redirect('/');
     },
 };
 

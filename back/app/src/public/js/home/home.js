@@ -51,15 +51,13 @@ function execution_daum_address() {
 }
 
 
-//쿠키에 주소 저장 function
 var setCookie = function(name, value, exp) {
 	var date = new Date();
 	date.setTime(date.getTime() + exp*24*60*60*1000);
-	document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
-};
+	var jsonValue = JSON.stringify(value);
+	var encodedValue = encodeURIComponent(jsonValue);
+	document.cookie = name + '=' + encodedValue + ';expires=' + date.toUTCString() + ';path=/';
+  };
+  
+  
 
-//쿠키에서 주소 읽어오기 function
-var getCookie = function(name) {
-	var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-	return value? value[2] : null;
-};

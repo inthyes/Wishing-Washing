@@ -23,6 +23,5 @@ router.use(cookieParser());
 // router.use("/search", require("./search"));
 
 router.post("/like", ctrl.process.like);
-router.post("/search", ctrl.process.searchAddress);
 
 module.exports = router; //웹으로 내보내기
