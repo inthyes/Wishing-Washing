@@ -17,9 +17,8 @@
             </v-card-text>
 
             <v-card-actions>
-                <router-link :to="{ name: 'laundrydetail', params: { id: laundry.id } }">
-                    <v-btn color="orange">상세정보</v-btn>
-                </router-link>
+                <v-btn color="orange" v-bind:to="`/laundrydetail/${laundry.id}`">상세정보</v-btn>
+
             </v-card-actions>
 
             <v-divider class="mx-1 mb-1"></v-divider>
