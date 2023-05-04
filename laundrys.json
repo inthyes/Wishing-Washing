@@ -8,21 +8,27 @@
             "info": "간단한 AA 세탁소 정보",
             "stars": 4.5,
             "items": [
-                {
+                {   "id": 1,
                     "name": "셔츠",
-                    "price": 10.99
+                    "price": 10.99,
+                    "quantity": 0
                 },
                 {
+                    "id": 2,
                     "name": "바지",
-                    "price": 8.99
+                    "price": 8.99,
+                    "quantity": 0
                 },
-                {
+                {   "id": 3,
                     "name": "코트",
-                    "price": 12.99
+                    "price": 12.99,
+                    "quantity": 0
                 },
                 {
+                    "id": 4,
                     "name": "스커트",
-                    "price": 5.99
+                    "price": 5.99,
+                    "quantity": 0
                 }
             ],
             "reviews": "정말 좋아요"
@@ -36,10 +42,12 @@
             "stars": 3.5,
             "items": [
                 {
+                    "id": 1,
                     "name": "코트",
                     "price": 12.99
                 },
                 {
+                    "id": 2,
                     "name": "스커트",
                     "price": 5.99
                 }
@@ -55,10 +63,12 @@
             "stars": 4.0,
             "items": [
                 {
+                    "id": 1,
                     "name": "패딩",
                     "price": 6.99
                 },
                 {
+                    "id": 2,
                     "name": "신발",
                     "price": 12.99
                 }

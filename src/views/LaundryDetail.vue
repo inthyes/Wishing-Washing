@@ -52,9 +52,9 @@
                             <v-list-item-content class="d-flex justify-space-between">
                                 <div>{{ item.name }}</div>
                                 <div>{{ item.price }}원&nbsp;&nbsp;&nbsp;
-                                        <v-icon color="deep-purple-lighten-2" @click="decrement">mdi-minus</v-icon>
-                                        <span>{{ quantity }}</span>
-                                        <v-icon color="deep-purple-lighten-2" @click="increment">mdi-plus</v-icon>
+                                        <v-icon color="deep-purple-lighten-2" @click="decrement(item)">mdi-minus</v-icon>
+                                        <span>{{ item.quantity }}</span>
+                                        <v-icon color="deep-purple-lighten-2" @click="increment(item)">mdi-plus</v-icon>
                                 </div>
                             </v-list-item-content>
 
@@ -111,18 +111,18 @@ export default {
             console.error(e);
         }
     },
-    async submitData() {
-       try {
-            const res2 = await axios.post("http://localhost:3005/submits", {
-                itemId: this.selectedItem.id,
-                quantity: this.quantity,
-            });
+    // async submitData() {
+    //    try {
+    //         const res2 = await axios.post("http://localhost:3005/submits", {
+    //             itemId: this.selectedItem.id,
+    //             quantity: this.quantity,
+    //         });
 
-            this.submits = [...this.submits, res2.data];
-        } catch (e) {
-            console.error(e);
-        }
-    },
+    //         this.submits = [...this.submits, res2.data];
+    //     } catch (e) {
+    //         console.error(e);
+    //     }
+    // },
     methods: {
         reserve() {
             this.loading = true
@@ -132,12 +132,12 @@ export default {
         toggleWish() {
             this.isWished = !this.isWished;
         },
-        increment() {
-            this.quantity++
+        increment(item) {
+            item.quantity++
         },
-        decrement() {
-            if (this.quantity > 0) {
-                this.quantity--
+        decrement(item) {
+            if (item.quantity > 0) {
+                item.quantity--
             }
         },
     },
