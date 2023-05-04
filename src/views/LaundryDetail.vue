@@ -146,10 +146,14 @@ export default {
                 this.submits = this.submits || [];
 
                 for (const item of selectedItems) {
+                    const now = new Date();
                     const res = await axios.post("http://localhost:3005/submits", {
                         title: this.laundry.title,
                         itemName: item.name,
                         quantity: item.quantity,
+                        // time: new Date(), // 현재 시간을 저장하는 time 프로퍼티를 추가
+                        date: now.toISOString().substring(0, 10), // 현재 날짜를 저장하는 date 프로퍼티
+                        time: now.toISOString().substring(11, 19), // 현재 시간을 저장하는 time 프로퍼티
                     });
 
                     // 기존 submits 배열에 추가하는 대신, 새로운 배열로 대체합니다.
