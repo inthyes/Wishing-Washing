@@ -7,8 +7,6 @@ const Cart = require("../../models/Cart");
 const Likes = require("../../models/Likes");
 const LaundryOrder = require("../../models/LaundryOrder");
 const MyPage = require("../../models/Mypage");
-const Search = require("../../models/Search");
-const Address = require("../../models/Address");
 const LaundryOrderComplete = require("../../models/LaundryOrderComplete");
 const LaundryList = require("../../models/LaundryList");
 const jwt = require('jsonwebtoken');
@@ -34,27 +32,22 @@ const output ={
     },
     laundry : async (req, res) => {
         logger.info(`GET /laundry 304 "세탁신청 화면으로 이동"`);
-        //home 화면에서 쿠키로 주소설정.
-        //여기서 쿠키 뺴와서 함수 부르기
-        // db 사용
-        //쿠키에서 주소 읽어오기 function
         const cookieValue = req.headers.cookie;
-        //쿠키 URL 디코드
         const decodedValue = decodeURIComponent(cookieValue);
 
         const matches = decodedValue.match(/deliveryAddress1="([^"]+)";\s*deliveryAddress2="([^"]+)"/);
         const deliveryAddress1 = matches[1];
         const deliveryAddress2 = matches[2];
         
-        const laundryList = new LaundryList(deliveryAddress1, deliveryAddress2);
+        const laundryList = new LaundryList(req.body, deliveryAddress1, deliveryAddress2);
         const laundryListRes = await laundryList.getLaundryInfo();
-    
-
-        res.render("home/laundry", {
-            laundryListRes
-          });
+        res.render("home/laundry", {laundryListRes});
     },
-
+    // search : async (req, res) => {
+    //     const search = new LaundryList(body)
+    //     let data = await search.searchLaundry();
+    //     res.render("home/laundry", {data});
+    // },
     history : (req, res) => {
         logger.info(`GET /history 304 "이용내역 화면으로 이동"`);
         res.render("home/history");
@@ -136,25 +129,21 @@ const output ={
         logger.info(`GET /home/upload 304 "upload 화면으로 이동`);
         res.render('home/upload');
     },
-    search : async (req, res) => {
-        const search = new Search(req.query);
-        //console.log('search');
-        //console.log('Param: ' + req.query.search);
-        let data = await search.getLaundryInfo();
-        //console.log(data);
-        res.render("home/laundry", {
-            data
-          });
-    },
     orderPage : async (req, res) => {
+        const cookieAddress = req.headers.cookie;
+        const decodedValue = decodeURIComponent(cookieAddress);
+        const matches = decodedValue.match(/deliveryAddress1="([^"]+)";\s*deliveryAddress2="([^"]+)"/);
+        const deliveryAddress = matches[2];
+
         const cookieValue = req.cookies.response;
         const orderNum = JSON.parse(cookieValue).orderNumber; 
         const laundryOrder = new LaundryOrder(orderNum);
         const cartRes = await laundryOrder.showCart();
         console.log(cartRes);
-        logger.info(`GET /home/laundryOrder 304 " 장바구니 화면으로 이동`);
+        logger.info(`GET /home/laundryOrder 304 " 세탁신청주문 화면으로 이동`);
         res.render("home/laundryOrder", 
         {
+            deliveryAddress : deliveryAddress,
             cartRes : cartRes
         });
     },
@@ -207,10 +196,16 @@ const process = {
         const response = await like.insert();
         return true;
     },
+
     orderComplete: async (req, res) => {
+        const cookieAddress = req.headers.cookie;
+        const decodedValue = decodeURIComponent(cookieAddress);
+        const matches = decodedValue.match(/deliveryAddress1="([^"]+)";\s*deliveryAddress2="([^"]+)"/);
+        const deliveryAddress = matches[2];
+        
         const cookieValue = req.cookies.response;
         const orderNum = JSON.parse(cookieValue).orderNumber; 
-        const orderComplete = new LaundryOrderComplete(req.body, orderNum);
+        const orderComplete = new LaundryOrderComplete(req.body, orderNum, deliveryAddress);
         const orderListRes = await orderComplete.addOrderList();
         const orderCompleteRes = await orderComplete.addOrderCompleteList();
         res.clearCookie('response').redirect('/');

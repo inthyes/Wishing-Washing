@@ -5,16 +5,18 @@ const db = require("../config/db");
 
 
 class LaundryOrderComplete {
-    constructor(body, orderNum) {
+    constructor(body, orderNum, deliveryAddress) {
         this.body = body;
         this.orderNum = orderNum;  
+        this.deliveryAddress = deliveryAddress;
       }
 
     async addOrderList() {
         const orderNum = this.orderNum;
         const request = this.body.request;
         const date = this.body.date;
-        const address = this.body.address;
+        const address = this.deliveryAddress + this.body.addressDetail;;
+
         let querygetUserId = "SELECT U_ID FROM ORDER_LIST WHERE O_NUM = ?;";
         let querygetUser = "SELECT U_PHONE FROM USERS WHERE U_ID = ?;";
         let query = "UPDATE ORDER_LIST SET O_DAY = ?, DELEVERY_ADDRESS = ?, O_REQUEST = ?, U_PHONE =? WHERE O_NUM = ?;";
