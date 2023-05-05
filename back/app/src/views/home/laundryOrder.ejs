@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>장바구니</title>
+    <title>세탁신청하기</title>
 </head>
 <body>
-    <h1>장바구니</h1>
+    <h1>세탁신청하기</h1>
 
     <h2>판매상품</h2>
     <p>
@@ -17,7 +17,22 @@
                 <P><%= cartRes[i].PRODUCT_QUANTITIY %></P>
         <% } %>
     </p>
+    
+    <form id="orderForm" method="POST" action="complete">
+            <h4>[날짜]</h4>
+            <input type="textbox" name = "date">
+            <h4>[요청사항]</h4>
+            <input type="textbox"  name = "request">
+            <h4>[주소]</h4>
+            <p><%= deliveryAddress %></p>
+            <p>상세주소</p>
+            <input type="textbox"  name = "addressDetail">
+        <br>
+        <br>
+        <button type="submit">주문완료</button>
+    </form>
 
+    
 
 </body>
 </html>

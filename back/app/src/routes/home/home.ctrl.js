@@ -9,7 +9,9 @@ const Cart = require("../../models/Cart");
 const Likes = require("../../models/Likes");
 const LaundryOrder = require("../../models/LaundryOrder");
 const MyPage = require("../../models/Mypage");
-const Search = require("../../models/Search");
+const LaundryOrderComplete = require("../../models/LaundryOrderComplete");
+const LaundryList = require("../../models/LaundryList");
+// const Search = require("../../models/Search");
 const MyPageEdit = require("../../models/MyPageEdit");
 const History = require("../../models/History");
 const Review = require("../../models/Review");
@@ -48,13 +50,18 @@ const output ={
         logger.info(`GET /register 304 "회원가입 화면으로 이동"`);
         res.render("home/register");
     },
-    laundry : (req, res) => {
-        const token = req.query.token;
-        const user_id = Vtoken(token);  // 토큰 검증
-        console.log("토큰확인: " + token);
-        console.log("user_id: " + user_id);
+    laundry : async (req, res) => {
         logger.info(`GET /laundry 304 "세탁신청 화면으로 이동"`);
-        res.render("home/laundry");
+        const cookieValue = req.headers.cookie;
+        const decodedValue = decodeURIComponent(cookieValue);
+
+        const matches = decodedValue.match(/deliveryAddress1="([^"]+)";\s*deliveryAddress2="([^"]+)"/);
+        const deliveryAddress1 = matches[1];
+        const deliveryAddress2 = matches[2];
+        
+        const laundryList = new LaundryList(req.body, deliveryAddress1, deliveryAddress2);
+        const laundryListRes = await laundryList.getLaundryInfo();
+        res.render("home/laundry", {laundryListRes});
     },
     review : (req, res) => {
         logger.info(`GET /laundry 304 "review 화면으로 이동"`);
@@ -62,6 +69,7 @@ const output ={
         const O_NUM = req.params.O_NUM;
         res.render("home/review", {S_ID : S_ID, O_NUM : O_NUM});
     },
+
     showReview : async (req, res) => {
         logger.info(`GET /laundry 304 "showreview 화면으로 이동"`);
         const S_ID = req.params.id; //세탁소아이디 불러옴
@@ -158,8 +166,6 @@ const output ={
         //실제 경로 , 라우팅 경로 : myPage/profileEdit
         res.render("home/profileEdit");
     },
-   
-
     customerService : (req, res) => {
         const token = req.query.token;
         const user_id = Vtoken(token);  // 토큰 검증
@@ -178,7 +184,6 @@ const output ={
         logger.info(`GET /home/myPage/userManagement 304 "탈퇴/로그아웃 화면으로 이동`);
         res.render("home/userManagement");
     },
-
     // 세탁소 세부페이지 
     laundryDetail: async(req, res) => {
         const token = req.query.token;
@@ -206,76 +211,76 @@ const output ={
         logger.info(`GET /home/upload 304 "upload 화면으로 이동`);
         res.render('home/upload');
     },
-    search : async (req, res) => {
-        const token = req.query.token;
-        const user_id = Vtoken(token);  // 토큰 검증
-        console.log("토큰확인: " + token);
-        console.log("user_id: " + user_id);
+    orderPage : async (req, res) => {
+        const cookieAddress = req.headers.cookie;
+        const decodedValue = decodeURIComponent(cookieAddress);
+        const matches = decodedValue.match(/deliveryAddress1="([^"]+)";\s*deliveryAddress2="([^"]+)"/);
+        const deliveryAddress = matches[2];
 
-        const search = new Search(req.query);
-        //console.log('search');
-        //console.log('Param: ' + req.query.search);
-        let data = await search.getLaundryInfo();
-        //console.log(data);
-        res.render("home/laundry", {
-            data
-          });
+        const cookieValue = req.cookies.response;
+        const orderNum = JSON.parse(cookieValue).orderNumber; 
+        const laundryOrder = new LaundryOrder(orderNum);
+        const cartRes = await laundryOrder.showCart();
+        logger.info(`GET /home/laundryOrder 304 " 세탁신청주문 화면으로 이동`);
+        res.render("home/laundryOrder", 
+        {
+            deliveryAddress : deliveryAddress,
+            cartRes : cartRes
+        });
     },
+    // search : async (req, res) => {
+    //     const token = req.query.token;
+    //     const user_id = Vtoken(token);  // 토큰 검증
+    //     console.log("토큰확인: " + token);
+    //     console.log("user_id: " + user_id);
+
+    //     const search = new Search(req.query);
+    //     //console.log('search');
+    //     //console.log('Param: ' + req.query.search);
+    //     let data = await search.getLaundryInfo();
+    //     //console.log(data);
+    //     res.render("home/laundry", {
+    //         data
+    //       });
+    // },
+    
 };
 
 const process = {
     addCart: async (req, res) => {
-        // var user;
-        //  //클라이언트가 HTTP요청 헤더에 토큰 받아서 보낼거임
-        // const token = req.headers.authorization.split(" ")[1];
-        // jwt.verify(token, "secretKey", (err, decoded) => {
-        //   if (err) {
-        //     console.log("토큰 만료 오류");
-        //     const json = {
-        //       code : 401,
-        //       message : "로그인 후 이용해주세요." 
-        //     }
-        //     return res.status(401).send(json);
-        //   }
-        //   try {
-        //     // JWT 토큰 검증을 수행한다.
-        //     const decoded = jwt.verify(token, 'secretKey');
-        //     // 검증이 완료된 경우, 요청 객체에 인증 정보를 추가한다.
-        //     //디코드한 유저를 변수로 저장.
-        //     console.log(decoded);
-        //    user = decoded.id;
-        //   } catch (err) {
-        //     // JWT 토큰 검증 실패 시, 403 Forbidden 에러를 반환한다.
-        //     const json = {
-        //       code: 403,
-        //       message: '잘못된 인증 정보입니다.'
-        //     };
-        //     return res.status(403).send(json);
-        //  }
-     //   });
-        //토큰 받아오면 하드코딩 해제
-        const cart = new Cart(req.body, "codus"/*user*/);
+        // const token = req.query.token;
+        // const user_id = Vtoken(token);  // 토큰 검증
+        // console.log("토큰확인: " + token);
+        // console.log("user_id: " + user_id);
+
+        const cart = new Cart(req.body, "codus");
         const response = await cart.add();
-        const data = response;
-        const orderNum = data.orderNumber;
-        const laundryOrder = new LaundryOrder(orderNum);
-        const cartRes = await laundryOrder.showCart();
-        console.log(cartRes);
-        res.render("home/laundryOrder", 
-        {
-            cartRes : cartRes
-        });
-        
+        const cookieName = 'response';
+        const cookieValue =  JSON.stringify(response);
+        res.cookie(cookieName, cookieValue);
+        res.status(200).json({ message: 'Cookie created successfully' });
     },
 
     like: async (req,res) => {
         //req.body -> 1과 0 리턴 
         const like = new Likes(req.body, "codus");
         
-        console.log(req.body,"yuze");
+        console.log(req.body,"codus");
         const response = await like.insert();
-        
         return true;
+    },
+    orderComplete: async (req, res) => {
+        const cookieAddress = req.headers.cookie;
+        const decodedValue = decodeURIComponent(cookieAddress);
+        const matches = decodedValue.match(/deliveryAddress1="([^"]+)";\s*deliveryAddress2="([^"]+)"/);
+        const deliveryAddress = matches[2];
+        
+        const cookieValue = req.cookies.response;
+        const orderNum = JSON.parse(cookieValue).orderNumber; 
+        const orderComplete = new LaundryOrderComplete(req.body, orderNum, deliveryAddress);
+        const orderListRes = await orderComplete.addOrderList();
+        const orderCompleteRes = await orderComplete.addOrderCompleteList();
+        res.clearCookie('response').redirect('/');
     },
     edit : async (req,res) => {
         console.log(req.body);

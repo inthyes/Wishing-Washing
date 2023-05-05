@@ -5,9 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src = "/js/home/home.js"></script>
+<script>
+
+</script>
 </head>
 <body>
-    여기는 루트입니다 backend테스트용
+    <section class="address_search">
+        <div id="search_box">
+            <div>
+                <input type="hidden" id="deliveryAddress1" placeholder="우편번호" value="" name="address1" readonly>
+                <input type="text" value= "" onclick="execution_daum_address()"
+                    id="deliveryAddress2" readonly placeholder="주소를 입력해 주세요" name="address2"><br>
+            </div>
+            <div class="search_btn">
+                <input type="button" name="search" id="search_btn" value="검색">
+            </div>
+        </div>
+   </section>
 
     <a href="/login">login</a>
     <a href="/register">register</a>

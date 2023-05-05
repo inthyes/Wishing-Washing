@@ -2,6 +2,7 @@
 
 const express = require("express");
 const router = express.Router();
+const cookieParser = require('cookie-parser');
 
 // const router = require("../")
 
@@ -19,6 +20,7 @@ router.get('/history/review/:S_ID/:O_NUM', ctrl.output.review);
 
 router.use("/myPage", require("./myPage"));
 router.use("/laundry", require("./laundry"));
+router.use(cookieParser());
 // router.use("/search", require("./search"));
 
 router.post("/like", ctrl.process.like);
