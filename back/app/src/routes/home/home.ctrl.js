@@ -51,11 +51,6 @@ const output ={
         res.render("home/register");
     },
     laundry : async (req, res) => {
-        const token = req.query.token;
-        const user_id = Vtoken(token);  // 토큰 검증
-        console.log("토큰확인: " + token);
-        console.log("user_id: " + user_id);
-        
         logger.info(`GET /laundry 304 "세탁신청 화면으로 이동"`);
         const cookieValue = req.headers.cookie;
         const decodedValue = decodeURIComponent(cookieValue);
@@ -253,11 +248,12 @@ const output ={
 
 const process = {
     addCart: async (req, res) => {
-        const token = req.query.token;
-        const user_id = Vtoken(token);  // 토큰 검증
-        console.log("토큰확인: " + token);
-        console.log("user_id: " + user_id);
-        const cart = new Cart(req.body, user_id);
+        // const token = req.query.token;
+        // const user_id = Vtoken(token);  // 토큰 검증
+        // console.log("토큰확인: " + token);
+        // console.log("user_id: " + user_id);
+
+        const cart = new Cart(req.body, "codus");
         const response = await cart.add();
         const cookieName = 'response';
         const cookieValue =  JSON.stringify(response);
