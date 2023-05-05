@@ -4,6 +4,12 @@
             <v-form @submit.prevent="submit">
                 <v-row>
                     <v-col cols="12">
+                        <p class="mb-4">주문상품</p>
+                    </v-col>
+                </v-row>
+                <v-divider></v-divider>
+                <v-row>
+                    <v-col cols="12">
                         <p class="mb-4">날짜 선택</p>
                         <v-slide-group> <!-- show-arrows -->
                             <v-slide-group-item v-for="(date, index) in getDateRange(14)" :key="index"
@@ -18,7 +24,6 @@
                 </v-row>
                 <v-divider></v-divider>
                 <v-row>
-
                     <v-col cols="12">
                         <p class="mb-4">시간 선택</p>
                         <v-chip-group v-model="selection">
@@ -30,19 +35,17 @@
                         </v-chip-group>
                     </v-col>
                 </v-row>
-
+                <v-divider></v-divider>
                 <v-row>
-                    <v-col cols="12" md="6">
-                        <v-select v-model="selectedClothes" :items="clothes" label="의류선택" required></v-select>
-                    </v-col>
-
-                    <v-col cols="12" md="6">
-                        <v-text-field v-model="selectedItems" label="수량" type="number" min="1"
-                            required></v-text-field>
+                    <v-col cols="12">
+                        <!-- <p class="mb-4">요청사항</p> -->
+                        <v-textarea label="요청사항" variant="outlined"></v-textarea>
                     </v-col>
                 </v-row>
+                <v-divider></v-divider>
 
-                <v-btn type="submit" color="primary" class="mt-4">Request</v-btn>
+
+                <v-btn type="submit" color="primary" class="mt-4">신청하기</v-btn>
             </v-form>
         </v-card>
     </v-container>
@@ -55,9 +58,6 @@ export default {
         return {
             options,
             selectedDate: null,
-            selectedClothes: 'Shirt',
-            selectedItems: 1,
-            clothes: ['셔츠', '바지', '코트', '패딩', '신발']
         };
 
     },
@@ -78,20 +78,20 @@ export default {
         toggle(index) {
             this.selectedDate = index;
         },
-        submit() {
-            const laundryRequest = {
-                date: this.selectedDate,
-                time: this.selectedTime,
-                clothes: this.selectedClothes,
-                items: this.selectedItems
-            }
-            console.log(laundryRequest) // Replace with your own logic to handle the laundry request
-            // Clear form inputs
-            this.selectedDate = ''
-            this.selectedTime = ''
-            this.selectedClothes = 'Shirt'
-            this.selectedItems = 1
-        }
+        // submit() {
+        //     const laundryRequest = {
+        //         date: this.selectedDate,
+        //         time: this.selectedTime,
+        //         clothes: this.selectedClothes,
+        //         items: this.selectedItems
+        //     }
+        //     console.log(laundryRequest) // Replace with your own logic to handle the laundry request
+        //     // Clear form inputs
+        //     this.selectedDate = ''
+        //     this.selectedTime = ''
+        //     this.selectedClothes = 'Shirt'
+        //     this.selectedItems = 1
+        // }
     },
     computed: {
         selectedDateString() {
