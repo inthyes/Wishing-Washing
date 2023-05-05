@@ -51,6 +51,11 @@ const output ={
         res.render("home/register");
     },
     laundry : async (req, res) => {
+        const token = req.query.token;
+        const user_id = Vtoken(token);  // 토큰 검증
+        console.log("토큰확인: " + token);
+        console.log("user_id: " + user_id);
+        
         logger.info(`GET /laundry 304 "세탁신청 화면으로 이동"`);
         const cookieValue = req.headers.cookie;
         const decodedValue = decodeURIComponent(cookieValue);
@@ -248,36 +253,11 @@ const output ={
 
 const process = {
     addCart: async (req, res) => {
-        // var user;
-        //  //클라이언트가 HTTP요청 헤더에 토큰 받아서 보낼거임
-        // const token = req.headers.authorization.split(" ")[1];
-        // jwt.verify(token, "secretKey", (err, decoded) => {
-        //   if (err) {
-        //     console.log("토큰 만료 오류");
-        //     const json = {
-        //       code : 401,
-        //       message : "로그인 후 이용해주세요." 
-        //     }
-        //     return res.status(401).send(json);
-        //   }
-        //   try {
-        //     // JWT 토큰 검증을 수행한다.
-        //     const decoded = jwt.verify(token, 'secretKey');
-        //     // 검증이 완료된 경우, 요청 객체에 인증 정보를 추가한다.
-        //     //디코드한 유저를 변수로 저장.
-        //     console.log(decoded);
-        //    user = decoded.id;
-        //   } catch (err) {
-        //     // JWT 토큰 검증 실패 시, 403 Forbidden 에러를 반환한다.
-        //     const json = {
-        //       code: 403,
-        //       message: '잘못된 인증 정보입니다.'
-        //     };
-        //     return res.status(403).send(json);
-        //  }
-     //   });
-        //토큰 받아오면 하드코딩 해제
-        const cart = new Cart(req.body, "codus");
+        const token = req.query.token;
+        const user_id = Vtoken(token);  // 토큰 검증
+        console.log("토큰확인: " + token);
+        console.log("user_id: " + user_id);
+        const cart = new Cart(req.body, user_id);
         const response = await cart.add();
         const cookieName = 'response';
         const cookieValue =  JSON.stringify(response);
