@@ -3,16 +3,22 @@
     <!-- 상단 Appbar -->
     <v-app-bar :elevation="1">
 
-      <!-- 버튼 : 앱바 맨 오른쪽 고정 -->
+      <!-- 버튼 : 앱바 맨 왼쪽 고정 -->
       <template v-slot:prepend>
-        <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+        <!-- 홈 화면에선 토글 버튼 -->
+        <v-app-bar-nav-icon v-if="isHome" variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+        <!-- 메인 컴포넌트에선 로고 버튼 (로고 임시) -->
+        <v-btn v-if="isMain" icon="mdi-washing-machine" @click="$router.push('/')"></v-btn>
+        <!-- 이외의 모든 페이지에선 뒤로가기 버튼 -->
+        <v-btn v-if="!isHome && !isMain" icon="mdi-arrow-left" @click="goBack"></v-btn>
+
       </template>
 
       <!-- 앱바 타이틀 
       홈 컴포넌트에서만 왼쪽정렬, 나머지는 가운데 정렬-->
       <v-app-bar-title :class="['m-2', isHome ? 'text-left' : 'text-center']">{{ $route.name }}</v-app-bar-title>
 
-      <!-- 버튼 : 앱바 맨 왼쪽 고정 -->
+      <!-- 버튼 : 앱바 맨 오른쪽 고정 -->
       <template v-slot:append>
         <v-btn icon="mdi-magnify"></v-btn>
         <!-- <v-btn icon="mdi-dots-vertical"></v-btn> -->
@@ -69,6 +75,17 @@ export default {
     isHome() {
       return this.$route.path === '/';
     },
+    isMain() {
+      const path = this.$route.path;
+      return path === '/aroundlaundry' || path === '/usagehistory' || path === '/mypage';
+
+    }
+  },
+  methods: {
+    goBack() {
+      this.$router.go(-1);
+    },
+    
   },
 }
 </script>
