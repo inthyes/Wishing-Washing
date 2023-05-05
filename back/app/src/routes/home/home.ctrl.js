@@ -1,5 +1,7 @@
 "use strict";
 
+const express = require("express");
+
 const logger = require("../../config/logger");
 const Laundry = require("../../models/Laundry");
 const Product = require("../../models/Product");
@@ -9,16 +11,34 @@ const LaundryOrder = require("../../models/LaundryOrder");
 const MyPage = require("../../models/Mypage");
 const LaundryOrderComplete = require("../../models/LaundryOrderComplete");
 const LaundryList = require("../../models/LaundryList");
-const jwt = require('jsonwebtoken');
-const router = require(".");
-const express = require("express");
-const { Console } = require("winston/lib/winston/transports");
+// const Search = require("../../models/Search");
+const MyPageEdit = require("../../models/MyPageEdit");
+const History = require("../../models/History");
+const Review = require("../../models/Review");
+// const router = require(".");
+const router = express.Router();
 
+const jwt = require("jsonwebtoken");
 
-
+function Vtoken(token) {
+  try {
+    var check = jwt.verify(token, "secretKey");
+    if (check) {
+      console.log("token 검증", check.user_id);
+      return check.user_id;
+    }
+  } catch {
+    console.log("token 검증 오류");
+  }
+}
 
 const output ={
     home : (req, res) =>{
+        const token = req.query.token;
+        const user_id = Vtoken(token);  // 토큰 검증
+        console.log("토큰확인: " + token);
+        console.log("user_id: " + user_id);
+
         logger.info(`GET / 304 "홈 화면으로 이동"`);
         res.render("home/index");
     },
@@ -43,20 +63,59 @@ const output ={
         const laundryListRes = await laundryList.getLaundryInfo();
         res.render("home/laundry", {laundryListRes});
     },
-    // search : async (req, res) => {
-    //     const search = new LaundryList(body)
-    //     let data = await search.searchLaundry();
-    //     res.render("home/laundry", {data});
-    // },
-    history : (req, res) => {
+    review : (req, res) => {
+        logger.info(`GET /laundry 304 "review 화면으로 이동"`);
+        const S_ID = req.params.S_ID;
+        const O_NUM = req.params.O_NUM;
+        res.render("home/review", {S_ID : S_ID, O_NUM : O_NUM});
+    },
+
+    showReview : async (req, res) => {
+        logger.info(`GET /laundry 304 "showreview 화면으로 이동"`);
+        const S_ID = req.params.id; //세탁소아이디 불러옴
+        //console.log(req.params.id);
+        const review = new Review(S_ID, "codus");
+        const RV = await review.showReview();
+        console.log("RV:");
+        console.log(RV);
+        res.render("home/showReview",
+        {
+                RV
+        });
+    },
+    history : async (req, res) => {
+        const token = req.query.token;
+        const user_id = Vtoken(token);  // 토큰 검증
+        console.log("토큰확인: " + token);
+        console.log("user_id: " + user_id);
+
         logger.info(`GET /history 304 "이용내역 화면으로 이동"`);
-        res.render("home/history");
+        const history = new History("codus"); //아이디토큰 받아오기
+
+        const {completeList, notCompleteList} = await history.showHistory();
+        //const response1 = await cart.addOrderList();
+        console.log(completeList, notCompleteList);
+        res.render("home/history", 
+        {
+            completeList : completeList, 
+            notCompleteList : notCompleteList
+        });
     },
     myPage : (req, res) => {
+        const token = req.query.token;
+        const user_id = Vtoken(token);  // 토큰 검증
+        console.log("토큰확인: " + token);
+        console.log("user_id: " + user_id);
+
         logger.info(`GET /home/myPage 304 "마이페이지 화면으로 이동`);
         res.render("home/myPage");
     },
     favoriteList : (req, res) => {
+        const token = req.query.token;
+        const user_id = Vtoken(token);  // 토큰 검증
+        console.log("토큰확인: " + token);
+        console.log("user_id: " + user_id);
+
         logger.info(`GET /myPage/favoriteList 304 "프로필편집 화면으로 이동"`);
         res.render("home/favoriteList");
         //실제 경로 , 라우팅 경로 : myPage/favoriteList
@@ -89,28 +148,49 @@ const output ={
           }
         }); */
         //토큰 받아오면 하드코딩 해제
-        const favorite = new MyPage("yuze");
+        const favorite = new MyPage("codus");
 
         const response = favorite.showFavoriteList();
         //const response1 = await cart.addOrderList();
         console.log(response);
     },
     //myPage 하위 기능
-    profileEdit : (req, res) => {
+    profileEdit : (req, res) => 
+    {
+        const token = req.query.token;
+        const user_id = Vtoken(token);  // 토큰 검증
+        console.log("토큰확인: " + token);
+        console.log("user_id: " + user_id);
+
         logger.info(`GET /myPage/profileEdit 304 "프로필편집 화면으로 이동"`);
         //실제 경로 , 라우팅 경로 : myPage/profileEdit
         res.render("home/profileEdit");
     },
     customerService : (req, res) => {
+        const token = req.query.token;
+        const user_id = Vtoken(token);  // 토큰 검증
+        console.log("토큰확인: " + token);
+        console.log("user_id: " + user_id);
+
         logger.info(`GET /home/myPage/customerService 304 "고객센터 화면으로 이동`);
         res.render("home/customerService");
     },
     userManagement : (req, res) => {
+        const token = req.query.token;
+        const user_id = Vtoken(token);  // 토큰 검증
+        console.log("토큰확인: " + token);
+        console.log("user_id: " + user_id);
+
         logger.info(`GET /home/myPage/userManagement 304 "탈퇴/로그아웃 화면으로 이동`);
         res.render("home/userManagement");
     },
     // 세탁소 세부페이지 
     laundryDetail: async(req, res) => {
+        const token = req.query.token;
+        const user_id = Vtoken(token);  // 토큰 검증
+        console.log("토큰확인: " + token);
+        console.log("user_id: " + user_id);
+
         logger.info(`GET /laundry/detail/id 304 "세탁신청 세부 화면으로 이동`);
         const laundry = new Laundry(req.params.id);
         const product = new Product(req.params.id);
@@ -125,6 +205,8 @@ const output ={
             productDetail : productDetailRes
         });
     },
+
+    //사장님 기능 & 리뷰 사진 올릴 때 사용
     upload : async(req, res) =>{
         logger.info(`GET /home/upload 304 "upload 화면으로 이동`);
         res.render('home/upload');
@@ -139,7 +221,6 @@ const output ={
         const orderNum = JSON.parse(cookieValue).orderNumber; 
         const laundryOrder = new LaundryOrder(orderNum);
         const cartRes = await laundryOrder.showCart();
-        console.log(cartRes);
         logger.info(`GET /home/laundryOrder 304 " 세탁신청주문 화면으로 이동`);
         res.render("home/laundryOrder", 
         {
@@ -147,6 +228,21 @@ const output ={
             cartRes : cartRes
         });
     },
+    // search : async (req, res) => {
+    //     const token = req.query.token;
+    //     const user_id = Vtoken(token);  // 토큰 검증
+    //     console.log("토큰확인: " + token);
+    //     console.log("user_id: " + user_id);
+
+    //     const search = new Search(req.query);
+    //     //console.log('search');
+    //     //console.log('Param: ' + req.query.search);
+    //     let data = await search.getLaundryInfo();
+    //     //console.log(data);
+    //     res.render("home/laundry", {
+    //         data
+    //       });
+    // },
     
 };
 
@@ -181,7 +277,7 @@ const process = {
         //  }
      //   });
         //토큰 받아오면 하드코딩 해제
-        const cart = new Cart(req.body, "yuze"/*user*/);
+        const cart = new Cart(req.body, "codus");
         const response = await cart.add();
         const cookieName = 'response';
         const cookieValue =  JSON.stringify(response);
@@ -191,12 +287,12 @@ const process = {
 
     like: async (req,res) => {
         //req.body -> 1과 0 리턴 
-        console.log(req.body,"yuze");
-        const like = new Likes(req.body, "yuze");
+        const like = new Likes(req.body, "codus");
+        
+        console.log(req.body,"codus");
         const response = await like.insert();
         return true;
     },
-
     orderComplete: async (req, res) => {
         const cookieAddress = req.headers.cookie;
         const decodedValue = decodeURIComponent(cookieAddress);
@@ -210,6 +306,18 @@ const process = {
         const orderCompleteRes = await orderComplete.addOrderCompleteList();
         res.clearCookie('response').redirect('/');
     },
+    edit : async (req,res) => {
+        console.log(req.body);
+        const Edit = new MyPageEdit(req.body, "codus");
+        const response = await Edit.update();
+        return response;
+    },
+    review : async (req,res) => {
+        console.log(req.body);
+        const review = new Review(req.body, "codus");
+        const response = await review.update();
+        res.render("home/myPage",);
+    }
 };
 
 module.exports = {

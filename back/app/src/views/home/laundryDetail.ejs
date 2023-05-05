@@ -14,7 +14,8 @@
     <p>세탁소 ID: <%= laundryDetail.id %></p>
     <p>세탁소 이름: <%= laundryDetail.name %></p>
     <button id="likeButton">관심있어요</button>
-
+    <a href="/laundry/<%= laundryDetail.id %>/showReview">세탁소 리뷰 보기</a>
+    
     <h2>판매상품</h2>
 
     <form id="cartForm" method="POST" action="<%=laundryDetail.id %>/order">
