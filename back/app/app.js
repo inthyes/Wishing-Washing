@@ -2,14 +2,19 @@
 
 //모듈
 const express = require("express");
+const cors = require('cors');
 const bodyParser = require("body-parser");
 const app = express();
 const dotenv = require("dotenv");
+
 
 // const morgan = require("morgan");
 // const logger = require("./src/config/logger");
 
 dotenv.config();
+
+//cors설정
+app.use(cors());
 
 //라우팅
 const home = require("./src/routes/home");
