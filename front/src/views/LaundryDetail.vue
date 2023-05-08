@@ -10,7 +10,7 @@
             <v-img cover height="250" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
 
             <v-card-item>
-                <v-card-title>{{ laundry.title }}</v-card-title>
+                <v-card-title>{{ laundry.name }}</v-card-title>
 
                 <v-card-subtitle>
                     <span class="me-1">{{ laundry.subtitle }}</span>
@@ -31,7 +31,7 @@
                 </v-row>
 
                 <div class="my-4 text-subtitle-1">
-                    {{ laundry.address }}
+                    {{ laundry.doroAddress }}
                 </div>
 
                 <div>{{ laundry.info }}</div>
@@ -47,16 +47,15 @@
             <v-window v-model="tab">
                 <v-window-item value="tab-1">
                     <v-list class="mx-1">
-                        <v-list-item v-for="(item, index) in laundry.items" :key="index">
+                        <v-list-item v-for="pro in product" :key="pro.PRODUCT_ID">
                             <v-list-item-content class="d-flex justify-space-between">
-                                <div>{{ item.name }}</div>
-                                <div>{{ item.price }}원&nbsp;&nbsp;&nbsp;
-                                        <v-icon color="deep-purple-lighten-2" @click="decrement(item)">mdi-minus</v-icon>
-                                        <span>{{ item.quantity }}</span>
-                                        <v-icon color="deep-purple-lighten-2" @click="increment(item)">mdi-plus</v-icon>
+                                <div>{{ pro.PRODUCT_NAME }}</div>
+                                <div>{{ pro.PRODUCT_PRICE }}원&nbsp;&nbsp;&nbsp;
+                                        <v-icon color="deep-purple-lighten-2" @click="decrement(pro)">mdi-minus</v-icon>
+                                        <!-- <span>{{ item.quantity }}</span> -->
+                                        <v-icon color="deep-purple-lighten-2" @click="increment(pro)">mdi-plus</v-icon>
                                 </div>
                             </v-list-item-content>
-
                         </v-list-item>
                     </v-list>
                 </v-window-item>
@@ -89,6 +88,7 @@
 <script>
 import axios from 'axios';
 
+
 export default {
     data: () => ({
         loading: false,
@@ -97,7 +97,9 @@ export default {
         quantity: 0,
 
         laundry: {},        // laundrys.json
-        submits: [],        // submits.json
+        submits: [],       // submits.json
+        product: [],
+        
 
         tab: 'Appetizers',  // 세탁/수선 & 리뷰 탭
         isWished: false,    // 찜버튼
@@ -106,8 +108,14 @@ export default {
     async created() {
         try {
             const id = this.$route.params.id;
-            const res = await axios.get(`http://localhost:3000/laundrys/${id}`);
-            this.laundry = res.data;
+            const res = await axios.get(`http://localhost:3000/laundry/detail/${id}`, {
+                withCredentials: true,
+                headers: {
+                 Cookie: document.cookie, // 쿠키를 요청에 추가
+                 },
+            });
+                this.laundry = res.data.laundryDetail;
+                this.product = res.data.productDetail
         } catch (e) {
             console.error(e);
         }
