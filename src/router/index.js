@@ -49,7 +49,7 @@ const routes = [
     // props: true
   },
   {
-    path: '/submitlaundry',
+    path: '/submitlaundry/:id',
     name: '세탁신청',
     component: SubmitLaundry,
   },
