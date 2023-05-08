@@ -87,19 +87,19 @@ export default {
                 passwordMatch: value => value === this.password || '비밀번호가 일치하지 않습니다',
 
                 // 회원가입 이메일 중복검사
-                emailDuplicate: async (value) => {
-                    try {
-                        const res = await axios.get(`${baseURL}?email=${value}`);
-                        if (res.data.length > 0) {
-                            return '이미 사용중인 이메일입니다';
-                        } else {
-                            return true;
-                        }
-                    } catch (e) {
-                        console.error(e);
-                        return 'Error checking email duplication.';
-                    }
-                },
+                // emailDuplicate: async (value) => {
+                //     try {
+                //         const res = await axios.get(`${baseURL}?email=${value}`);
+                //         if (res.data.length > 0) {
+                //             return '이미 사용중인 이메일입니다';
+                //         } else {
+                //             return true;
+                //         }
+                //     } catch (e) {
+                //         console.error(e);
+                //         return 'Error checking email duplication.';
+                //     }
+                // },
                 // 회원가입 닉네임 중복검사
                 ID_Duplicate: async (value) => {
                     try {
