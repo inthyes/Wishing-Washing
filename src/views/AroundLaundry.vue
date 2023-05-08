@@ -39,7 +39,6 @@ export default {
     async created() {
         try {
             const res = await axios.get('http://localhost:3000/laundrys');
-            // const res = await axios.get('https://8701-118-217-221-198.jp.ngrok.io/laundrys');    // 실제서버주소로 테스트할때
 
             this.laundrys = res.data;
         } catch (e) {

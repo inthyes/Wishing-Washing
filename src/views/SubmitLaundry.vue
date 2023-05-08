@@ -4,10 +4,21 @@
             <v-form @submit.prevent="submit">
                 <v-row>
                     <v-col cols="12">
-                        <p class="mb-4">주문상품</p>
+                        <h2>{{ laundry.title }}</h2>
                     </v-col>
                 </v-row>
                 <v-divider></v-divider>
+
+                <v-row>
+                    <v-col cols="12">
+                        <p class="mb-4">주문상품</p>
+                        <a>{{ submit.id }}</a>
+                        <a>{{ submit.itemName }}</a>
+                        <a> {{ submit.quantity }}개</a>
+                    </v-col>
+                </v-row>
+                <v-divider></v-divider>
+
                 <v-row>
                     <v-col cols="12">
                         <p class="mb-4">날짜 선택</p>
@@ -23,6 +34,7 @@
                     </v-col>
                 </v-row>
                 <v-divider></v-divider>
+
                 <v-row>
                     <v-col cols="12">
                         <p class="mb-4">시간 선택</p>
@@ -36,6 +48,7 @@
                     </v-col>
                 </v-row>
                 <v-divider></v-divider>
+
                 <v-row>
                     <v-col cols="12">
                         <!-- <p class="mb-4">요청사항</p> -->
@@ -44,7 +57,6 @@
                 </v-row>
                 <v-divider></v-divider>
 
-
                 <v-btn type="submit" color="primary" class="mt-4">신청하기</v-btn>
             </v-form>
         </v-card>
@@ -52,14 +64,29 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     data() {
         const options = { weekday: 'long', day: 'numeric' };
         return {
             options,
             selectedDate: null,
+            laundry: {},
+            submit: {},
         };
+    },
+    async created() {
+        try {
+            const id = this.$route.params.id;
+            const res = await axios.get(`http://localhost:3000/laundrys/${id}`);
+            this.laundry = res.data;
 
+            const res2 = await axios.get(`http://localhost:3005/submits`);
+            this.submit = res2.data;
+        } catch (e) {
+            console.error(e);
+        }
     },
     methods: {
         formatDate(date) {
@@ -78,20 +105,6 @@ export default {
         toggle(index) {
             this.selectedDate = index;
         },
-        // submit() {
-        //     const laundryRequest = {
-        //         date: this.selectedDate,
-        //         time: this.selectedTime,
-        //         clothes: this.selectedClothes,
-        //         items: this.selectedItems
-        //     }
-        //     console.log(laundryRequest) // Replace with your own logic to handle the laundry request
-        //     // Clear form inputs
-        //     this.selectedDate = ''
-        //     this.selectedTime = ''
-        //     this.selectedClothes = 'Shirt'
-        //     this.selectedItems = 1
-        // }
     },
     computed: {
         selectedDateString() {
@@ -102,5 +115,6 @@ export default {
             return '';
         },
     },
+
 };
 </script>

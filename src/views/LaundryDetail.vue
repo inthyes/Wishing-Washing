@@ -74,7 +74,8 @@
                 <v-btn icon @click="toggleWish">
                     <v-icon :color="isWished ? 'red' : ''">{{ isWished ? 'mdi-heart' : 'mdi-heart-outline' }}</v-icon>
                 </v-btn>
-                <v-btn to="/submitlaundry" color="deep-purple-lighten-2" variant="text" @click="submitData">
+                <v-btn v-bind:to="`/submitlaundry/${laundry.id}`" 
+                color="deep-purple-lighten-2" variant="text" @click="submitData">
                     세탁신청
                 </v-btn>
                 <!-- <router-link :to="{ name: 'submitlaundry', params: { id: laundry.id } }">
@@ -96,6 +97,7 @@ export default {
         quantity: 0,
 
         laundry: {},        // laundrys.json
+        submits: [],        // submits.json
 
         tab: 'Appetizers',  // 세탁/수선 & 리뷰 탭
         isWished: false,    // 찜버튼
@@ -110,24 +112,12 @@ export default {
             console.error(e);
         }
     },
-    // async submitData() {
-    //    try {
-    //         const res = await axios.post("http://localhost:3005/submits", {
-    //             itemId: this.selectedItem.id,
-    //             quantity: this.quantity,
-    //         });
-
-    //         this.submits = [...this.submits, res.data];
-    //     } catch (e) {
-    //         console.error(e);
-    //     }
-    // },
     methods: {
-        reserve() {
-            this.loading = true
+        // reserve() {
+        //     this.loading = true
 
-            setTimeout(() => (this.loading = false), 2000)
-        },
+        //     setTimeout(() => (this.loading = false), 2000)
+        // },
         toggleWish() {
             this.isWished = !this.isWished;
         },
@@ -142,8 +132,6 @@ export default {
         async submitData() {
             try {
                 const selectedItems = this.laundry.items.filter(item => item.quantity > 0);
-                // 초기에 submits 변수가 배열이 아닐 경우 빈 배열로 초기화해줍니다.
-                this.submits = this.submits || [];
 
                 for (const item of selectedItems) {
                     const now = new Date();
@@ -156,7 +144,6 @@ export default {
                         time: now.toISOString().substring(11, 19), // 현재 시간을 저장하는 time 프로퍼티
                     });
 
-                    // 기존 submits 배열에 추가하는 대신, 새로운 배열로 대체합니다.
                     this.submits = [...this.submits, res.data];
                 }
             } catch (e) {
