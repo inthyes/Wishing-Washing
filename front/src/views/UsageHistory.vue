@@ -1,12 +1,12 @@
 <!--사용자 이용내역-->
 
 <template>
-    <div class="wrapper">
+    <div class="wrapper px-3">
         <v-card class="mx-auto my-5" max-width="500" elevation="0">
-            <div class="myWashing">
-                <b>내 세탁물</b>
+            <!-- <div class="myWashing">
+                <a>내 세탁물</a>
             </div>
-            <hr id="divisionLine">
+            <hr id="divisionLine"> -->
 
             <div v-for="(h, index) in historys" v-bind:key="h.id">
                 <div v-if="index === 0 || h.date !== historys[index - 1].date">
@@ -26,7 +26,7 @@
                             <div id="requirement">요청사항&nbsp;|&nbsp;&nbsp;{{ h.requirement }}</div>
                             <v-divider id="divisionLine2"></v-divider>
                             <a id="laundryName">{{ h.laundryName }}</a>&nbsp;
-                            <v-btn id="reviewBtn" to="addreview">리뷰</v-btn>
+                            <v-btn id="reviewBtn" v-bind:to="`/addreview/${h.id}`">리뷰</v-btn>
                         </v-card-text>
                     </div>
                 </v-card>
@@ -121,7 +121,6 @@
 
 <script>
 import axios from "axios";
-
 export default {
     data: () => ({
         show: false,
