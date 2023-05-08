@@ -1,0 +1,25 @@
+{
+  "users": [
+    {
+      "name": "김영임",
+      "id": "비버",
+      "phone": "01012341234",
+      "email": "20kyi@naver.com",
+      "password": "rladuddla"
+    },
+    {
+      "name": "user1",
+      "id": "user1",
+      "phone": "010-1234-1234",
+      "email": "user1@naver.com",
+      "password": "12341234"
+    },
+    {
+      "name": "user2",
+      "id": "user2",
+      "phone": "010-1224-1233",
+      "email": "user2@naver.com",
+      "password": "12341234"
+    }
+  ]
+}

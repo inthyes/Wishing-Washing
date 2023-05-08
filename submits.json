@@ -1,0 +1,60 @@
+{
+  "submits": [
+    {
+      "title": "AA세탁소",
+      "itemName": "바지",
+      "quantity": 1,
+      "date": "2023-05-04",
+      "time": "09:14:08",
+      "id": 1
+    },
+    {
+      "title": "AA세탁소",
+      "itemName": "코트",
+      "quantity": 1,
+      "date": "2023-05-04",
+      "time": "09:14:08",
+      "id": 2
+    },
+    {
+      "title": "BB세탁소",
+      "itemName": "코트",
+      "quantity": 1,
+      "date": "2023-05-06",
+      "time": "05:14:26",
+      "id": 3
+    },
+    {
+      "title": "AA세탁소",
+      "itemName": "셔츠",
+      "quantity": 1,
+      "date": "2023-05-07",
+      "time": "02:27:43",
+      "id": 4
+    },
+    {
+      "title": "AA세탁소",
+      "itemName": "코트",
+      "quantity": 1,
+      "date": "2023-05-07",
+      "time": "02:56:36",
+      "id": 5
+    },
+    {
+      "title": "CC세탁소",
+      "itemName": "패딩",
+      "quantity": 1,
+      "date": "2023-05-07",
+      "time": "03:10:19",
+      "id": 6
+    },
+    {
+      "title": "CC세탁소",
+      "itemName": "신발",
+      "quantity": 1,
+      "date": "2023-05-07",
+      "time": "03:10:19",
+      "id": 7
+    }
+  ]
+}
