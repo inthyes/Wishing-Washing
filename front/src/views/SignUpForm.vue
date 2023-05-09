@@ -50,7 +50,7 @@
 
 <script>
 import axios from 'axios';
-const baseURL = "http://localhost:3001/users";
+const baseURL = "http://localhost:3000/register";
 
 export default {
     data() {
@@ -86,7 +86,10 @@ export default {
                 minRules: value => value.length >= 8 || '8자 이상 입력하세요',
                 passwordMatch: value => value === this.password || '비밀번호가 일치하지 않습니다',
 
+
                 // 회원가입 이메일 중복검사
+
+
                 // emailDuplicate: async (value) => {
                 //     try {
                 //         const res = await axios.get(`${baseURL}?email=${value}`);
@@ -95,25 +98,31 @@ export default {
                 //         } else {
                 //             return true;
                 //         }
-                //     } catch (e) {
-                //         console.error(e);
+
+             
+                //     } catch (error) {
+                //         console.error(error);
+
                 //         return 'Error checking email duplication.';
                 //     }
                 // },
                 // 회원가입 닉네임 중복검사
-                ID_Duplicate: async (value) => {
-                    try {
-                        const res = await axios.get(`${baseURL}?id=${value}`);
-                        if (res.data.length > 0) {
-                            return '이미 사용중인 닉네임입니다';
-                        } else {
-                            return true;
-                        }
-                    } catch (e) {
-                        console.error(e);
-                        return 'Error checking id duplication.';
-                    }
-                },
+                // ID_Duplicate: async (value) => {
+                //     try {
+                //         const encodedValue = encodeURIComponent(value);
+                //         const res = await axios.post('baseURL/', { id: encodedValue, action: 'checkDuplicate' });
+                //         if (res.data.code === 409) {
+                //         return '이미 사용중인 아이디입니다. 다른 아이디를 사용해주세요.';
+                //         } else {
+                //         return true;
+                //         }
+                //     } catch (e) {
+                //         console.error(e);
+                //         return '아이디 중복 검사 중에 오류가 발생했습니다.';
+                //     }
+                //     },
+
+                message: '닉네임 중복 검사에 실패했습니다.',
                 // 약관동의
                 agree: value => !!value || '약관에 동의해야 합니다'
             },
@@ -128,10 +137,11 @@ export default {
                 this.rules.phoneRules(this.phone) === true &&
                 this.rules.emailRules(this.email) === true &&
                 this.rules.minRules(this.password) === true &&
-                this.rules.passwordMatch(this.PasswordCheck) === true &&
+                this.rules.passwordMatch(this.PasswordCheck) === true 
+                // &&
 
-                await this.rules.emailDuplicate(this.email) &&
-                await this.rules.ID_Duplicate(this.id)
+                // await this.rules.emailDuplicate(this.email) &&
+                // await this.rules.ID_Duplicate(this.id)
             ) {
                 try {
                     const res = await axios.post(baseURL, {
@@ -139,7 +149,8 @@ export default {
                         id: this.id,
                         phone: this.phone,
                         email: this.email,
-                        password: this.password,
+                        psword: this.password,
+                        confirmPsword: this.PasswordCheck,
                     });
 
                     this.users = [...this.users, res.data];
