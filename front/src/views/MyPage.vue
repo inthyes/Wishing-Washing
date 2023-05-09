@@ -62,10 +62,10 @@
                     </v-col>
 
                     <v-col cols="12">
-                        <v-card class="card-hover" color="#5E5A80" theme="dark" to="favoritelaundry" style="color: white;">
+                        <v-card class="card-hover" color="#5E5A80" theme="dark" to="/favoritelaundry" style="color: white;">
                             <div class="d-flex flex-no-wrap justify-space-between">
                                 <div style="margin-left: 15px;">
-                                    <v-card-title class="text-h7" style="margin-top: 10px; margin-bottom: 5px;">단골
+                                    <v-card-title class="text-h7" style="margin-top: 10px; margin-bottom: 5px;">관심
                                         세탁소</v-card-title>
 
                                     <v-card-subtitle>
@@ -91,7 +91,7 @@
 
                 <v-card color="white" style="border-radius: 0%; margin-top: -10px; box-shadow: none;">
                     <v-divider class="mx-1 mb-1"></v-divider>
-                    <v-card-title style="margin-bottom: 5px; font-size: 16px;">단골 세탁소 정보</v-card-title>
+                    <v-card-title style="margin-bottom: 5px; font-size: 16px;">관심 세탁소 정보</v-card-title>
                     <v-card-subtitle>
                         <div id="operatingHour">운영시간 : {{ mp.operatingHour }}</div>
                         <div id="dayOff">휴무일 : {{ mp.dayOff }}</div>
