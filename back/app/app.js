@@ -14,7 +14,11 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 //cors설정
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:8080', // 허용할 도메인
+    methods: 'GET,POST', // 허용할 HTTP 메서드
+}
+));
 
 //라우팅
 const home = require("./src/routes/home");
