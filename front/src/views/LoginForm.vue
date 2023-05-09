@@ -13,15 +13,17 @@
 
       <br>
 
-      <v-btn :disabled="!form" :loading="loading" block color="success" size="large" type="submit" variant="elevated">
+      <v-btn to="/" :disabled="!form" :loading="loading" block color="success" size="large" type="submit" variant="elevated">
         로그인
       </v-btn>
+
+      
     </v-form>
   </v-card>
 </template>
 
 <script>
-// import axios from 'axios';
+import axios from 'axios';
 
 export default {
   data() {
@@ -34,7 +36,24 @@ export default {
   },
   methods: {
     login() {
-      alert('로그인 되었습니다');
+      const data = {
+        id: this.id,
+        psword: this.password
+      };
+
+      axios.post("http://localhost:3000/login", data)
+        .then(response => {
+          // 통신 성공 시 실행할 코드
+          console.log(response.data);
+          // 로그인 성공 여부를 확인하고 필요한 로직을 추가하세요.
+          alert('로그인 성공');
+        })
+        .catch(error => {
+          // 통신 실패 시 실행할 코드
+          console.log(error);
+          // 에러 처리 로직을 추가하세요.
+          alert('로그인 실패');
+        });
     }
   }
 };

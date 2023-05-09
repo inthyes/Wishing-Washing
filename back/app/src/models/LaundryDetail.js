@@ -18,7 +18,10 @@ class LaundryDetail {
                     resolve({
                         id: laundry.S_ID,
                         name: laundry.S_NAME,
-                        // 객체 배열화
+                        postAddress : laundry.S_ADDR1,
+                        doroAddress : laundry.S_ADDR2,
+                        detailAddress : laundry.S_ADDR3,
+                        info : laundry.S_COMMENT
                     })
                     }
                 });
