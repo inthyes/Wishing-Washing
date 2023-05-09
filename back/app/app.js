@@ -20,6 +20,11 @@ app.use(cors({
 }
 ));
 
+app.use(cors({
+    origin: 'http://localhost:8080',
+    credentials: true
+  }));
+
 //라우팅
 const home = require("./src/routes/home");
 

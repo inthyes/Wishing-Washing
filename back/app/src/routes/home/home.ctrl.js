@@ -51,18 +51,21 @@ const output ={
         res.render("home/register");
     },
     laundry : async (req, res) => {
-        logger.info(`GET /laundry 304 "세탁신청 화면으로 이동"`);
-        const cookieValue = req.headers.cookie;
-        const decodedValue = decodeURIComponent(cookieValue);
+            logger.info(`GET /laundry 304 "세탁신청 화면으로 이동"`);
+            const myCookieValue = req.headers;
 
-        const matches = decodedValue.match(/deliveryAddress1="([^"]+)";\s*deliveryAddress2="([^"]+)"/);
-        const deliveryAddress1 = matches[1];
-        const deliveryAddress2 = matches[2];
-        
-        const laundryList = new LaundryList(req.body, deliveryAddress1, deliveryAddress2);
-        const laundryListRes = await laundryList.getLaundryInfo();
-        res.render("home/laundry", {laundryListRes});
-    },
+            const cookieValue = req.headers.cookie;
+            const decodedValue = decodeURIComponent(cookieValue);
+
+            const matches = decodedValue.match(/deliveryAddress1="([^"]+)";\s*deliveryAddress2="([^"]+)"/);
+            const deliveryAddress1 = matches[1];
+            const deliveryAddress2 = matches[2];
+
+            const laundryList = new LaundryList(req.body, deliveryAddress1, deliveryAddress2);
+            const laundryListRes = await laundryList.getLaundryInfo();
+            console.log(laundryListRes);
+            res.json(laundryListRes);
+        },
     review : (req, res) => {
         logger.info(`GET /laundry 304 "review 화면으로 이동"`);
         const S_ID = req.params.S_ID;
@@ -199,10 +202,11 @@ const output ={
         // response로 json 형태로 데이터가 전달.
         const laundryDetailRes = await laundry.showDetail();
         const productDetailRes = await product.showDetail();
-        res.render("home/LaundryDetail", 
-        {
-            laundryDetail : laundryDetailRes,
-            productDetail : productDetailRes
+        console.log(laundryDetailRes);
+        console.log(productDetailRes); 
+        res.json({
+            laundryDetail: laundryDetailRes, 
+            productDetail: productDetailRes
         });
     },
 

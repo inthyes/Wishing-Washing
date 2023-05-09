@@ -86,6 +86,10 @@ export default {
                 minRules: value => value.length >= 8 || '8자 이상 입력하세요',
                 passwordMatch: value => value === this.password || '비밀번호가 일치하지 않습니다',
 
+
+                // 회원가입 이메일 중복검사
+
+
                 // emailDuplicate: async (value) => {
                 //     try {
                 //         const res = await axios.get(`${baseURL}?email=${value}`);
@@ -94,8 +98,11 @@ export default {
                 //         } else {
                 //             return true;
                 //         }
+
+             
                 //     } catch (error) {
                 //         console.error(error);
+
                 //         return 'Error checking email duplication.';
                 //     }
                 // },
