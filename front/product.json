@@ -1,0 +1,46 @@
+{
+    "product": [
+        {
+            "p_id": 1,
+            "name": "A상의",
+            "price": 1000,
+            "quantity": 0,
+            "l_id" : 1
+        },
+        {
+            "p_id": 2,
+            "name": "A하의",
+            "price": 2000,
+            "quantity": 0,
+            "l_id": 1
+        },
+        {
+            "p_id": 3,
+            "name": "B상의",
+            "price": 3000,
+            "quantity": 0,
+            "l_id": 2
+        },
+        {
+            "p_id": 4,
+            "name": "B하의",
+            "price": 4000,
+            "quantity": 0,
+            "l_id": 2
+        },
+        {
+            "p_id": 5,
+            "name": "C상의",
+            "price": 5000,
+            "quantity": 0,
+            "l_id": 3
+        },
+        {
+            "p_id": 6,
+            "name": "C하의",
+            "price": 6000,
+            "quantity": 0,
+            "l_id": 3
+        }
+    ]
+}

@@ -7,30 +7,6 @@
             "address": "경기 성남시 분당구 불정로 6 그린팩토리",
             "info": "간단한 AA 세탁소 정보",
             "stars": 4.5,
-            "items": [
-                {   "id": 1,
-                    "name": "셔츠",
-                    "price": 6000,
-                    "quantity": 0
-                },
-                {
-                    "id": 2,
-                    "name": "바지",
-                    "price": 6000,
-                    "quantity": 0
-                },
-                {   "id": 3,
-                    "name": "코트",
-                    "price": 12900,
-                    "quantity": 0
-                },
-                {
-                    "id": 4,
-                    "name": "스커트",
-                    "price": 6000,
-                    "quantity": 0
-                }
-            ],
             "reviews": "정말 좋아요"
         },
         {
@@ -40,20 +16,6 @@
             "address": "경기도 수원시 장안구",
             "info": "간단한 BB세탁소 정보... 안녕하세요~",
             "stars": 3.5,
-            "items": [
-                {
-                    "id": 1,
-                    "name": "코트",
-                    "price": 12.99,
-                    "quantity": 0
-                },
-                {
-                    "id": 2,
-                    "name": "스커트",
-                    "price": 5.99,
-                    "quantity": 0
-                }
-            ],
             "reviews": "별로에요.."
         },
         {
@@ -63,20 +25,6 @@
             "address": "경기도 안양시 만안구",
             "info": "간단한 CC세탁소 정보... 안녕하세요~",
             "stars": 4.0,
-            "items": [
-                {
-                    "id": 1,
-                    "name": "패딩",
-                    "price": 6.99,
-                    "quantity": 0
-                },
-                {
-                    "id": 2,
-                    "name": "신발",
-                    "price": 12.99,
-                    "quantity": 0
-                }
-            ],
             "reviews": "괜찮아요"
         }
     ]

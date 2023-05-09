@@ -6,13 +6,14 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "dev": "concurrently \"npm run laundrys\" \"npm run users\" \"npm run historys\" \"npm run mypage\" \"npm run reviews\" \"npm run submits\" ",
+    "dev": "concurrently \"npm run laundrys\" \"npm run users\" \"npm run historys\" \"npm run mypage\" \"npm run reviews\" \"npm run submits\" \"npm run product\" ",
     "laundrys": "json-server --watch laundrys.json --port 3000",
     "users": "json-server --watch users.json --port 3001",
     "historys": "json-server --watch historys.json --port 3002",
     "mypage": "json-server --watch mypage.json --port 3003",
     "reviews": "json-server --watch reviews.json --port 3004",
-    "submits": "json-server --watch submits.json --port 3005"
+    "submits": "json-server --watch submits.json --port 3005",
+    "product": "json-server --watch submits.json --port 3006"
   },
   "dependencies": {
     "@mdi/font": "5.9.55",
