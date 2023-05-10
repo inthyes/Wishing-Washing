@@ -8,7 +8,7 @@
       "info": "간단한 AA 세탁소 정보",
       "stars": 4.5,
       "reviews": "정말 좋아요",
-      "wish": 0,
+      "wish": 1,
       "products": [
         {
           "p_id": 1,
@@ -22,10 +22,7 @@
           "p_price": 2000,
           "quantity": 0
         }
-      ],
-      "isTrusted": true,
-      "_vts": 1683658133485,
-      "isWished": 1
+      ]
     },
     {
       "id": 2,
@@ -43,8 +40,7 @@
           "p_price": 2000,
           "quantity": 0
         }
-      ],
-      "isWished": 1
+      ]
     },
     {
       "id": 3,
