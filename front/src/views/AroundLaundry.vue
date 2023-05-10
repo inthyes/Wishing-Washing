@@ -6,7 +6,7 @@
         <v-card class="mx-auto mt-4" max-width="400" v-for="laundry in laundrys" :key="laundry.id" elevation="0">
 
             <v-img class="align-end text-white" id="laund-img" height="150"
-                src="https://cdn.vuetifyjs.com/images/cards/docks.jpg" cover>
+                src="https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8JUVDJTg0JUI4JUVEJTgzJTgxfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60" cover>
                 <v-card-title id="laund-title">{{ laundry.title }}</v-card-title>
             </v-img>
 
