@@ -13,7 +13,7 @@
 
       <br>
 
-      <v-btn to="/" :disabled="!form" :loading="loading" block color="success" size="large" type="submit" variant="elevated">
+      <v-btn to="/" :disabled="!form" :loading="loading" block color="success" size="large" type="submit" variant="elevated" @click="login">
         로그인
       </v-btn>
 
@@ -24,38 +24,45 @@
 
 <script>
 import axios from 'axios';
+const baseURL = "http://localhost:3000/login";
 
 export default {
   data() {
     return {
-      id: "",
-      password: "",
+      id: null,
+      password: null,
 
       show1: false,
-    };
+      form: false,
+      loading: false,
+      required: value => !!value || '필수 항목입니다.', // 필수 입력 필드 유효성 검사
+      users: []
+    }
   },
-  methods: {
-    login() {
+
+ //수정필요, 함수작성 필요 -
+   methods: {
+    async login() {
+      this.loading = true;
+
       const data = {
         id: this.id,
-        psword: this.password
+        psword: this.password,
+        // token: this.token
       };
-
-      axios.post("http://localhost:3000/login", data)
-        .then(response => {
-          // 통신 성공 시 실행할 코드
-          console.log(response.data);
-          // 로그인 성공 여부를 확인하고 필요한 로직을 추가하세요.
-          alert('로그인 성공');
-        })
-        .catch(error => {
-          // 통신 실패 시 실행할 코드
-          console.log(error);
-          // 에러 처리 로직을 추가하세요.
-          alert('로그인 실패');
-        });
+      try {
+      const response = await axios.post(baseURL, data);
+      const user = response.data;
+      this.users.push(user);
+      console.log(user);
+      alert('로그인 성공');
+    } catch (error) {
+      console.log(error);
+      alert('로그인 실패');
     }
   }
-};
+    }
+  }
+
 </script>
 

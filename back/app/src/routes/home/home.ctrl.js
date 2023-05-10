@@ -20,17 +20,17 @@ const router = express.Router();
 
 const jwt = require("jsonwebtoken");
 
-function Vtoken(token) {
-  try {
-    var check = jwt.verify(token, "secretKey");
-    if (check) {
-      console.log("token 검증", check.user_id);
-      return check.user_id;
-    }
-  } catch {
-    console.log("token 검증 오류");
-  }
-}
+// function Vtoken(token) {
+//   try {
+//     var check = jwt.verify(token, "secretKey");
+//     if (check) {
+//       console.log("token 검증", check.user_id);
+//       return check.user_id;
+//     }
+//   } catch {
+//     console.log("token 검증 오류");
+//   }
+// }
 
 const output ={
     home : (req, res) =>{

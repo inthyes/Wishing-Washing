@@ -122,7 +122,7 @@ export default {
                 //     }
                 //     },
 
-                message: '닉네임 중복 검사에 실패했습니다.',
+                // message: '닉네임 중복 검사에 실패했습니다.',
                 // 약관동의
                 agree: value => !!value || '약관에 동의해야 합니다'
             },
