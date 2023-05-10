@@ -12,12 +12,12 @@
 
             <v-card-subtitle class="pt-3" id="laund-sub-title">{{ laundry.subtitle }}</v-card-subtitle>
 
-            <v-card-text>
+            <v-card-text  class="py-2">
                 <div id="laund-address">{{ laundry.address }}</div>
                 <div id="laund-info">{{ laundry.info }}</div>
             </v-card-text>
 
-            <v-card-actions>
+            <v-card-actions class="py-0">
                 <v-btn icon @click="toggleWish(laundry)">
                     <v-icon :color="laundry.wish ? 'red' : ''">
                         {{ laundry.wish ? 'mdi-heart' : 'mdi-heart-outline' }}
@@ -26,7 +26,7 @@
                 <v-btn color="orange" v-bind:to="`/laundrydetail/${laundry.id}`">상세정보</v-btn>
             </v-card-actions>
 
-            <v-divider></v-divider>
+            <v-divider class="py-0"></v-divider>
 
         </v-card>
     </div>
