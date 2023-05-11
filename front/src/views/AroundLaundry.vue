@@ -44,7 +44,7 @@ export default {
     }),
     async created() {
         try {
-            const res = await axios.get('http://localhost:3000/laundrys');
+            const res = await axios.get('http://localhost:5000/laundrys');
 
             this.laundrys = res.data;
         } catch (e) {
@@ -57,7 +57,7 @@ export default {
             //const laundry = this.laundrys.find(l => l.id === laundryId);
             laundry.wish = laundry.wish ? 0 : 1;
             //const id = this.$route.params.id;
-            axios.patch(`http://localhost:3000/laundrys/${laundry.id}`, laundry)
+            axios.patch(`http://localhost:5000/laundrys/${laundry.id}`, laundry)
                 .then(response => {
                     // handle successful response
                     console.log(response);

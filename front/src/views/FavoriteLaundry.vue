@@ -31,7 +31,7 @@ export default {
     }),
     async created() {
         try {
-            const res = await axios.get('http://localhost:3000/laundrys');
+            const res = await axios.get('http://localhost:5000/laundrys');
             this.laundrys = res.data;
         } catch (e) {
             console.error(e);

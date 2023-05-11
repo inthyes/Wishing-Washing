@@ -1,0 +1,211 @@
+{
+  "users": [
+    {
+      "name": "김영임",
+      "id": "비버",
+      "phone": "01012341234",
+      "email": "20kyi@naver.com",
+      "password": "rladuddla"
+    },
+    {
+      "name": "user1",
+      "id": "user1",
+      "phone": "010-1234-1234",
+      "email": "user1@naver.com",
+      "password": "12341234"
+    },
+    {
+      "name": "user2",
+      "id": "user2",
+      "phone": "010-1224-1233",
+      "email": "user2@naver.com",
+      "password": "12341234"
+    }
+  ],
+  "laundrys": [
+    {
+      "id": 1,
+      "title": "AA세탁소",
+      "subtitle": "AA세탁소 서브 타이틀",
+      "address": "경기 성남시 분당구 불정로 6 그린팩토리",
+      "info": "간단한 AA 세탁소 정보",
+      "stars": 4.5,
+      "reviews": "정말 좋아요",
+      "wish": 1,
+      "products": [
+        {
+          "p_id": 1,
+          "p_name": "A상의",
+          "p_price": 1000,
+          "quantity": 0
+        },
+        {
+          "p_id": 2,
+          "p_name": "A하의",
+          "p_price": 2000,
+          "quantity": 0
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "BB세탁소",
+      "subtitle": "BB세탁소 서브 타이틀",
+      "address": "경기도 수원시 장안구",
+      "info": "간단한 BB세탁소 정보... 안녕하세요~",
+      "stars": 3.5,
+      "reviews": "별로에요..",
+      "wish": 0,
+      "products": [
+        {
+          "p_id": 2,
+          "p_name": "B상의",
+          "p_price": 2000,
+          "quantity": 0
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "CC세탁소",
+      "subtitle": "CC세탁소 서브 타이틀",
+      "address": "경기도 안양시 만안구",
+      "info": "간단한 CC세탁소 정보... 안녕하세요~",
+      "stars": 4,
+      "reviews": "괜찮아요",
+      "wish": 1,
+      "products": [
+        {
+          "p_id": 3,
+          "p_name": "C상의",
+          "p_price": 3000,
+          "quantity": 0
+        }
+      ]
+    }
+  ],
+  "product": [
+    {
+      "p_id": 1,
+      "name": "A상의",
+      "price": 1000,
+      "quantity": 0,
+      "l_id": 1
+    },
+    {
+      "p_id": 2,
+      "name": "A하의",
+      "price": 2000,
+      "quantity": 0,
+      "l_id": 1
+    },
+    {
+      "p_id": 3,
+      "name": "B상의",
+      "price": 3000,
+      "quantity": 0,
+      "l_id": 2
+    },
+    {
+      "p_id": 4,
+      "name": "B하의",
+      "price": 4000,
+      "quantity": 0,
+      "l_id": 2
+    },
+    {
+      "p_id": 5,
+      "name": "C상의",
+      "price": 5000,
+      "quantity": 0,
+      "l_id": 3
+    },
+    {
+      "p_id": 6,
+      "name": "C하의",
+      "price": 6000,
+      "quantity": 0,
+      "l_id": 3
+    }
+  ],
+  "submits": [
+    {
+      
+    }
+  ],
+  "historys": [
+    {
+      "id": 1,
+      "date": "2023.03.18",
+      "washingImg": "https://images.unsplash.com/photo-1603400521630-9f2de124b33b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
+      "name": "니트",
+      "delivery": "배송중",
+      "cost": "10,000원",
+      "requirement": "얼룩 깨끗하게 지워주세요",
+      "laundryName": "OO 세탁소"
+    },
+    {
+      "id": 2,
+      "date": "2023.03.11",
+      "washingImg": "https://images.unsplash.com/photo-1603400521630-9f2de124b33b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
+      "name": "운동화",
+      "delivery": "배송완료(3/14)",
+      "cost": "12,000원",
+      "requirement": "변색 복구 부탁드립니다",
+      "laundryName": "XX 세탁소"
+    },
+    {
+      "id": 3,
+      "date": "2023.03.11",
+      "washingImg": "https://images.unsplash.com/photo-1603400521630-9f2de124b33b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
+      "name": "청바지",
+      "delivery": "배송완료(3/14)",
+      "cost": "13,000원",
+      "requirement": "기장 2cm 줄여주세요",
+      "laundryName": "XX 세탁소"
+    },
+    {
+      "id": 4,
+      "date": "2023.03.10",
+      "washingImg": "https://images.unsplash.com/photo-1603400521630-9f2de124b33b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
+      "name": "종합세탁물",
+      "delivery": "배송완료(3/12)",
+      "cost": "10,000원",
+      "requirement": "없음",
+      "laundryName": "AA 세탁소"
+    }
+  ],
+  "mypage": [
+    {
+      "id": 1,
+      "userName": "XXX 고객님",
+      "userAddr": "경기도 수원시",
+      "countHistory": "32",
+      "countReview": "11",
+      "countQnA": "2",
+      "laundryName": "XX 세탁소",
+      "laundryAddr": "경기도 수원시",
+      "operatingHour": "11:00 - 18:00",
+      "dayOff": "공휴일 휴무",
+      "laundryNumber": "031-123-777",
+      "stars": 4.5
+    }
+  ],
+  "reviews": [
+    {
+      "title": "제목 1",
+      "content": "내용 1",
+      "rating": 5
+    },
+    {
+      "title": "제목 2",
+      "content": "내용 2",
+      "rating": 5
+    },
+    {
+      "title": "제목 3",
+      "content": "내용 3",
+      "rating": 5
+    }
+  ]
+}

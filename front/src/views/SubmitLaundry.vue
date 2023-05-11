@@ -79,10 +79,10 @@ export default {
     async created() {
         try {
             const id = this.$route.params.id;
-            const res = await axios.get(`http://localhost:3000/laundrys/${id}`);
+            const res = await axios.get(`http://localhost:5000/laundrys/${id}`);
             this.laundry = res.data;
 
-            const res2 = await axios.get(`http://localhost:3005/submits`);
+            const res2 = await axios.get(`http://localhost:5000/submits`);
             this.submit = res2.data;
         } catch (e) {
             console.error(e);
