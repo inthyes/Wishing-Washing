@@ -2,35 +2,50 @@
 
 <template>
     <div class="wrapper px-3">
-        <v-card class="mx-auto my-5" max-width="500" elevation="0">
-            <!-- <div class="myWashing">
-                <a>내 세탁물</a>
-            </div>
-            <hr id="divisionLine"> -->
 
-            <div v-for="(h, index) in historys" v-bind:key="h.id">
-                <div v-if="index === 0 || h.date !== historys[index - 1].date">
-                    <div class="date" id="date">
-                        <b>{{ h.date }}</b>
-                    </div>
-                </div>
-                <v-card v-bind:key="h.id" elevation="0">
-                    <div class="washingStatus">
-                        <v-img id="washingImg" :src="h.washingImg" cover></v-img>
-                        <v-card-text>
-                            <div id="name">
-                                품&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목&nbsp;&nbsp;|&nbsp;&nbsp;{{ h.name }}
-                                &nbsp;&nbsp;∙&nbsp;<a class="delivery">{{ h.delivery }}</a>
+        <v-card class="mx-auto my-5" max-width="500" elevation="0">
+            <v-card>
+                <v-tabs v-model="tab" stacked grow>
+                    <v-tab value="one">현재 진행사항</v-tab>
+                    <v-tab value="two">지난 이용내역</v-tab>
+                </v-tabs>
+
+                <v-card-text>
+                    <v-window v-model="tab">
+                        <v-window-item value="one">
+                            One
+                        </v-window-item>
+
+                        <v-window-item value="two">
+                            <div v-for="(h, index) in historys" v-bind:key="h.id">
+                                <div v-if="index === 0 || h.date !== historys[index - 1].date">
+                                    <div class="date" id="date">
+                                        <b>{{ h.date }}</b>
+                                    </div>
+                                </div>
+                                <v-card v-bind:key="h.id" elevation="0">
+                                    <div class="washingStatus">
+                                        <!-- <v-img id="washingImg" :src="h.washingImg" cover></v-img> -->
+                                        <v-card-text>
+                                            <div id="name">
+                                                품&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목&nbsp;&nbsp;|&nbsp;&nbsp;{{ h.name }}
+                                                &nbsp;&nbsp;∙&nbsp;<a class="delivery">{{ h.delivery }}</a>
+                                            </div>
+                                            <div id="cost">세탁비용&nbsp;|&nbsp;&nbsp;{{ h.cost }}</div>
+                                            <div id="requirement">요청사항&nbsp;|&nbsp;&nbsp;{{ h.requirement }}</div>
+                                            <v-divider id="divisionLine2"></v-divider>
+                                            <a id="laundryName">{{ h.laundryName }}</a>&nbsp;
+                                            <v-btn id="reviewBtn" v-bind:to="`/addreview/${h.id}`">리뷰</v-btn>
+                                        </v-card-text>
+                                    </div>
+                                </v-card>
                             </div>
-                            <div id="cost">세탁비용&nbsp;|&nbsp;&nbsp;{{ h.cost }}</div>
-                            <div id="requirement">요청사항&nbsp;|&nbsp;&nbsp;{{ h.requirement }}</div>
-                            <v-divider id="divisionLine2"></v-divider>
-                            <a id="laundryName">{{ h.laundryName }}</a>&nbsp;
-                            <v-btn id="reviewBtn" v-bind:to="`/addreview/${h.id}`">리뷰</v-btn>
-                        </v-card-text>
-                    </div>
-                </v-card>
-            </div>
+                        </v-window-item>
+                    </v-window>
+                </v-card-text>
+            </v-card>
+
+
             <br>
         </v-card>
     </div>
@@ -123,8 +138,9 @@
 import axios from "axios";
 export default {
     data: () => ({
+        tab: null,
         show: false,
-        historys: []
+        historys: [],
     }),
     async created() {
         try {

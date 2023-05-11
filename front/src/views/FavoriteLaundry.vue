@@ -1,30 +1,25 @@
 <!-- 관심 세탁소 -->
 
 <template>
-    <div id="laund-list">
-        <v-card class="mx-auto my-5" max-width="500" v-for="laundry in laundrys" :key="laundry.id" elevation="0">
-            <v-img class="align-end text-white" id="laund-img" height="150"
-                src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA5MjRfMTQ3%2FMDAxNjY0MDA4MTk4MzAz.BwhTgWGfyhuJY0X5BwkEBx-MCnAp1AiontZ8lctUZcog.p1YZYnoJbu2O6wimUoYzP6ZSLj8UdUW6POKhIBcJtTMg.JPEG.sol_ji1%2FIMG_2992.jpg&type=sc960_832"
-                cover>
-                <v-card-title id="laund-title">{{ laundry.title }}</v-card-title>
-            </v-img>
+    <v-col cols="12">
+        <v-card class="mx-auto mt-4" max-width="400" color="#ffffff" theme="light" elevation="1"
+            v-for="laundry in favoriteLaundrys" :key="laundry.id" v-bind:to="`/laundrydetail/${laundry.id}`">
+            <div class="d-flex">
+                <v-avatar class="ma-3" size="100" rounded="0">
+                    <div class="square-container">
+                        <v-img
+                            src="https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8JUVDJTg0JUI4JUVEJTgzJTgxfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60"
+                            width="200" :aspect-ratio="1"></v-img>
+                    </div>
+                </v-avatar>
 
-            <v-card-subtitle class="pt-3" id="laund-sub-title">{{ laundry.subtitle }}</v-card-subtitle>
-
-            <v-card-text>
-                <div id="laund-address">{{ laundry.address }}</div>
-                <div id="laund-info">{{ laundry.info }}</div>
-            </v-card-text>
-
-            <v-card-actions>
-                <v-btn color="orange" v-bind:to="`/laundrydetail/${laundry.id}`">상세정보</v-btn>
-
-            </v-card-actions>
-
-            <v-divider class="mx-1 mb-1"></v-divider>
-
+                <div class="mt-1">
+                    <v-card-title class="px-1"> {{ laundry.title }} </v-card-title>
+                    <v-card-text class="px-1 text-medium-emphasis"> {{ laundry.address }} </v-card-text>
+                </div>
+            </div>
         </v-card>
-    </div>
+    </v-col>
 </template>
 
 <script>
@@ -41,6 +36,13 @@ export default {
         } catch (e) {
             console.error(e);
         }
-    }
-}
+    },
+    computed: {
+        favoriteLaundrys() {
+            return this.laundrys.filter((laundry) => laundry.wish === 1);
+        },
+    },
+};
 </script>
+
+<style></style>

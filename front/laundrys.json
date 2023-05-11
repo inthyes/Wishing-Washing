@@ -1,83 +1,64 @@
 {
-    "laundrys": [
+  "laundrys": [
+    {
+      "id": 1,
+      "title": "AA세탁소",
+      "subtitle": "AA세탁소 서브 타이틀",
+      "address": "경기 성남시 분당구 불정로 6 그린팩토리",
+      "info": "간단한 AA 세탁소 정보",
+      "stars": 4.5,
+      "reviews": "정말 좋아요",
+      "wish": 1,
+      "products": [
         {
-            "id": 1,
-            "title": "AA세탁소",
-            "subtitle": "AA세탁소 서브 타이틀",
-            "address": "경기 성남시 분당구 불정로 6 그린팩토리",
-            "info": "간단한 AA 세탁소 정보",
-            "stars": 4.5,
-            "items": [
-                {   "id": 1,
-                    "name": "셔츠",
-                    "price": 6000,
-                    "quantity": 0
-                },
-                {
-                    "id": 2,
-                    "name": "바지",
-                    "price": 6000,
-                    "quantity": 0
-                },
-                {   "id": 3,
-                    "name": "코트",
-                    "price": 12900,
-                    "quantity": 0
-                },
-                {
-                    "id": 4,
-                    "name": "스커트",
-                    "price": 6000,
-                    "quantity": 0
-                }
-            ],
-            "reviews": "정말 좋아요"
+          "p_id": 1,
+          "p_name": "A상의",
+          "p_price": 1000,
+          "quantity": 0
         },
         {
-            "id": 2,
-            "title": "BB세탁소",
-            "subtitle": "BB세탁소 서브 타이틀",
-            "address": "경기도 수원시 장안구",
-            "info": "간단한 BB세탁소 정보... 안녕하세요~",
-            "stars": 3.5,
-            "items": [
-                {
-                    "id": 1,
-                    "name": "코트",
-                    "price": 12.99,
-                    "quantity": 0
-                },
-                {
-                    "id": 2,
-                    "name": "스커트",
-                    "price": 5.99,
-                    "quantity": 0
-                }
-            ],
-            "reviews": "별로에요.."
-        },
-        {
-            "id": 3,
-            "title": "CC세탁소",
-            "subtitle": "CC세탁소 서브 타이틀",
-            "address": "경기도 안양시 만안구",
-            "info": "간단한 CC세탁소 정보... 안녕하세요~",
-            "stars": 4.0,
-            "items": [
-                {
-                    "id": 1,
-                    "name": "패딩",
-                    "price": 6.99,
-                    "quantity": 0
-                },
-                {
-                    "id": 2,
-                    "name": "신발",
-                    "price": 12.99,
-                    "quantity": 0
-                }
-            ],
-            "reviews": "괜찮아요"
+          "p_id": 2,
+          "p_name": "A하의",
+          "p_price": 2000,
+          "quantity": 0
         }
-    ]
+      ]
+    },
+    {
+      "id": 2,
+      "title": "BB세탁소",
+      "subtitle": "BB세탁소 서브 타이틀",
+      "address": "경기도 수원시 장안구",
+      "info": "간단한 BB세탁소 정보... 안녕하세요~",
+      "stars": 3.5,
+      "reviews": "별로에요..",
+      "wish": 0,
+      "products": [
+        {
+          "p_id": 2,
+          "p_name": "B상의",
+          "p_price": 2000,
+          "quantity": 0
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "CC세탁소",
+      "subtitle": "CC세탁소 서브 타이틀",
+      "address": "경기도 안양시 만안구",
+      "info": "간단한 CC세탁소 정보... 안녕하세요~",
+      "stars": 4,
+      "reviews": "괜찮아요",
+      "wish": 1,
+      "products": [
+        {
+          "p_id": 3,
+          "p_name": "C상의",
+          "p_price": 3000,
+          "quantity": 0
+        }
+      ]
+    }
+  ]
 }
