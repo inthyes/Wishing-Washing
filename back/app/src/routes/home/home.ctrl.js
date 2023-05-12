@@ -206,7 +206,7 @@ const output ={
     //     });
     // },
     laundryDetail: async (req, res) => {
-        try {
+      /*  try {
           const token = req.headers.cookie; // 헤더에서 토큰 추출
       
           // 토큰 검증
@@ -218,7 +218,7 @@ const output ={
             }
       
             const user_id = decoded.user_id; // 토큰에서 추출한 사용자 ID
-            console.log('user_id:', user_id);
+            console.log('user_id:', user_id); */
       
             // 토큰 검증 후의 나머지 로직을 이곳에 작성
       
@@ -232,11 +232,11 @@ const output ={
               laundryDetail: laundryDetailRes,
               productDetail: productDetailRes,
             });
-          });
+       /*   });
         } catch (error) {
           console.error(error);
           res.status(500).json({ error: 'Internal Server Error' });
-        }
+        }*/
       },
 
     //사장님 기능 & 리뷰 사진 올릴 때 사용
@@ -245,6 +245,9 @@ const output ={
         res.render('home/upload');
     },
     orderPage : async (req, res) => {
+        const laundry = new Laundry(req.params.id);
+        const laundryDetailRes = await laundry.showDetail();
+
         const cookieAddress = req.headers.cookie;
         const decodedValue = decodeURIComponent(cookieAddress);
         const matches = decodedValue.match(/deliveryAddress1="([^"]+)";\s*deliveryAddress2="([^"]+)"/);
@@ -254,11 +257,17 @@ const output ={
         const orderNum = JSON.parse(cookieValue).orderNumber; 
         const laundryOrder = new LaundryOrder(orderNum);
         const cartRes = await laundryOrder.showCart();
+
+        const product = new Product(cartRes);
+        const productRes = await product.getProductId();
+
         logger.info(`GET /home/laundryOrder 304 " 세탁신청주문 화면으로 이동`);
         res.render("home/laundryOrder", 
         {
             deliveryAddress : deliveryAddress,
-            cartRes : cartRes
+            cartRes : cartRes,
+            laundryDetailRes : laundryDetailRes,
+            productRes : productRes
         });
     },
 };
@@ -269,13 +278,9 @@ const process = {
         // const user_id = Vtoken(token);  // 토큰 검증
         // console.log("토큰확인: " + token);
         // console.log("user_id: " + user_id);
-
         const cart = new Cart(req.body, "codus");
         const response = await cart.add();
-        const cookieName = 'response';
-        const cookieValue =  JSON.stringify(response);
-        res.cookie(cookieName, cookieValue);
-        res.status(200).json({ message: 'Cookie created successfully' });
+        res.json(response)
     },
 
     like: async (req,res) => {

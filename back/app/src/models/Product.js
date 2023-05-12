@@ -3,7 +3,7 @@ const {response} = require("express");
 const ProductDetail = require("./ProductDetail");
 
 class Product {
-    constructor(body) {
+    constructor(body, res) {
         // this.body에는 req.params.id가 들어가있음
         this.body = body;
       }
@@ -15,6 +15,17 @@ class Product {
 
         return detail;
     }
+
+    async getProductId() {
+      let product = [];
+      let productDetail = [];
+      product = this.body;
+      for (var i = 0; i < product.length; i++) {
+        productDetail[i] = await ProductDetail.getProduct(product[i].PRODUCT_ID);
+      }
+      return productDetail;
+    }
+
 }
 
 module.exports = Product;

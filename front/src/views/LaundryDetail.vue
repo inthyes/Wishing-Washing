@@ -10,10 +10,10 @@
             <v-img cover height="250" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
 
             <v-card-item>
-                <v-card-title>{{ laundry.S_NAME }}</v-card-title>
+                <v-card-title>{{ laundry.name }}</v-card-title>
 
                 <v-card-subtitle>
-                    <span class="me-1">{{ laundry.S_OPENING }} ~ {{ laundry.S_OPENING }}</span>
+                    <span class="me-1">{{ laundry.opening }} ~ {{ laundry.closing }}</span>
 
                     <v-icon color="error" icon="mdi-fire-circle" size="small"></v-icon>
                 </v-card-subtitle>
@@ -31,13 +31,13 @@
                 </v-row>
 
                 <div class="my-4 text-subtitle-1">
-                    {{ laundry.S_ADD2 }}
+                    {{ laundry.doroAddress }}
                 </div>
                 <div class="my-4 text-subtitle-1">
-                    {{ laundry.S_ADD3 }}
+                    {{ laundry.detailAddress }}
                 </div>
 
-                <div>{{ laundry.S_COMMNET }}</div>
+                <div>{{ laundry.info }}</div>
             </v-card-text>
 
             <v-divider class="mx-4 mb-1"></v-divider>
@@ -50,13 +50,13 @@
             <v-window v-model="tab">
                 <v-window-item value="tab-1">
                     <v-list class="mx-1">
-                        <v-list-item v-for="(product, p_id) in laundry.products" :key="p_id">
+                        <v-list-item v-for="pro in product" :key="pro.PRODUCT_ID">
                             <v-list-item-content class="d-flex justify-space-between">
-                                <div>{{ product.p_name }}</div>
-                                <div>{{ product.p_price }}원&nbsp;&nbsp;&nbsp;
-                                    <v-icon color="deep-purple-lighten-2" @click="decrement(product)">mdi-minus</v-icon>
-                                    <span>{{ product.quantity }}</span>
-                                    <v-icon color="deep-purple-lighten-2" @click="increment(product)">mdi-plus</v-icon>
+                                <div>{{ pro.PRODUCT_NAME }}</div>
+                                <div>{{ pro.PRODUCT_PRICE }}원&nbsp;&nbsp;&nbsp;
+                                    <v-icon color="deep-purple-lighten-2" @click="decrement(pro)">mdi-minus</v-icon>
+                                    <span>{{ pro.PRODUCT_QUANTITIY }}</span>
+                                    <v-icon color="deep-purple-lighten-2" @click="increment(pro)">mdi-plus</v-icon>
                                 </div>
                             </v-list-item-content>
 
@@ -103,6 +103,7 @@ export default {
 
         laundry: {},        // laundrys.json
         submits: [],        // submits.json      
+        product: [],
 
         tab: 'Appetizers',  // 세탁/수선 & 리뷰 탭
         //isWished: 0,    // 찜버튼
@@ -116,9 +117,9 @@ export default {
             const id = this.$route.params.id;
             const res = await axios.get(`http://localhost:3000/laundry/detail/${id}`, {
                 withCredentials: true,
-                // headers: {
-                //  Cookie: document.cookie, // 쿠키를 요청에 추가
-                //  },
+                headers: {
+                 Cookie: document.cookie, // 쿠키를 요청에 추가
+                 },
             });
                 this.laundry = res.data.laundryDetail;
                 this.product = res.data.productDetail
@@ -148,35 +149,28 @@ export default {
                 });
         },
         // 상품수량증가
-        increment(product) {
-            product.quantity++
+        increment(pro) {
+            pro.PRODUCT_QUANTITIY++;
+            pro.PRODUCT_PRICE_TOTAL = pro.PRODUCT_PRICE_TOTAL + pro.PRODUCT_PRICE;
         },
         // 상품수량감소
-        decrement(product) {
-            if (product.quantity > 0) {
-                product.quantity--
+        decrement(pro) {
+            if (pro.PRODUCT_QUANTITIY > 0) {
+                pro.PRODUCT_QUANTITIY--;
+                pro.PRODUCT_PRICE_TOTAL = pro.PRODUCT_PRICE_TOTAL - pro.PRODUCT_PRICE;
             }
         },
         async submitData() {
             try {
-                const selectedItems = this.laundry.items.filter(item => item.quantity > 0);
+                    const selectedItems = this.product;
+                    const id = this.$route.params.id;
 
-                for (const product of selectedProducts) {
-                    const now = new Date();
-                    const res = await axios.post("http://localhost:5000/submits", {
-                        title: this.laundry.title,
-                        itemName: product.p_name,
-                        quantity: product.quantity,
-                        // time: new Date(), // 현재 시간을 저장하는 time 프로퍼티를 추가
-                        date: now.toISOString().substring(0, 10), // 현재 날짜를 저장하는 date 프로퍼티
-                        time: now.toISOString().substring(11, 19), // 현재 시간을 저장하는 time 프로퍼티
-                    },{
-                        headers: headers,
-                    });
-
-                    this.submits = [...this.submits, res.data];
-                    console.log(headers);
-                }
+                    const data = { laundryId: this.$route.params.id};
+                    selectedItems.forEach(pro => {data[pro.PRODUCT_ID] = pro.PRODUCT_QUANTITIY});
+                    const res = await axios.post(`http://localhost:3000/laundry/detail/${id}/order`, data);
+                    //res.data의 orderNum 쿠키처리
+                    this.$cookies.set('response', res.data)
+                    this.$cookies.get('response')
             } catch (e) {
                 console.error(e);
             }
