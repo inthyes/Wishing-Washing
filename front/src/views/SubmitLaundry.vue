@@ -4,7 +4,7 @@
             <v-form @submit.prevent="submit">
                 <v-row>
                     <v-col cols="12">
-                        <h2>{{ laundry.title }}</h2>
+                        <h2>{{ laundry.S_NAME }}</h2>
                     </v-col>
                 </v-row>
                 <v-divider></v-divider>
@@ -78,11 +78,11 @@ export default {
     },
     async created() {
         try {
-            const id = this.$route.params.id;
-            const res = await axios.get(`http://localhost:3000/laundrys/${id}`);
+            const S_ID = this.$route.params.id;
+            const res = await axios.get(`http://localhost:5000/laundrys/${S_ID}`);
             this.laundry = res.data;
 
-            const res2 = await axios.get(`http://localhost:3005/submits`);
+            const res2 = await axios.get(`http://localhost:5000/submits`);
             this.submit = res2.data;
         } catch (e) {
             console.error(e);

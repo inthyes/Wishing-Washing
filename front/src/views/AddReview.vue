@@ -66,7 +66,7 @@ export default {
                 date: dateString
             };
             // reviews.json 파일에 새로운 리뷰 데이터 추가
-            axios.post('http://localhost:3004/reviews', newReview)
+            axios.post('http://localhost:5000/reviews', newReview)
                 .then(() => {
                     // 리뷰 작성 후 폼 초기화
                     this.review.title = '';

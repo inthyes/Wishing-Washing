@@ -144,7 +144,7 @@ export default {
     }),
     async created() {
         try {
-            const res = await axios.get('http://localhost:3002/historys');
+            const res = await axios.get('http://localhost:5000/historys');
             this.historys = res.data;
         } catch (e) {
             console.error(e);

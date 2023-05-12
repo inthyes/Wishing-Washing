@@ -10,10 +10,10 @@
             <v-img cover height="250" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
 
             <v-card-item>
-                <v-card-title>{{ laundry.title }}</v-card-title>
+                <v-card-title>{{ laundry.S_NAME }}</v-card-title>
 
                 <v-card-subtitle>
-                    <span class="me-1">{{ laundry.subtitle }}</span>
+                    <span class="me-1">{{ laundry.S_OPENING }} ~ {{ laundry.S_OPENING }}</span>
 
                     <v-icon color="error" icon="mdi-fire-circle" size="small"></v-icon>
                 </v-card-subtitle>
@@ -26,15 +26,18 @@
                         size="normal"></v-rating>
 
                     <div class="text-grey ms-2">
-                        {{ laundry.stars }} (413)
+                        {{ laundry.stars }}
                     </div>
                 </v-row>
 
                 <div class="my-4 text-subtitle-1">
-                    {{ laundry.address }}
+                    {{ laundry.S_ADD2 }}
+                </div>
+                <div class="my-4 text-subtitle-1">
+                    {{ laundry.S_ADD3 }}
                 </div>
 
-                <div>{{ laundry.info }}</div>
+                <div>{{ laundry.S_COMMNET }}</div>
             </v-card-text>
 
             <v-divider class="mx-4 mb-1"></v-divider>
@@ -108,11 +111,8 @@ export default {
     async created() {
         try {
             const id = this.$route.params.id;
-            const res = await axios.get(`http://localhost:3000/laundrys/${id}`);
+            const res = await axios.get(`http://localhost:5000/laundrys/${id}`);
             this.laundry = res.data;
-
-            // const resProduct = await axios.get('http//localhost:3006/product/');
-            // this.prod = resProduct.data;
         } catch (e) {
             console.error(e);
         }
@@ -128,8 +128,7 @@ export default {
         toggleWish(laundry) {
             //const laundry = this.laundrys.find(l => l.id === laundryId);
             laundry.wish = laundry.wish ? 0 : 1;
-            //const id = this.$route.params.id;
-            axios.patch(`http://localhost:3000/laundrys/${laundry.id}`, laundry)
+            axios.patch(`http://localhost:5000/laundrys/${laundry.id}`, laundry)
                 .then(response => {
                     // handle successful response
                     console.log(response);
@@ -155,9 +154,9 @@ export default {
 
                 for (const product of selectedProducts) {
                     const now = new Date();
-                    const res = await axios.post("http://localhost:3005/submits", {
+                    const res = await axios.post("http://localhost:5000/submits", {
                         title: this.laundry.title,
-                        itemName: product.name,
+                        itemName: product.p_name,
                         quantity: product.quantity,
                         // time: new Date(), // 현재 시간을 저장하는 time 프로퍼티를 추가
                         date: now.toISOString().substring(0, 10), // 현재 날짜를 저장하는 date 프로퍼티

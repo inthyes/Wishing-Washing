@@ -133,7 +133,7 @@ export default {
     }),
     async created() {
         try {
-            const res = await axios.get('http://localhost:3003/mypage');
+            const res = await axios.get('http://localhost:5000/mypage');
             this.mypage = res.data;
         } catch (e) {
             console.error(e);
