@@ -10,10 +10,10 @@
             <v-img cover height="250" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
 
             <v-card-item>
-                <v-card-title>{{ laundry.title }}</v-card-title>
+                <v-card-title>{{ laundry.S_NAME }}</v-card-title>
 
                 <v-card-subtitle>
-                    <span class="me-1">{{ laundry.subtitle }}</span>
+                    <span class="me-1">{{ laundry.S_OPENING }} ~ {{ laundry.S_OPENING }}</span>
 
                     <v-icon color="error" icon="mdi-fire-circle" size="small"></v-icon>
                 </v-card-subtitle>
@@ -26,15 +26,18 @@
                         size="normal"></v-rating>
 
                     <div class="text-grey ms-2">
-                        {{ laundry.stars }} (413)
+                        {{ laundry.stars }}
                     </div>
                 </v-row>
 
                 <div class="my-4 text-subtitle-1">
-                    {{ laundry.address }}
+                    {{ laundry.S_ADD2 }}
+                </div>
+                <div class="my-4 text-subtitle-1">
+                    {{ laundry.S_ADD3 }}
                 </div>
 
-                <div>{{ laundry.info }}</div>
+                <div>{{ laundry.S_COMMNET }}</div>
             </v-card-text>
 
             <v-divider class="mx-4 mb-1"></v-divider>
@@ -107,12 +110,9 @@ export default {
     }),
     async created() {
         try {
-            const l_id = this.$route.params.id;
-            const res = await axios.get(`http://localhost:5000/laundrys/${l_id}`);
+            const id = this.$route.params.id;
+            const res = await axios.get(`http://localhost:5000/laundrys/${id}`);
             this.laundry = res.data;
-
-            // const resProduct = await axios.get('http//localhost:3006/product/');
-            // this.prod = resProduct.data;
         } catch (e) {
             console.error(e);
         }
@@ -128,7 +128,6 @@ export default {
         toggleWish(laundry) {
             //const laundry = this.laundrys.find(l => l.id === laundryId);
             laundry.wish = laundry.wish ? 0 : 1;
-            //const id = this.$route.params.id;
             axios.patch(`http://localhost:5000/laundrys/${laundry.id}`, laundry)
                 .then(response => {
                     // handle successful response

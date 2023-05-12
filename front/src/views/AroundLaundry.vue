@@ -6,15 +6,20 @@
         <v-card class="mx-auto mt-4" max-width="400" v-for="laundry in laundrys" :key="laundry.id" elevation="0">
 
             <v-img class="align-end text-white" id="laund-img" height="150"
-                src="https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8JUVDJTg0JUI4JUVEJTgzJTgxfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60" cover>
-                <v-card-title id="laund-title">{{ laundry.title }}</v-card-title>
+                src="https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8JUVDJTg0JUI4JUVEJTgzJTgxfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60"
+                cover>
+                <v-card-title id="laund-title">{{ laundry.S_NAME }}</v-card-title>
             </v-img>
 
-            <v-card-subtitle class="pt-3" id="laund-sub-title">{{ laundry.subtitle }}</v-card-subtitle>
+            <v-card-subtitle class="pt-3" id="laund-PHONE">
+                <!-- 도로명 주소 --> <!-- 상세주소 -->
+                <div id="laund-address">{{ laundry.S_ADD2 }}</div>
+                <div id="laund-address">{{ laundry.S_ADD3 }}</div>
+            </v-card-subtitle>
 
-            <v-card-text  class="py-2">
-                <div id="laund-address">{{ laundry.address }}</div>
-                <div id="laund-info">{{ laundry.info }}</div>
+            <v-card-text class="py-2">
+                <!-- 소개글 -->
+                <div id="laund-comment">{{ laundry.S_COMMNET }}</div>
             </v-card-text>
 
             <v-card-actions class="py-0">
@@ -38,7 +43,6 @@ import axios from "axios";
 export default {
     data: () => ({
         show: false,
-        //isWished: 0,    // 찜버튼
 
         laundrys: [] // Add this line to initialize the laundry array
     }),
@@ -56,7 +60,6 @@ export default {
         toggleWish(laundry) {
             //const laundry = this.laundrys.find(l => l.id === laundryId);
             laundry.wish = laundry.wish ? 0 : 1;
-            //const id = this.$route.params.id;
             axios.patch(`http://localhost:5000/laundrys/${laundry.id}`, laundry)
                 .then(response => {
                     // handle successful response
