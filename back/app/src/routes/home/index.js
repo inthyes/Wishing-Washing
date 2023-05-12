@@ -25,5 +25,6 @@ router.use(cookieParser());
 
 router.post("/like", ctrl.process.like);
 router.post("/review", ctrl.process.review);
+router.post("/verify-token", ctrl.process.verityToken);
 
 module.exports = router; //웹으로 내보내기

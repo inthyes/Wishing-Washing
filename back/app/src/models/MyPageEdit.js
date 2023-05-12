@@ -14,6 +14,8 @@ class MyPageEdit {
         const phone = this.body.phone;
         const address = this.body.address;
         const U_ID = this.U_ID;
+
+
         var salt = Math.round(new Date().valueOf() * Math.random()) + "";
         var hashPsword = crypto
           .createHash("sha512")
@@ -21,11 +23,26 @@ class MyPageEdit {
           .digest("hex");
         const PW = await MyPageEdit.PW(hashPsword,phone,address, U_ID);
         return PW;
-        
     }
     
     static async PW(password,phone,address, U_ID) {
-      return new Promise ((resolve, reject) => {
+      return new Promise ((resolve, reject) => {const json = {
+        code: 404,
+        message: "DB 서버 연결 실패"
+      };
+  
+      db.getConnection((err, conn) => {
+        // db 연결 실패
+        if (err) {
+          console.log("Mysql 연결 실패");
+          conn.release();
+          console.log(json);
+          // return res.status(404).send(json);
+          reject(json);
+        }
+        // db 연결 성공
+        console.log("DB 연결 성공");
+        
       db.query("USE CAPSTONE", (err, result) => {
           const query = "UPDATE USERS SET U_PW = ?, U_PHONE=?, U_ADDRESS = ? WHERE U_ID = ?;";
           if (err) reject(err);
@@ -40,6 +57,7 @@ class MyPageEdit {
               });
             })
       });
+      })
   }
     
       
@@ -47,3 +65,4 @@ class MyPageEdit {
 
 
 module.exports = MyPageEdit; 
+

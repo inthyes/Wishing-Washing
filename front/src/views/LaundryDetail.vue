@@ -108,11 +108,20 @@ export default {
         //isWished: 0,    // 찜버튼
 
     }),
+
+ 
+
     async created() {
         try {
             const id = this.$route.params.id;
-            const res = await axios.get(`http://localhost:5000/laundrys/${id}`);
-            this.laundry = res.data;
+            const res = await axios.get(`http://localhost:3000/laundry/detail/${id}`, {
+                withCredentials: true,
+                // headers: {
+                //  Cookie: document.cookie, // 쿠키를 요청에 추가
+                //  },
+            });
+                this.laundry = res.data.laundryDetail;
+                this.product = res.data.productDetail
         } catch (e) {
             console.error(e);
         }
@@ -150,7 +159,7 @@ export default {
         },
         async submitData() {
             try {
-                const selectedProducts = this.laundry.products.filter(products => products.quantity > 0);
+                const selectedItems = this.laundry.items.filter(item => item.quantity > 0);
 
                 for (const product of selectedProducts) {
                     const now = new Date();
@@ -161,9 +170,12 @@ export default {
                         // time: new Date(), // 현재 시간을 저장하는 time 프로퍼티를 추가
                         date: now.toISOString().substring(0, 10), // 현재 날짜를 저장하는 date 프로퍼티
                         time: now.toISOString().substring(11, 19), // 현재 시간을 저장하는 time 프로퍼티
+                    },{
+                        headers: headers,
                     });
 
                     this.submits = [...this.submits, res.data];
+                    console.log(headers);
                 }
             } catch (e) {
                 console.error(e);

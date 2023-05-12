@@ -1,4 +1,4 @@
-<!--사용자 mypage-->
+<!-- 사용자 mypage -->
 
 <template>
     <div class="mypage">
@@ -133,8 +133,9 @@ export default {
     }),
     async created() {
         try {
-            const res = await axios.get('http://localhost:5000/mypage');
+            const res = await axios.get('http://localhost:3000/myPage');
             this.mypage = res.data;
+            console.log(this.mypage);
         } catch (e) {
             console.error(e);
         }

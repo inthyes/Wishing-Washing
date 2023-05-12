@@ -15,6 +15,7 @@ router.post("/", (req, res) => {
   console.log("/login 호출됨");
   const id = req.body.id;
   const psword = req.body.psword;
+  const token = req.body.token;
 
   var json = {};
 

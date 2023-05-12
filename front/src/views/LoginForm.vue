@@ -48,19 +48,25 @@ export default {
       const data = {
         id: this.id,
         psword: this.password,
-        // token: this.token
+        token: this.token
       };
       try {
-      const response = await axios.post(baseURL, data);
-      const user = response.data;
-      this.users.push(user);
-      console.log(user);
-      alert('로그인 성공');
+        const response = await axios.post(baseURL, data);
+        const user = response.data;
+        this.users.push(user);
+        const token = response.data.token;
+        localStorage.setItem("token", token);
+
+        console.log(user);
+        console.log(token);
+
+        alert('로그인 성공');
     } catch (error) {
       console.log(error);
       alert('로그인 실패');
     }
-  }
+  },
+
     }
   }
 

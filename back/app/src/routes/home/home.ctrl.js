@@ -20,27 +20,28 @@ const router = express.Router();
 
 const jwt = require("jsonwebtoken");
 
-// function Vtoken(token) {
-//   try {
-//     var check = jwt.verify(token, "secretKey");
-//     if (check) {
-//       console.log("token 검증", check.user_id);
-//       return check.user_id;
-//     }
-//   } catch {
-//     console.log("token 검증 오류");
-//   }
-// }
+
+// const verifyToken = (req, res, next) => {
+//     const token = req.headers.authorization; // 토큰을 쿼리 파라미터로 전달 받음
+  
+//     // 토큰 검증 로직
+//     jwt.verify(token, "secretKey", (err, decoded) => {
+//       if (err) {
+//         // 토큰이 유효하지 않은 경우
+//         return res.status(401).json({ message: "유효하지 않은 토큰입니다." });
+//       }
+  
+//       // 토큰이 유효한 경우
+//       req.user_id = decoded.id; // 토큰에서 추출한 사용자 ID를 요청 객체에 추가
+//       next(); // 다음 미들웨어로 이동
+//     });
+//   };
 
 const output ={
-    home : (req, res) =>{
-        const token = req.query.token;
-        const user_id = Vtoken(token);  // 토큰 검증
-        console.log("토큰확인: " + token);
-        console.log("user_id: " + user_id);
-
-        logger.info(`GET / 304 "홈 화면으로 이동"`);
-        res.render("home/index");
+    
+    home: (req, res) => {
+          logger.info(`GET / 304 "홈 화면으로 이동"`);
+          res.render("home/index");  
     },
     login : (req,res) => {
         logger.info(`GET /login 304 "로그인 화면으로 이동"`);
@@ -105,10 +106,10 @@ const output ={
         });
     },
     myPage : (req, res) => {
-        const token = req.query.token;
-        const user_id = Vtoken(token);  // 토큰 검증
-        console.log("토큰확인: " + token);
-        console.log("user_id: " + user_id);
+        // const token = req.query.token;
+        // const user_id = Vtoken(token);  // 토큰 검증
+        // console.log("토큰확인: " + token);
+        // console.log("user_id: " + user_id);
 
         logger.info(`GET /home/myPage 304 "마이페이지 화면으로 이동`);
         res.render("home/myPage");
@@ -160,11 +161,6 @@ const output ={
     //myPage 하위 기능
     profileEdit : (req, res) => 
     {
-        const token = req.query.token;
-        const user_id = Vtoken(token);  // 토큰 검증
-        console.log("토큰확인: " + token);
-        console.log("user_id: " + user_id);
-
         logger.info(`GET /myPage/profileEdit 304 "프로필편집 화면으로 이동"`);
         //실제 경로 , 라우팅 경로 : myPage/profileEdit
         res.render("home/profileEdit");
@@ -188,27 +184,60 @@ const output ={
         res.render("home/userManagement");
     },
     // 세탁소 세부페이지 
-    laundryDetail: async(req, res) => {
-        const token = req.query.token;
-        const user_id = Vtoken(token);  // 토큰 검증
-        console.log("토큰확인: " + token);
-        console.log("user_id: " + user_id);
+    // laundryDetail: async(req, res) => {
+    //     // const token = req.query.token;
+    //     // const user_id = Vtoken(token);  // 토큰 검증
+    //     // console.log("토큰확인: " + token);
+    //     // console.log("user_id: " + user_id);
 
-        logger.info(`GET /laundry/detail/id 304 "세탁신청 세부 화면으로 이동`);
-        const laundry = new Laundry(req.params.id);
-        const product = new Product(req.params.id);
+    //     logger.info(`GET /laundry/detail/id 304 "세탁신청 세부 화면으로 이동`);
+    //     const laundry = new Laundry(req.params.id);
+    //     const product = new Product(req.params.id);
         
-        //db에서 찾아온 내용 보여주기.
-        // response로 json 형태로 데이터가 전달.
-        const laundryDetailRes = await laundry.showDetail();
-        const productDetailRes = await product.showDetail();
-        console.log(laundryDetailRes);
-        console.log(productDetailRes); 
-        res.json({
-            laundryDetail: laundryDetailRes, 
-            productDetail: productDetailRes
-        });
-    },
+    //     //db에서 찾아온 내용 보여주기.
+    //     // response로 json 형태로 데이터가 전달.
+    //     const laundryDetailRes = await laundry.showDetail();
+    //     const productDetailRes = await product.showDetail();
+    //     console.log(laundryDetailRes);
+    //     console.log(productDetailRes); 
+    //     res.json({
+    //         laundryDetail: laundryDetailRes, 
+    //         productDetail: productDetailRes
+    //     });
+    // },
+    laundryDetail: async (req, res) => {
+        try {
+          const token = req.headers.cookie; // 헤더에서 토큰 추출
+      
+          // 토큰 검증
+          jwt.verify(token, 'your-secret-key', async (err, decoded) => {
+            if (err) {
+              // 토큰이 유효하지 않을 경우에 대한 처리
+              console.error(err);
+              return res.status(401).json({ error: 'Invalid token' });
+            }
+      
+            const user_id = decoded.user_id; // 토큰에서 추출한 사용자 ID
+            console.log('user_id:', user_id);
+      
+            // 토큰 검증 후의 나머지 로직을 이곳에 작성
+      
+            const laundry = new Laundry(req.params.id);
+            const product = new Product(req.params.id);
+      
+            const laundryDetailRes = await laundry.showDetail();
+            const productDetailRes = await product.showDetail();
+      
+            res.json({
+              laundryDetail: laundryDetailRes,
+              productDetail: productDetailRes,
+            });
+          });
+        } catch (error) {
+          console.error(error);
+          res.status(500).json({ error: 'Internal Server Error' });
+        }
+      },
 
     //사장님 기능 & 리뷰 사진 올릴 때 사용
     upload : async(req, res) =>{
@@ -232,22 +261,6 @@ const output ={
             cartRes : cartRes
         });
     },
-    // search : async (req, res) => {
-    //     const token = req.query.token;
-    //     const user_id = Vtoken(token);  // 토큰 검증
-    //     console.log("토큰확인: " + token);
-    //     console.log("user_id: " + user_id);
-
-    //     const search = new Search(req.query);
-    //     //console.log('search');
-    //     //console.log('Param: ' + req.query.search);
-    //     let data = await search.getLaundryInfo();
-    //     //console.log(data);
-    //     res.render("home/laundry", {
-    //         data
-    //       });
-    // },
-    
 };
 
 const process = {
@@ -286,18 +299,51 @@ const process = {
         const orderCompleteRes = await orderComplete.addOrderCompleteList();
         res.clearCookie('response').redirect('/');
     },
+
+    //수정중
     edit : async (req,res) => {
         console.log(req.body);
-        const Edit = new MyPageEdit(req.body, "codus");
+
+        const token = req.headers.authorization;
+
+        try {
+          // 토큰을 검증하고 사용자 아이디를 추출합니다.
+          const decodedToken = jwt.verify(token, secretKey);
+          const userId = decodedToken.userId;
+      
+        const Edit = new MyPageEdit(req.body, userId);
         const response = await Edit.update();
         return response;
+        }catch (error) {
+            // 토큰 검증 실패 등의 오류 처리
+            console.error(error);
+            // 오류 응답을 반환하거나 예외 처리를 진행합니다.
+          }
     },
     review : async (req,res) => {
         console.log(req.body);
         const review = new Review(req.body, "codus");
         const response = await review.update();
         res.render("home/myPage",);
-    }
+    },
+    verityToken : (req,res) => {
+        const { token } = req.body;
+
+        // 토큰 검증
+        jwt.verify(token,secretKey, (err, decoded) => {
+            if (err) {
+                // 토큰이 유효하지 않은 경우
+                return res.status(401).json({ message: '토큰이 유효하지 않습니다.' });
+                }
+
+                // 토큰이 유효한 경우
+                // 여기에서 추가적인 검증이나 처리를 수행할 수 있습니다.
+                // 예를 들어, decoded 객체에 저장된 정보를 확인하고 권한 검사를 수행할 수 있습니다.
+
+                // 검증에 성공한 경우, 클라이언트에게 성공 응답을 보냅니다.
+                return res.status(200).json({ message: '토큰이 유효합니다.' });
+        });
+    },
 };
 
 module.exports = {
