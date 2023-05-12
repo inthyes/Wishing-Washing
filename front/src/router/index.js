@@ -59,6 +59,8 @@ const routes = [
     name: '로그인',
     component: LoginFormVue
   },
+
+  
   {
     path: '/signup',
     name: '회원가입',

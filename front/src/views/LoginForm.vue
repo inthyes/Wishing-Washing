@@ -66,6 +66,15 @@ export default {
       alert('로그인 실패');
     }
   },
+  verifyToken(token) {
+        // 서버로 토큰 검증 요청을 보내는 함수
+        // axios 등의 HTTP 클라이언트를 사용하여 서버로 요청을 보낼 수 있습니다.
+        // 아래는 예시 코드이므로 실제 서버의 엔드포인트 및 요청 방식에 맞게 수정해주셔야 합니다.
+
+        // axios 예시 코드
+        return axios.post('/verify-token', { token });
+        },
+       
 
     }
   }

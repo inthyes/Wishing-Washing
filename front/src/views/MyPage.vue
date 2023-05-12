@@ -1,4 +1,4 @@
-<!-- 사용자 mypage -->
+<!--사용자 mypage-->
 
 <template>
     <div class="mypage">
@@ -62,10 +62,10 @@
                     </v-col>
 
                     <v-col cols="12">
-                        <v-card class="card-hover" color="#5E5A80" theme="dark" to="/favoritelaundry" style="color: white;">
+                        <v-card class="card-hover" color="#5E5A80" theme="dark" to="favoritelaundry" style="color: white;">
                             <div class="d-flex flex-no-wrap justify-space-between">
                                 <div style="margin-left: 15px;">
-                                    <v-card-title class="text-h7" style="margin-top: 10px; margin-bottom: 5px;">관심
+                                    <v-card-title class="text-h7" style="margin-top: 10px; margin-bottom: 5px;">단골
                                         세탁소</v-card-title>
 
                                     <v-card-subtitle>
@@ -91,7 +91,7 @@
 
                 <v-card color="white" style="border-radius: 0%; margin-top: -10px; box-shadow: none;">
                     <v-divider class="mx-1 mb-1"></v-divider>
-                    <v-card-title style="margin-bottom: 5px; font-size: 16px;">관심 세탁소 정보</v-card-title>
+                    <v-card-title style="margin-bottom: 5px; font-size: 16px;">단골 세탁소 정보</v-card-title>
                     <v-card-subtitle>
                         <div id="operatingHour">운영시간 : {{ mp.operatingHour }}</div>
                         <div id="dayOff">휴무일 : {{ mp.dayOff }}</div>
@@ -111,7 +111,7 @@
                     </v-col>
                     <v-col>
                         <v-card-actions style="margin-left: -22px;">
-                            <v-btn variant="outlined" style="width: 95%; border-color: #5E5A80; border-radius: 8px;">
+                            <v-btn variant="outlined" style="width: 95%; border-color: #5E5A80; border-radius: 8px;" @click="logout">
                                 로그아웃 <!--연결 필요-->
                             </v-btn>
                         </v-card-actions>
@@ -133,12 +133,34 @@ export default {
     }),
     async created() {
         try {
-            const res = await axios.get('http://localhost:3000/myPage');
+            const res = await axios.get('http://localhost:5000/mypage');
             this.mypage = res.data;
-            console.log(this.mypage);
         } catch (e) {
             console.error(e);
         }
+    },
+    methods: {
+    async logout() {
+      try {
+        const response = await axios.post('http://localhost:3000/logout', null, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+        });
+        const data = response.data;
+        console.log(data);
+        alert(data.message);
+
+        // 로그아웃 후 로컬 스토리지에서 토큰을 제거합니다.
+        localStorage.removeItem("token");
+
+        // 로그아웃 성공 후 로그인 페이지로 이동하도록 처리할 수 있습니다.
+        this.$router.push('/login');
+      } catch (error) {
+        console.log(error);
+        alert('로그아웃 실패');
+      }
     }
+  }
 }
 </script>
