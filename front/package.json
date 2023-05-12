@@ -1,0 +1,72 @@
+{
+  "name": "wwmanager",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "managelaundrys": "json-server --watch managelaundrys.json --port 3005",
+    "reviews": "json-server --watch reviews.json --port 3006",
+    "requests": "json-server --watch requests.json --port 3012",
+    "dev": "concurrently \"npm run managelaundrys\" \"npm run reviews\" \"npm run requests\" "
+  },
+  "dependencies": {
+    "@mdi/font": "5.9.55",
+    "axios": "^1.3.5",
+    "concurrently": "^8.0.1",
+    "core-js": "^3.8.3",
+    "express": "^4.18.2",
+    "json-server": "^0.17.3",
+    "multer": "^1.4.5-lts.1",
+    "roboto-fontface": "*",
+    "vue": "^3.2.13",
+    "vue-router": "^4.0.13",
+    "vuetify": "^3.1.4",
+    "webfontloader": "^1.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.16",
+    "@babel/eslint-parser": "^7.12.16",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-vue": "^8.0.3",
+    "vue-cli-plugin-vuetify": "~2.5.8",
+    "webpack-plugin-vuetify": "^2.0.0-alpha.0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "@babel/eslint-parser"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ],
+  "description": "```\r npm install\r ```",
+  "main": "babel.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inthyes/capstone_DD846_team1.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/inthyes/capstone_DD846_team1/issues"
+  },
+  "homepage": "https://github.com/inthyes/capstone_DD846_team1#readme"
+}

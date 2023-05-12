@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>상품추가</title>
+</head>
+<body>
+    <h1>상품추가</h1>
+    <form action="/laundry/addProduct" method="POST">
+        <input type="hidden" name="S_ID" id="S_ID" value="<%= S_ID %>" required>
+        <div>
+            <label for="PRODUCT_NAME">이름:</label>
+            <input type="text" name="PRODUCT_NAME" id="PRODUCT_NAME" required>
+        </div>
+        <div>
+            <label for="PRODUCT_INFO">상품소개:</label>
+            <textarea name="PRODUCT_INFO" id="PRODUCT_INFO" required></textarea>
+        </div>
+        <div>
+            <label for="PRODUCT_PRICE">가격:</label>
+            <textarea name="PRODUCT_PRICE" id="PRODUCT_PRICE" required></textarea>
+        </div>
+        
+        <button type="submit">제출</button>
+    </form>
+</body>
+</html>

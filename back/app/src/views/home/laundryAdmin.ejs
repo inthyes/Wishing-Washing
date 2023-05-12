@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    여기는 세탁소 정보 수정 페이지입니다
+
+    1. 이미지
+    2. 전화번호
+    3. 주소
+    4. 오픈시간-마감시간
+    5. 가게소개
+    6. 공지사항
+
+    <form method="POST" action="/laundry/edit">
+        <div>
+          <label for="phone">새로운 연락처</label>
+          <input type="text" id="phone" name="phone">
+        </div>
+        <div>
+          <label for="address">새로운 주소</label>
+          <input type="text" id="address" name="address">
+        </div>
+        <div>
+          <label for="openTime">오픈시간</label>
+          <input type="text" id="openTime" name="openTime">
+        </div>
+        <div>
+            <label for="closeTime">마감시간</label>
+            <input type="text" id="closeTime" name="closeTime">
+          </div>
+          <div>
+            <label for="info">가게 소개</label>
+            <input type="text" id="info" name="info">
+          </div>
+          <div>
+            <label for="announce">공지사항</label>
+            <input type="text" id="announce" name="announce">
+          </div>
+        
+        <button type="submit" id = "edit">세탁소 정보 수정</button>
+      </form>
+</body>
+</html>
