@@ -135,10 +135,23 @@ export default {
         // },
 
         // 위시리스트-토글버튼
+        // toggleWish(laundry) {
+        //     //const laundry = this.laundrys.find(l => l.id === laundryId);
+        //     laundry.wish = laundry.wish ? 0 : 1;
+        //     axios.patch(`http://localhost:5000/laundrys/${laundry.id}`, laundry)
+        //         .then(response => {
+        //             // handle successful response
+        //             console.log(response);
+        //         })
+        //         .catch(error => {
+        //             // handle error
+        //             console.log(error);
+        //         });
+        // },
         toggleWish(laundry) {
             //const laundry = this.laundrys.find(l => l.id === laundryId);
             laundry.wish = laundry.wish ? 0 : 1;
-            axios.patch(`http://localhost:5000/laundrys/${laundry.id}`, laundry)
+            axios.post(`http://localhost:3000/like`,  { laundryId: laundry.id, like: laundry.wish })
                 .then(response => {
                     // handle successful response
                     console.log(response);
@@ -148,6 +161,8 @@ export default {
                     console.log(error);
                 });
         },
+
+
         // 상품수량증가
         increment(pro) {
             pro.PRODUCT_QUANTITIY++;

@@ -19,7 +19,7 @@
 
             <v-card-text class="py-2">
                 <!-- 소개글 -->
-                <div id="laund-comment">{{ laundry.S_COMMNET }}</div>
+                <div id="laund-comment">{{ laundry.S_COMMENT }}</div>
             </v-card-text>
 
             <v-card-actions class="py-0">
@@ -64,7 +64,7 @@ export default {
         toggleWish(laundry) {
             //const laundry = this.laundrys.find(l => l.id === laundryId);
             laundry.wish = laundry.wish ? 0 : 1;
-            axios.patch(`http://localhost:5000/laundrys/${laundry.id}`, laundry)
+            axios.patch(`http://localhost:3000/laundrys/${laundry.id}`, laundry)
                 .then(response => {
                     // handle successful response
                     console.log(response);
@@ -74,6 +74,7 @@ export default {
                     console.log(error);
                 });
         },
+        
     }
 }
 </script>
