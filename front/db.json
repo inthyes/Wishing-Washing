@@ -1,131 +1,56 @@
 {
   "users": [
     {
-      "name": "김영임",
-      "id": "비버",
-      "phone": "01012341234",
-      "email": "20kyi@naver.com",
-      "password": "rladuddla"
+      "u_name": "김영임",
+      "u_id": "20kyi",
+      "u_phone": "01012341234",
+      "u_email": "20kyi@naver.com",
+      "u_pw": "rladuddla",
+      "salt": ""
     },
     {
-      "name": "user1",
-      "id": "user1",
-      "phone": "010-1234-1234",
-      "email": "user1@naver.com",
-      "password": "12341234"
+      "u_name": "user1",
+      "u_id": "user1",
+      "u_phone": "010-1234-1234",
+      "u_email": "user1@naver.com",
+      "u_pw": "12341234",
+      "salt": ""
     },
     {
-      "name": "user2",
-      "id": "user2",
-      "phone": "010-1224-1233",
-      "email": "user2@naver.com",
-      "password": "12341234"
+      "u_name": "user2",
+      "u_id": "user2",
+      "u_phone": "010-1224-1233",
+      "u_email": "user2@naver.com",
+      "u_pw": "12341234",
+      "salt": ""
     }
   ],
   "laundrys": [
     {
       "id": 1,
-      "title": "AA세탁소",
-      "subtitle": "AA세탁소 서브 타이틀",
-      "address": "경기 성남시 분당구 불정로 6 그린팩토리",
-      "info": "간단한 AA 세탁소 정보",
+      "S_NAME": "AA세탁소",
+      "S_PHONE": "010-1111-1111",
+      "S_IMAGE": "",
+      "S_THUMB": "",
+      "S_OPENING": "09:00",
+      "S_CLOSING": "22:00",
+      "S_COMMNET": "안녕하세요 AA세탁소 입니다.",
+      "S_ANNOUNCE": "공지사항입니다.",
+      "S_ADD1": 16227,
+      "S_ADD2": "경기도 수원시 영통구 광교산로 154-42",
+      "S_ADD3": "1층 101호",
       "stars": 4.5,
-      "reviews": "정말 좋아요",
-      "wish": 1,
-      "products": [
-        {
-          "p_id": 1,
-          "p_name": "A상의",
-          "p_price": 1000,
-          "quantity": 0
-        },
-        {
-          "p_id": 2,
-          "p_name": "A하의",
-          "p_price": 2000,
-          "quantity": 0
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "title": "BB세탁소",
-      "subtitle": "BB세탁소 서브 타이틀",
-      "address": "경기도 수원시 장안구",
-      "info": "간단한 BB세탁소 정보... 안녕하세요~",
-      "stars": 3.5,
-      "reviews": "별로에요..",
-      "wish": 0,
-      "products": [
-        {
-          "p_id": 2,
-          "p_name": "B상의",
-          "p_price": 2000,
-          "quantity": 0
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "title": "CC세탁소",
-      "subtitle": "CC세탁소 서브 타이틀",
-      "address": "경기도 안양시 만안구",
-      "info": "간단한 CC세탁소 정보... 안녕하세요~",
-      "stars": 4,
-      "reviews": "괜찮아요",
-      "wish": 1,
-      "products": [
-        {
-          "p_id": 3,
-          "p_name": "C상의",
-          "p_price": 3000,
-          "quantity": 0
-        }
-      ]
+      "wish": 1
     }
   ],
   "product": [
     {
-      "p_id": 1,
-      "name": "A상의",
-      "price": 1000,
-      "quantity": 0,
-      "l_id": 1
-    },
-    {
-      "p_id": 2,
-      "name": "A하의",
-      "price": 2000,
-      "quantity": 0,
-      "l_id": 1
-    },
-    {
-      "p_id": 3,
-      "name": "B상의",
-      "price": 3000,
-      "quantity": 0,
-      "l_id": 2
-    },
-    {
-      "p_id": 4,
-      "name": "B하의",
-      "price": 4000,
-      "quantity": 0,
-      "l_id": 2
-    },
-    {
-      "p_id": 5,
-      "name": "C상의",
-      "price": 5000,
-      "quantity": 0,
-      "l_id": 3
-    },
-    {
-      "p_id": 6,
-      "name": "C하의",
-      "price": 6000,
-      "quantity": 0,
-      "l_id": 3
+      "product_id": 1,
+      "product_name": "A 상의",
+      "product_price": 1000,
+      "product_info": "",
+      "s_id": 1,
+      "quantity": 0
     }
   ],
   "submits": [
