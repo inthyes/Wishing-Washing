@@ -8,6 +8,16 @@ class Product {
         this.body = body;
       }
 
+      async getProductId() {
+        let product = [];
+        let productDetail = [];
+        product = this.body;
+        for (var i = 0; i < product.length; i++) {
+          productDetail[i] = await ProductDetail.getProduct(product[i].PRODUCT_ID);
+        }
+        return productDetail;
+      }
+
       async showDetail() {
         const product = this.body;
         const detail = await ProductDetail.getProductDetail(product);
@@ -15,17 +25,6 @@ class Product {
 
         return detail;
     }
-
-    async getProductId() {
-      let product = [];
-      let productDetail = [];
-      product = this.body;
-      for (var i = 0; i < product.length; i++) {
-        productDetail[i] = await ProductDetail.getProduct(product[i].PRODUCT_ID);
-      }
-      return productDetail;
-    }
-
 }
 
 module.exports = Product;

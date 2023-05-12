@@ -262,7 +262,15 @@ const output ={
         const productRes = await product.getProductId();
 
         logger.info(`GET /home/laundryOrder 304 " 세탁신청주문 화면으로 이동`);
-        res.render("home/laundryOrder", 
+
+        console.log({
+            deliveryAddress : deliveryAddress,
+            cartRes : cartRes,
+            laundryDetailRes : laundryDetailRes,
+            productRes : productRes
+        });
+
+        res.json(
         {
             deliveryAddress : deliveryAddress,
             cartRes : cartRes,

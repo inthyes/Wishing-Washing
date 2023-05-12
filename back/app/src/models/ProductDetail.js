@@ -29,7 +29,7 @@ class ProductDetail {
             db.query(query, productId, (err, data) => {
                 if (err) reject(err);
                 else {
-                    const product = data;
+                    const product = data[0];
                     resolve(product)
                     }
                 });
