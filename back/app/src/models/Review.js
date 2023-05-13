@@ -62,7 +62,29 @@ class Review {
           })
     });
 }
-      
+
+  async averageStar(S_ID) {
+    return new Promise ((resolve, reject) => {
+      let reviewStar = 0;
+      let starAverage;
+      db.query("USE CAPSTONE", (err, result) => {
+          const queryGetStore = "SELECT REVIEW_STAR FROM REVIEW where S_ID = ?;";
+          if (err) reject(err);
+          db.query(queryGetStore,  [S_ID], (err, data) => {
+              if (err) reject(err);
+              else {
+                for (var i = 0; i < data.length; i++) {
+                  reviewStar = reviewStar + data[i].REVIEW_STAR;
+                }
+                starAverage = reviewStar/data.length;
+                resolve(
+                  starAverage
+                )
+                }
+              });
+          })
+      });
+  }
 }
 
 

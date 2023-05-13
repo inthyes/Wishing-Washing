@@ -253,17 +253,12 @@ const output ={
             //console.log(req.params.id);
             const review = new Review(S_ID, "codus");
             const RV = await review.showReview();
-
-            console.log( {
-                laundryDetail: laundryDetailRes,
-                productDetail: productDetailRes,
-                review : RV
-              });
-             
+            const reviewStar = await review.averageStar(S_ID);
             res.json({
               laundryDetail: laundryDetailRes,
               productDetail: productDetailRes,
-              review : RV
+              review : RV,
+              reviewStar : reviewStar
             });
        /*   });
         } catch (error) {
