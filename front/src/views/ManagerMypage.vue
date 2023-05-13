@@ -128,7 +128,8 @@ export default {
     async created() {
         try {
             const res = await axios.get('http://localhost:5001/managelaundrys');
-            this.managelaundrys = res.data;
+            this.managelaundrys = res.data.filter((laundry) => laundry.id === 1);
+            //this.managelaundrys = res.data;
         } catch (e) {
             console.error(e);
         }
