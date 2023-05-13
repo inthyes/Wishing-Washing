@@ -10,7 +10,7 @@ class Cart {
         // this.body = req.body;
         this.body= body;
         this.userID = userID;
-    }
+    }   
     async add() {
         const response = await Cart.addCart(this.body, this.userID);
         return response;
@@ -81,9 +81,50 @@ class Cart {
         }
 
         async deleteCart() {
-          console.log(this.body)
+          return new Promise((resolve, reject) => {
+          db.query("USE CAPSTONE", (err, result) => {
+            if (err) {
+              reject(err);
+              return;
+            }
+            let queryDeleteCart = "DELETE FROM CART WHERE O_NUM = ?";
+            let queryDeleteOrderList = "DELETE FROM ORDER_LIST WHERE O_NUM = ?";
+            let queryUpdateOrderNum = "UPDATE ORDER_NUM SET ORDER_NUM = ? WHERE ORDER_NUM = ?;";
+            let orderNum = this.body;
+
+            db.query(
+              queryDeleteCart,
+              orderNum,
+              (err) => {
+                if (err) reject(err);
+                else {
+                  db.query(
+                    queryDeleteOrderList,
+                    orderNum,
+                    (err, result) => {
+                      if (err) reject(err);
+                      else {                       
+                        db.query(
+                          queryUpdateOrderNum,
+                          [orderNum-1, orderNum], 
+                          (err, data) => {
+                          if (err) reject(err);
+                          else {
+                            resolve({ orderNumber: orderNum }); 
+                          }
+                        });              
+                      }
+                    }
+                  )
+                }
+              }
+            );
+          }
+          )
         }
-      }
+        )
+     }
+    }
 
 
 

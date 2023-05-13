@@ -53,7 +53,6 @@ const output ={
     },
     laundry : async (req, res) => {
             logger.info(`GET /laundry 304 "세탁신청 화면으로 이동"`);
-            const myCookieValue = req.headers;
 
             const cookieValue = req.headers.cookie;
             const decodedValue = decodeURIComponent(cookieValue);
@@ -221,7 +220,16 @@ const output ={
             console.log('user_id:', user_id); */
       
             // 토큰 검증 후의 나머지 로직을 이곳에 작성
-            res.clearCookie('response');
+            
+            //뒤로가기 실행시 if 쿠키가 존재 -> 쿠키삭제 + cart랑 orderList에서 ordernum관련 내용 삭제
+            if (req.headers.cookie.includes('response')) {
+                const cookieValue = req.cookies.response;
+                const orderNum = JSON.parse(cookieValue).orderNumber; 
+                const deleteCart = new Cart(orderNum);
+                deleteCart.deleteCart();
+                res.clearCookie('response');
+            }
+            
             const laundry = new Laundry(req.params.id);
             const product = new Product(req.params.id);
       
