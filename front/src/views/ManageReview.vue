@@ -50,7 +50,7 @@ data: () => ({
 }),
 async created() {
   try {
-    const res = await axios.get("http://localhost:3006/reviews");
+    const res = await axios.get("http://localhost:5001/reviews");
     this.reviews = res.data;
   } catch (e) {
     console.error(e);
@@ -61,7 +61,7 @@ methods: {
     try {
       const review = this.reviews.find((r) => r.id === reviewId);
       review.reply = this.replyValue;   // 텍스트 필드에서 입력받은 값
-      await axios.put(`http://localhost:3006/reviews/${reviewId}`, review);
+      await axios.put(`http://localhost:5001/reviews/${reviewId}`, review);
       this.showAlert("답글이 등록되었습니다.");
       review.replyValue = '';   // 텍스트 필드 비우기
     } catch (e) {

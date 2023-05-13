@@ -6,10 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "managelaundrys": "json-server --watch managelaundrys.json --port 3005",
-    "reviews": "json-server --watch reviews.json --port 3006",
-    "requests": "json-server --watch requests.json --port 3012",
-    "dev": "concurrently \"npm run managelaundrys\" \"npm run reviews\" \"npm run requests\" "
+    "dev": "json-server --watch db_m.json --port 5001",
+    "start": "concurrently \"npm run serve\" \"npm run dev\" "
   },
   "dependencies": {
     "@mdi/font": "5.9.55",

@@ -66,7 +66,7 @@ export default {
     }),
     async created() {
         try {
-            const res = await axios.get('http://localhost:3012/requests');
+            const res = await axios.get('http://localhost:5001/requests');
             this.requests = res.data;
         } catch (e) {
             console.error(e);

@@ -102,7 +102,7 @@ export default {
                     // 업로드된 이미지의 경로를 데이터 객체에 추가
                     //newLaundry.image = response.data.filePath;
 
-                    await axios.post('http://localhost:3005/managelaundrys', newLaundry);
+                    await axios.post('http://localhost:5001/managelaundrys', newLaundry);
                     console.log('데이터가 성공적으로 추가되었습니다.');
                     this.showAlert("세탁소 정보가 등록되었습니다.");
 

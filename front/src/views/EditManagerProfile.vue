@@ -51,7 +51,7 @@
 
 <script>
 import axios from 'axios';
-const baseURL = "http://localhost:3001/users";
+const baseURL = "http://localhost:5000/users";  // 사용자 users.json 포트 5000번으로 변경해서 여기도 변경했어요!
 export default {
     data() {
         return {

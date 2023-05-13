@@ -127,13 +127,13 @@ export default {
     }),
     async created() {
         try {
-            const res = await axios.get('http://localhost:3005/managelaundrys');
+            const res = await axios.get('http://localhost:5001/managelaundrys');
             this.managelaundrys = res.data;
         } catch (e) {
             console.error(e);
         }
         //판매내역 수
-        axios.get(`http://localhost:3012/requests`)
+        axios.get(`http://localhost:5001/requests`)
             .then(response => {
                 const historyData = response.data;
                 const filteredHistoryData = historyData.filter(item => item.status === '배송완료');
@@ -141,7 +141,7 @@ export default {
                 this.historyCount = historyNum;
         })
         //리뷰 수
-        axios.get(`http://localhost:3006/reviews`)
+        axios.get(`http://localhost:5001/reviews`)
             .then(response => {
                 const reviewData = response.data;
                 const reviewNum = reviewData.length;
