@@ -5,7 +5,7 @@
 
         <v-card class="mx-auto" max-width="500" elevation="0">
             <v-tabs v-model="tab" stacked grow>
-                <v-tab value="one">진행중인 세탁</v-tab>
+                <v-tab value="one">세탁 진행중</v-tab>
                 <v-tab value="two">지난 이용내역</v-tab>
             </v-tabs>
 
@@ -13,7 +13,37 @@
                 <v-window v-model="tab">
                     <!-- tab 1 : 진행중인 세탁 -->
                     <v-window-item value="one">
-                        진행중인 세탁이 없습니다!
+                        <!-- 이용내역 리스트 -->
+                        <div v-for="(h, index) in InProgress" v-bind:key="h.id">
+                            <!-- 배송날짜 출력 -->
+                            <div v-if="index === 0 || h.O_DATE !== order_complete[index - 1].O_DATE">
+                                <div class="date" id="date">
+                                    <b>{{ h.O_DATE }}</b>
+                                </div>
+                            </div>
+                            <!-- 이용내역 리스트 출력 -->
+                            <v-card v-bind:key="h.id" elevation="0">
+                                <div class="washingStatus">
+                                    <v-card-text>
+                                        <!--  배송상태  -2(수락 대기중) -1(세탁 진행중) 1(배송중) | 2(배송완료) -->
+                                        <div id="state">
+                                            배송상태&nbsp;|&nbsp;
+                                            <span v-if="h.DELEVERY_STATE === -2" style="color: red">수락 대기중</span>
+                                            <span v-else-if="h.DELEVERY_STATE === -1">세탁 진행중</span>
+                                            <span v-else-if="h.DELEVERY_STATE === 1">배송중</span>
+                                        </div>
+                                        <!-- 세탁비용 -->
+                                        <div id="price">세탁비용&nbsp;|&nbsp;&nbsp;{{ h.O_PRICE }}</div>
+                                        <!-- 요청사항 -->
+                                        <div id="requirement">요청사항&nbsp;|&nbsp;&nbsp;{{ h.O_REQUEST }}</div>
+                                        <v-divider></v-divider>
+                                        <!-- 세탁소 이름 -->
+                                        <a id="laundryName">{{ h.S_NAME }}</a>&nbsp;
+                                        
+                                    </v-card-text>
+                                </div>
+                            </v-card>
+                        </div>
                     </v-window-item>
 
                     <!-- tap 2 : 지난 이용내역 -->
@@ -25,7 +55,7 @@
                         </v-chip-group>
 
                         <!-- 이용내역 리스트 -->
-                        <div v-for="(h, index) in order_complete" v-bind:key="h.id">
+                        <div v-for="(h, index) in completeDelivery" v-bind:key="h.id">
                             <!-- 배송날짜 출력 -->
                             <div v-if="index === 0 || h.O_DATE !== order_complete[index - 1].O_DATE">
                                 <div class="date" id="date">
@@ -35,23 +65,14 @@
                             <!-- 이용내역 리스트 출력 -->
                             <v-card v-bind:key="h.id" elevation="0">
                                 <div class="washingStatus">
-                                    <!-- <v-img id="washingImg" :src="h.washingImg" cover></v-img> -->
                                     <v-card-text>
-                                        <!-- <div id="name">
-                                            품&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목&nbsp;&nbsp;|&nbsp;&nbsp;{{ h.name }}
-                                            &nbsp;&nbsp;∙&nbsp;<a class="delivery">{{ h.delivery }}</a>
-                                        </div> -->
-
-                                        <!--  배송상태  -2(수락전) -1(진행중) 1(배송중) 2(배송완료) -->
-                                        <div id="cost">
+                                        <!--  배송상태  -2(수락 대기중) -1(진행중) 1(배송중) | 2(배송완료) -->
+                                        <div id="state">
                                             배송상태&nbsp;|&nbsp;
-                                            <span v-if="h.DELEVERY_STATE === -2">수락전</span>
-                                            <span v-else-if="h.DELEVERY_STATE === -1">진행중</span>
-                                            <span v-else-if="h.DELEVERY_STATE === 1">배송중</span>
-                                            <span v-else-if="h.DELEVERY_STATE === 2">배송완료 ({{ h.COMPLETE_DATE }})</span>
+                                            <span v-if="h.DELEVERY_STATE === 2">배송완료 ({{ h.COMPLETE_DATE }})</span>
                                         </div>
                                         <!-- 세탁비용 -->
-                                        <div id="cost">세탁비용&nbsp;|&nbsp;&nbsp;{{ h.O_PRICE }}</div>
+                                        <div id="price">세탁비용&nbsp;|&nbsp;&nbsp;{{ h.O_PRICE }}</div>
                                         <!-- 요청사항 -->
                                         <div id="requirement">요청사항&nbsp;|&nbsp;&nbsp;{{ h.O_REQUEST }}</div>
                                         <v-divider></v-divider>
@@ -67,8 +88,6 @@
                 </v-window>
             </v-card-text>
 
-
-            <br>
         </v-card>
     </div>
 </template>
@@ -87,7 +106,7 @@ export default {
 
     async created() {
         try {
-            this.order_complete = await this.fetchOrderComplete('asc');
+            this.order_complete = await this.fetchOrderComplete('desc');    // 기본값은 최근순으로 설정
             // this.order_complete = res.data;
         } catch (e) {
             console.error(e);
@@ -108,7 +127,7 @@ export default {
                 throw new Error(e);
             }
         },
-        // 최신순
+        // 오래된순
         async sortAscending() {
             try {
                 this.order_complete = await this.fetchOrderComplete('asc');
@@ -116,7 +135,7 @@ export default {
                 console.error(e);
             }
         },
-        // 오래된순
+        // 최근순
         async sortDescending() {
             try {
                 this.order_complete = await this.fetchOrderComplete('desc');
@@ -124,6 +143,16 @@ export default {
                 console.error(e);
             }
         },
+    },
+    computed: {
+        // tap1
+        InProgress() {
+            return this.order_complete.filter((h) => h.DELEVERY_STATE !== 2);
+        },
+        // tap2 - 배송완료
+        completeDelivery() {
+            return this.order_complete.filter((h) => h.DELEVERY_STATE === 2);
+        }
     }
 }
 </script>
@@ -164,20 +193,12 @@ export default {
     font-display: center;
     margin-bottom: 10px;
     margin-top: 10px;
-    white-space: nowrap;
+    /* white-space: nowrap;  */ /* 텍스트 한줄 유지 기능 삭제 */
     text-overflow: ellipsis;
-    overflow: auto;
+    /* overflow: auto; */    /* 스크롤바 기능 삭제 */
 }
 
-#name {
-    margin-bottom: 3px;
-}
-
-#cost {
-    margin-bottom: 3px;
-}
-
-#requirement {
+#name, #state, #price, #requirement {
     margin-bottom: 3px;
 }
 
