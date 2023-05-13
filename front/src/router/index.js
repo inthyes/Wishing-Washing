@@ -21,6 +21,9 @@ import WWNoticeVue from '@/views/WWNotice.vue'
 import NoticeDetail1Vue from '@/views/NoticeDetail1.vue'
 import NoticeDetail2Vue from '@/views/NoticeDetail2.vue'
 
+//test
+import UploadFormVue from '@/views/UploadForm.vue'
+
 const routes = [
   {
     path: '/',
@@ -111,6 +114,13 @@ const routes = [
     name: 'noticedetail2',
     component: NoticeDetail2Vue
   },
+
+  {
+    path: '/UploadForm',
+    name: '업로드',
+    component: UploadFormVue
+  },
+
 ]
 
 const router = createRouter({

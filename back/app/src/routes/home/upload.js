@@ -32,9 +32,9 @@ router.post('/', upload.single('imgUpload'), (req, res) => {
     })    
     
     const { filename, destination } = req.file;
-    const s_id = 1; //client에게 받아와야함
+    const i_id = 3; //client에게 받아와야함/
     const filePath = `/${filename}`;
-    
+
   
     const imagePath = path.join(destination, filename);  // 파일 경로를 지정합니다.
     const image = fs.readFileSync(imagePath);
@@ -42,22 +42,37 @@ router.post('/', upload.single('imgUpload'), (req, res) => {
 
   
    
-    const query = "UPDATE store SET i_name = ?, i_data = ? WHERE s_id = ?";
-    db.query(query, [filename, imageBuffer, s_id], (err, results, fields) => {
+    const query = "INSERT INTO IMAGE (i_name, i_data, i_id) VALUES (?, ?, ?)";
+    db.query(query, [filename, imageBuffer, i_id], (err, results, fields) => {
       if (err) {
         console.log(err);
         res.sendStatus(500);
         return;
       }
-      const data = { s_id, filePath };
+      const data = { i_id, filePath };
       board.push(data);
       console.log(board);
       /*다음 페이지로 라우팅을 의미, but 현재 라우팅 페이지 구현 안해놨기 때문에 can not get상태
         업로드 후 연동되는 페이지로 추후 연동 필요!*/
-      res.redirect('/board');
+      // res.redirect('/board');
     });
-     
     
   });
+
+
+router.get('/board', (req, res) => {
+  // 이미지 목록을 데이터베이스에서 가져옵니다.
+  const query = "SELECT i_id, i_name, i_data FROM IMAGE";
+  db.query(query, (err, results, fields) => {
+    if (err) {
+      console.log(err);
+      res.sendStatus(500);
+      return;
+    }
+
+    // 이미지 목록을 템플릿으로 전달하여 페이지를 렌더링합니다.
+    res.render('board', { images: results });
+  });
+});
 
   module.exports = router; //웹으로 내보내기

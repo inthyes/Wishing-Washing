@@ -40,6 +40,22 @@
       "S_ADD2": "경기도 수원시 영통구 광교산로 154-42",
       "S_ADD3": "1층 101호",
       "stars": 4.5,
+      "wish": 0
+    },
+    {
+      "id": 2,
+      "S_NAME": "AA세탁소",
+      "S_PHONE": "010-1111-1111",
+      "S_IMAGE": "",
+      "S_THUMB": "",
+      "S_OPENING": "09:00",
+      "S_CLOSING": "22:00",
+      "S_COMMNET": "안녕하세요 BB세탁소 입니다.",
+      "S_ANNOUNCE": "공지사항입니다.",
+      "S_ADD1": 12333,
+      "S_ADD2": "경기도 수원시 영통구",
+      "S_ADD3": "9층 901호",
+      "stars": 4.5,
       "wish": 1
     }
   ],
@@ -102,6 +118,20 @@
     {
       "id": 1,
       "userName": "XXX 고객님",
+      "userAddr": "경기도 수원시",
+      "countHistory": "32",
+      "countReview": "11",
+      "countQnA": "2",
+      "laundryName": "XX 세탁소",
+      "laundryAddr": "경기도 수원시",
+      "operatingHour": "11:00 - 18:00",
+      "dayOff": "공휴일 휴무",
+      "laundryNumber": "031-123-777",
+      "stars": 4.5
+    },
+    {
+      "id": 2,
+      "userName": "000 고객님",
       "userAddr": "경기도 수원시",
       "countHistory": "32",
       "countReview": "11",

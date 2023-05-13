@@ -1,0 +1,21 @@
+<!-- board.ejs -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Board</title>
+</head>
+<body>
+  <h1>Board</h1>
+  <% if (images.length > 0) { %>
+    <% images.forEach((image) => { %>
+      <div>
+        <h3><%= image.i_name %></h3>
+        <img src="data:image/jpeg;base64,<%= image.i_data.toString('base64') %>" />
+      </div>
+    <% }) %>
+  <% } else { %>
+    <p>No images found.</p>
+  <% } %>
+</body>
+</html>

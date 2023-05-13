@@ -16,7 +16,7 @@
                     </v-col>
                     <v-col style="margin-top: 30px; margin-right: -35%;">
                         <v-btn icon="mdi-wrench" color="white" size="40" to="editprofile"></v-btn>
-                    </v-col>
+                    </v-col> 
                 </v-row>
                 <v-divider class="mx-1 mb-1"></v-divider><br>
             </div>
@@ -125,21 +125,73 @@
 
 <script>
 import axios from "axios";
+import jwt_decode from 'jwt-decode';
 
 export default {
-    data: () => ({
-        show: false,
-        mypage: []
-    }),
-    async created() {
-        try {
-            const res = await axios.get('http://localhost:5000/mypage');
-            this.mypage = res.data;
-        } catch (e) {
-            console.error(e);
-        }
+  data: () => ({
+    show: false,
+    mypageData: [],
+    userName: ""
+  }),
+
+  created() {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      this.verifyToken(token)
+        .then((isValidToken) => {
+          if (isValidToken) {
+            this.fetchMypageData();
+          } else {
+            this.fetchMypageData();
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+          this.redirectToLogin();
+        });
+    } else {
+      this.redirectToLogin();
+    }
+  },
+
+  methods: {
+    async verifyToken(token) {
+      try {
+        const response = await axios.post(
+          "http://localhost:3000/verify-token",
+          { token }
+        );
+        const data = response.data;
+        console.log(data);
+        return data.isValid;
+      } catch (error) {
+        throw new Error("토큰 검증 실패");
+      }
     },
-    methods: {
+
+    async fetchMypageData() {
+      try {
+        const response = await axios.get("http://localhost:3000/myPage");
+        this.mypageData = Array.isArray(response.data) ? response.data : [];
+        const token = localStorage.getItem("token");
+        const tokenPayload = jwt_decode(token);
+
+        console.log("ID:", tokenPayload.id);
+        console.log("Token Payload:", tokenPayload);
+
+    
+        this.mypageData = this.mypageData.filter((mp) => mp.userName === tokenPayload.userName);
+      } catch (error) {
+        console.error(error);
+        throw new Error("마이페이지 데이터 가져오기 실패");
+      }
+    },
+
+    redirectToLogin() {
+      this.$router.push("/login");
+    },
+
     async logout() {
       try {
         const response = await axios.post('http://localhost:3000/logout', null, {
@@ -151,10 +203,8 @@ export default {
         console.log(data);
         alert(data.message);
 
-        // 로그아웃 후 로컬 스토리지에서 토큰을 제거합니다.
         localStorage.removeItem("token");
 
-        // 로그아웃 성공 후 로그인 페이지로 이동하도록 처리할 수 있습니다.
         this.$router.push('/login');
       } catch (error) {
         console.log(error);
@@ -163,4 +213,5 @@ export default {
     }
   }
 }
+
 </script>
