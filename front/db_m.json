@@ -1,4 +1,16 @@
 {
+  "managelaundrys": [
+    {
+      "laundryName": "인생 세탁소",
+      "laundryAddr": "경기도 수원시",
+      "intro": "반갑습니다. 인생 세탁소입니다.",
+      "openTime": "08:00",
+      "closeTime": "19:00",
+      "tel": "031-2341-2121",
+      "notice": "연중무휴",
+      "id": 1
+    }
+  ],
   "requests": [
     {
       "id": 1,
@@ -49,6 +61,38 @@
       "price": "8,000원",
       "userAddr": "경기도 수원시 AA빌라",
       "status": "배송완료"
+    }
+  ],
+  "reviews": [
+    {
+      "id": 1,
+      "userId": "user123",
+      "reviewDate": "2023-03-20",
+      "reviewImg": "https://cdn.vuetifyjs.com/images/cards/docks.jpg",
+      "stars": "5",
+      "reviewContent": "깨끗하게 잘해주셨어요",
+      "reply": "",
+      "replyValue": ""
+    },
+    {
+      "id": 2,
+      "userId": "5678user",
+      "reviewDate": "2023-03-20",
+      "reviewImg": "https://cdn.vuetifyjs.com/images/cards/docks.jpg",
+      "stars": "4.5",
+      "reviewContent": "좋아요!",
+      "reply": "",
+      "replyValue": ""
+    },
+    {
+      "id": 3,
+      "userId": "us52er",
+      "reviewDate": "2023-03-19",
+      "reviewImg": "https://cdn.vuetifyjs.com/images/cards/docks.jpg",
+      "stars": "4.5",
+      "reviewContent": "사장님이 매우 친절하십니다",
+      "reply": "",
+      "replyValue": ""
     }
   ]
 }

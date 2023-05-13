@@ -62,7 +62,7 @@ export default {
   },
   created() {
     const requestId = this.$route.query.id;     // requestId를 사용하여 데이터를 가져옴
-    axios.get(`http://localhost:3012/requests/${requestId}`)    // 요청 ID와 일치하는 데이터를 가져옴
+    axios.get(`http://localhost:5001/requests/${requestId}`)    // 요청 ID와 일치하는 데이터를 가져옴
       .then(response => {
         this.request = response.data;
       })
@@ -74,7 +74,7 @@ export default {
         async rejectRequest(index) {
             try {
                 const requestId = this.request.id;
-                await axios.delete(`http://localhost:3012/requests/${requestId}`);
+                await axios.delete(`http://localhost:5001/requests/${requestId}`);
                 this.showAlert("세탁 요청이 거절되었습니다.");
                 this.requests.splice(index, 1);
             } catch (e) {
@@ -89,7 +89,7 @@ export default {
                 const requestId = this.request.id;
                 const request = this.request;
                 request.status = "배송전";    // JSON 데이터의 "status" 값을 "배송전"으로 수정
-                await axios.put(`http://localhost:3012/requests/${requestId}`, request);
+                await axios.put(`http://localhost:5001/requests/${requestId}`, request);
                 this.showAlert("세탁 요청이 수락되었습니다.");
                 this.$router.push("/manageorder"); // 관리 페이지로 이동
             } catch (e) {

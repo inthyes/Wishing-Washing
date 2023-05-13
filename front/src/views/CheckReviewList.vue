@@ -44,7 +44,7 @@ export default {
   }),
   async created() {
     try {
-      const res = await axios.get("http://localhost:3006/reviews");
+      const res = await axios.get("http://localhost:5001/reviews");
       this.reviews = res.data;
     } catch (e) {
       console.error(e);

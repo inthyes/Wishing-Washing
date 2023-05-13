@@ -50,7 +50,7 @@ export default {
   },
   created() {
     const requestId = this.$route.query.id;     // requestId를 사용하여 데이터를 가져옴
-    axios.get(`http://localhost:3012/requests/${requestId}`)    // 요청 ID와 일치하는 데이터를 가져옴
+    axios.get(`http://localhost:5001/requests/${requestId}`)    // 요청 ID와 일치하는 데이터를 가져옴
       .then(response => {
         this.request = response.data;
       })

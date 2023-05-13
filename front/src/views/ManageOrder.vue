@@ -117,7 +117,7 @@ export default {
     }),
     async created() {
         try {
-            const res = await axios.get('http://localhost:3012/requests');
+            const res = await axios.get('http://localhost:5001/requests');
             this.requests = res.data;
         } catch (e) {
             console.error(e);
@@ -126,7 +126,7 @@ export default {
     methods: {
         async rejectRequest(requestId) {
             try {
-                await axios.delete(`http://localhost:3012/requests/${requestId}`);
+                await axios.delete(`http://localhost:5001/requests/${requestId}`);
                 window.location.reload(); // 페이지 새로고침 (= this.$router.go();)
                 this.showAlert("세탁 요청이 거절되었습니다.");
             } catch (e) {
@@ -139,10 +139,10 @@ export default {
         // 수락 버튼 -> 배송전으로 이동
         async clickAccept(requestId) {
             try {
-                const response = await axios.get(`http://localhost:3012/requests/${requestId}`);
+                const response = await axios.get(`http://localhost:5001/requests/${requestId}`);
                 const request = response.data;
                 request.status = "배송전";  // JSON 데이터의 "status" 값을 "배송전"으로 수정
-                await axios.put(`http://localhost:3012/requests/${requestId}`, request);
+                await axios.put(`http://localhost:5001/requests/${requestId}`, request);
                 window.location.reload(); 
                 this.showAlert("세탁 요청이 수락되었습니다.");
             } catch (e) {
@@ -152,10 +152,10 @@ export default {
         // 배송시작 버튼 -> 배송중으로 이동
         async clickStartDelivery(requestId) {
             try {
-                const response = await axios.get(`http://localhost:3012/requests/${requestId}`);
+                const response = await axios.get(`http://localhost:5001/requests/${requestId}`);
                 const request = response.data;
                 request.status = "배송중";
-                await axios.put(`http://localhost:3012/requests/${requestId}`, request);
+                await axios.put(`http://localhost:5001/requests/${requestId}`, request);
                 window.location.reload();
                 this.showAlert("배송이 시작되었습니다.");
             } catch (e) {
@@ -165,10 +165,10 @@ export default {
         // 배송완료 버튼 -> 배송완료로 이동
         async clickCompleteDelivery(requestId) {
             try {
-                const response = await axios.get(`http://localhost:3012/requests/${requestId}`);
+                const response = await axios.get(`http://localhost:5001/requests/${requestId}`);
                 const request = response.data;
                 request.status = "배송완료";
-                await axios.put(`http://localhost:3012/requests/${requestId}`, request);
+                await axios.put(`http://localhost:5001/requests/${requestId}`, request);
                 window.location.reload(); 
                 this.showAlert("배송이 완료되었습니다.");
             } catch (e) {
@@ -178,7 +178,7 @@ export default {
         // 삭제 버튼 -> 해당 기록 삭제
         async clickDelete(requestId) {
             try {
-                await axios.delete(`http://localhost:3012/requests/${requestId}`);
+                await axios.delete(`http://localhost:5001/requests/${requestId}`);
                 window.location.reload();
                 this.showAlert("완료 항목이 삭제되었습니다.");
             } catch (e) {
