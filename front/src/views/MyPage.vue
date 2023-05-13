@@ -16,7 +16,7 @@
                     </v-col>
                     <v-col style="margin-top: 30px; margin-right: -35%;">
                         <v-btn icon="mdi-wrench" color="white" size="40" to="editprofile"></v-btn>
-                    </v-col>
+                    </v-col> 
                 </v-row>
                 <v-divider class="mx-1 mb-1"></v-divider><br>
             </div>
@@ -62,10 +62,10 @@
                     </v-col>
 
                     <v-col cols="12">
-                        <v-card class="card-hover" color="#5E5A80" theme="dark" to="/favoritelaundry" style="color: white;">
+                        <v-card class="card-hover" color="#5E5A80" theme="dark" to="favoritelaundry" style="color: white;">
                             <div class="d-flex flex-no-wrap justify-space-between">
                                 <div style="margin-left: 15px;">
-                                    <v-card-title class="text-h7" style="margin-top: 10px; margin-bottom: 5px;">관심
+                                    <v-card-title class="text-h7" style="margin-top: 10px; margin-bottom: 5px;">단골
                                         세탁소</v-card-title>
 
                                     <v-card-subtitle>
@@ -91,7 +91,7 @@
 
                 <v-card color="white" style="border-radius: 0%; margin-top: -10px; box-shadow: none;">
                     <v-divider class="mx-1 mb-1"></v-divider>
-                    <v-card-title style="margin-bottom: 5px; font-size: 16px;">관심 세탁소 정보</v-card-title>
+                    <v-card-title style="margin-bottom: 5px; font-size: 16px;">단골 세탁소 정보</v-card-title>
                     <v-card-subtitle>
                         <div id="operatingHour">운영시간 : {{ mp.operatingHour }}</div>
                         <div id="dayOff">휴무일 : {{ mp.dayOff }}</div>
@@ -111,7 +111,7 @@
                     </v-col>
                     <v-col>
                         <v-card-actions style="margin-left: -22px;">
-                            <v-btn variant="outlined" style="width: 95%; border-color: #5E5A80; border-radius: 8px;">
+                            <v-btn variant="outlined" style="width: 95%; border-color: #5E5A80; border-radius: 8px;" @click="logout">
                                 로그아웃 <!--연결 필요-->
                             </v-btn>
                         </v-card-actions>
@@ -125,19 +125,93 @@
 
 <script>
 import axios from "axios";
+import jwt_decode from 'jwt-decode';
 
 export default {
-    data: () => ({
-        show: false,
-        mypage: []
-    }),
-    async created() {
-        try {
-            const res = await axios.get('http://localhost:5000/mypage');
-            this.mypage = res.data;
-        } catch (e) {
-            console.error(e);
-        }
+  data: () => ({
+    show: false,
+    mypageData: [],
+    userName: ""
+  }),
+
+  created() {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      this.verifyToken(token)
+        .then((isValidToken) => {
+          if (isValidToken) {
+            this.fetchMypageData();
+          } else {
+            this.fetchMypageData();
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+          this.redirectToLogin();
+        });
+    } else {
+      this.redirectToLogin();
     }
+  },
+
+  methods: {
+    async verifyToken(token) {
+      try {
+        const response = await axios.post(
+          "http://localhost:3000/verify-token",
+          { token }
+        );
+        const data = response.data;
+        console.log(data);
+        return data.isValid;
+      } catch (error) {
+        throw new Error("토큰 검증 실패");
+      }
+    },
+
+    async fetchMypageData() {
+      try {
+        const response = await axios.get("http://localhost:3000/myPage");
+        this.mypageData = Array.isArray(response.data) ? response.data : [];
+        const token = localStorage.getItem("token");
+        const tokenPayload = jwt_decode(token);
+
+        console.log("ID:", tokenPayload.id);
+        console.log("Token Payload:", tokenPayload);
+
+    
+        this.mypageData = this.mypageData.filter((mp) => mp.userName === tokenPayload.userName);
+      } catch (error) {
+        console.error(error);
+        throw new Error("마이페이지 데이터 가져오기 실패");
+      }
+    },
+
+    redirectToLogin() {
+      this.$router.push("/login");
+    },
+
+    async logout() {
+      try {
+        const response = await axios.post('http://localhost:3000/logout', null, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+        });
+        const data = response.data;
+        console.log(data);
+        alert(data.message);
+
+        localStorage.removeItem("token");
+
+        this.$router.push('/login');
+      } catch (error) {
+        console.log(error);
+        alert('로그아웃 실패');
+      }
+    }
+  }
 }
+
 </script>
