@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
+import ManageMylaundry from '../views/ManageMylaundry.vue'
 import ManageLaundry from '../views/ManageLaundry.vue'
 import ManageProduct from '../views/ManageProduct.vue'
 import ManageReview from '../views/ManageReview.vue'
@@ -17,7 +18,6 @@ import NoticeDetail2 from '../views/NoticeDetail2.vue'
 
 import ManageOrder from '../views/ManageOrder.vue'
 import OrderDetails from '../views/OrderDetails.vue'
-
 import HistoryDetails from '../views/HistoryDetails.vue'
 
 
@@ -27,14 +27,11 @@ const routes = [
     name: 'home',
     component: HomeView
   },
-  // {
-  //   path: '/about',
-  //   name: 'about',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  // }
+  {
+    path: '/managemylaundry',
+    name: 'managemylaundry',
+    component: ManageMylaundry
+  },
   {
     path: '/managelaundry',
     name: 'managelaundry',
