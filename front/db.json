@@ -127,6 +127,17 @@
       "O_PRICE": "10,000원",
       "O_REQUEST": "없음",
       "S_NAME": "AA 세탁소"
+    },
+    {
+      "id": 6,
+      "S_ID": 2,
+      "U_ID": "",
+      "O_DATE": "2023-05-14",
+      "COMPLETE_DATE": "",
+      "DELEVERY_STATE": -2,
+      "O_PRICE": "30,000원",
+      "O_REQUEST": "빠른 세탁과 배송 부탁드립니다 ",
+      "S_NAME": "BB 세탁소"
     }
   ],
   "mypage": [
