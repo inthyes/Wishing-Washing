@@ -75,7 +75,6 @@ const output ={
 
             const laundryList = new LaundryList(req.body, deliveryAddress1, deliveryAddress2);
             const laundryListRes = await laundryList.getLaundryInfo();
-            console.log(laundryListRes);
             res.json(laundryListRes);
         },
     review : (req, res) => {

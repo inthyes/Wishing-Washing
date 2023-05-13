@@ -24,8 +24,8 @@
 
             <v-card-actions class="py-0">
                 <v-btn icon @click="toggleWish(laundry)">
-                    <v-icon :color="laundry.wish ? 'red' : ''">
-                        {{ laundry.wish ? 'mdi-heart' : 'mdi-heart-outline' }}
+                    <v-icon :color="laundry.userLike ? 'red' : ''">
+                        {{ laundry.userLike ? 'mdi-heart' : 'mdi-heart-outline' }}
                     </v-icon>
                 </v-btn>
                 <v-btn color="orange" v-bind:to="`/laundrydetail/${laundry.S_ID}`">상세정보</v-btn>
@@ -63,8 +63,8 @@ export default {
         // 위시리스트-토글버튼
         toggleWish(laundry) {
             //const laundry = this.laundrys.find(l => l.id === laundryId);
-            laundry.wish = laundry.wish ? 0 : 1;
-            axios.patch(`http://localhost:3000/laundrys/${laundry.id}`, laundry)
+            laundry.userLike = laundry.userLike ? 0 : 1;
+            axios.post(`http://localhost:3000/like`, { laundryId: laundry.S_ID, like: laundry.userLike })
                 .then(response => {
                     // handle successful response
                     console.log(response);
