@@ -1,4 +1,4 @@
-<!--내 세탁소-->
+<!--내 세탁소 (마이페이지 하위)-->
 <!--서혜린-->
 
 <template>
@@ -37,7 +37,8 @@ export default {
     async created() {
         try {
             const res = await axios.get('http://localhost:5001/managelaundrys');
-            this.managelaundrys = res.data;
+            this.managelaundrys = res.data.filter((laundry) => laundry.id === 1);
+            //this.managelaundrys = res.data;
         } catch (e) {
             console.error(e);
         }
