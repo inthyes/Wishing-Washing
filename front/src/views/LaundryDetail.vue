@@ -50,10 +50,10 @@
             <v-window v-model="tab">
                 <v-window-item value="tab-1">
                     <v-list class="mx-1">
-                        <v-list-item v-for="(product, p_id) in laundry.products" :key="p_id">
+                        <v-list-item v-for="(product, s_id) in laundry.products" :key="s_id">
                             <v-list-item-content class="d-flex justify-space-between">
-                                <div>{{ product.p_name }}</div>
-                                <div>{{ product.p_price }}원&nbsp;&nbsp;&nbsp;
+                                <div>{{ product_name }}</div>
+                                <div>{{ product_price }}원&nbsp;&nbsp;&nbsp;
                                     <v-icon color="deep-purple-lighten-2" @click="decrement(product)">mdi-minus</v-icon>
                                     <span>{{ product.quantity }}</span>
                                     <v-icon color="deep-purple-lighten-2" @click="increment(product)">mdi-plus</v-icon>
