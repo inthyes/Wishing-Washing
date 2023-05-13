@@ -65,7 +65,7 @@
                 </v-window-item>
                 <v-window-item value="tab-2">
                     <div class="text-black mx-6 mt-2">
-                        {{ laundry.reviews }}
+                        {{ review}}
                     </div>
                 </v-window-item>
             </v-window>
@@ -104,6 +104,7 @@ export default {
         laundry: {},        // laundrys.json
         submits: [],        // submits.json      
         product: [],
+        review: [],
 
         tab: 'Appetizers',  // 세탁/수선 & 리뷰 탭
         //isWished: 0,    // 찜버튼
@@ -122,7 +123,8 @@ export default {
                  },
             });
                 this.laundry = res.data.laundryDetail;
-                this.product = res.data.productDetail
+                this.product = res.data.productDetail;
+                this.review = res.data.review;
         } catch (e) {
             console.error(e);
         }

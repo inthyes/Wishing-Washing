@@ -40,20 +40,20 @@ const jwt = require("jsonwebtoken");
 const output ={
     
     home: async (req, res) => {
-        if (req.headers.cookie.includes('response')) {
-                  const cookies = req.headers.cookie.split('; ');
-                  let cookieValue;
-                  cookies.forEach(cookie => {
-                    if (cookie.startsWith('response=')) {
-                        cookieValue = cookie.split('=')[1];
-                    }
-                  });
-                  const orderNum = JSON.parse(decodeURIComponent(cookieValue)).orderNumber;
-                  const deleteCart = new Cart(orderNum);
-                  deleteCart.deleteCart();
-                  res.clearCookie('response');
-                res.status(200).json({ message: 'success' });
-        }
+        // if (req.headers.cookie.includes('response')) {
+        //           const cookies = req.headers.cookie.split('; ');
+        //           let cookieValue;
+        //           cookies.forEach(cookie => {
+        //             if (cookie.startsWith('response=')) {
+        //                 cookieValue = cookie.split('=')[1];
+        //             }
+        //           });
+        //           const orderNum = JSON.parse(decodeURIComponent(cookieValue)).orderNumber;
+        //           const deleteCart = new Cart(orderNum);
+        //           deleteCart.deleteCart();
+        //           res.clearCookie('response');
+        //         res.status(200).json({ message: 'success' });
+        // }
     },
     login : (req,res) => {
         logger.info(`GET /login 304 "로그인 화면으로 이동"`);
@@ -85,19 +85,19 @@ const output ={
         res.render("home/review", {S_ID : S_ID, O_NUM : O_NUM});
     },
 
-    showReview : async (req, res) => {
-        logger.info(`GET /laundry 304 "showreview 화면으로 이동"`);
-        const S_ID = req.params.id; //세탁소아이디 불러옴
-        //console.log(req.params.id);
-        const review = new Review(S_ID, "codus");
-        const RV = await review.showReview();
-        console.log("RV:");
-        console.log(RV);
-        res.render("home/showReview",
-        {
-                RV
-        });
-    },
+    // showReview : async (req, res) => {
+    //     logger.info(`GET /laundry 304 "showreview 화면으로 이동"`);
+    //     const S_ID = req.params.id; //세탁소아이디 불러옴
+    //     //console.log(req.params.id);
+    //     const review = new Review(S_ID, "codus");
+    //     const RV = await review.showReview();
+    //     console.log("RV:");
+    //     console.log(RV);
+    //     res.json(
+    //     {
+    //         RV
+    //     });
+    // },
     history : async (req, res) => {
         const token = req.query.token;
         const user_id = Vtoken(token);  // 토큰 검증
@@ -234,24 +234,36 @@ const output ={
             // 토큰 검증 후의 나머지 로직을 이곳에 작성
             
             //뒤로가기 실행시 if 쿠키가 존재 -> 쿠키삭제 + cart랑 orderList에서 ordernum관련 내용 삭제
-            if (req.headers.cookie.includes('response')) {
-                const cookieValue = req.cookies.response;
-                console.log(req.cookies);
-                const orderNum = JSON.parse(cookieValue).orderNumber; 
-                const deleteCart = new Cart(orderNum);
-                deleteCart.deleteCart();
-                res.clearCookie('response');
-            }
+            // if (req.headers.cookie.includes('response')) {
+            //     const cookieValue = req.cookies.response;
+            //     console.log(req.cookies);
+            //     const orderNum = JSON.parse(cookieValue).orderNumber; 
+            //     const deleteCart = new Cart(orderNum);
+            //     deleteCart.deleteCart();
+            //     res.clearCookie('response');
+            // }
 
             const laundry = new Laundry(req.params.id);
             const product = new Product(req.params.id);
       
             const laundryDetailRes = await laundry.showDetail();
             const productDetailRes = await product.showDetail();
-      
+
+            const S_ID = req.params.id; //세탁소아이디 불러옴
+            //console.log(req.params.id);
+            const review = new Review(S_ID, "codus");
+            const RV = await review.showReview();
+
+            console.log( {
+                laundryDetail: laundryDetailRes,
+                productDetail: productDetailRes,
+                review : RV
+              });
+             
             res.json({
               laundryDetail: laundryDetailRes,
               productDetail: productDetailRes,
+              review : RV
             });
        /*   });
         } catch (error) {

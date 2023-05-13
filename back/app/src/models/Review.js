@@ -30,7 +30,7 @@ class Review {
     static async review(O_NUM, S_ID, title, body, rating, U_ID) {
       return new Promise ((resolve, reject) => {
       db.query("USE CAPSTONE", (err, result) => {
-          const query = "INSERT INTO REVIEW (O_NUM,S_ID, REVIEW_TEXT, REVIEW_START, U_ID) VALUES (?,? , ?,?,?);";
+          const query = "INSERT INTO REVIEW (O_NUM,S_ID, REVIEW_TEXT, REVIEW_STAR, U_ID) VALUES (?,? , ?,?,?);";
           if (err) reject(err);
           //const keys = Object.keys(query);
           db.query(query,  [O_NUM,S_ID, body, rating, U_ID], (err, data) => {
