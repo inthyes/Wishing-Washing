@@ -41,6 +41,22 @@
       "S_ADD3": "1층 101호",
       "stars": 4.5,
       "wish": 1
+    },  
+    {
+      "id": 2,
+      "S_NAME": "BB세탁소",
+      "S_PHONE": "010-2222-2222",
+      "S_IMAGE": "",
+      "S_THUMB": "",
+      "S_OPENING": "09:00",
+      "S_CLOSING": "22:00",
+      "S_COMMNET": "안녕하세요 BB세탁소 입니다.",
+      "S_ANNOUNCE": "공지사항입니다.",
+      "S_ADD1": 17408,
+      "S_ADD2": "경기 이천시 모가면 양화천로 30",
+      "S_ADD3": "XX빌딩",
+      "stars": 3.0,
+      "wish": 0
     }
   ],
   "product": [
@@ -54,9 +70,7 @@
     }
   ],
   "submits": [
-    {
-      
-    }
+    {}
   ],
   "historys": [
     {
