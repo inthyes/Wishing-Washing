@@ -22,11 +22,11 @@
             <v-card-text>
                 <!--별점(리뷰수)-->
                 <v-row align="center" class="mx-0">
-                    <v-rating :model-value=laundry.stars color="amber" density="compact" half-increments readonly
+                    <v-rating :model-value= reviewStar color="amber" density="compact" half-increments readonly
                         size="normal"></v-rating>
 
                     <div class="text-grey ms-2">
-                        {{ laundry.stars }}
+                        {{ reviewStar}}
                     </div>
                 </v-row>
 
@@ -105,6 +105,7 @@ export default {
         submits: [],        // submits.json      
         product: [],
         review: [],
+        reviewStar : {},
 
         tab: 'Appetizers',  // 세탁/수선 & 리뷰 탭
         //isWished: 0,    // 찜버튼
@@ -125,6 +126,7 @@ export default {
                 this.laundry = res.data.laundryDetail;
                 this.product = res.data.productDetail;
                 this.review = res.data.review;
+                this.reviewStar = res.data.reviewStar;
         } catch (e) {
             console.error(e);
         }
