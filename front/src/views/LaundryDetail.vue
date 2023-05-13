@@ -10,18 +10,16 @@
             <v-img cover height="250" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
 
             <v-card-item>
-                <v-card-title>{{ laundry.S_NAME }}</v-card-title>
+                <v-card-title class="mb-1">{{ laundry.S_NAME }}</v-card-title>
 
                 <v-card-subtitle>
-                    <span class="me-1">{{ laundry.S_OPENING }} ~ {{ laundry.S_OPENING }}</span>
-
-                    <v-icon color="error" icon="mdi-fire-circle" size="small"></v-icon>
+                    <span class="mb-1">영업시간&nbsp;{{ laundry.S_OPENING }} ~ {{ laundry.S_CLOSING }}</span>
                 </v-card-subtitle>
             </v-card-item>
 
             <v-card-text>
                 <!--별점(리뷰수)-->
-                <v-row align="center" class="mx-0">
+                <v-row align="center" class="mx-0 mb-1">
                     <v-rating :model-value=laundry.stars color="amber" density="compact" half-increments readonly
                         size="normal"></v-rating>
 
@@ -30,14 +28,14 @@
                     </div>
                 </v-row>
 
-                <div class="my-4 text-subtitle-1">
+                <div class="mt-3">
                     {{ laundry.S_ADD2 }}
                 </div>
-                <div class="my-4 text-subtitle-1">
+                <div class="mt-0">
                     {{ laundry.S_ADD3 }}
                 </div>
 
-                <div>{{ laundry.S_COMMNET }}</div>
+                <div class="mt-1 text-subtitle-1">{{ laundry.S_COMMNET }}</div>
             </v-card-text>
 
             <v-divider class="mx-4 mb-1"></v-divider>
