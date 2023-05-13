@@ -65,7 +65,7 @@
                 </v-window-item>
                 <v-window-item value="tab-2">
                     <div class="text-black mx-6 mt-2">
-                        {{ review}}
+                        {{review}}
                     </div>
                 </v-window-item>
             </v-window>
