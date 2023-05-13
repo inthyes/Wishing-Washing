@@ -23,7 +23,7 @@ class Cart {
                 return;
               }
               let queryAddCart = "INSERT INTO cart(O_NUM, PRODUCT_ID, PRODUCT_QUANTITIY) VALUES ?";
-              let queryAddOrderList = "INSERT INTO ORDER_LIST(O_NUM, S_ID, U_ID) VALUES (? , ? , ?);";
+              let queryAddOrderList = "INSERT INTO ORDER_LIST(O_NUM, S_ID, U_ID, ORD_DAY, ORD_TIME) VALUES (? , ? , ? , ? , ?);";
               let queryGetOrderNum = "SELECT * FROM ORDER_NUM;";
               let queryUpdateOrderNum = "UPDATE ORDER_NUM SET ORDER_NUM = ? WHERE ORDER_NUM = ?;";
               let orderNum;
@@ -36,13 +36,13 @@ class Cart {
                     orderNum = result[0].ORDER_NUM + 1;
                     db.query(
                       queryAddOrderList,
-                      [orderNum, parseInt(Info.laundryId), userID],
+                      [orderNum, parseInt(Info.laundryId), userID, Info.date, Info.time],
                       (err, result) => {
                         if (err) reject(err);
                         else {
                           let values = [];
                           const keys = Object.keys(Info); //객체의 배열화
-                          for (let i = 0; i < keys.length-1; i++) {
+                          for (let i = 0; i < keys.length-3; i++) {
                             const cartNum = parseInt(Info[keys[i]]); //Info.p1
                             values.push([orderNum, keys[i], cartNum]);
                           }   

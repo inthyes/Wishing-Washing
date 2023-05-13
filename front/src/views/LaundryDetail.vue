@@ -175,10 +175,11 @@ export default {
         },
         async submitData() {
             try {
+                    const now = new Date();
                     const selectedItems = this.product;
                     const id = this.$route.params.id;
 
-                    const data = { laundryId: id};
+                    const data = { laundryId: id,  date: now.toISOString().substring(0, 10), time: now.toISOString().substring(11, 19)};
                     selectedItems.forEach(pro => {data[pro.PRODUCT_ID] = pro.PRODUCT_QUANTITIY});
                     const res = await axios.post(`http://localhost:3000/laundry/detail/${id}/order`, data);
                     //res.data의 orderNum 쿠키처리

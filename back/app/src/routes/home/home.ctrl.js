@@ -284,7 +284,6 @@ const output ={
 
         logger.info(`GET /home/laundryOrder 304 " 세탁신청주문 화면으로 이동`);
 
-
         res.json(
         {
             deliveryAddress : deliveryAddress,
