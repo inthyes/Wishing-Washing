@@ -39,9 +39,21 @@ const jwt = require("jsonwebtoken");
 
 const output ={
     
-    home: (req, res) => {
-          logger.info(`GET / 304 "홈 화면으로 이동"`);
-          res.render("home/index");  
+    home: async (req, res) => {
+        if (req.headers.cookie.includes('response')) {
+                  const cookies = req.headers.cookie.split('; ');
+                  let cookieValue;
+                  cookies.forEach(cookie => {
+                    if (cookie.startsWith('response=')) {
+                        cookieValue = cookie.split('=')[1];
+                    }
+                  });
+                  const orderNum = JSON.parse(decodeURIComponent(cookieValue)).orderNumber;
+                  const deleteCart = new Cart(orderNum);
+                  deleteCart.deleteCart();
+                  res.clearCookie('response');
+                res.status(200).json({ message: 'success' });
+        }
     },
     login : (req,res) => {
         logger.info(`GET /login 304 "로그인 화면으로 이동"`);
@@ -224,12 +236,13 @@ const output ={
             //뒤로가기 실행시 if 쿠키가 존재 -> 쿠키삭제 + cart랑 orderList에서 ordernum관련 내용 삭제
             if (req.headers.cookie.includes('response')) {
                 const cookieValue = req.cookies.response;
+                console.log(req.cookies);
                 const orderNum = JSON.parse(cookieValue).orderNumber; 
                 const deleteCart = new Cart(orderNum);
                 deleteCart.deleteCart();
                 res.clearCookie('response');
             }
-            
+
             const laundry = new Laundry(req.params.id);
             const product = new Product(req.params.id);
       
@@ -271,12 +284,6 @@ const output ={
 
         logger.info(`GET /home/laundryOrder 304 " 세탁신청주문 화면으로 이동`);
 
-        console.log({
-            deliveryAddress : deliveryAddress,
-            cartRes : cartRes,
-            laundryDetailRes : laundryDetailRes,
-            productRes : productRes
-        });
 
         res.json(
         {

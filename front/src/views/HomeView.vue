@@ -46,6 +46,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
@@ -65,6 +67,18 @@ export default {
       ],
     }
   },
+  async created() {
+        try {
+            await axios.get(`http://localhost:3000`, {
+                withCredentials: true,
+                headers: {
+                 Cookie: document.cookie, // 쿠키를 요청에 추가
+                 },
+            });
+        } catch (e) {
+            console.error(e);
+        }
+    },
 }
 </script>
 
