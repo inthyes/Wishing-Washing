@@ -236,7 +236,6 @@ const output ={
             // 뒤로가기 실행시 if 쿠키가 존재 -> 쿠키삭제 + cart랑 orderList에서 ordernum관련 내용 삭제
             if (req.headers.cookie.includes('response')) {
                 const cookieValue = req.cookies.response;
-                console.log(req.cookies);
                 const orderNum = JSON.parse(cookieValue).orderNumber; 
                 const deleteCart = new Cart(orderNum);
                 deleteCart.deleteCart();

@@ -74,9 +74,9 @@
 
 
             <v-card-actions>
-                <v-btn icon @click="toggleWish(laundry)">
-                    <v-icon :color="laundry.wish ? 'red' : ''">
-                        {{ laundry.wish ? 'mdi-heart' : 'mdi-heart-outline' }}
+                <v-btn icon @click="toggleWish(likeStatus)">
+                    <v-icon :color="likeStatus ? 'red' : ''">
+                        {{ likeStatus ? 'mdi-heart' : 'mdi-heart-outline' }}
                     </v-icon>
                 </v-btn>
                 <v-btn color="deep-purple-lighten-2" variant="text"
@@ -106,6 +106,7 @@ export default {
         product: [],
         review: [],
         reviewStar : {},
+        likeStatus : {},
 
         tab: 'Appetizers',  // 세탁/수선 & 리뷰 탭
         //isWished: 0,    // 찜버튼
@@ -127,6 +128,7 @@ export default {
                 this.product = res.data.productDetail;
                 this.review = res.data.review;
                 this.reviewStar = res.data.reviewStar;
+                this.likeStatus = res.data.userLike;
         } catch (e) {
             console.error(e);
         }
@@ -152,10 +154,12 @@ export default {
         //             console.log(error);
         //         });
         // },
-        toggleWish(laundry) {
+        toggleWish(likeStatus) {
             //const laundry = this.laundrys.find(l => l.id === laundryId);
-            laundry.wish = laundry.wish ? 0 : 1;
-            axios.post(`http://localhost:3000/like`,  { laundryId: laundry.id, like: laundry.wish })
+
+            this.likeStatus = likeStatus ? 0 : 1;
+
+            axios.post(`http://localhost:3000/like`,  { laundryId: this.$route.params.id, like: this.likeStatus })
                 .then(response => {
                     // handle successful response
                     console.log(response);
