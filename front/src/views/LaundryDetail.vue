@@ -79,7 +79,7 @@
                         {{ laundry.wish ? 'mdi-heart' : 'mdi-heart-outline' }}
                     </v-icon>
                 </v-btn>
-                <v-btn v-bind:to="`/submitlaundry/${laundry.id}`" color="deep-purple-lighten-2" variant="text"
+                <v-btn color="deep-purple-lighten-2" variant="text"
                     @click="submitData">
                     세탁신청
                 </v-btn>
@@ -180,12 +180,13 @@ export default {
                     const selectedItems = this.product;
                     const id = this.$route.params.id;
 
-                    const data = { laundryId: this.$route.params.id};
+                    const data = { laundryId: id};
                     selectedItems.forEach(pro => {data[pro.PRODUCT_ID] = pro.PRODUCT_QUANTITIY});
                     const res = await axios.post(`http://localhost:3000/laundry/detail/${id}/order`, data);
                     //res.data의 orderNum 쿠키처리
                     this.$cookies.set('response', res.data)
                     this.$cookies.get('response')
+                    this.$router.push(`/submitlaundry/${id}`);
             } catch (e) {
                 console.error(e);
             }

@@ -79,6 +79,10 @@ class Cart {
             }
             )
         }
+
+        async deleteCart() {
+          console.log(this.body)
+        }
       }
 
 

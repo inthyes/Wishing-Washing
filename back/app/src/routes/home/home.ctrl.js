@@ -221,7 +221,7 @@ const output ={
             console.log('user_id:', user_id); */
       
             // 토큰 검증 후의 나머지 로직을 이곳에 작성
-      
+            res.clearCookie('response');
             const laundry = new Laundry(req.params.id);
             const product = new Product(req.params.id);
       
