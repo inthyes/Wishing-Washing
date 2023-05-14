@@ -29,6 +29,16 @@
       "tel": "02-1234-3822",
       "notice": "없음",
       "id": 3
+    },
+    {
+      "laundryName": "ga",
+      "laundryAddr": "a",
+      "intro": "gasss",
+      "openTime": "19:37",
+      "closeTime": "16:40",
+      "tel": "010-5321-1111",
+      "notice": "gas",
+      "id": 4
     }
   ],
   "requests": [
@@ -60,7 +70,7 @@
       "requirement": "얼룩 지워주세요",
       "price": "7,000원",
       "userAddr": "경기도 수원시 XX빌라",
-      "status": "요청중"
+      "status": "배송완료"
     },
     {
       "id": 4,
@@ -92,7 +102,7 @@
       "stars": "5",
       "reviewContent": "깨끗하게 잘해주셨어요",
       "reply": "",
-      "replyValue": ""
+      "replyValue": "ㅁㄴㅇㄹ"
     },
     {
       "id": 2,
@@ -113,6 +123,26 @@
       "reviewContent": "사장님이 매우 친절하십니다",
       "reply": "",
       "replyValue": ""
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "productImg": "https://source.unsplash.com/featured/?clothes",
+      "productName": "상",
+      "price": "5000"
+    },
+    {
+      "id": 2,
+      "productImg": "https://source.unsplash.com/featured/?clothes",
+      "productName": "원피스",
+      "price": "5000"
+    },
+    {
+      "id": 3,
+      "productImg": "https://source.unsplash.com/featured/?shoes",
+      "productName": "신발",
+      "price": "8000"
     }
   ]
 }
