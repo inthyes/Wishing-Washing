@@ -40,7 +40,7 @@
       "requirement": "드라이클리닝 해주세요",
       "price": "10,000원",
       "userAddr": "경기도 수원시 영통구 경기대학교",
-      "status": "요청중"
+      "status": -2
     },
     {
       "id": 2,
@@ -50,7 +50,7 @@
       "requirement": "없음",
       "price": "8,000원",
       "userAddr": "경기도 수원시 OO아파트",
-      "status": "요청중"
+      "status": -2
     },
     {
       "id": 3,
@@ -60,7 +60,7 @@
       "requirement": "얼룩 지워주세요",
       "price": "7,000원",
       "userAddr": "경기도 수원시 XX빌라",
-      "status": "요청중"
+      "status": -2
     },
     {
       "id": 4,
@@ -70,7 +70,7 @@
       "requirement": "없음",
       "price": "7,000원",
       "userAddr": "경기대학교 기숙사",
-      "status": "배송완료"
+      "status": 2
     },
     {
       "id": 5,
@@ -80,7 +80,7 @@
       "requirement": "변색 복구해주세요",
       "price": "8,000원",
       "userAddr": "경기도 수원시 AA빌라",
-      "status": "배송완료"
+      "status": 2
     }
   ],
   "reviews": [
