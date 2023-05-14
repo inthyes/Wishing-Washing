@@ -55,7 +55,7 @@
                                 <div>{{ pro.PRODUCT_NAME }}</div>
                                 <div>{{ pro.PRODUCT_PRICE }}원&nbsp;&nbsp;&nbsp;
                                     <v-icon color="deep-purple-lighten-2" @click="decrement(pro)">mdi-minus</v-icon>
-                                    <span>{{ pro.PRODUCT_QUANTITIY }}</span>
+                                    <span>{{ pro.PRODUCT_QUANTITY }}</span>
                                     <v-icon color="deep-purple-lighten-2" @click="increment(pro)">mdi-plus</v-icon>
                                 </div>
                             </v-list-item-content>
@@ -171,13 +171,13 @@ export default {
         },
         // 상품수량증가
         increment(pro) {
-            pro.PRODUCT_QUANTITIY++;
+            pro.PRODUCT_QUANTITY++;
             pro.PRODUCT_PRICE_TOTAL = pro.PRODUCT_PRICE_TOTAL + pro.PRODUCT_PRICE;
         },
         // 상품수량감소
         decrement(pro) {
-            if (pro.PRODUCT_QUANTITIY > 0) {
-                pro.PRODUCT_QUANTITIY--;
+            if (pro.PRODUCT_QUANTITY > 0) {
+                pro.PRODUCT_QUANTITY--;
                 pro.PRODUCT_PRICE_TOTAL = pro.PRODUCT_PRICE_TOTAL - pro.PRODUCT_PRICE;
             }
         },
@@ -188,7 +188,7 @@ export default {
                     const id = this.$route.params.id;
 
                     const data = { laundryId: id,  date: now.toISOString().substring(0, 10), time: now.toISOString().substring(11, 19)};
-                    selectedItems.forEach(pro => {data[pro.PRODUCT_ID] = pro.PRODUCT_QUANTITIY});
+                    selectedItems.forEach(pro => {data[pro.PRODUCT_ID] = pro.PRODUCT_QUANTITY});
                     const res = await axios.post(`http://localhost:3000/laundry/detail/${id}/order`, data);
                     //res.data의 orderNum 쿠키처리
                     this.$cookies.set('response', res.data)

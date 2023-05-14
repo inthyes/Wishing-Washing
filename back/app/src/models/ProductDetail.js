@@ -14,8 +14,8 @@ class ProductDetail {
             db.query(query, storeId, (err, data) => {
                 if (err) reject(err);
                 else {
-                    const product = data;
-                    resolve(product)
+                    for (let i = 0; i < data.length; i++)  {data[i].PRODUCT_QUANTITY = 0;}
+                    resolve(data)
                     }
                 });
               })
