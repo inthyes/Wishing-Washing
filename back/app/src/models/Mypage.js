@@ -13,7 +13,6 @@ class MyPage {
       async showFavoriteList() {
         const id = this.body;
         const List = await MyPage.showList(id);
-        console.log(List);
         //detail에는 db에서 가져온 세탁소의 id와 name이 포함.
 
         if(List) {

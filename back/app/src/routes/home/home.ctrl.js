@@ -169,10 +169,10 @@ const output ={
     },
     //myPage 하위 기능
     profileEdit : (req, res) => 
-    {
+    {   
         logger.info(`GET /myPage/profileEdit 304 "프로필편집 화면으로 이동"`);
         //실제 경로 , 라우팅 경로 : myPage/profileEdit
-        res.render("home/profileEdit");
+        res.status(200).json({ message: 'success'});
     },
     customerService : (req, res) => {
         const token = req.query.token;
