@@ -14,8 +14,8 @@
                 </v-avatar>
 
                 <div class="mt-1">
-                    <v-card-title class="px-1"> {{ laundry.title }} </v-card-title>
-                    <v-card-text class="px-1 text-medium-emphasis"> {{ laundry.address }} </v-card-text>
+                    <v-card-title class="px-1"> {{ laundry.S_NAME }} </v-card-title>
+                    <v-card-text class="px-1 text-medium-emphasis"> {{ laundry.S_ADD2 }} </v-card-text>
                 </div>
             </div>
         </v-card>
