@@ -36,30 +36,30 @@
       "S_CLOSING": "22:00",
       "S_COMMNET": "안녕하세요 AA세탁소 입니다.",
       "S_ANNOUNCE": "공지사항입니다.",
-      "S_ADD1": 16227,
+      "S_ADD1": "16227",
       "S_ADD2": "경기도 수원시 영통구 광교산로 154-42",
       "S_ADD3": "1층 101호",
-      "stars": 4.5,
-      "wish": 0
-    },
-    {
-      "id": 2,
-      "S_NAME": "AA세탁소",
-      "S_PHONE": "010-1111-1111",
-      "S_IMAGE": "",
-      "S_THUMB": "",
-      "S_OPENING": "09:00",
-      "S_CLOSING": "22:00",
-      "S_COMMNET": "안녕하세요 BB세탁소 입니다.",
-      "S_ANNOUNCE": "공지사항입니다.",
-      "S_ADD1": 12333,
-      "S_ADD2": "경기도 수원시 영통구",
-      "S_ADD3": "9층 901호",
       "stars": 4.5,
       "wish": 1
     },
     {
       "id": 2,
+      "S_NAME": "삼일세탁소",
+      "S_PHONE": "010-1111-2222",
+      "S_IMAGE": "",
+      "S_THUMB": "",
+      "S_OPENING": "09:00",
+      "S_CLOSING": "22:00",
+      "S_COMMNET": "안녕하세요 삼일세탁소 입니다.",
+      "S_ANNOUNCE": "공지사항입니다.",
+      "S_ADD1": "06253",
+      "S_ADD2": "서울 강남구 도곡로1길 14 삼일프라자오피스텔",
+      "S_ADD3": "9층 901호",
+      "stars": 4.5,
+      "wish": 1
+    },
+    {
+      "id": 3,
       "S_NAME": "BB세탁소",
       "S_PHONE": "010-2222-2222",
       "S_IMAGE": "",
@@ -68,14 +68,14 @@
       "S_CLOSING": "22:00",
       "S_COMMNET": "안녕하세요 BB세탁소 입니다.",
       "S_ANNOUNCE": "공지사항입니다.",
-      "S_ADD1": 17408,
+      "S_ADD1": "17408",
       "S_ADD2": "경기 이천시 모가면 양화천로 30",
       "S_ADD3": "XX빌딩",
       "stars": 3.7,
       "wish": 0
     },
     {
-      "id": 3,
+      "id": 4,
       "S_NAME": "크린토피아 안양석수현대점",
       "S_PHONE": "031-344-5900",
       "S_IMAGE": "",
@@ -84,25 +84,39 @@
       "S_CLOSING": "21:00",
       "S_COMMNET": "안녕하세요 크린토피아 입니다.",
       "S_ANNOUNCE": "공지사항입니다.",
-      "S_ADD1": 13963,
+      "S_ADD1": "13963",
       "S_ADD2": "경기 안양시 만안구 안양로 512",
       "S_ADD3": "",
-      "stars": 5.0,
+      "stars": 5,
       "wish": 1
     }
   ],
   "product": [
     {
-      "product_id": 1,
-      "product_name": "A 상의",
-      "product_price": 1000,
-      "product_info": "",
-      "s_id": 1,
-      "quantity": 0
+      "id": 1,
+      "S_ID": 1,
+      "PRODUCT_NAME": "A 상의",
+      "PRODUCT_PRICE": 1000,
+      "PRODUCT_INFO": "",
+      "PRODUCT_IMG": "",
+      "PRODUCT_QUANTITIY": 0
+    },
+    {
+      "id": 2,
+      "S_ID": 1,
+      "PRODUCT_NAME": "A 하의",
+      "PRODUCT_PRICE": 2000,
+      "PRODUCT_INFO": "",
+      "PRODUCT_IMG": "",
+      "PRODUCT_QUANTITIY": 0
     }
   ],
-  "submits": [
-    {}
+  "cart": [
+    {
+      "O_NUM":1,
+      "PRODUCT_ID": 1,
+      "PRODUCT_QUANTITIY": 0
+    }
   ],
   "order_complete": [
     {
