@@ -58,11 +58,11 @@ class MyPage {
                   else {
                     const countHistory = result[0].count;
                     data[0].countHistory = countHistory;
-                    
+
                     db.query(queryReview, userId, (err, complete) => {
                       if (err) reject(err);
                       else {
-                        const countReview = result[0].count;
+                        const countReview = complete[0].count;
                         data[0].countReview = countReview;
                         resolve(data[0]);
                       }

@@ -124,14 +124,13 @@ const output ={
         console.log(myPageInfo);
         res.json(myPageInfo);
     },
-    favoriteList : (req, res) => {
-        const token = req.query.token;
-        const user_id = Vtoken(token);  // 토큰 검증
-        console.log("토큰확인: " + token);
-        console.log("user_id: " + user_id);
+    favoriteList : async (req, res) => {
+        // const token = req.query.token;
+        // const user_id = Vtoken(token);  // 토큰 검증
+        // console.log("토큰확인: " + token);
+        // console.log("user_id: " + user_id);
 
         logger.info(`GET /myPage/favoriteList 304 "프로필편집 화면으로 이동"`);
-        res.render("home/favoriteList");
         //실제 경로 , 라우팅 경로 : myPage/favoriteList
         /* var user;
          //클라이언트가 HTTP요청 헤더에 토큰 받아서 보낼거임
@@ -164,7 +163,7 @@ const output ={
         //토큰 받아오면 하드코딩 해제
         const favorite = new MyPage("codus");
 
-        const response = favorite.showFavoriteList();
+        const response = await favorite.showFavoriteList();
         //const response1 = await cart.addOrderList();
         console.log(response);
     },

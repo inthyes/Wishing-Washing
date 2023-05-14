@@ -32,7 +32,7 @@ export default {
     }),
     async created() {
         try {
-            const res = await axios.get('http://localhost:5000/reviews');
+            const res = await axios.get('http://localhost:3000/reviews');
             this.reviews = res.data;
         } catch (e) {
             console.error(e);
