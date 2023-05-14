@@ -112,14 +112,17 @@ const output ={
         //const response1 = await cart.addOrderList();
         res.json(orderCompleteList);
     },
-    myPage : (req, res) => {
+    myPage : async (req, res) => {
         // const token = req.query.token;
         // const user_id = Vtoken(token);  // 토큰 검증
         // console.log("토큰확인: " + token);
         // console.log("user_id: " + user_id);
-
         logger.info(`GET /home/myPage 304 "마이페이지 화면으로 이동`);
-        res.render("home/myPage");
+        
+        const myPage = new MyPage("codus");
+        const myPageInfo = await myPage.showMyPageInfo("codus");
+        console.log(myPageInfo);
+        res.json(myPageInfo);
     },
     favoriteList : (req, res) => {
         const token = req.query.token;

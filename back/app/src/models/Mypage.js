@@ -42,6 +42,38 @@ class MyPage {
             })
       });
   }   
+
+  async showMyPageInfo(userId) {
+    return new Promise ((resolve, reject) => {
+    db.query("USE CAPSTONE", (err, result) => {
+        const queryGetUser = "SELECT * FROM USERS where U_ID = ?;";
+        const queryGetOrderComplete = "SELECT COUNT(*) AS count FROM ORDER_COMPLETE WHERE U_ID = ?;"
+        const queryReview = "SELECT COUNT(*) AS count FROM REVIEW WHERE U_ID = ?;"
+        if (err) reject(err);
+        db.query(queryGetUser, userId, (err, data) => {
+            if (err) reject(err);
+            else {
+                db.query(queryGetOrderComplete, userId, (err, result) => {
+                  if (err) reject(err);
+                  else {
+                    const countHistory = result[0].count;
+                    data[0].countHistory = countHistory;
+                    
+                    db.query(queryReview, userId, (err, complete) => {
+                      if (err) reject(err);
+                      else {
+                        const countReview = result[0].count;
+                        data[0].countReview = countReview;
+                        resolve(data[0]);
+                      }
+                    })
+                  }
+                })
+                }
+            });
+          })
+    });
+  }   
 }
 
 
