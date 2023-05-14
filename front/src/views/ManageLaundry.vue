@@ -76,7 +76,7 @@
                 <v-text-field v-model="notice" :rules="[rules.required]" 
                     color="blue" label="공지사항" placeholder="공지사항을 작성해주세요" variant="underlined"></v-text-field><br>
 
-                <v-file-input v-model="image" :rules="[rules.required]"
+                <v-file-input v-model="image" @change="handleFileUpload" :rules="[rules.required]"
                     color="blue" label="세탁소 이미지" variant="outlined"></v-file-input>
             </v-container>
 
@@ -140,21 +140,22 @@ export default {
                     closeTime: this.closeTime,
                     tel: this.tel,
                     notice: this.notice,
+                    image: '',
                 };
 
-                // 이미지 업로드
+                //이미지 업로드
                 const formData = new FormData();
                 formData.append('image', this.selectedImage);
-                axios.post('http://localhost:2001/upload', formData)
-                    .then(response => {
-                        console.log('Image uploaded successfully');
-                        console.log('업로드된 이미지 경로:', response.data.imagePath);
-                    })
-                    .catch(error => {
-                        console.error('Error uploading image', error);
-                    });
 
                 try {
+                    // 이미지 업로드
+                    const res = await axios.post('http://localhost:2000/upload', formData);
+                    console.log('Image uploaded successfully');
+                    const imagePath = res.data; // 업로드된 이미지 경로
+                    console.log('업로드된 이미지 경로:', imagePath);
+                    // 이미지 경로를 newLaundry 객체에 추가
+                    newLaundry.image = imagePath.imagePath; // imagePath의 imagePath 프로퍼티를 할당
+
                     // 폼 데이터 업로드
                     const response = await axios.post('http://localhost:5001/managelaundrys', newLaundry);
                     const createdLaundryId = response.data.id; // 생성된 아이디를 저장
@@ -229,9 +230,19 @@ export default {
                     closeTime: this.closeTime,
                     tel: this.tel,
                     notice: this.notice,
+                    image: '',
                 };
 
+                //이미지 업로드
+                const formData = new FormData();
+                formData.append('image', this.selectedImage);
+
                 try {
+                    const res = await axios.post('http://localhost:2000/upload', formData);
+                    console.log('Image uploaded successfully');
+                    const imagePath = res.data;
+                    newLaundry.image = imagePath.imagePath;
+
                     await axios.put('http://localhost:5001/managelaundrys/1', newLaundry);
                     console.log('데이터가 성공적으로 추가되었습니다.');
                     this.showAlert('세탁소 정보가 수정되었습니다.');
