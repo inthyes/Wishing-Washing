@@ -10,40 +10,50 @@
             <v-img cover height="250" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
 
             <v-card-item>
+
                 <v-card-title class="mb-1">{{ laundry.name }}</v-card-title>
+
 
                 <!-- 또는 -->
                 <!-- <v-card-title>{{ laundry.name }}</v-card-title> -->
 
                 <v-card-subtitle>
+
                     <span class="mb-1">영업시간&nbsp;{{ laundry.opening }} ~ {{ laundry.closing}}</span>
+
                 </v-card-subtitle>
             </v-card-item>
 
             <v-card-text>
                 <!--별점(리뷰수)-->
                 <v-row align="center" class="mx-0 mb-1">
+
                     <v-rating :model-value= reviewStar color="amber" density="compact" half-increments readonly
                         size="normal"></v-rating>
 
                     <div class="text-grey ms-2">
                         {{ reviewStar }} (413)
+
                     </div>
                 </v-row>
 
                 <div class="mt-3">
+
                     {{ laundry.doroAddress }}
                 </div>
                 <div class="mt-0">
                     {{ laundry.postAddress }}
+
                 </div>
 
                 <!-- 이건 수정할수도 -->
                     <div class="my-4 text-subtitle-1">
+
                             {{ laundry.S_ADDR2 }}
                         </div>
 
                 <div class="mt-1 text-subtitle-1">{{ laundry.info }}</div>
+
             </v-card-text>
 
             <v-divider class="mx-4 mb-1"></v-divider>
@@ -61,7 +71,9 @@
                                 <div>{{ pro.PRODUCT_NAME }}</div>
                                 <div>{{ pro.PRODUCT_PRICE }}원&nbsp;&nbsp;&nbsp;
                                         <v-icon color="deep-purple-lighten-2" @click="decrement(pro)">mdi-minus</v-icon>
+
                                         <span>{{ pro.PRODUCT_QUANTITY }}</span>
+
                                         <v-icon color="deep-purple-lighten-2" @click="increment(pro)">mdi-plus</v-icon>
                                 </div>
                             </v-list-item-content>
@@ -79,10 +91,12 @@
 
 
             <v-card-actions>
+
                 <v-btn icon @click="toggleWish(likeStatus)">
                     <v-icon :color="likeStatus ? 'red' : ''">{{ likeStatus ? 'mdi-heart' : 'mdi-heart-outline' }}</v-icon>
                 </v-btn>
                 <v-btn color="deep-purple-lighten-2" variant="text" @click="submitData">
+
                     세탁신청
                 </v-btn>
                 <!-- <router-link :to="{ name: 'submitlaundry', params: { id: laundry.id } }">
@@ -103,11 +117,13 @@ export default {
         selection: 1,
 
         laundry: {},        // laundrys.json
+
         submits: [],        // submits.json      
         product: [],
         review: [],
         reviewStar : {},
         likeStatus : {},
+
 
         tab: 'Appetizers',  // 세탁/수선 & 리뷰 탭
         isWished: false,    // 찜버튼
@@ -138,20 +154,7 @@ export default {
         //     setTimeout(() => (this.loading = false), 2000)
         // },
 
-        // 위시리스트-토글버튼
-        // toggleWish(laundry) {
-        //     //const laundry = this.laundrys.find(l => l.id === laundryId);
-        //     laundry.wish = laundry.wish ? 0 : 1;
-        //     axios.patch(`http://localhost:5000/laundrys/${laundry.id}`, laundry)
-        //         .then(response => {
-        //             // handle successful response
-        //             console.log(response);
-        //         })
-        //         .catch(error => {
-        //             // handle error
-        //             console.log(error);
-        //         });
-        // },
+   
         toggleWish(likeStatus) {
             //const laundry = this.laundrys.find(l => l.id === laundryId);
 
@@ -193,6 +196,7 @@ export default {
                     this.$cookies.get('response')
                     this.$router.push(`/submitlaundry/${id}`);
                 // const selectedItems = this.laundry.items.filter(item => item.quantity > 0);
+
             } catch (e) {
                 console.error(e);
             }

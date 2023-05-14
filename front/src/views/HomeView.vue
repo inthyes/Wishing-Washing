@@ -52,7 +52,9 @@
 </template>
 
 <script>
+
 import axios from 'axios';
+
 export default {
   name: 'daumMap',
   data() {
@@ -70,6 +72,7 @@ export default {
       addr1: ''
     }
   },
+
   async created() {
         try {
             await axios.get(`http://localhost:3000`, {
@@ -82,6 +85,7 @@ export default {
             console.error(e);
         }
     },
+
   methods: {
     showApi() {
       new window.daum.Postcode({
@@ -115,6 +119,7 @@ export default {
           //this.zip = data.zonecode; //5자리 새우편번호 사용
           this.addr1 = fullRoadAddr;
 
+
           const date = new Date();
           date.setTime(date.getTime() + 30 * 24 * 60 * 60 * 1000); // 30일 후의 시간을 설정합니다.
           const jsonValue = JSON.stringify(data.zonecode); // 데이터를 JSON 형식으로 변환합니다.
@@ -133,6 +138,7 @@ export default {
     },
 
 }
+
 }
 </script>
 

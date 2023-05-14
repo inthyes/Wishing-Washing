@@ -225,7 +225,6 @@ const output ={
         //       console.error(err);
         //       return res.status(401).json({ error: 'Invalid token' });
         //     }
-      
 
         //     const user_id = decoded.user_id; // 토큰에서 추출한 사용자 ID
         //     console.log('user_id:', user_id);
@@ -264,6 +263,8 @@ const output ={
               reviewStar : reviewStar,
               userLike : userLike
             });
+
+
 
         } catch (error) {
           console.error(error);
