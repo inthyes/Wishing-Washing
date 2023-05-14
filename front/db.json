@@ -40,6 +40,54 @@
       "S_ADD2": "경기도 수원시 영통구 광교산로 154-42",
       "S_ADD3": "1층 101호",
       "stars": 4.5,
+      "wish": 0
+    },
+    {
+      "id": 2,
+      "S_NAME": "AA세탁소",
+      "S_PHONE": "010-1111-1111",
+      "S_IMAGE": "",
+      "S_THUMB": "",
+      "S_OPENING": "09:00",
+      "S_CLOSING": "22:00",
+      "S_COMMNET": "안녕하세요 BB세탁소 입니다.",
+      "S_ANNOUNCE": "공지사항입니다.",
+      "S_ADD1": 12333,
+      "S_ADD2": "경기도 수원시 영통구",
+      "S_ADD3": "9층 901호",
+      "stars": 4.5,
+      "wish": 1
+    },
+    {
+      "id": 2,
+      "S_NAME": "BB세탁소",
+      "S_PHONE": "010-2222-2222",
+      "S_IMAGE": "",
+      "S_THUMB": "",
+      "S_OPENING": "09:00",
+      "S_CLOSING": "22:00",
+      "S_COMMNET": "안녕하세요 BB세탁소 입니다.",
+      "S_ANNOUNCE": "공지사항입니다.",
+      "S_ADD1": 17408,
+      "S_ADD2": "경기 이천시 모가면 양화천로 30",
+      "S_ADD3": "XX빌딩",
+      "stars": 3.7,
+      "wish": 0
+    },
+    {
+      "id": 3,
+      "S_NAME": "크린토피아 안양석수현대점",
+      "S_PHONE": "031-344-5900",
+      "S_IMAGE": "",
+      "S_THUMB": "",
+      "S_OPENING": "10:00",
+      "S_CLOSING": "21:00",
+      "S_COMMNET": "안녕하세요 크린토피아 입니다.",
+      "S_ANNOUNCE": "공지사항입니다.",
+      "S_ADD1": 13963,
+      "S_ADD2": "경기 안양시 만안구 안양로 512",
+      "S_ADD3": "",
+      "stars": 5.0,
       "wish": 1
     }
   ],
@@ -54,56 +102,94 @@
     }
   ],
   "submits": [
-    {
-      
-    }
+    {}
   ],
-  "historys": [
+  "order_complete": [
     {
       "id": 1,
-      "date": "2023.03.18",
-      "washingImg": "https://images.unsplash.com/photo-1603400521630-9f2de124b33b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-      "name": "니트",
-      "delivery": "배송중",
-      "cost": "10,000원",
-      "requirement": "얼룩 깨끗하게 지워주세요",
-      "laundryName": "OO 세탁소"
+      "S_ID": 1,
+      "U_ID": "",
+      "O_DATE": "2023-03-10",
+      "COMPLETE_DATE": "3/11",
+      "DELEVERY_STATE": 2,
+      "O_PRICE": "10,000원",
+      "O_REQUEST": "얼룩 깨끗하게 지워주세요",
+      "S_NAME": "AA 세탁소"
     },
     {
       "id": 2,
-      "date": "2023.03.11",
-      "washingImg": "https://images.unsplash.com/photo-1603400521630-9f2de124b33b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-      "name": "운동화",
-      "delivery": "배송완료(3/14)",
-      "cost": "12,000원",
-      "requirement": "변색 복구 부탁드립니다",
-      "laundryName": "XX 세탁소"
+      "S_ID": 2,
+      "U_ID": "",
+      "O_DATE": "2023-03-11",
+      "COMPLETE_DATE": "3/14",
+      "DELEVERY_STATE": 2,
+      "O_PRICE": "12,000원",
+      "O_REQUEST": "변색 복구 부탁드립니다",
+      "S_NAME": "BB 세탁소"
     },
     {
       "id": 3,
-      "date": "2023.03.11",
-      "washingImg": "https://images.unsplash.com/photo-1603400521630-9f2de124b33b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-      "name": "청바지",
-      "delivery": "배송완료(3/14)",
-      "cost": "13,000원",
-      "requirement": "기장 2cm 줄여주세요",
-      "laundryName": "XX 세탁소"
+      "S_ID": 2,
+      "U_ID": "",
+      "O_DATE": "2023-03-11",
+      "COMPLETE_DATE": "3/14",
+      "DELEVERY_STATE": 2,
+      "O_PRICE": "13,000원",
+      "O_REQUEST": "기장 2cm 줄여주세요",
+      "S_NAME": "BB 세탁소"
     },
     {
       "id": 4,
-      "date": "2023.03.10",
-      "washingImg": "https://images.unsplash.com/photo-1603400521630-9f2de124b33b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-      "name": "종합세탁물",
-      "delivery": "배송완료(3/12)",
-      "cost": "10,000원",
-      "requirement": "없음",
-      "laundryName": "AA 세탁소"
+      "S_ID": 3,
+      "U_ID": "",
+      "O_DATE": "2023-03-14",
+      "COMPLETE_DATE": "",
+      "DELEVERY_STATE": 1,
+      "O_PRICE": "10,000원",
+      "O_REQUEST": "없음",
+      "S_NAME": "CC 세탁소"
+    },
+    {
+      "id": 5,
+      "S_ID": 1,
+      "U_ID": "",
+      "O_DATE": "2023-04-21",
+      "COMPLETE_DATE": "",
+      "DELEVERY_STATE": -1,
+      "O_PRICE": "10,000원",
+      "O_REQUEST": "없음",
+      "S_NAME": "AA 세탁소"
+    },
+    {
+      "id": 6,
+      "S_ID": 2,
+      "U_ID": "",
+      "O_DATE": "2023-05-14",
+      "COMPLETE_DATE": "",
+      "DELEVERY_STATE": -2,
+      "O_PRICE": "30,000원",
+      "O_REQUEST": "빠른 세탁과 배송 부탁드립니다 ",
+      "S_NAME": "BB 세탁소"
     }
   ],
   "mypage": [
     {
       "id": 1,
       "userName": "XXX 고객님",
+      "userAddr": "경기도 수원시",
+      "countHistory": "32",
+      "countReview": "11",
+      "countQnA": "2",
+      "laundryName": "XX 세탁소",
+      "laundryAddr": "경기도 수원시",
+      "operatingHour": "11:00 - 18:00",
+      "dayOff": "공휴일 휴무",
+      "laundryNumber": "031-123-777",
+      "stars": 4.5
+    },
+    {
+      "id": 2,
+      "userName": "000 고객님",
       "userAddr": "경기도 수원시",
       "countHistory": "32",
       "countReview": "11",

@@ -11,7 +11,13 @@
                 <v-card-title id="laund-title">{{ laundry.S_NAME }}</v-card-title>
             </v-img>
 
-            <v-card-subtitle class="pt-3" id="laund-PHONE">
+            <v-row align="center" class="mx-3 my-3">
+                <v-rating :model-value=laundry.stars color="amber" density="compact"  half-increments readonly 
+                    size="small"></v-rating>
+                <div class="text-grey ms-2">{{ laundry.stars }}</div>
+            </v-row>
+
+            <v-card-subtitle class="pt-0" id="laund-PHONE">
                 <!-- 도로명 주소 --> <!-- 상세주소 -->
                 <div id="laund-address">{{ laundry.S_ADDR2 }}</div>
                 <div id="laund-address">{{ laundry.S_ADDR3 }}</div>

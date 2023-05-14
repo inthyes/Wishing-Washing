@@ -19,6 +19,8 @@ const Review = require("../../models/Review");
 const router = express.Router();
 
 const jwt = require("jsonwebtoken");
+const secretKey = 'secretKey'; // 비밀 키를 정의합니다.
+
 
 
 // const verifyToken = (req, res, next) => {
@@ -98,10 +100,10 @@ const output ={
     //     });
     // },
     history : async (req, res) => {
-        const token = req.query.token;
-        const user_id = Vtoken(token);  // 토큰 검증
-        console.log("토큰확인: " + token);
-        console.log("user_id: " + user_id);
+        // const token = req.query.token;
+        // const user_id = Vtoken(token);  // 토큰 검증
+        // console.log("토큰확인: " + token);
+        // console.log("user_id: " + user_id);
 
         logger.info(`GET /history 304 "이용내역 화면으로 이동"`);
         const history = new History("codus"); //아이디토큰 받아오기
@@ -216,19 +218,21 @@ const output ={
     //     });
     // },
     laundryDetail: async (req, res) => {
-      /*  try {
+        try {
           const token = req.headers.cookie; // 헤더에서 토큰 추출
       
           // 토큰 검증
-          jwt.verify(token, 'your-secret-key', async (err, decoded) => {
-            if (err) {
-              // 토큰이 유효하지 않을 경우에 대한 처리
-              console.error(err);
-              return res.status(401).json({ error: 'Invalid token' });
-            }
+        //   jwt.verify(token, 'your-secret-key', async (err, decoded) => {
+        //     if (err) {
+        //       // 토큰이 유효하지 않을 경우에 대한 처리
+        //       console.error(err);
+        //       return res.status(401).json({ error: 'Invalid token' });
+        //     }
       
-            const user_id = decoded.user_id; // 토큰에서 추출한 사용자 ID
-            console.log('user_id:', user_id); */
+
+        //     const user_id = decoded.user_id; // 토큰에서 추출한 사용자 ID
+        //     console.log('user_id:', user_id);
+
       
             // 토큰 검증 후의 나머지 로직을 이곳에 작성
             
@@ -263,11 +267,11 @@ const output ={
               reviewStar : reviewStar,
               userLike : userLike
             });
-       /*   });
+
         } catch (error) {
           console.error(error);
           res.status(500).json({ error: 'Internal Server Error' });
-        }*/
+        }
       },
 
     //사장님 기능 & 리뷰 사진 올릴 때 사용
@@ -361,7 +365,7 @@ const process = {
         const response = await review.update();
         res.render("home/myPage",);
     },
-    verityToken : (req,res) => {
+    verifyToken : (req,res) => {
         const { token } = req.body;
 
         // 토큰 검증
@@ -376,9 +380,38 @@ const process = {
                 // 예를 들어, decoded 객체에 저장된 정보를 확인하고 권한 검사를 수행할 수 있습니다.
 
                 // 검증에 성공한 경우, 클라이언트에게 성공 응답을 보냅니다.
+                console.log(token);
                 return res.status(200).json({ message: '토큰이 유효합니다.' });
         });
     },
+    // upload : ('/image/:i_id', async (req, res) => {
+    //     const i_id = req.params.i_id;
+        
+    //     try {
+    //       // 특정 i_id에 해당하는 이미지 데이터를 데이터베이스에서 조회
+    //       const query = "SELECT i_data FROM IMAGE WHERE i_id = ?";
+    //       const results = await db.query(query, [i_id]);
+      
+    //       if (results.length === 0) {
+    //         res.sendStatus(404);
+    //         return;
+    //       }
+      
+    //       const imageBuffer = results[0].i_data;
+          
+    //       // 이미지를 클라이언트로 전송
+    //       res.writeHead(200, {
+    //         'Content-Type': 'image/jpeg',
+    //         'Content-Length': imageBuffer.length
+    //       });
+    //       res.end(imageBuffer);
+    //     } catch (error) {
+    //       console.error(error);
+    //       res.sendStatus(500);
+    //     }
+    // }),
+    
+      
 };
 
 module.exports = {

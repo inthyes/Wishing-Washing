@@ -10,34 +10,40 @@
             <v-img cover height="250" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
 
             <v-card-item>
-                <v-card-title>{{ laundry.name }}</v-card-title>
+                <v-card-title class="mb-1">{{  laundry.name }}</v-card-title>
+
+                <!-- 또는 -->
+                <!-- <v-card-title>{{ laundry.name }}</v-card-title> -->
 
                 <v-card-subtitle>
-                    <span class="me-1">{{ laundry.opening }} ~ {{ laundry.closing }}</span>
-
-                    <v-icon color="error" icon="mdi-fire-circle" size="small"></v-icon>
+                    <span class="mb-1">영업시간&nbsp;{{ laundry.opening }} ~ {{ laundry.closing}}</span>
                 </v-card-subtitle>
             </v-card-item>
 
             <v-card-text>
                 <!--별점(리뷰수)-->
-                <v-row align="center" class="mx-0">
+                <v-row align="center" class="mx-0 mb-1">
                     <v-rating :model-value= reviewStar color="amber" density="compact" half-increments readonly
                         size="normal"></v-rating>
 
                     <div class="text-grey ms-2">
-                        {{ reviewStar}}
+                        {{ reviewStar }} (413)
                     </div>
                 </v-row>
 
-                <div class="my-4 text-subtitle-1">
+                <div class="mt-3">
                     {{ laundry.doroAddress }}
                 </div>
-                <div class="my-4 text-subtitle-1">
+                <div class="mt-0">
                     {{ laundry.detailAddress }}
                 </div>
 
-                <div>{{ laundry.info }}</div>
+                <!-- 이건 수정할수도 -->
+                    <div class="my-4 text-subtitle-1">
+                            {{ laundry.doroAddress }}
+                        </div>
+
+                <div class="mt-1 text-subtitle-1">{{ laundry.info }}</div>
             </v-card-text>
 
             <v-divider class="mx-4 mb-1"></v-divider>
@@ -54,12 +60,11 @@
                             <v-list-item-content class="d-flex justify-space-between">
                                 <div>{{ pro.PRODUCT_NAME }}</div>
                                 <div>{{ pro.PRODUCT_PRICE }}원&nbsp;&nbsp;&nbsp;
-                                    <v-icon color="deep-purple-lighten-2" @click="decrement(pro)">mdi-minus</v-icon>
-                                    <span>{{ pro.PRODUCT_QUANTITY }}</span>
-                                    <v-icon color="deep-purple-lighten-2" @click="increment(pro)">mdi-plus</v-icon>
+                                        <v-icon color="deep-purple-lighten-2" @click="decrement(pro)">mdi-minus</v-icon>
+                                        <span>{{ pro.PRODUCT_QUANTITY }}</span>
+                                        <v-icon color="deep-purple-lighten-2" @click="increment(pro)">mdi-plus</v-icon>
                                 </div>
                             </v-list-item-content>
-
                         </v-list-item>
                     </v-list>
                 </v-window-item>
@@ -75,12 +80,9 @@
 
             <v-card-actions>
                 <v-btn icon @click="toggleWish(likeStatus)">
-                    <v-icon :color="likeStatus ? 'red' : ''">
-                        {{ likeStatus ? 'mdi-heart' : 'mdi-heart-outline' }}
-                    </v-icon>
+                    <v-icon :color="likeStatus ? 'red' : ''">{{ likeStatus ? 'mdi-heart' : 'mdi-heart-outline' }}</v-icon>
                 </v-btn>
-                <v-btn color="deep-purple-lighten-2" variant="text"
-                    @click="submitData">
+                <v-btn color="deep-purple-lighten-2" variant="text" @click="submitData">
                     세탁신청
                 </v-btn>
                 <!-- <router-link :to="{ name: 'submitlaundry', params: { id: laundry.id } }">
@@ -94,12 +96,11 @@
 <script>
 import axios from 'axios';
 
+
 export default {
     data: () => ({
         loading: false,
         selection: 1,
-
-        quantity: 0,
 
         laundry: {},        // laundrys.json
         submits: [],        // submits.json      
@@ -109,12 +110,9 @@ export default {
         likeStatus : {},
 
         tab: 'Appetizers',  // 세탁/수선 & 리뷰 탭
-        //isWished: 0,    // 찜버튼
+        isWished: false,    // 찜버튼
 
     }),
-
- 
-
     async created() {
         try {
             const id = this.$route.params.id;
@@ -179,7 +177,7 @@ export default {
             if (pro.PRODUCT_QUANTITY > 0) {
                 pro.PRODUCT_QUANTITY--;
                 pro.PRODUCT_PRICE_TOTAL = pro.PRODUCT_PRICE_TOTAL - pro.PRODUCT_PRICE;
-            }
+       }
         },
         async submitData() {
             try {
@@ -194,6 +192,7 @@ export default {
                     this.$cookies.set('response', res.data)
                     this.$cookies.get('response')
                     this.$router.push(`/submitlaundry/${id}`);
+                // const selectedItems = this.laundry.items.filter(item => item.quantity > 0);
             } catch (e) {
                 console.error(e);
             }
