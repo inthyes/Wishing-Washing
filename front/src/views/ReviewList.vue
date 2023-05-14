@@ -8,11 +8,11 @@
 
         <v-container fluid>
             <v-row>
-                <v-col v-for="r in reviews" :key="r.id" cols="12" md="6" lg="4">
+                <v-col v-for="r in reviews" :key="r.O_NUM" cols="12" md="6" lg="4">
                     <v-card>
-                        <v-card-actions>{{ r.rating }}점</v-card-actions>
-                        <v-card-title>{{ r.title }}</v-card-title>
-                        <v-card-text>{{ r.content }}</v-card-text>
+                        <v-card-actions>{{ r.REVIEW_STAR }}점</v-card-actions>
+                        <v-card-title>{{ r.REVIEW_TITLE }}</v-card-title>
+                        <v-card-text>{{ r.REVIEW_TEXT }}</v-card-text>
                     </v-card>
                 </v-col>
             </v-row>
@@ -32,7 +32,7 @@ export default {
     }),
     async created() {
         try {
-            const res = await axios.get('http://localhost:3000/reviews');
+            const res = await axios.get('http://localhost:3000/myPage/review');
             this.reviews = res.data;
         } catch (e) {
             console.error(e);

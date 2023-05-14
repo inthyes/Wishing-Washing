@@ -99,6 +99,15 @@ const output ={
     //         RV
     //     });
     // },
+
+    myReview : async (req, res) => {
+        logger.info(`GET /myPage 304 "review 화면으로 이동"`);
+        const myReview = new Review(req.body, "codus");
+        const myReviewRes = await myReview.myReview();
+        console.log(myReviewRes);
+        res.json(myReviewRes);
+    },
+
     history : async (req, res) => {
         // const token = req.query.token;
         // const user_id = Vtoken(token);  // 토큰 검증
