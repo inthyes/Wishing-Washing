@@ -24,19 +24,16 @@ class MyPage {
     static async showList(id) {
       return new Promise ((resolve, reject) => {
       db.query("USE CAPSTONE", (err, result) => {
-          const query = "SELECT * FROM LIKES where U_ID = ?;";
+          const query = "SELECT LIKES.S_ID, S_NAME, S_ADDR2\
+                          FROM LIKES\
+                          left outer JOIN STORE ON LIKES.S_ID = store.S_ID\
+                          where U_ID = ?;"
           if (err) reject(err);
           const keys = Object.keys(query);
           db.query(query, [id], (err, data) => {
               if (err) reject(err);
               else {
-                  const list = data;
-                 
-                  console.log(list);
-                  resolve({
-                    id: list[0].S_ID
-                      // 객체 배열화
-                  })
+                  resolve(data)
                   }
               });
             })

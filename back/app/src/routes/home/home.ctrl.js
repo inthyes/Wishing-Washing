@@ -165,7 +165,7 @@ const output ={
 
         const response = await favorite.showFavoriteList();
         //const response1 = await cart.addOrderList();
-        console.log(response);
+        res.json(response);
     },
     //myPage 하위 기능
     profileEdit : (req, res) => 
