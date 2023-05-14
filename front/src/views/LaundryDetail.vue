@@ -10,7 +10,7 @@
             <v-img cover height="250" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
 
             <v-card-item>
-                <v-card-title class="mb-1">{{  laundry.name }}</v-card-title>
+                <v-card-title class="mb-1">{{ laundry.name }}</v-card-title>
 
                 <!-- 또는 -->
                 <!-- <v-card-title>{{ laundry.name }}</v-card-title> -->
@@ -35,12 +35,12 @@
                     {{ laundry.doroAddress }}
                 </div>
                 <div class="mt-0">
-                    {{ laundry.detailAddress }}
+                    {{ laundry.postAddress }}
                 </div>
 
                 <!-- 이건 수정할수도 -->
                     <div class="my-4 text-subtitle-1">
-                            {{ laundry.doroAddress }}
+                            {{ laundry.S_ADDR2 }}
                         </div>
 
                 <div class="mt-1 text-subtitle-1">{{ laundry.info }}</div>

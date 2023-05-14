@@ -108,14 +108,9 @@ const output ={
         logger.info(`GET /history 304 "이용내역 화면으로 이동"`);
         const history = new History("codus"); //아이디토큰 받아오기
 
-        const {completeList, notCompleteList} = await history.showHistory();
+        const orderCompleteList = await history.showHistory();
         //const response1 = await cart.addOrderList();
-        console.log(completeList, notCompleteList);
-        res.render("home/history", 
-        {
-            completeList : completeList, 
-            notCompleteList : notCompleteList
-        });
+        res.json(orderCompleteList);
     },
     myPage : (req, res) => {
         // const token = req.query.token;

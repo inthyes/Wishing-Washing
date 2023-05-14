@@ -14,11 +14,11 @@
                     <!-- tab 1 : 진행중인 세탁 -->
                     <v-window-item value="one">
                         <!-- 이용내역 리스트 -->
-                        <div v-for="(h, index) in InProgress" v-bind:key="h.id">
+                        <div v-for="(h, index) in InProgress" v-bind:key="h.O_NUM">
                             <!-- 배송날짜 출력 -->
-                            <div v-if="index === 0 || h.O_DATE !== order_complete[index - 1].O_DATE">
+                            <div v-if="index === 0 || h.ORD_DAY !== order_complete[index - 1].ORD_DAY">
                                 <div class="date" id="date">
-                                    <b>{{ h.O_DATE }}</b>
+                                    <b>{{ h.ORD_DAY }}</b>
                                 </div>
                             </div>
                             <!-- 이용내역 리스트 출력 -->
@@ -55,11 +55,11 @@
                         </v-chip-group>
 
                         <!-- 이용내역 리스트 -->
-                        <div v-for="(h, index) in completeDelivery" v-bind:key="h.id">
+                        <div v-for="(h, index) in completeDelivery" v-bind:key="h.O_NUM">
                             <!-- 배송날짜 출력 -->
-                            <div v-if="index === 0 || h.O_DATE !== order_complete[index - 1].O_DATE">
+                            <div v-if="index === 0 || h.ORD_DAY !== order_complete[index - 1].ORD_DAY">
                                 <div class="date" id="date">
-                                    <b>{{ h.O_DATE }}</b>
+                                    <b>{{ h.ORD_DAY }}</b>
                                 </div>
                             </div>
                             <!-- 이용내역 리스트 출력 -->
@@ -79,7 +79,7 @@
                                         <!-- 세탁소 이름 -->
                                         <a id="laundryName">{{ h.S_NAME }}</a>&nbsp;
                                         <!-- 리뷰버튼 -->
-                                        <v-btn id="reviewBtn" v-bind:to="`/addreview/${h.id}`">리뷰</v-btn>
+                                        <v-btn id="reviewBtn" v-bind:to="`/addreview/${h.O_NUM}`">리뷰</v-btn>
                                     </v-card-text>
                                 </div>
                             </v-card>
@@ -116,12 +116,14 @@ export default {
     methods: {
         async fetchOrderComplete(order) {
             try {
-                const res = await axios.get('http://localhost:5000/order_complete', {
+                const res = await axios.get('http://localhost:3000/history', {
                     params: {
-                        _sort: 'O_DATE',
+                        _sort: 'ORD_DAY',
                         _order: order
-                    }
+                    },
+                    
                 });
+                console.log(res.data);
                 return res.data;
             } catch (e) {
                 throw new Error(e);
