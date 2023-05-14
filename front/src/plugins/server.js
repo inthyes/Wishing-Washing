@@ -57,14 +57,15 @@ app.post('/upload', upload.single('image'), (req, res) => {
   if (!req.file) {
     return res.status(400).send('No file uploaded');
   }
-  const imagePath = `uploads/${file.filename}`;
-  res.status(200).json({ message: '이미지 업로드 성공', imagePath });
+  //res.status(200).send('이미지 업로드 성공');
+  const imagePath = `/uploads/${req.file.filename}`;
+  res.status(200).send(imagePath);
 });
 
 // uploads 디렉토리 파일을 정적 파일로 제공
 app.use('/uploads', express.static('uploads'));
 
 // 서버 시작
-app.listen(2000, () => {
-  console.log('Server is running on port 2000');
+app.listen(2001, () => {
+  console.log('Server is running on port 2001');
 });

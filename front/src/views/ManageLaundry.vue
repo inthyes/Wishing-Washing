@@ -42,8 +42,6 @@
 
             <v-divider></v-divider>
 
-            <v-img :src="uploadedImagePath" alt="Uploaded Image"></v-img>
-
             <v-card-actions style="margin-top:5px; margin-right: 10px">
                 <v-spacer></v-spacer>
                 <v-btn color="#0C70FE" @click="addManageLaundrys()" style="background-color: #e1ecfe;">등록</v-btn>
@@ -108,7 +106,6 @@ export default {
             notice: null,
             image: null,
             selectedImage: null,
-            uploadedImagePath: null, //
 
             managelaundrys: [],
             rules: {
@@ -148,11 +145,10 @@ export default {
                 // 이미지 업로드
                 const formData = new FormData();
                 formData.append('image', this.selectedImage);
-                axios.post('http://localhost:2000/upload', formData)
+                axios.post('http://localhost:2001/upload', formData)
                     .then(response => {
                         console.log('Image uploaded successfully');
                         console.log('업로드된 이미지 경로:', response.data.imagePath);
-                        this.uploadedImagePath = response.data.imagePath; // 업로드된 이미지 경로 저장
                     })
                     .catch(error => {
                         console.error('Error uploading image', error);
