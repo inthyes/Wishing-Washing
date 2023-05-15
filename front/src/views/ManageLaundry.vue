@@ -158,7 +158,7 @@ export default {
 
                     // 폼 데이터 업로드
                     const response = await axios.post('http://localhost:5001/managelaundrys', newLaundry);
-                    const createdLaundryId = response.data.id; // 생성된 아이디를 저장
+                    const createdLaundryId = response.data.id; // 생성된 아이디 db 저장
                     console.log('데이터가 성공적으로 추가되었습니다.');
                     this.showAlert('세탁소 정보가 등록되었습니다.');
                     console.log('생성된 세탁소 아이디:', createdLaundryId);
