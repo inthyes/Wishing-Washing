@@ -13,6 +13,15 @@
   <div class="wrapper">
     <div class="content">
       <!--추천 세탁소-->
+       <v-card class="mx-auto" color="white" max-width="400" elevation="0">
+        <v-card-text>
+      <v-text-field density="compact" variant="solo" append-inner-icon="mdi-magnify" single-line
+        @click:append-inner="showApi" readonly>{{ addr1 }}</v-text-field>
+    </v-card-text>
+  </v-card>
+  <div class="daummap">
+    <div ref="embed"></div>
+  </div>
       <div class="recommend">
         <p style="font-size: 18px;"><b>이 세탁소는 어떠세요 ?</b></p>
         <p style="font-size: 9px; margin-top: -3%;">저희가 추천해드릴게요.</p>
@@ -39,6 +48,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
@@ -64,8 +75,61 @@ export default {
           altText: 'Fifth Slide',
         },
       ],
+      addr1: ''
     }
   },
+
+  async created() {
+        try {
+            await axios.get(`http://localhost:3000`, {
+                withCredentials: true,
+                headers: {
+                 Cookie: document.cookie, // 쿠키를 요청에 추가
+                 },
+            });
+        } catch (e) {
+            console.error(e);
+        }
+    },
+    methods: {
+    showApi() {
+      new window.daum.Postcode({
+        oncomplete: (data) => {
+          let fullRoadAddr = data.roadAddress;
+          let extraRoadAddr = ''; 
+          if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+            extraRoadAddr += data.bname;
+          }
+          if (data.buildingName !== '' && data.apartment === 'Y') {
+            extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+          }
+          if (extraRoadAddr !== '') {
+            extraRoadAddr = ' (' + extraRoadAddr + ')';
+          }
+          if (fullRoadAddr !== '') {
+            fullRoadAddr += extraRoadAddr;
+          }
+
+          this.addr1 = fullRoadAddr;
+
+          const date = new Date();
+          date.setTime(date.getTime() + 30 * 24 * 60 * 60 * 1000);
+          const jsonValue = JSON.stringify(data.zonecode);
+          const encodedValue = encodeURIComponent(jsonValue);
+          console.log(encodedValue);
+          document.cookie = `deliveryAddress1=${encodedValue}; expires=${date.toUTCString()}; path=/;`;
+
+          const addr = this.addr1; 
+          const jsonValue2 = JSON.stringify(addr);
+          const encodedValue2 = encodeURIComponent(jsonValue2);
+          console.log(encodedValue2);
+          document.cookie = `deliveryAddress2=${encodedValue2}; expires=${date.toUTCString()}; path=/;`;
+        }
+        // }).embed(this.$refs.embed)
+      }).open();
+    },
+
+}
 }
 </script>
 
