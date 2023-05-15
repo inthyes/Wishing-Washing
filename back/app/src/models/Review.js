@@ -77,7 +77,7 @@ class Review {
                 for (var i = 0; i < data.length; i++) {
                   reviewStar = reviewStar + data[i].REVIEW_STAR;
                 }
-                starAverage = reviewStar/data.length;
+                starAverage = (reviewStar/data.length).toFixed(1);
                 resolve(
                   starAverage
                 )
