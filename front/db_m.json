@@ -32,6 +32,16 @@
       "notice": "없음",
       "image": "uploads/laundryImg2.jpg",
       "id": 3
+    },
+    {
+      "laundryName": "ga",
+      "laundryAddr": "a",
+      "intro": "gasss",
+      "openTime": "19:37",
+      "closeTime": "16:40",
+      "tel": "010-5321-1111",
+      "notice": "gas",
+      "id": 4
     }
   ],
   "requests": [
@@ -67,6 +77,7 @@
       "price": "7,000원",
       "userAddr": "경기도 수원시 XX빌라",
       "status": -2
+
     },
     {
       "laundryId": 1,
@@ -112,7 +123,7 @@
       "stars": "5",
       "reviewContent": "깨끗하게 잘해주셨어요",
       "reply": "",
-      "replyValue": ""
+      "replyValue": "ㅁㄴㅇㄹ"
     },
     {
       "laundryId": 1,
@@ -157,6 +168,26 @@
       "reviewContent": "그냥 그래요",
       "reply": "",
       "replyValue": ""
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "productImg": "https://source.unsplash.com/featured/?clothes",
+      "productName": "상",
+      "price": "5000"
+    },
+    {
+      "id": 2,
+      "productImg": "https://source.unsplash.com/featured/?clothes",
+      "productName": "원피스",
+      "price": "5000"
+    },
+    {
+      "id": 3,
+      "productImg": "https://source.unsplash.com/featured/?shoes",
+      "productName": "신발",
+      "price": "8000"
     }
   ]
 }
