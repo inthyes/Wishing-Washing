@@ -51,19 +51,17 @@
                     <!-- tap 2 : 지난 이용내역 -->
                     <v-window-item value="two">
                         <!-- 최근순 / 오래된순 선택 -->
-                        <v-chip-group filter>
-                            <v-chip @click="sortDescending">최근순</v-chip>
-                            <v-chip @click="sortAscending">오래된순</v-chip>
-                        </v-chip-group>
+                        <v-chip @click="sortByDate(true)">최근순</v-chip>
+                        <v-chip @click="sortByDate(false)">오래된순</v-chip>
 
                         <!-- 이용내역 리스트 -->
-
                         <div v-for="(h, index) in completeDelivery" v-bind:key="h.O_NUM">
+                            <!-- 배송날짜 출력 -->
+                            <div v-if="index === 0 || h.ORD_DAY !== order_complete[index - 1].ORD_DAY">
                             <!-- 배송날짜 출력 -->
                             <div v-if="index === 0 || h.ORD_DAY !== order_complete[index - 1].ORD_DAY">
                                 <div class="date" id="date">
                                     <b>{{ h.ORD_DAY }}</b>
-
                                 </div>
                             </div>
                             <!-- 이용내역 리스트 출력 -->
@@ -83,23 +81,22 @@
                                         <!-- 세탁소 이름 -->
                                         <a id="laundryName">{{ h.S_NAME }}</a>&nbsp;
                                         <!-- 리뷰버튼 -->
-
-                                        <v-btn id="reviewBtn" v-bind:to="`/addreview/${h.S_ID}/${h.O_NUM}`">리뷰</v-btn>
-
+                                        <v-btn id="reviewBtn" v-bind:to="`/addreview/${h.O_NUM}`">리뷰</v-btn>
                                     </v-card-text>
                                 </div>
                             </v-card>
                         </div>
+                    </div>
                     </v-window-item>
                 </v-window>
             </v-card-text>
-
         </v-card>
     </div>
 </template>
 
 <script>
 import axios from "axios";
+import jwt_decode from 'jwt-decode';
 
 export default {
     data: () => ({
@@ -107,6 +104,7 @@ export default {
         tab: null,
         show: false,
 
+        sortOption: 'recent', // 최근순이 기본값
         order_complete: [],
     }),
 
@@ -117,51 +115,102 @@ export default {
         } catch (e) {
             console.error(e);
         }
+
+        const token = localStorage.getItem("token");
+
+        if (token) {
+        this.verifyToken(token)
+            .then((isValidToken) => {
+                this.fetchhistoryData();
+                console.log(isValidToken);
+            })
+            .catch((error) => {
+            console.error(error);
+            this.redirectToLogin();
+            });
+        } else {
+        this.redirectToLogin();
+        }
     },
 
     methods: {
+        async verifyToken(token) {
+            try {
+                const response = await axios.post(
+                "http://localhost:3000/verify-token",
+                { token }
+                );
+                const data = response.data;
+                console.log(data);
+                return data.isValid;
+            } catch (error) {
+                throw new Error("토큰 검증 실패");
+            }
+        },
+        async fetchhistoryData() {
+            try {
+                const res = await axios.get("http://localhost:3000/history");
+                this.historyData = res.data;
+                const token = localStorage.getItem("token");
+                const tokenPayload = jwt_decode(token);
+
+                console.log("ID:", tokenPayload.id);
+                console.log("Token Payload:", tokenPayload);
+
+            
+                // this.mypageData = this.mypageData.filter((mypageData) => mypageData.userName === tokenPayload.userName);
+            } catch (error) {
+                console.error(error);
+                throw new Error("마이페이지 데이터 가져오기 실패");
+            }
+        },
+
         async fetchOrderComplete(order) {
             try {
 
                 const res = await axios.get('http://localhost:3000/history', {
                     params: {
-                        _sort: 'ORD_DAY',
+                        _sort: 'COMPLETE_DATE',
                         _order: order
                     },
                     
                 });
                 console.log(res.data);
 
+
                 return res.data;
-            } catch (e) {
+            }   catch (e) {
                 throw new Error(e);
             }
         },
-        // 오래된순
-        async sortAscending() {
+  
+        async sortByDate(isDescending) {
             try {
-                this.order_complete = await this.fetchOrderComplete('asc');
+                const order = isDescending ? 'desc' : 'asc';
+                this.order_complete = await this.fetchOrderComplete(order);
             } catch (e) {
                 console.error(e);
             }
         },
-        // 최근순
-        async sortDescending() {
-            try {
-                this.order_complete = await this.fetchOrderComplete('desc');
-            } catch (e) {
-                console.error(e);
-            }
+
+        redirectToLogin() {
+        this.$router.push("/login");
         },
+
     },
+
     computed: {
         // tap1
         InProgress() {
-            return this.order_complete.filter((h) => h.DELEVERY_STATE !== 2);
+            const filteredData = this.order_complete.filter((h) => h.DELEVERY_STATE !== 2);
+            console.log(filteredData); // 해당 데이터를 콘솔에 찍음
+            return filteredData;
         },
         // tap2 - 배송완료
         completeDelivery() {
-            return this.order_complete.filter((h) => h.DELEVERY_STATE === 2);
+            const filteredData = this.order_complete.filter((h) => h.DELEVERY_STATE === 2);
+            console.log(filteredData); // 해당 데이터를 콘솔에 찍음
+            return filteredData;
         }
     }
 }
