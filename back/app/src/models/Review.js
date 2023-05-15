@@ -30,7 +30,7 @@ class Review {
     static async review(O_NUM, S_ID, title, body, rating, U_ID) {
       return new Promise ((resolve, reject) => {
       db.query("USE CAPSTONE", (err, result) => {
-          const query = "INSERT INTO REVIEW (O_NUM,S_ID, REVIEW_TEXT, REVIEW_START, U_ID) VALUES (?,? , ?,?,?);";
+          const query = "INSERT INTO REVIEW (O_NUM,S_ID, REVIEW_TEXT, REVIEW_STAR, U_ID) VALUES (?,?,?,?,?);";
           if (err) reject(err);
           //const keys = Object.keys(query);
           db.query(query,  [O_NUM,S_ID, body, rating, U_ID], (err, data) => {
@@ -62,7 +62,48 @@ class Review {
           })
     });
 }
-      
+
+  async averageStar(S_ID) {
+    return new Promise ((resolve, reject) => {
+      let reviewStar = 0;
+      let starAverage;
+      db.query("USE CAPSTONE", (err, result) => {
+          const queryGetStore = "SELECT REVIEW_STAR FROM REVIEW where S_ID = ?;";
+          if (err) reject(err);
+          db.query(queryGetStore,  [S_ID], (err, data) => {
+              if (err) reject(err);
+              else {
+                for (var i = 0; i < data.length; i++) {
+                  reviewStar = reviewStar + data[i].REVIEW_STAR;
+                }
+                starAverage = reviewStar/data.length;
+                resolve(
+                  starAverage
+                )
+                }
+              });
+          })
+      });
+  }
+
+  async myReview() {
+      return new Promise ((resolve, reject) => {
+        let userId = this.U_ID;
+        db.query("USE CAPSTONE", (err, result) => {
+            const queryGetMyReview = "SELECT * FROM REVIEW WHERE U_ID = ?;";
+            if (err) reject(err);
+            db.query(queryGetMyReview,  userId, (err, data) => {
+                if (err) reject(err);
+                else {
+                  resolve(
+                    data
+                  )
+                  }
+                });
+            })
+        });
+
+  }
 }
 
 

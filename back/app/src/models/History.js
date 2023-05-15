@@ -11,30 +11,33 @@ class History {
       }
       async showHistory() {
         const id = this.body;
-        const { completeList, notCompleteList } = await History.showList(id);
-        console.log(completeList, notCompleteList);
-        return { completeList, notCompleteList };
+        const orderCompleteList = await History.showList(id);
+        return orderCompleteList;
       }
     static async showList(id) {
       return new Promise ((resolve, reject) => {
         db.query("USE CAPSTONE", (err, result) => {
           if (err) reject(err);
           else {
-            const completeQuery = "SELECT * FROM ORDER_COMPLETE WHERE U_ID = ? AND DELEVERY_STATE = 1 ORDER BY O_DAY DESC";
-            const notCompleteQuery = "SELECT * FROM ORDER_COMPLETE WHERE U_ID = ? AND DELEVERY_STATE = 0 ORDER BY O_DAY DESC";
-            db.query(completeQuery, [id], (err, completeData) => {
+            const getOrderCompleteList = "SELECT ORDER_COMPLETE.S_ID, S_NAME, ORDER_COMPLETE.S_ID, U_ID, ORD_DAY, DELEVERY_STATE, O_PRICE, O_REQUEST, COMPLETE_DATE\
+                                          FROM order_complete\
+                                          left outer JOIN store ON ORDER_COMPLETE.s_id = store.s_id\
+                                          where u_id = ?;"
+            // const notCompleteQuery = "SELECT * FROM ORDER_COMPLETE WHERE U_ID = ? AND DELEVERY_STATE = 0 ORDER BY ORD_DAY DESC";
+            db.query(getOrderCompleteList, [id], (err, orderCompleteList) => {
               if (err) reject(err);
               else {
-                db.query(notCompleteQuery, [id], (err, notCompleteData) => {
-                  if (err) reject(err);
-                  else {
-                    const completeList = completeData;
-                    const notCompleteList = notCompleteData;
-                    resolve({
-                      completeList, notCompleteList
-                    });
-                  }
-                });
+                resolve(orderCompleteList);
+                // db.query(notCompleteQuery, [id], (err, notCompleteData) => {
+                //   if (err) reject(err);
+                //   else {
+                //     const completeList = completeData;
+                //     const notCompleteList = notCompleteData;
+                //     resolve({
+                //       completeList, notCompleteList
+                //     });
+                //   }
+                // });
               }
             });
           }

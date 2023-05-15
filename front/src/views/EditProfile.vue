@@ -28,7 +28,7 @@
 
 <script>
 import axios from 'axios';
-const baseURL = "http://localhost:5000/users";
+const baseURL = "http://localhost:3000/myPage/profileEdit";
 
 export default {
     data() {
@@ -45,8 +45,13 @@ export default {
             },
         }
     },
-    created() {
-
+    async created() {
+        try {
+            const res = await axios.get(`http://localhost:3000/myPage/profileEdit`)
+            console.log(res);
+        } catch (e) {
+            console.error(e);
+        }
     },
 
     methods: {

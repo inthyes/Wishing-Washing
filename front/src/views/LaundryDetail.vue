@@ -10,31 +10,50 @@
             <v-img cover height="250" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
 
             <v-card-item>
-                <v-card-title>{{ laundry.name }}</v-card-title>
+
+                <v-card-title class="mb-1">{{ laundry.name }}</v-card-title>
+
+
+                <!-- 또는 -->
+                <!-- <v-card-title>{{ laundry.name }}</v-card-title> -->
 
                 <v-card-subtitle>
-                    <span class="me-1">{{ laundry.subtitle }}</span>
 
-                    <v-icon color="error" icon="mdi-fire-circle" size="small"></v-icon>
+                    <span class="mb-1">영업시간&nbsp;{{ laundry.opening }} ~ {{ laundry.closing}}</span>
+
                 </v-card-subtitle>
             </v-card-item>
 
             <v-card-text>
                 <!--별점(리뷰수)-->
-                <v-row align="center" class="mx-0">
-                    <v-rating :model-value=laundry.stars color="amber" density="compact" half-increments readonly
+                <v-row align="center" class="mx-0 mb-1">
+
+                    <v-rating :model-value= reviewStar color="amber" density="compact" half-increments readonly
                         size="normal"></v-rating>
 
                     <div class="text-grey ms-2">
-                        {{ laundry.stars }} (413)
+                        {{ reviewStar }} (413)
+
                     </div>
                 </v-row>
 
-                <div class="my-4 text-subtitle-1">
+                <div class="mt-3">
+
                     {{ laundry.doroAddress }}
                 </div>
+                <div class="mt-0">
+                    {{ laundry.postAddress }}
 
-                <div>{{ laundry.info }}</div>
+                </div>
+
+                <!-- 이건 수정할수도 -->
+                    <div class="my-4 text-subtitle-1">
+
+                            {{ laundry.S_ADDR2 }}
+                        </div>
+
+                <div class="mt-1 text-subtitle-1">{{ laundry.info }}</div>
+
             </v-card-text>
 
             <v-divider class="mx-4 mb-1"></v-divider>
@@ -52,7 +71,9 @@
                                 <div>{{ pro.PRODUCT_NAME }}</div>
                                 <div>{{ pro.PRODUCT_PRICE }}원&nbsp;&nbsp;&nbsp;
                                         <v-icon color="deep-purple-lighten-2" @click="decrement(pro)">mdi-minus</v-icon>
-                                        <!-- <span>{{ item.quantity }}</span> -->
+
+                                        <span>{{ pro.PRODUCT_QUANTITY }}</span>
+
                                         <v-icon color="deep-purple-lighten-2" @click="increment(pro)">mdi-plus</v-icon>
                                 </div>
                             </v-list-item-content>
@@ -61,7 +82,7 @@
                 </v-window-item>
                 <v-window-item value="tab-2">
                     <div class="text-black mx-6 mt-2">
-                        {{ laundry.reviews }}
+                        {{review}}
                     </div>
                 </v-window-item>
             </v-window>
@@ -70,11 +91,12 @@
 
 
             <v-card-actions>
-                <v-btn icon @click="toggleWish">
-                    <v-icon :color="isWished ? 'red' : ''">{{ isWished ? 'mdi-heart' : 'mdi-heart-outline' }}</v-icon>
+
+                <v-btn icon @click="toggleWish(likeStatus)">
+                    <v-icon :color="likeStatus ? 'red' : ''">{{ likeStatus ? 'mdi-heart' : 'mdi-heart-outline' }}</v-icon>
                 </v-btn>
-                <v-btn v-bind:to="`/submitlaundry/${laundry.id}`" 
-                color="deep-purple-lighten-2" variant="text" @click="submitData">
+                <v-btn color="deep-purple-lighten-2" variant="text" @click="submitData">
+
                     세탁신청
                 </v-btn>
                 <!-- <router-link :to="{ name: 'submitlaundry', params: { id: laundry.id } }">
@@ -94,12 +116,14 @@ export default {
         loading: false,
         selection: 1,
 
-        quantity: 0,
-
         laundry: {},        // laundrys.json
-        submits: [],       // submits.json
+
+        submits: [],        // submits.json      
         product: [],
-        
+        review: [],
+        reviewStar : {},
+        likeStatus : {},
+
 
         tab: 'Appetizers',  // 세탁/수선 & 리뷰 탭
         isWished: false,    // 찜버튼
@@ -115,7 +139,10 @@ export default {
                  },
             });
                 this.laundry = res.data.laundryDetail;
-                this.product = res.data.productDetail
+                this.product = res.data.productDetail;
+                this.review = res.data.review;
+                this.reviewStar = res.data.reviewStar;
+                this.likeStatus = res.data.userLike;
         } catch (e) {
             console.error(e);
         }
@@ -126,34 +153,50 @@ export default {
 
         //     setTimeout(() => (this.loading = false), 2000)
         // },
-        toggleWish() {
-            this.isWished = !this.isWished;
+
+   
+        toggleWish(likeStatus) {
+            //const laundry = this.laundrys.find(l => l.id === laundryId);
+
+            this.likeStatus = likeStatus ? 0 : 1;
+
+            axios.post(`http://localhost:3000/like`,  { laundryId: this.$route.params.id, like: this.likeStatus })
+                .then(response => {
+                    // handle successful response
+                    console.log(response);
+                })
+                .catch(error => {
+                    // handle error
+                    console.log(error);
+                });
         },
-        increment(item) {
-            item.quantity++
+        // 상품수량증가
+        increment(pro) {
+            pro.PRODUCT_QUANTITY++;
+            pro.PRODUCT_PRICE_TOTAL = pro.PRODUCT_PRICE_TOTAL + pro.PRODUCT_PRICE;
         },
-        decrement(item) {
-            if (item.quantity > 0) {
-                item.quantity--
-            }
+        // 상품수량감소
+        decrement(pro) {
+            if (pro.PRODUCT_QUANTITY > 0) {
+                pro.PRODUCT_QUANTITY--;
+                pro.PRODUCT_PRICE_TOTAL = pro.PRODUCT_PRICE_TOTAL - pro.PRODUCT_PRICE;
+       }
         },
         async submitData() {
             try {
-                const selectedItems = this.laundry.items.filter(item => item.quantity > 0);
-
-                for (const item of selectedItems) {
                     const now = new Date();
-                    const res = await axios.post("http://localhost:3005/submits", {
-                        title: this.laundry.title,
-                        itemName: item.name,
-                        quantity: item.quantity,
-                        // time: new Date(), // 현재 시간을 저장하는 time 프로퍼티를 추가
-                        date: now.toISOString().substring(0, 10), // 현재 날짜를 저장하는 date 프로퍼티
-                        time: now.toISOString().substring(11, 19), // 현재 시간을 저장하는 time 프로퍼티
-                    });
+                    const selectedItems = this.product;
+                    const id = this.$route.params.id;
 
-                    this.submits = [...this.submits, res.data];
-                }
+                    const data = { laundryId: id,  date: now.toISOString().substring(0, 10), time: now.toISOString().substring(11, 19)};
+                    selectedItems.forEach(pro => {data[pro.PRODUCT_ID] = pro.PRODUCT_QUANTITY});
+                    const res = await axios.post(`http://localhost:3000/laundry/detail/${id}/order`, data);
+                    //res.data의 orderNum 쿠키처리
+                    this.$cookies.set('response', res.data)
+                    this.$cookies.get('response')
+                    this.$router.push(`/submitlaundry/${id}`);
+                // const selectedItems = this.laundry.items.filter(item => item.quantity > 0);
+
             } catch (e) {
                 console.error(e);
             }
