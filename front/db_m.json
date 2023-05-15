@@ -88,7 +88,8 @@
   ],
   "reviews": [
     {
-      "id": 1,
+      "laundryId": 1,
+      "id": "1",
       "userId": "user123",
       "reviewDate": "2023-03-20",
       "reviewImg": "https://cdn.vuetifyjs.com/images/cards/docks.jpg",
@@ -98,7 +99,8 @@
       "replyValue": ""
     },
     {
-      "id": 2,
+      "laundryId": 1,
+      "id": "2",
       "userId": "5678user",
       "reviewDate": "2023-03-20",
       "reviewImg": "https://cdn.vuetifyjs.com/images/cards/docks.jpg",
@@ -108,12 +110,35 @@
       "replyValue": ""
     },
     {
-      "id": 3,
+      "laundryId": 1,
+      "id": "3",
       "userId": "us52er",
       "reviewDate": "2023-03-19",
       "reviewImg": "https://cdn.vuetifyjs.com/images/cards/docks.jpg",
       "stars": "4.5",
       "reviewContent": "사장님이 매우 친절하십니다",
+      "reply": "",
+      "replyValue": ""
+    },
+    {
+      "laundryId": 2,
+      "id": "4",
+      "userId": "gohome",
+      "reviewDate": "2023-03-03",
+      "reviewImg": "https://cdn.vuetifyjs.com/images/cards/docks.jpg",
+      "stars": "5",
+      "reviewContent": "세탁 잘해주셨네요",
+      "reply": "",
+      "replyValue": ""
+    },
+    {
+      "laundryId": 2,
+      "id": "5",
+      "userId": "imimim",
+      "reviewDate": "2023-03-10",
+      "reviewImg": "https://cdn.vuetifyjs.com/images/cards/docks.jpg",
+      "stars": "3",
+      "reviewContent": "그냥 그래요",
       "reply": "",
       "replyValue": ""
     }
