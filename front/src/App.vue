@@ -26,7 +26,7 @@
     </v-app-bar>
 
     <!-- 앱바 드롭다운 메뉴 : 왼쪽에서  -->
-    <v-navigation-drawer v-model="drawer" location="left" temporary width="150">
+    <v-navigation-drawer v-model="drawer" location="left" temporary width="200">
       <v-list>
         <v-list-item class="text-left px-5" @click="logout">
           로그아웃
