@@ -13,7 +13,6 @@ class MyPage {
       async showFavoriteList() {
         const id = this.body;
         const List = await MyPage.showList(id);
-        console.log(List);
         //detail에는 db에서 가져온 세탁소의 id와 name이 포함.
 
         if(List) {
@@ -24,26 +23,53 @@ class MyPage {
     static async showList(id) {
       return new Promise ((resolve, reject) => {
       db.query("USE CAPSTONE", (err, result) => {
-          const query = "SELECT * FROM LIKES where U_ID = ?;";
+          const query = "SELECT LIKES.S_ID, S_NAME, S_ADDR2\
+                          FROM LIKES\
+                          left outer JOIN STORE ON LIKES.S_ID = store.S_ID\
+                          where U_ID = ?;"
           if (err) reject(err);
           const keys = Object.keys(query);
           db.query(query, [id], (err, data) => {
               if (err) reject(err);
               else {
-                  const list = data;
-                 
-                  console.log(list);
-                  resolve({
-                    id: list[0].S_ID
-                      // 객체 배열화
-                  })
+                  resolve(data)
                   }
               });
             })
       });
-  }
-    
-      
+  }   
+
+  async showMyPageInfo(userId) {
+    return new Promise ((resolve, reject) => {
+    db.query("USE CAPSTONE", (err, result) => {
+        const queryGetUser = "SELECT * FROM USERS where U_ID = ?;";
+        const queryGetOrderComplete = "SELECT COUNT(*) AS count FROM ORDER_COMPLETE WHERE U_ID = ?;"
+        const queryReview = "SELECT COUNT(*) AS count FROM REVIEW WHERE U_ID = ?;"
+        if (err) reject(err);
+        db.query(queryGetUser, userId, (err, data) => {
+            if (err) reject(err);
+            else {
+                db.query(queryGetOrderComplete, userId, (err, result) => {
+                  if (err) reject(err);
+                  else {
+                    const countHistory = result[0].count;
+                    data[0].countHistory = countHistory;
+
+                    db.query(queryReview, userId, (err, complete) => {
+                      if (err) reject(err);
+                      else {
+                        const countReview = complete[0].count;
+                        data[0].countReview = countReview;
+                        resolve(data[0]);
+                      }
+                    })
+                  }
+                })
+                }
+            });
+          })
+    });
+  }   
 }
 
 

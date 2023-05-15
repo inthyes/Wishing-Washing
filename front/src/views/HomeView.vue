@@ -52,7 +52,8 @@
 </template>
 
 <script>
-// import axios from "axios";
+
+import axios from 'axios';
 
 export default {
   name: 'daumMap',
@@ -71,6 +72,20 @@ export default {
       addr1: ''
     }
   },
+
+  async created() {
+        try {
+            await axios.get(`http://localhost:3000`, {
+                withCredentials: true,
+                headers: {
+                 Cookie: document.cookie, // 쿠키를 요청에 추가
+                 },
+            });
+        } catch (e) {
+            console.error(e);
+        }
+    },
+
   methods: {
     showApi() {
       new window.daum.Postcode({
@@ -103,11 +118,27 @@ export default {
           // 우편번호와 주소 정보를 해당 필드에 넣는다.
           //this.zip = data.zonecode; //5자리 새우편번호 사용
           this.addr1 = fullRoadAddr;
+
+
+          const date = new Date();
+          date.setTime(date.getTime() + 30 * 24 * 60 * 60 * 1000); // 30일 후의 시간을 설정합니다.
+          const jsonValue = JSON.stringify(data.zonecode); // 데이터를 JSON 형식으로 변환합니다.
+          const encodedValue = encodeURIComponent(jsonValue); // 데이터를 인코딩합니다.
+          console.log(encodedValue);
+          document.cookie = `deliveryAddress1=${encodedValue}; expires=${date.toUTCString()}; path=/;`;
+
+          const addr = this.addr1; // this.addr1에 주소 값이 있다고 가정합니다.
+          const jsonValue2 = JSON.stringify(addr); // 데이터를 JSON 형식으로 변환합니다.
+          const encodedValue2 = encodeURIComponent(jsonValue2); // 데이터를 인코딩합니다.
+          console.log(encodedValue2);
+          document.cookie = `deliveryAddress2=${encodedValue2}; expires=${date.toUTCString()}; path=/;`;
         }
         // }).embed(this.$refs.embed)
       }).open();
-    }
-  }
+    },
+
+}
+
 }
 </script>
 

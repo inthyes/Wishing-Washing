@@ -3,7 +3,7 @@
 <template>
     <v-col cols="12">
         <v-card class="mx-auto mt-4" max-width="400" color="#ffffff" theme="light" elevation="1"
-            v-for="laundry in favoriteLaundrys" :key="laundry.id" v-bind:to="`/laundrydetail/${laundry.id}`">
+            v-for="laundry in laundrys" :key="laundry.S_ID" v-bind:to="`/laundrydetail/${laundry.S_ID}`">
             <div class="d-flex">
                 <v-avatar class="ma-3" size="100" rounded="0">
                     <div class="square-container">
@@ -15,7 +15,7 @@
 
                 <div class="mt-1">
                     <v-card-title class="px-1"> {{ laundry.S_NAME }} </v-card-title>
-                    <v-card-text class="px-1 text-medium-emphasis"> {{ laundry.S_ADD2 }} </v-card-text>
+                    <v-card-text class="px-1 text-medium-emphasis"> {{ laundry.S_ADDR2 }} </v-card-text>
                 </div>
             </div>
         </v-card>
@@ -31,17 +31,17 @@ export default {
     }),
     async created() {
         try {
-            const res = await axios.get('http://localhost:5000/laundrys');
+            const res = await axios.get('http://localhost:3000/myPage/favoriteList');
             this.laundrys = res.data;
         } catch (e) {
             console.error(e);
         }
     },
-    computed: {
-        favoriteLaundrys() {
-            return this.laundrys.filter((laundry) => laundry.wish === 1);
-        },
-    },
+    // computed: {
+    //     favoriteLaundrys() {
+    //         return this.laundrys.filter((laundry) => laundry.wish === 1);
+    //     },
+    // },
 };
 </script>
 
