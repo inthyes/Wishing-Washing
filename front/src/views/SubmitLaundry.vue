@@ -4,7 +4,7 @@
             <v-form @submit.prevent="submit">
                 <v-row>
                     <v-col cols="12">
-                        <h2>{{ laundry.S_NAME }}</h2>
+                        <h2>{{ laundry.name }}</h2>
                     </v-col>
                 </v-row>
                 <v-divider></v-divider>
@@ -12,9 +12,9 @@
                 <v-row>
                     <v-col cols="12">
                         <p class="mb-4">주문상품</p>
-                        <a>{{ submit.id }}</a>
-                        <a>{{ submit.itemName }}</a>
-                        <a> {{ submit.quantity }}개</a>
+                        <!-- <a>{{ submit.id }}</a> -->
+                        <!-- <a>{{ submit.itemName }}</a>
+                        <a> {{ submit.quantity }}개</a> -->
                     </v-col>
                 </v-row>
                 <v-divider></v-divider>
@@ -73,17 +73,20 @@ export default {
             options,
             selectedDate: null,
             laundry: {},
-            submit: {},
+            cart: [],
+            addr: {}
         };
     },
     async created() {
         try {
-            const S_ID = this.$route.params.id;
-            const res = await axios.get(`http://localhost:5000/laundrys/${S_ID}`);
-            this.laundry = res.data;
-
-            const res2 = await axios.get(`http://localhost:5000/submits`);
-            this.submit = res2.data;
+            const id = this.$route.params.id;
+            const res = await axios.get(`http://localhost:3000/laundry/detail/${id}/order`, {
+                withCredentials: true,
+                headers: {Cookie: document.cookie}
+            });
+            this.cart = res.data.cartRes;
+            this.addr = res.data.deliveryAddress;
+            this.laundry = res.data.laundryDetailRes;
         } catch (e) {
             console.error(e);
         }
@@ -115,7 +118,5 @@ export default {
             return '';
         },
     },
-    
-
 };
 </script>

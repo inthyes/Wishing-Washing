@@ -41,9 +41,21 @@ const secretKey = 'secretKey'; // 비밀 키를 정의합니다.
 
 const output ={
     
-    home: (req, res) => {
-          logger.info(`GET / 304 "홈 화면으로 이동"`);
-          res.render("home/index");  
+    home: async (req, res) => {
+        if (req.headers.cookie.includes('response')) {
+                  const cookies = req.headers.cookie.split('; ');
+                  let cookieValue;
+                  cookies.forEach(cookie => {
+                    if (cookie.startsWith('response=')) {
+                        cookieValue = cookie.split('=')[1];
+                    }
+                  });
+                  const orderNum = JSON.parse(decodeURIComponent(cookieValue)).orderNumber;
+                  const deleteCart = new Cart(orderNum);
+                  deleteCart.deleteCart();
+                  res.clearCookie('response');
+                res.status(200).json({ message: 'success' });
+        }
     },
     login : (req,res) => {
         logger.info(`GET /login 304 "로그인 화면으로 이동"`);
@@ -55,7 +67,6 @@ const output ={
     },
     laundry : async (req, res) => {
             logger.info(`GET /laundry 304 "세탁신청 화면으로 이동"`);
-            const myCookieValue = req.headers;
 
             const cookieValue = req.headers.cookie;
             const decodedValue = decodeURIComponent(cookieValue);
@@ -66,7 +77,6 @@ const output ={
 
             const laundryList = new LaundryList(req.body, deliveryAddress1, deliveryAddress2);
             const laundryListRes = await laundryList.getLaundryInfo();
-            console.log(laundryListRes);
             res.json(laundryListRes);
         },
     review : (req, res) => {
@@ -76,19 +86,28 @@ const output ={
         res.render("home/review", {S_ID : S_ID, O_NUM : O_NUM});
     },
 
-    showReview : async (req, res) => {
-        logger.info(`GET /laundry 304 "showreview 화면으로 이동"`);
-        const S_ID = req.params.id; //세탁소아이디 불러옴
-        //console.log(req.params.id);
-        const review = new Review(S_ID, "codus");
-        const RV = await review.showReview();
-        console.log("RV:");
-        console.log(RV);
-        res.render("home/showReview",
-        {
-                RV
-        });
+    // showReview : async (req, res) => {
+    //     logger.info(`GET /laundry 304 "showreview 화면으로 이동"`);
+    //     const S_ID = req.params.id; //세탁소아이디 불러옴
+    //     //console.log(req.params.id);
+    //     const review = new Review(S_ID, "codus");
+    //     const RV = await review.showReview();
+    //     console.log("RV:");
+    //     console.log(RV);
+    //     res.json(
+    //     {
+    //         RV
+    //     });
+    // },
+
+    myReview : async (req, res) => {
+        logger.info(`GET /myPage 304 "review 화면으로 이동"`);
+        const myReview = new Review(req.body, "codus");
+        const myReviewRes = await myReview.myReview();
+        console.log(myReviewRes);
+        res.json(myReviewRes);
     },
+
     history : async (req, res) => {
         // const token = req.query.token;
         // const user_id = Vtoken(token);  // 토큰 검증
@@ -98,32 +117,29 @@ const output ={
         logger.info(`GET /history 304 "이용내역 화면으로 이동"`);
         const history = new History("codus"); //아이디토큰 받아오기
 
-        const {completeList, notCompleteList} = await history.showHistory();
+        const orderCompleteList = await history.showHistory();
         //const response1 = await cart.addOrderList();
-        console.log(completeList, notCompleteList);
-        res.render("home/history", 
-        {
-            completeList : completeList, 
-            notCompleteList : notCompleteList
-        });
+        res.json(orderCompleteList);
     },
-    myPage : (req, res) => {
+    myPage : async (req, res) => {
+        // const token = req.query.token;
+        // const user_id = Vtoken(token);  // 토큰 검증
+        // console.log("토큰확인: " + token);
+        // console.log("user_id: " + user_id);
+        logger.info(`GET /home/myPage 304 "마이페이지 화면으로 이동`);
+        
+        const myPage = new MyPage("codus");
+        const myPageInfo = await myPage.showMyPageInfo("codus");
+        console.log(myPageInfo);
+        res.json(myPageInfo);
+    },
+    favoriteList : async (req, res) => {
         // const token = req.query.token;
         // const user_id = Vtoken(token);  // 토큰 검증
         // console.log("토큰확인: " + token);
         // console.log("user_id: " + user_id);
 
-        logger.info(`GET /home/myPage 304 "마이페이지 화면으로 이동`);
-        res.render("home/myPage");
-    },
-    favoriteList : (req, res) => {
-        const token = req.query.token;
-        const user_id = Vtoken(token);  // 토큰 검증
-        console.log("토큰확인: " + token);
-        console.log("user_id: " + user_id);
-
         logger.info(`GET /myPage/favoriteList 304 "프로필편집 화면으로 이동"`);
-        res.render("home/favoriteList");
         //실제 경로 , 라우팅 경로 : myPage/favoriteList
         /* var user;
          //클라이언트가 HTTP요청 헤더에 토큰 받아서 보낼거임
@@ -156,16 +172,16 @@ const output ={
         //토큰 받아오면 하드코딩 해제
         const favorite = new MyPage("codus");
 
-        const response = favorite.showFavoriteList();
+        const response = await favorite.showFavoriteList();
         //const response1 = await cart.addOrderList();
-        console.log(response);
+        res.json(response);
     },
     //myPage 하위 기능
     profileEdit : (req, res) => 
-    {
+    {   
         logger.info(`GET /myPage/profileEdit 304 "프로필편집 화면으로 이동"`);
         //실제 경로 , 라우팅 경로 : myPage/profileEdit
-        res.render("home/profileEdit");
+        res.status(200).json({ message: 'success'});
     },
     customerService : (req, res) => {
         const token = req.query.token;
@@ -218,23 +234,47 @@ const output ={
         //       console.error(err);
         //       return res.status(401).json({ error: 'Invalid token' });
         //     }
-      
+
         //     const user_id = decoded.user_id; // 토큰에서 추출한 사용자 ID
         //     console.log('user_id:', user_id);
+
       
             // 토큰 검증 후의 나머지 로직을 이곳에 작성
-      
+            
+            // 뒤로가기 실행시 if 쿠키가 존재 -> 쿠키삭제 + cart랑 orderList에서 ordernum관련 내용 삭제
+            if (req.headers.cookie.includes('response')) {
+                const cookieValue = req.cookies.response;
+                const orderNum = JSON.parse(cookieValue).orderNumber; 
+                const deleteCart = new Cart(orderNum);
+                deleteCart.deleteCart();
+                res.clearCookie('response');
+            }
+
             const laundry = new Laundry(req.params.id);
             const product = new Product(req.params.id);
       
             const laundryDetailRes = await laundry.showDetail();
             const productDetailRes = await product.showDetail();
-      
+
+            const S_ID = req.params.id; //세탁소아이디 불러옴
+            //console.log(req.params.id);
+            const review = new Review(S_ID, "codus");
+            const RV = await review.showReview();
+            const reviewStar = await review.averageStar(S_ID);
+
+            const like = new Likes(req.body, "codus");
+            const userLike = await like.likeStatus(S_ID, "codus");
+
             res.json({
               laundryDetail: laundryDetailRes,
               productDetail: productDetailRes,
+              review : RV,
+              reviewStar : reviewStar,
+              userLike : userLike
             });
-        //   });
+
+
+
         } catch (error) {
           console.error(error);
           res.status(500).json({ error: 'Internal Server Error' });
@@ -247,6 +287,9 @@ const output ={
         res.render('home/upload');
     },
     orderPage : async (req, res) => {
+        const laundry = new Laundry(req.params.id);
+        const laundryDetailRes = await laundry.showDetail();
+
         const cookieAddress = req.headers.cookie;
         const decodedValue = decodeURIComponent(cookieAddress);
         const matches = decodedValue.match(/deliveryAddress1="([^"]+)";\s*deliveryAddress2="([^"]+)"/);
@@ -256,11 +299,18 @@ const output ={
         const orderNum = JSON.parse(cookieValue).orderNumber; 
         const laundryOrder = new LaundryOrder(orderNum);
         const cartRes = await laundryOrder.showCart();
+
+        const product = new Product(cartRes);
+        const productRes = await product.getProductId();
+
         logger.info(`GET /home/laundryOrder 304 " 세탁신청주문 화면으로 이동`);
-        res.render("home/laundryOrder", 
+
+        res.json(
         {
             deliveryAddress : deliveryAddress,
-            cartRes : cartRes
+            cartRes : cartRes,
+            laundryDetailRes : laundryDetailRes,
+            productRes : productRes
         });
     },
 };
@@ -271,22 +321,16 @@ const process = {
         // const user_id = Vtoken(token);  // 토큰 검증
         // console.log("토큰확인: " + token);
         // console.log("user_id: " + user_id);
-
         const cart = new Cart(req.body, "codus");
         const response = await cart.add();
-        const cookieName = 'response';
-        const cookieValue =  JSON.stringify(response);
-        res.cookie(cookieName, cookieValue);
-        res.status(200).json({ message: 'Cookie created successfully' });
+        res.json(response)
     },
 
     like: async (req,res) => {
         //req.body -> 1과 0 리턴 
         const like = new Likes(req.body, "codus");
-        
-        console.log(req.body,"codus");
         const response = await like.insert();
-        return true;
+        res.status(200).json({ message: 'success' });
     },
     orderComplete: async (req, res) => {
         const cookieAddress = req.headers.cookie;

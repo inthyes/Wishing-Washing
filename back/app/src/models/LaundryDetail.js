@@ -18,10 +18,13 @@ class LaundryDetail {
                     resolve({
                         id: laundry.S_ID,
                         name: laundry.S_NAME,
+                        phone : laundry.S_PHONE,
                         postAddress : laundry.S_ADDR1,
                         doroAddress : laundry.S_ADDR2,
                         detailAddress : laundry.S_ADDR3,
-                        info : laundry.S_COMMENT
+                        info : laundry.S_COMMENT,
+                        opening : laundry.S_OPENING,
+                        closing : laundry.S_CLOSING
                     })
                     }
                 });

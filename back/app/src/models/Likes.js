@@ -84,7 +84,22 @@ static async getLikedStore() {
   });
 }
 
-    
+async likeStatus(S_ID, U_ID) {
+  return new Promise((resolve, reject) => {
+    db.query("USE CAPSTONE", (err, result) => {
+      if (err) reject(err);
+      const query = "SELECT * FROM LIKES WHERE S_ID = ? AND U_ID = ?";
+      db.query(query, [parseInt(S_ID),U_ID],(err, data) => {
+        if (err) reject(err);
+        else  {
+          if (data != "") data = 1;
+          else data = 0;
+          resolve(data);
+        }
+      });
+    });
+  });
+}
       
 }
 
