@@ -26,9 +26,9 @@
                             별점 선택
                         </option>
                         <option v-for="i in 5" :key="i" :value="i">{{ i }}점</option> -->
-                        <v-rating v-model="rating" color="yellow-accent-4" active-color="yellow-accent-4" size="x-large"
+                        <v-rating v-model="review.rating" color="yellow-accent-4" active-color="yellow-accent-4" size="x-large"
                             half-increments></v-rating>
-                        <pre>{{ rating }}</pre>
+                        <pre>{{ review.rating }}</pre>
                     </div>
 
                 </div>
@@ -46,6 +46,7 @@ export default {
     data() {
         return {
             review: {
+                
                 title: '',
                 content: '',
                 //rating: 0
@@ -53,20 +54,31 @@ export default {
             rating: 0,
         };
     },
+    async created() {
+         
+        try {
+             const res = await axios.get(`http://localhost:3000/review`)
+             console.log(res);
+        } catch (e) {
+            console.error(e);
+        }
+    },
     methods: {
         submitReview() {
             // 현재 날짜 및 시간 가져오기
             const date = new Date();
-            const dateString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+            const dateString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
             // 새로운 리뷰 데이터 생성
             const newReview = {
+                storeId : this.$route.params.storeId,
+                orderNum : this.$route.params.orderNum,
                 title: this.review.title,
                 content: this.review.content,
                 rating: this.review.rating,
                 date: dateString
             };
             // reviews.json 파일에 새로운 리뷰 데이터 추가
-            axios.post('http://localhost:5000/reviews', newReview)
+            axios.post('http://localhost:3000/review', newReview)
                 .then(() => {
                     // 리뷰 작성 후 폼 초기화
                     this.review.title = '';

@@ -82,9 +82,7 @@ const output ={
         },
     review : (req, res) => {
         logger.info(`GET /laundry 304 "review 화면으로 이동"`);
-        const S_ID = req.params.S_ID;
-        const O_NUM = req.params.O_NUM;
-        res.render("home/review", {S_ID : S_ID, O_NUM : O_NUM});
+        res.status(200);
     },
 
     // showReview : async (req, res) => {
@@ -117,8 +115,8 @@ const output ={
 
         logger.info(`GET /history 304 "이용내역 화면으로 이동"`);
         const history = new History("codus"); //아이디토큰 받아오기
-
         const orderCompleteList = await history.showHistory();
+        console.log(orderCompleteList);
         //const response1 = await cart.addOrderList();
         res.json(orderCompleteList);
     },
@@ -368,10 +366,9 @@ const process = {
           }
     },
     review : async (req,res) => {
-        console.log(req.body);
         const review = new Review(req.body, "codus");
         const response = await review.update();
-        res.render("home/myPage",);
+        res.json(response);
     },
     verifyToken : (req,res) => {
         const { token } = req.body;

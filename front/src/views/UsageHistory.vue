@@ -84,7 +84,7 @@
                                         <a id="laundryName">{{ h.S_NAME }}</a>&nbsp;
                                         <!-- 리뷰버튼 -->
 
-                                        <v-btn id="reviewBtn" v-bind:to="`/addreview/${h.O_NUM}`">리뷰</v-btn>
+                                        <v-btn id="reviewBtn" v-bind:to="`/addreview/${h.S_ID}/${h.O_NUM}`">리뷰</v-btn>
 
                                     </v-card-text>
                                 </div>
