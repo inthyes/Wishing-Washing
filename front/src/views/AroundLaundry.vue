@@ -58,7 +58,7 @@ export default {
 
                 headers: {
                  Cookie: document.cookie, // 쿠키를 요청에 추가
-                 },
+                },
             });
             this.laundrys = res.data;
         } catch (e) {

@@ -42,7 +42,7 @@ const secretKey = 'secretKey'; // 비밀 키를 정의합니다.
 const output ={
     
     home: async (req, res) => {
-        if (req.headers.cookie.includes('response')) {
+        if (req.headers.cookie && req.headers.cookie.includes('response')) {
                   const cookies = req.headers.cookie.split('; ');
                   let cookieValue;
                   cookies.forEach(cookie => {
@@ -242,7 +242,7 @@ const output ={
             // 토큰 검증 후의 나머지 로직을 이곳에 작성
             
             // 뒤로가기 실행시 if 쿠키가 존재 -> 쿠키삭제 + cart랑 orderList에서 ordernum관련 내용 삭제
-            if (req.headers.cookie.includes('response')) {
+            if (req.headers.cookie && req.headers.cookie.includes('response')) {
                 const cookieValue = req.cookies.response;
                 const orderNum = JSON.parse(cookieValue).orderNumber; 
                 const deleteCart = new Cart(orderNum);
