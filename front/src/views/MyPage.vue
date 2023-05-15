@@ -61,8 +61,8 @@
             <v-card class="card-hover" color="#5E5A80" theme="dark" to="favoritelaundry" style="color: white;">
               <div class="d-flex flex-no-wrap justify-space-between">
                 <div style="margin-left: 15px;">
-                  <v-card-title class="text-h7" style="margin-top: 10px; margin-bottom: 5px;">단골
-                    세탁소</v-card-title>
+                  <v-card-title class="text-h7" style="margin-top: 10px; margin-bottom: 5px;">
+                    관심 세탁소</v-card-title>
                 </div>
               </div>
             </v-card>
