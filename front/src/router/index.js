@@ -75,7 +75,7 @@ const routes = [
     component: SignUpForm2Vue
   },
   {
-    path: '/addreview/:id',
+    path: '/addreview/:storeId/:orderNum',
     name: '리뷰작성',
     component: AddReviewVue
   },
