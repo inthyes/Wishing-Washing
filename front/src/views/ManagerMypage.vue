@@ -137,10 +137,13 @@ export default {
         axios.get(`http://localhost:5001/requests`)
             .then(response => {
                 const historyData = response.data;
-                const filteredHistoryData = historyData.filter(item => item.status === 2);
+                const matchingLaundry = this.managelaundrys.find(laundry => laundry.id === 1);  // 세탁소별
+                const filteredHistoryData = historyData.filter(item => {
+                return matchingLaundry && matchingLaundry.id === item.laundryId && item.status === 2;  // 배송상태별
+                });
                 const historyNum = filteredHistoryData.length;
                 this.historyCount = historyNum;
-        })
+            })
         //리뷰 수
         axios.get(`http://localhost:5001/reviews`)
             .then(response => {

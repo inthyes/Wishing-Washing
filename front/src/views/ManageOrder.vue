@@ -112,13 +112,16 @@ import axios from "axios";
 export default {
     data: () => ({
         show: false,
+        managelaundrys: [],
         requests: [],
         beforeShipping: [],
     }),
     async created() {
         try {
-            const res = await axios.get('http://localhost:5001/requests');
-            this.requests = res.data;
+            const res1 = await axios.get("http://localhost:5001/managelaundrys");
+            const res2 = await axios.get("http://localhost:5001/requests");
+            this.managelaundrys = res1.data;
+            this.requests = res2.data;
         } catch (e) {
             console.error(e);
         }
@@ -133,8 +136,12 @@ export default {
                 console.error(e);
             }
         },
-        filteredRequests(status) {  //배송 상태별로 구분
-            return this.requests.filter(request => request.status === status);
+        filteredRequests(status) {  //배송 상태별로 구분, 세탁소별 할당
+            //return this.requests.filter(request => request.status === status);
+            return this.requests.filter(request => {
+            const matchingLaundry = this.managelaundrys.find(laundry => laundry.id === 1);
+            return matchingLaundry && matchingLaundry.id === request.laundryId && request.status === status;
+            });
         },
         // 수락 버튼 -> 배송전으로 이동
         async clickAccept(requestId) {

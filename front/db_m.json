@@ -36,6 +36,7 @@
   ],
   "requests": [
     {
+      "laundryId": 1,
       "id": 1,
       "date": "2023.03.21",
       "userId": "user12",
@@ -46,6 +47,7 @@
       "status": -2
     },
     {
+      "laundryId": 1,
       "id": 2,
       "date": "2023.03.21",
       "userId": "1us2er",
@@ -56,6 +58,7 @@
       "status": -2
     },
     {
+      "laundryId": 1,
       "id": 3,
       "date": "2023.03.20",
       "userId": "imuser",
@@ -66,6 +69,7 @@
       "status": -2
     },
     {
+      "laundryId": 1,
       "id": 4,
       "date": "2023.03.19",
       "userId": "usser",
@@ -76,6 +80,7 @@
       "status": 2
     },
     {
+      "laundryId": 1,
       "id": 5,
       "date": "2023.03.18",
       "userId": "wlrkdy",
@@ -84,6 +89,17 @@
       "price": "8,000원",
       "userAddr": "경기도 수원시 AA빌라",
       "status": 2
+    },
+    {
+      "laundryId": 2,
+      "id": 6,
+      "date": "2023.03.18",
+      "userId": "imim",
+      "name": "종합세탁물",
+      "requirement": "없음",
+      "price": "7,000원",
+      "userAddr": "경기도 수원시",
+      "status": -2
     }
   ],
   "reviews": [
