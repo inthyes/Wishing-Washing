@@ -73,8 +73,8 @@
                         </v-row>
                        </div>
 
-                        <v-avatar class="ma-3" rounded="0" style="width: 50%; height: 140px;">
-                            <v-img src="https://cdn.vuetifyjs.com/images/cards/docks.jpg" cover
+                        <v-avatar class="ma-3" rounded="0" style="width: 52%; height: 140px;"> <!--src="https://cdn.vuetifyjs.com/images/cards/docks.jpg" cover-->
+                            <v-img :src= "require(`@/plugins/${managelaundry.image}`)"
                                     style="margin-left: -10px;"></v-img>
                         </v-avatar>
                      </div>
@@ -129,7 +129,6 @@ export default {
         try {
             const res = await axios.get('http://localhost:5001/managelaundrys');
             this.managelaundrys = res.data.filter((laundry) => laundry.id === 1);
-            //this.managelaundrys = res.data;
         } catch (e) {
             console.error(e);
         }
