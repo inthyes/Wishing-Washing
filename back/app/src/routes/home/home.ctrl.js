@@ -260,16 +260,18 @@ const output ={
             const review = new Review(S_ID, "codus");
             const RV = await review.showReview();
             const reviewStar = await review.averageStar(S_ID);
+            const countReview = await review.countReview(S_ID);
 
             const like = new Likes(req.body, "codus");
             const userLike = await like.likeStatus(S_ID, "codus");
-
+            
             res.json({
               laundryDetail: laundryDetailRes,
               productDetail: productDetailRes,
               review : RV,
               reviewStar : reviewStar,
-              userLike : userLike
+              userLike : userLike,
+              countReview : countReview
             });
 
 

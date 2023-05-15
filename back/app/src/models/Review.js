@@ -103,9 +103,24 @@ class Review {
                 });
             })
         });
-
   }
+
+  async countReview(storeId) {
+    return new Promise ((resolve, reject) => {
+      db.query("USE CAPSTONE", (err, result) => {
+          const queryCountReview = "SELECT * FROM REVIEW WHERE S_ID = ?;";
+          if (err) reject(err);
+          db.query(queryCountReview,  storeId, (err, data) => {
+              if (err) reject(err);
+              else {
+                resolve(data.length)
+                }
+              });
+          })
+      });
 }
+}
+
 
 
 module.exports = Review; 

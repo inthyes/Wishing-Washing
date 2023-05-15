@@ -32,8 +32,7 @@
                         size="normal"></v-rating>
 
                     <div class="text-grey ms-2">
-                        {{ reviewStar }} (413)
-
+                        {{ reviewStar }} ({{countReview}})
                     </div>
                 </v-row>
 
@@ -117,12 +116,12 @@ export default {
         selection: 1,
 
         laundry: {},        // laundrys.json
-
         submits: [],        // submits.json      
         product: [],
         review: [],
         reviewStar : {},
         likeStatus : {},
+        countReview : {},
 
 
         tab: 'Appetizers',  // 세탁/수선 & 리뷰 탭
@@ -143,6 +142,7 @@ export default {
                 this.review = res.data.review;
                 this.reviewStar = res.data.reviewStar;
                 this.likeStatus = res.data.userLike;
+                this.countReview = res.data.countReview;
         } catch (e) {
             console.error(e);
         }
