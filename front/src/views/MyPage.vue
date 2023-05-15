@@ -2,7 +2,7 @@
 
 <template>
     <div class="mypage">
-        <v-card class="mx-auto my-5" max-width="500" flat v-for="mp in mypage" :key="mp.id" elevation="0">
+        <v-card class="mx-auto my-5" max-width="500" flat elevation="0">
             <div class="align-end text-black" height="150">
                 <v-row>
                     <v-col style="margin-left: 30px; margin-right: -45%; margin-top: 24px;">
@@ -10,8 +10,8 @@
                     </v-col>
                     <v-col style="margin-top: 14px;">
                         <v-card-text id="userInfo">
-                            <div id="userName" style="font-size: large;"><b>{{ mp.userName }}</b></div>
-                            <div id="userAddr" style="margin-top: 5px;">{{ mp.userAddr }}</div>
+                            <div id="userName" style="font-size: large;"><b>{{ mypageData.userName }}</b></div>
+                            <div id="userAddr" style="margin-top: 5px;">{{ mypageData.userAddr }}</div>
                         </v-card-text>
                     </v-col>
                     <v-col style="margin-top: 30px; margin-right: -35%;">
@@ -31,7 +31,7 @@
                                     <v-card-actions>
                                         <v-btn class="text-h5" id="countHistory" style="margin-left: 2px;" color="white"
                                             to="usagehistory">
-                                            {{ mp.countHistory }}
+                                            {{ mypageData.countHistory }}
                                         </v-btn>
                                     </v-card-actions>
                                 </v-col>
@@ -43,7 +43,7 @@
                                     <v-card-actions>
                                         <v-btn class="text-h5" id="countReview" style="margin-left: 2px;" color="white"
                                             to="reviewlist">
-                                            {{ mp.countReview }}
+                                            {{ mypageData.countReview }}
                                         </v-btn>
                                     </v-card-actions>
                                 </v-col>
@@ -53,8 +53,7 @@
                                 <v-col xs3 style="">
                                     <v-card-subtitle style="margin-left: 10px;">Q&A</v-card-subtitle>
                                     <v-card-actions>
-                                        <v-btn class="text-h5" id="countQnA" color="white" to="qna">{{ mp.countQnA
-                                        }}</v-btn>
+                                        <v-btn class="text-h5" id="countQnA" color="white" to="qna">{{ mypageData.countQnA}}</v-btn>
                                     </v-card-actions>
                                 </v-col>
                             </v-row>
@@ -67,38 +66,11 @@
                                 <div style="margin-left: 15px;">
                                     <v-card-title class="text-h7" style="margin-top: 10px; margin-bottom: 5px;">단골
                                         세탁소</v-card-title>
-
-                                    <v-card-subtitle>
-                                        <div id="laundryName">{{ mp.laundryName }}</div>
-                                        <div id="laundryAddr">{{ mp.laundryAddr }}</div>
-                                    </v-card-subtitle>
-
-                                    <v-row class="mx-0">
-                                        <v-rating :model-value=mp.stars color="amber" density="compact" half-increments
-                                            readonly size="small" style="margin-left: 15px; margin-top: 20px;"></v-rating>
-                                        <!--<div class="text-grey ms-2" style="font-size: 15px; margin-top: 16%;">{{ mp.stars }}</div>-->
-                                    </v-row>
                                 </div>
-
-                                <v-avatar class="ma-3" rounded="0" style="width: 50%; height: 140px;">
-                                    <v-img src="https://cdn.vuetifyjs.com/images/cards/docks.jpg" cover
-                                        style="margin-left: -10px;"></v-img>
-                                </v-avatar>
                             </div>
                         </v-card>
                     </v-col>
                 </v-row>
-
-                <v-card color="white" style="border-radius: 0%; margin-top: -10px; box-shadow: none;">
-                    <v-divider class="mx-1 mb-1"></v-divider>
-                    <v-card-title style="margin-bottom: 5px; font-size: 16px;">단골 세탁소 정보</v-card-title>
-                    <v-card-subtitle>
-                        <div id="operatingHour">운영시간 : {{ mp.operatingHour }}</div>
-                        <div id="dayOff">휴무일 : {{ mp.dayOff }}</div>
-                        <div id="laundryNumber" style="margin-bottom: 4px;">전화 : {{ mp.laundryNumber }}</div>
-                    </v-card-subtitle>
-                    <v-divider class="mx-1 mb-1"></v-divider>
-                </v-card>
 
                 <v-row style="margin-top: 1px;">
                     <v-col>
@@ -181,7 +153,7 @@ export default {
         console.log("Token Payload:", tokenPayload);
 
     
-        this.mypageData = this.mypageData.filter((mp) => mp.userName === tokenPayload.userName);
+        this.mypageData = this.mypageData.filter((mypageData) => mypageData.userName === tokenPayload.userName);
       } catch (error) {
         console.error(error);
         throw new Error("마이페이지 데이터 가져오기 실패");
