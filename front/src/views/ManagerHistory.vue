@@ -5,7 +5,7 @@
     <div class="wrapper">
         <v-card class="mx-auto my-5" max-width="500" elevation="0">
             <div style="margin-top: -7%;"></div>
-            <div v-for="(request, index) in filteredRequests('배송완료')" v-bind:key="request.id" elevation="0" query="request.id">
+            <div v-for="(request, index) in filteredRequests(2)" v-bind:key="request.id" elevation="0" query="request.id">
                 <div v-if="index === 0 || request.date !== requests[index - 1].date">
                     <div class="date" id="date" style="margin-top: 40px; margin-left: 4%; font-size: 15px;">
                         <b>{{ request.date }}</b>

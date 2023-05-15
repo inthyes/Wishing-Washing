@@ -137,7 +137,7 @@ export default {
         axios.get(`http://localhost:5001/requests`)
             .then(response => {
                 const historyData = response.data;
-                const filteredHistoryData = historyData.filter(item => item.status === '배송완료');
+                const filteredHistoryData = historyData.filter(item => item.status === 2);
                 const historyNum = filteredHistoryData.length;
                 this.historyCount = historyNum;
         })
@@ -145,9 +145,13 @@ export default {
         axios.get(`http://localhost:5001/reviews`)
             .then(response => {
                 const reviewData = response.data;
-                const reviewNum = reviewData.length;
+                const filteredReviews = reviewData.filter(review => {
+                    const matchingLaundry = this.managelaundrys.find(laundry => laundry.id === 1);
+                    return matchingLaundry && matchingLaundry.id === review.laundryId;
+                });
+                const reviewNum = filteredReviews.length;
                 this.reviewCount = reviewNum;
-        })
+            });
     }
 }
 </script>
