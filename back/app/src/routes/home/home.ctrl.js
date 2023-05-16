@@ -367,7 +367,7 @@ const process = {
     review : async (req,res) => {
         const review = new Review(req.body, "codus");
         const response = await review.update();
-        console.lolg(response);
+        console.log(response);
         res.json(response);
     },
     edit : async (req,res) => {

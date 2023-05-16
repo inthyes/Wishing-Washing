@@ -41,7 +41,8 @@ export default {
       show1: false,
       form: false,
       required: value => !!value || '필수 항목입니다.', // 필수 입력 필드 유효성 검사
-      users: []
+      users: [],
+      loading: false // loading 속성 추가
     }
   },
 
