@@ -16,7 +16,7 @@
                         <!-- 이용내역 리스트 -->
                         <div v-for="(h, index) in InProgress" v-bind:key="h.O_NUM">
                             <!-- 신청날짜 출력 -->
-                            <div v-if="index === 0 || Fh.O_DAY !== order_complete[index - 1].O_DAY">
+                            <div v-if="index === 0 || h.O_DAY !== order_complete[index - 1].O_DAY">
                                 <div class="date" id="date">
                                     <b>{{ h.O_DAY }}</b>
 
