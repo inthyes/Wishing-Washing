@@ -19,7 +19,6 @@
                             <div v-if="index === 0 || h.O_DAY !== order_complete[index - 1].O_DAY">
                                 <div class="date" id="date">
                                     <b>{{ h.O_DAY }}</b>
-
                                 </div>
                             </div>
                             <!-- 이용내역 리스트 출력 -->
@@ -34,13 +33,13 @@
                                             <span v-else-if="h.DELIVERY_STATE === 1">배송중</span>
                                         </div>
                                         <!-- 세탁비용 -->
-                                        <div id="price">세탁비용&nbsp;|&nbsp;&nbsp;{{ h.O_PRICE }}</div>
+                                        <div id="price">세탁비용&nbsp;|&nbsp;&nbsp;{{ h.O_PRICE }} 원</div>
                                         <!-- 요청사항 -->
                                         <div id="requirement">요청사항&nbsp;|&nbsp;&nbsp;{{ h.O_REQUEST }}</div>
                                         <v-divider></v-divider>
                                         <!-- 세탁소 이름 -->
                                         <a id="laundryName">{{ h.S_NAME }}</a>&nbsp;
-                                        
+
                                     </v-card-text>
                                 </div>
                             </v-card>
@@ -50,17 +49,17 @@
                     <!-- tap 2 : 지난 이용내역 -->
                     <v-window-item value="two">
                         <!-- 최근순 / 오래된순 선택 -->
-                        <v-chip @click="sortByDate(true)">최근순</v-chip>
-                        <v-chip @click="sortByDate(false)">오래된순</v-chip>
+                        <v-chip-group filter >
+                            <v-chip @click="sortByDate(false)">최근순</v-chip>
+                            <v-chip @click="sortByDate(true)">오래된순</v-chip>
+                        </v-chip-group>
 
                         <!-- 이용내역 리스트 -->
                         <div v-for="(h, index) in completeDelivery" v-bind:key="h.O_NUM">
-                            <!-- 배송날짜 출력 -->
-                            <div v-if="index === 0 || h.DELIVERY_DAY !== order_complete[index - 1].DELIVERY_DAY">
-                            <!-- 배송날짜 출력 -->
-                            <div v-if="index === 0 || h.DELIVERY_DAY !== order_complete[index - 1].DELIVERY_DAY">
+                            <!-- 신청날짜 출력 -->
+                            <div v-if="index === 0 || h.O_DAY !== order_complete[index - 1].O_DAY">
                                 <div class="date" id="date">
-                                    <b>{{ h.DELIVERY_DAY }}</b>
+                                    <b>{{ h.O_DAY }}</b>
                                 </div>
                             </div>
                             <!-- 이용내역 리스트 출력 -->
@@ -73,7 +72,7 @@
                                             <span v-if="h.DELIVERY_STATE === 2">배송완료 ({{ h.COMPLETE_DATE }})</span>
                                         </div>
                                         <!-- 세탁비용 -->
-                                        <div id="price">세탁비용&nbsp;|&nbsp;&nbsp;{{ h.O_PRICE }}</div>
+                                        <div id="price">세탁비용&nbsp;|&nbsp;&nbsp;{{ h.O_PRICE }} 원</div>
                                         <!-- 요청사항 -->
                                         <div id="requirement">요청사항&nbsp;|&nbsp;&nbsp;{{ h.O_REQUEST }}</div>
                                         <v-divider></v-divider>
@@ -85,7 +84,6 @@
                                 </div>
                             </v-card>
                         </div>
-                    </div>
                     </v-window-item>
                 </v-window>
             </v-card-text>
@@ -109,7 +107,8 @@ export default {
 
     async created() {
         try {
-            this.order_complete = await this.fetchOrderComplete('desc');    // 기본값은 최근순으로 설정
+            // this.order_complete = await this.fetchOrderComplete('asc');    // 기본값은 과거순으로 설정 
+            this.order_complete = await this.fetchOrderComplete('desc');    // 기본값은 최신순으로 설정 
             // this.order_complete = res.data;
         } catch (e) {
             console.error(e);
@@ -118,26 +117,27 @@ export default {
         const token = localStorage.getItem("token");
 
         if (token) {
-        this.verifyToken(token)
-            .then((isValidToken) => {
-                this.fetchhistoryData();
-                console.log(isValidToken);
-            })
-            .catch((error) => {
-            console.error(error);
-            this.redirectToLogin();
-            });
+            this.verifyToken(token)
+                .then((isValidToken) => {
+                    this.fetchhistoryData();
+                    console.log(isValidToken);
+                })
+                .catch((error) => {
+                    console.error(error);
+                    this.redirectToLogin();
+                });
         } else {
-        this.redirectToLogin();
+            this.redirectToLogin();
         }
+        this.sortByDate(false);   // 기본 최신순으로 정렬
     },
 
     methods: {
         async verifyToken(token) {
             try {
                 const response = await axios.post(
-                "http://localhost:3000/verify-token",
-                { token }
+                    "http://localhost:3000/verify-token",
+                    { token }
                 );
                 const data = response.data;
                 console.log(data);
@@ -156,7 +156,7 @@ export default {
                 console.log("ID:", tokenPayload.id);
                 console.log("Token Payload:", tokenPayload);
 
-        
+
             } catch (error) {
                 console.error(error);
                 throw new Error("usagehistory 데이터 가져오기 실패");
@@ -165,34 +165,34 @@ export default {
 
         async fetchOrderComplete(order) {
             try {
-
                 const res = await axios.get('http://localhost:3000/history', {
                     params: {
-                        _sort: 'COMPLETE_DATE',
+                        _sort: 'O_DAY',
                         _order: order
                     },
-                    
                 });
                 console.log(res.data);
-
-
                 return res.data;
-            }   catch (e) {
+            } catch (e) {
                 throw new Error(e);
             }
         },
-  
-        async sortByDate(isDescending) {
-            try {
-                const order = isDescending ? 'desc' : 'asc';
-                this.order_complete = await this.fetchOrderComplete(order);
-            } catch (e) {
-                console.error(e);
-            }
+
+        sortByDate(isAscending) {
+            this.order_complete.sort((a, b) => {
+                const dateA = new Date(a.O_DAY);
+                const dateB = new Date(b.O_DAY);
+                if (isAscending) {
+                    return dateA - dateB;
+                } else {
+                    return dateB - dateA;
+                }
+            });
+            this.order_complete = [...this.order_complete];
         },
 
         redirectToLogin() {
-        this.$router.push("/login");
+            this.$router.push("/login");
         },
 
     },
@@ -250,12 +250,17 @@ export default {
     font-display: center;
     margin-bottom: 10px;
     margin-top: 10px;
-    /* white-space: nowrap;  */ /* 텍스트 한줄 유지 기능 삭제 */
+    /* white-space: nowrap;  */
+    /* 텍스트 한줄 유지 기능 삭제 */
     text-overflow: ellipsis;
-    /* overflow: auto; */    /* 스크롤바 기능 삭제 */
+    /* overflow: auto; */
+    /* 스크롤바 기능 삭제 */
 }
 
-#name, #state, #price, #requirement {
+#name,
+#state,
+#price,
+#requirement {
     margin-bottom: 3px;
 }
 
@@ -277,7 +282,7 @@ export default {
     color: red;
     text-decoration-line: none;
 }
-
+/* 
 #washingImg {
     width: 85px;
     height: 100px;
@@ -286,5 +291,5 @@ export default {
     margin-top: 19px;
     margin-right: 17px;
     border-radius: 5px;
-}
+} */
 </style>
