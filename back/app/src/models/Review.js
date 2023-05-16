@@ -15,25 +15,26 @@ class Review {
         return show;
       }
       async update() {
-        const S_ID = this.body.S_ID;
+        const S_ID = this.body.storeId;
         const title = this.body.title;
-        const body = this.body.body;
+        const content = this.body.content;
         const rating = this.body.rating;
         const U_ID = this.U_ID;
-        const O_NUM = this.body.O_NUM;
+        const O_NUM = this.body.orderNum;
+        const date = this.body.date;
 
-        const RV = await Review.review(O_NUM, S_ID, title, body, rating, U_ID);
+        const RV = await Review.review(O_NUM, S_ID, title, content, rating, U_ID, date);
         return RV;
         
     }
     
-    static async review(O_NUM, S_ID, title, body, rating, U_ID) {
+    static async review(O_NUM, S_ID, title, content, rating, U_ID, date) {
       return new Promise ((resolve, reject) => {
       db.query("USE CAPSTONE", (err, result) => {
-          const query = "INSERT INTO REVIEW (O_NUM,S_ID, REVIEW_TEXT, REVIEW_STAR, U_ID) VALUES (?,?,?,?,?);";
+          const query = "INSERT INTO REVIEW (O_NUM, S_ID, REVIEW_TITLE, REVIEW_TEXT, REVIEW_STAR, U_ID, REGI_DATE) VALUES (?, ?,?,?,?,?,?);";
           if (err) reject(err);
           //const keys = Object.keys(query);
-          db.query(query,  [O_NUM,S_ID, body, rating, U_ID], (err, data) => {
+          db.query(query,  [O_NUM, S_ID, title, content, rating, U_ID, date], (err, data) => {
               if (err) reject(err);
               else {
                   resolve({

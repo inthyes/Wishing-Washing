@@ -45,6 +45,7 @@
 
 <script>
 import axios from "axios";
+import jwt_decode from 'jwt-decode';
 
 export default {
     data: () => ({
@@ -52,19 +53,55 @@ export default {
         laundrys: [] // Add this line to initialize the laundry array
     }),
     async created() {
-        try {
-            const res = await axios.get('http://localhost:3000/laundry', {
-                withCredentials: true, //axios에서 서버에 요청할때 쿠키를 추가하기 위한 작업.
+     const token = await localStorage.getItem("token");
+    if (token) {
+         this.verifyToken(token)
+        .then((isValidToken) => {
+        //   if (isValid) {
+        //     // 토큰이 유효한 경우에만 쿠키 작업 수행
+            this.handleCookies();
 
-                headers: {
-                 Cookie: document.cookie, // 쿠키를 요청에 추가
-                 },
-            });
-            this.laundrys = res.data;
-        } catch (e) {
-            console.error(e);
-        }
-    },
+            this.fetcharoundlaundryData();
+            console.log("is",isValidToken);
+        //   } else {
+        //     this.handleCookies();
+        //     this.fetcharoundlaundryData();
+        //     console.log(isValid);
+        //   }
+        })
+        .catch((error) => {
+          console.error(error);
+          this.redirectToLogin();
+        });
+    } else {
+      this.redirectToLogin();
+    }
+  },
+// async created() {
+//     const token = localStorage.getItem("token");
+//     console.log("created:", token);
+//     if (token) {
+//         try {
+//             const isValid = await this.verifyToken(token);
+//             if (isValid) {
+//                 console.log("Token is not valid");
+//                 this.redirectToLogin();
+//             } else {
+                
+//                 this.handleCookies();
+//                 this.fetcharoundlaundryData();
+//                 console.log("isValid:", isValid);
+//             }
+//         } catch (error) {
+//             console.error(error);
+//             this.redirectToLogin();
+//         }
+//     } else {
+//         this.redirectToLogin();
+//     }
+// },
+
+
     methods: {
         // 위시리스트-토글버튼
         toggleWish(laundry) {
@@ -79,6 +116,56 @@ export default {
                     // handle error
                     console.log(error);
                 });
+        },
+        async verifyToken(token) {
+            try {
+                const response = await axios.post(
+                "http://localhost:3000/verify-token",
+                { token }
+                );
+                const data = response.data;
+                console.log(data);
+                console.log(token);
+                return data.isValid;
+            } catch (error) {
+                throw new Error("토큰 검증 실패");
+            }
+        },
+        async handleCookies() {
+        try {
+                const res = await axios.get('http://localhost:3000/laundry', {
+                withCredentials: true, // axios에서 서버에 요청할 때 쿠키를 추가하기 위한 작업.
+                headers: {
+                    Cookie: document.cookie, // 쿠키를 요청에 추가
+                },
+            });
+                this.laundrys = res.data;
+                console.log("쿠키 확인");
+            } catch (e) {
+                console.error(e);
+            }
+        },
+         fetcharoundlaundryData() {
+            try {
+               
+                const res =  axios.get("http://localhost:3000/aroundlaundry");
+                this.aroundlaundryData = res.data;
+                const token = localStorage.getItem("token");
+                const tokenPayload = jwt_decode(token);
+
+                console.log("ID:", tokenPayload.id);
+                console.log("Token Payload:", tokenPayload);
+
+            
+                // this.mypageData = this.mypageData.filter((mypageData) => mypageData.userName === tokenPayload.userName);
+            } catch (error) {
+                console.error(error);
+                throw new Error("마이페이지 데이터 가져오기 실패");
+            }
+        },
+
+        redirectToLogin() {
+        this.$router.push("/login");
         },
         
     }

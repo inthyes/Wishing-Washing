@@ -42,7 +42,7 @@ const secretKey = 'secretKey'; // 비밀 키를 정의합니다.
 const output ={
     
     home: async (req, res) => {
-        if (req.headers.cookie.includes('response')) {
+        if (req.headers.cookie && req.headers.cookie.includes('response')) {
                   const cookies = req.headers.cookie.split('; ');
                   let cookieValue;
                   cookies.forEach(cookie => {
@@ -77,13 +77,12 @@ const output ={
 
             const laundryList = new LaundryList(req.body, deliveryAddress1, deliveryAddress2);
             const laundryListRes = await laundryList.getLaundryInfo();
+
             res.json(laundryListRes);
         },
     review : (req, res) => {
         logger.info(`GET /laundry 304 "review 화면으로 이동"`);
-        const S_ID = req.params.S_ID;
-        const O_NUM = req.params.O_NUM;
-        res.render("home/review", {S_ID : S_ID, O_NUM : O_NUM});
+        res.status(200);
     },
 
     // showReview : async (req, res) => {
@@ -116,8 +115,8 @@ const output ={
 
         logger.info(`GET /history 304 "이용내역 화면으로 이동"`);
         const history = new History("codus"); //아이디토큰 받아오기
-
         const orderCompleteList = await history.showHistory();
+        console.log(orderCompleteList);
         //const response1 = await cart.addOrderList();
         res.json(orderCompleteList);
     },
@@ -242,7 +241,7 @@ const output ={
             // 토큰 검증 후의 나머지 로직을 이곳에 작성
             
             // 뒤로가기 실행시 if 쿠키가 존재 -> 쿠키삭제 + cart랑 orderList에서 ordernum관련 내용 삭제
-            if (req.headers.cookie.includes('response')) {
+            if (req.headers.cookie && req.headers.cookie.includes('response')) {
                 const cookieValue = req.cookies.response;
                 const orderNum = JSON.parse(cookieValue).orderNumber; 
                 const deleteCart = new Cart(orderNum);
@@ -367,10 +366,9 @@ const process = {
           }
     },
     review : async (req,res) => {
-        console.log(req.body);
         const review = new Review(req.body, "codus");
         const response = await review.update();
-        res.render("home/myPage",);
+        res.json(response);
     },
     verifyToken : (req,res) => {
         const { token } = req.body;
@@ -388,7 +386,7 @@ const process = {
 
                 // 검증에 성공한 경우, 클라이언트에게 성공 응답을 보냅니다.
                 console.log(token);
-                return res.status(200).json({ message: '토큰이 유효합니다.' });
+                return res.status(200).json({ message: '토큰이 유효합니다.', token: token });
         });
     },
     // upload : ('/image/:i_id', async (req, res) => {

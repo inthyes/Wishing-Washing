@@ -16,7 +16,8 @@ router.get('/laundry', ctrl.output.laundry);
 router.get('/history', ctrl.output.history);
 router.get('/myPage', ctrl.output.myPage);
 router.get('/upload', ctrl.output.upload);
-router.get('/history/review/:S_ID/:O_NUM', ctrl.output.review);
+router.get('/review', ctrl.output.review);
+// router.get('/review', ctrl.output.review);
 
 router.use("/myPage", require("./myPage"));
 router.use("/laundry", require("./laundry"));

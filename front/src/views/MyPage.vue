@@ -108,11 +108,8 @@ export default {
     if (token) {
       this.verifyToken(token)
         .then((isValidToken) => {
-          if (isValidToken) {
             this.fetchMypageData();
-          } else {
-            this.fetchMypageData();
-          }
+            console.log(isValidToken);
         })
         .catch((error) => {
           console.error(error);
@@ -131,7 +128,7 @@ export default {
           { token }
         );
         const data = response.data;
-        console.log(data);
+        console.log("data:",data);
         return data.isValid;
       } catch (error) {
         throw new Error("토큰 검증 실패");

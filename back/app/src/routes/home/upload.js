@@ -32,7 +32,7 @@ router.post('/', upload.single('imgUpload'), (req, res) => {
     })    
     
     const { filename, destination } = req.file;
-    const i_id = 3; //client에게 받아와야함/
+    const i_id = 4; //client에게 받아와야함/
     const filePath = `/${filename}`;
 
   
