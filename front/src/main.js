@@ -17,10 +17,10 @@ loadFonts()
 //   .use(router)
 //   .use(vuetify)
 //   .mount('#app')
-const app = createApp(App).use(store)
+const app = createApp(App);
 app.use(router)
 app.use(vuetify)
-app.config.globalProperties.axios = axios;
 app.use(VueCookies)
-
+app.use(store);
+app.config.globalProperties.axios = axios;
 app.mount('#app');

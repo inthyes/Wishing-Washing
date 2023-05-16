@@ -7,7 +7,7 @@
       <template v-slot:prepend>
         <!-- 홈 화면에선 토글 버튼 -->
         <v-app-bar-nav-icon v-if="isHome" variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-        <!-- 메인 컴포넌트에선 로고 버튼 (로고 임시) -->
+        <!-- 메인 컴포넌트에선 로고 버튼 (로고 추후 수정) -->
         <v-btn v-if="isMain" icon="mdi-washing-machine" @click="$router.push('/')"></v-btn>
         <!-- 이외의 모든 페이지에선 뒤로가기 버튼 -->
         <v-btn v-if="!isHome && !isMain" icon="mdi-arrow-left" @click="goBack"></v-btn>
@@ -26,16 +26,10 @@
     </v-app-bar>
 
     <!-- 앱바 드롭다운 메뉴 : 왼쪽에서  -->
-    <v-navigation-drawer v-model="drawer" location="left" temporary>
+    <v-navigation-drawer v-model="drawer" location="left" temporary width="200">
       <v-list>
-        <v-list-item router-link to="/login"> <!-- Add router link to Login -->
-          <v-list-item-title>로그인</v-list-item-title>
-        </v-list-item>
-        <v-list-item router-link to="/signup"> <!-- Add router link to Sign Up -->
-          <v-list-item-title>회원가입</v-list-item-title>
-        </v-list-item>
-        <v-list-item router-link to="/signup2"> <!-- Add router link to Sign Up -->
-          <v-list-item-title>회원가입2</v-list-item-title>
+        <v-list-item class="text-left px-5" @click="logout">
+          로그아웃
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -54,8 +48,8 @@
 </template>
 
 <script>
-// import AppBar from './components/AppBar.vue'
 import BottomNavBar from './components/BottomNavBar.vue'
+import axios from 'axios'
 
 export default {
   components: { BottomNavBar, },
@@ -77,15 +71,32 @@ export default {
     },
     isMain() {
       const path = this.$route.path;
-      return path === '/aroundlaundry' || path === '/usagehistory' || path === '/mypage';
-
+      return path === '/aroundlaundry' || path === '/usagehistory' || path === '/mypage' || path === '/login';
     }
   },
   methods: {
     goBack() {
       this.$router.go(-1);
     },
-    
+    async logout() {
+      try {
+        const response = await axios.post('http://localhost:3000/logout', null, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+        });
+        const data = response.data;
+        console.log(data);
+        alert(data.message);
+
+        localStorage.removeItem("token");
+
+        this.$router.push('/login');
+      } catch (error) {
+        console.log(error);
+        alert('로그아웃 실패');
+      }
+    }
   },
 }
 </script>
