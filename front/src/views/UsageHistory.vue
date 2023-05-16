@@ -14,12 +14,11 @@
                     <!-- tab 1 : 진행중인 세탁 -->
                     <v-window-item value="one">
                         <!-- 이용내역 리스트 -->
-
                         <div v-for="(h, index) in InProgress" v-bind:key="h.O_NUM">
-                            <!-- 배송날짜 출력 -->
-                            <div v-if="index === 0 || h.ORD_DAY !== order_complete[index - 1].ORD_DAY">
+                            <!-- 신청날짜 출력 -->
+                            <div v-if="index === 0 || h.O_DAY !== order_complete[index - 1].O_DAY">
                                 <div class="date" id="date">
-                                    <b>{{ h.ORD_DAY }}</b>
+                                    <b>{{ h.O_DAY }}</b>
 
                                 </div>
                             </div>

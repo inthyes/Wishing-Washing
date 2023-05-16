@@ -148,7 +148,12 @@ export default {
          fetcharoundlaundryData() {
             try {
                
-                const res =  axios.get("http://localhost:3000/aroundlaundry");
+                const res =  axios.get("http://localhost:3000/laundry", {
+                withCredentials: true, // axios에서 서버에 요청할 때 쿠키를 추가하기 위한 작업.
+                    headers: {
+                        Cookie: document.cookie, // 쿠키를 요청에 추가
+                    },
+                })
                 this.aroundlaundryData = res.data;
                 const token = localStorage.getItem("token");
                 const tokenPayload = jwt_decode(token);
