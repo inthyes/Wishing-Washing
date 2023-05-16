@@ -18,9 +18,9 @@
             <v-text-field v-model="edit.mail" label="이메일"></v-text-field>
             
             <v-text-field v-model="edit.phone" label="연락처"></v-text-field>
-            <!-- <v-text-field v-model="edit.password" label="현재 비밀번호"></v-text-field>
+            <v-text-field v-model="edit.password" label="현재 비밀번호"></v-text-field>
             <v-text-field v-model="edit.newPassword" label="새 비밀번호"></v-text-field>
-            <v-text-field v-model="edit.newPasswordConfirm" label="새 비밀번호 확인"></v-text-field> -->
+            <v-text-field v-model="edit.newPasswordConfirm" label="새 비밀번호 확인"></v-text-field>
             <v-btn type="button" color="primary" @click="save">저장</v-btn>
         </v-form>
     </v-card>
