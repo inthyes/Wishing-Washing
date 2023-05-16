@@ -20,7 +20,7 @@ class LaundryOrderComplete {
 
         let querygetUserId = "SELECT U_ID FROM ORDER_LIST WHERE O_NUM = ?;";
         let querygetUser = "SELECT U_PHONE FROM USERS WHERE U_ID = ?;";
-        let query = "UPDATE ORDER_LIST SET DELIVERY DAY = ?, DELEVERY_ADDRESS = ?, O_REQUEST = ?, U_PHONE =?, O_TIME = ? WHERE O_NUM = ?;";
+        let query = "UPDATE ORDER_LIST SET DELIVERY DAY = ?, DELEVERY_ADDRESS = ?, O_REQUEST = ?, U_PHONE =?, DELIVERY_TIME = ? WHERE O_NUM = ?;";
 
         return new Promise ((resolve, reject) => {
         db.query("USE CAPSTONE", (err, result) => {
@@ -47,8 +47,8 @@ class LaundryOrderComplete {
     }
     async addOrderCompleteList() {
         const orderNum = this.orderNum;
-        let query = "INSERT INTO ORDER_COMPLETE (O_NUM, S_ID, U_ID, DELIVERY DAY, U_PHONE, O_REQUEST, DELEVERY_ADDRESS, ORD_DAY, ORD_TIME, O_TIME)\
-        SELECT O_NUM, S_ID, U_ID, DELIVERY DAY, U_PHONE, O_REQUEST, DELEVERY_ADDRESS, ORD_DAY, ORD_TIME, O_TIME\
+        let query = "INSERT INTO ORDER_COMPLETE (O_NUM, S_ID, U_ID, DELIVERY DAY, U_PHONE, O_REQUEST, DELEVERY_ADDRESS, ORD_DAY, ORD_TIME, DELIVERY_TIME)\
+        SELECT O_NUM, S_ID, U_ID, DELIVERY DAY, U_PHONE, O_REQUEST, DELEVERY_ADDRESS, ORD_DAY, ORD_TIME, DELIVERY_TIME\
         FROM ORDER_LIST\
         WHERE O_NUM = ?;";
         let query1 = "UPDATE ORDER_COMPLETE SET DELEVERY_STATE = ? WHERE O_NUM = ?;";
