@@ -58,7 +58,9 @@ export default {
          
         try {
              const res = await axios.get(`http://localhost:3000/review`)
-             console.log(res);
+             console.log("res",res);
+             
+
         } catch (e) {
             console.error(e);
         }

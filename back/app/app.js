@@ -16,6 +16,7 @@ dotenv.config();
 //cors설정
 app.use(cors({
     origin: 'http://localhost:8080', // 허용할 도메인
+
     methods: 'GET,POST', // 허용할 HTTP 메서드
     credentials: true
 }

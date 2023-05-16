@@ -156,11 +156,10 @@ export default {
                 console.log("ID:", tokenPayload.id);
                 console.log("Token Payload:", tokenPayload);
 
-            
-                // this.mypageData = this.mypageData.filter((mypageData) => mypageData.userName === tokenPayload.userName);
+        
             } catch (error) {
                 console.error(error);
-                throw new Error("마이페이지 데이터 가져오기 실패");
+                throw new Error("usagehistory 데이터 가져오기 실패");
             }
         },
 
