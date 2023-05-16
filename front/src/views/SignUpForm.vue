@@ -27,7 +27,7 @@
                     variant="underlined" clearable>
                 </v-text-field>
 
-                <v-checkbox v-model="terms" :rules="[rules.agree]" color="secondary" label="약관동의"></v-checkbox>
+                <v-checkbox v-model="terms" :rules="[rules.agree]" color="light-blue-darken-4" label="약관동의"></v-checkbox>
             </v-form>
             <v-divider></v-divider>
 
@@ -36,7 +36,8 @@
                 <v-spacer></v-spacer>
 
                 <!-- 버튼 클릭 -> 회원가입 완료 후 로그인 페이지로 이동 -->
-                <v-btn to="/login" color="success" :disabled="!form" :loading="isLoading" @click="addUsers">
+                <v-btn block to="/login" color="light-blue-darken-4" variant="outlined" size="large"
+                 :disabled="!form" :loading="isLoading" @click="addUsers">
                     가입 완료
                     <v-icon icon="mdi-chevron-right" end></v-icon>
                 </v-btn>
