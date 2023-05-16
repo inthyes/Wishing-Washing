@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <!-- 상단 Appbar -->
-    <v-app-bar :elevation="1">
+    <v-app-bar :elevation="1" v-if="!isHome">
 
       <!-- 버튼 : 앱바 맨 왼쪽 고정 -->
       <template v-slot:prepend>
