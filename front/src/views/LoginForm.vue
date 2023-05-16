@@ -1,7 +1,7 @@
 <!-- 로그인 -->
 
 <template>
-  <v-card class="mx-auto px-12 py-0" max-width="344" elevation="0">
+  <v-card class="mx-auto px-12 py-12" max-width="344" elevation="0">
     <v-img :width="auto" cover src="..\assets\위싱워싱로고.png" class="mt-10"></v-img>
     <v-form v-model="form" @submit.prevent="login">
       <div class="input-fields">
