@@ -23,7 +23,7 @@ class Cart {
                 return;
               }
               let queryAddCart = "INSERT INTO cart(O_NUM, PRODUCT_ID, PRODUCT_QUANTITY) VALUES ?";
-              let queryAddOrderList = "INSERT INTO ORDER_LIST(O_NUM, S_ID, U_ID, O_DAY, ORD_TIME) VALUES (? , ? , ? , ? , ?);";
+              let queryAddOrderList = "INSERT INTO ORDER_LIST(O_NUM, S_ID, U_ID, O_DAY, O_TIME) VALUES (? , ? , ? , ? , ?);";
               let queryGetOrderNum = "SELECT * FROM ORDER_NUM;";
               let queryUpdateOrderNum = "UPDATE ORDER_NUM SET ORDER_NUM = ? WHERE ORDER_NUM = ?;";
               let orderNum;
