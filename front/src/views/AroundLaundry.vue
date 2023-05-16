@@ -1,7 +1,7 @@
 <!-- 주변 세탁소 -->
 
 <template>
-    <div id="laund-list" class="px-2">
+    <div id="laund-list" class="mt-10 px-2">
 
         <v-card class="mx-auto mt-4" max-width="400" v-for="laundry in laundrys" :key="laundry.S_ID" elevation="0">
 
@@ -29,12 +29,12 @@
             </v-card-text>
 
             <v-card-actions class="py-0">
-                <v-btn icon @click="toggleWish(laundry)">
+                <v-btn icon @click="toggleWish(laundry)" class="mx-0 px-0">
                     <v-icon :color="laundry.userLike ? 'red' : ''">
                         {{ laundry.userLike ? 'mdi-heart' : 'mdi-heart-outline' }}
                     </v-icon>
                 </v-btn>
-                <v-btn color="orange" v-bind:to="`/laundrydetail/${laundry.S_ID}`">상세정보</v-btn>
+                <v-btn class="mx-0 px-0" color="indigo-darken-2" size="x-large" v-bind:to="`/laundrydetail/${laundry.S_ID}`">상세정보</v-btn>
             </v-card-actions>
 
             <v-divider class="py-0"></v-divider>

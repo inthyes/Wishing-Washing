@@ -1,23 +1,25 @@
 <!-- 로그인 -->
 
 <template>
-  <v-card class="mx-auto pa-12" max-width="344" elevation="0">
+  <v-card class="mx-auto px-12 py-12" max-width="344" elevation="0">
+    <v-img :width="auto" cover src="..\assets\위싱워싱로고.png" class="mt-10"></v-img>
     <v-form v-model="form" @submit.prevent="login">
       <div class="input-fields">
-        <v-text-field v-model="id" :readonly="loading" :rules="[required]" class="mb-2" clearable label="아이디"
+        <v-text-field v-model="id" :readonly="loading" :rules="[required]" class="mb-0" clearable label="아이디"
           placeholder="아이디를 입력하세요" variant="underlined"></v-text-field>
         <v-text-field v-model="password" :readonly="loading" :rules="[required]" clearable label="비밀번호"
           placeholder="비밀번호를 입력하세요" variant="underlined" :type="show1 ? 'text' : 'password'"
           :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" @click:append="show1 = !show1"></v-text-field>
 
-        <v-card-text class="px-0 py-0" style="color: rgb(243, 85, 85); font-size: small;" v-if="loginFailureMessage"> {{ loginFailureMessage }} </v-card-text>
+        <v-card-text class="px-0 py-0" style="color: rgb(243, 85, 85); font-size: small;" v-if="loginFailureMessage"> {{
+          loginFailureMessage }} </v-card-text>
       </div>
       <div class="button">
-        <v-btn class="login-button" :disabled="!form" block color="success" size="large" type="submit" variant="elevated"
+        <v-btn class="login-button" :disabled="!form" block color="info" size="large" type="submit" variant="elevated"
           @click="login">
           로그인
         </v-btn>
-        <v-btn class="go-signup" to="/signup" block color="success" size="large" variant="text">
+        <v-btn class="go-signup" to="/signup" block color="info" size="large" variant="text">
           회원가입
         </v-btn>
       </div>
@@ -92,7 +94,7 @@ export default {
 
 <style scoped>
 .input-fields {
-  padding-top: 40px;
+  padding-top: 0px;
   padding-bottom: 20px;
 }
 
@@ -104,6 +106,5 @@ export default {
 .go-signup {
   margin-bottom: 10px;
 }
-
 </style>
 

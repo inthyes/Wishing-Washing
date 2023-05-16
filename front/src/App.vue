@@ -1,12 +1,12 @@
 <template>
   <v-app>
     <!-- 상단 Appbar -->
-    <v-app-bar :elevation="1">
+    <v-app-bar v-if="!isLogin" app class="rounded-bottom" :elevation="1" style="background-color:rgba(97, 151, 202, 0.874)" :style="{ color: '#ffffff' }">
 
       <!-- 버튼 : 앱바 맨 왼쪽 고정 -->
-      <template v-slot:prepend>
+      <template v-slot:prepend  >
         <!-- 홈 화면에선 토글 버튼 -->
-        <v-app-bar-nav-icon v-if="isHome" variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+        <v-app-bar-nav-icon  v-if="isHome" variant="text" @click.stop="drawer = !drawer" ></v-app-bar-nav-icon>
         <!-- 메인 컴포넌트에선 로고 버튼 (로고 추후 수정) -->
         <v-btn v-if="isMain" icon="mdi-washing-machine" @click="$router.push('/')"></v-btn>
         <!-- 이외의 모든 페이지에선 뒤로가기 버튼 -->
@@ -35,7 +35,7 @@
     </v-navigation-drawer>
 
     <!-- 메인 -->
-    <v-main>
+    <v-main style="background-color:  rgba(255, 255, 255, 0.689)">
       <router-view />
     </v-main>
 
@@ -71,7 +71,10 @@ export default {
     },
     isMain() {
       const path = this.$route.path;
-      return path === '/aroundlaundry' || path === '/usagehistory' || path === '/mypage' || path === '/login';
+      return path === '/aroundlaundry' || path === '/usagehistory' || path === '/mypage';
+    },
+    isLogin() {
+      return this.$route.path === '/login';
     }
   },
   methods: {
@@ -111,5 +114,9 @@ export default {
 
 .align-center {
   text-align: center;
+}
+
+.rounded-bottom {
+  border-radius: 0 0 80px 80px;
 }
 </style>

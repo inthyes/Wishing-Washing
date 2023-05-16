@@ -2,25 +2,29 @@
 <!--서혜린-->
 
 <template>
-      <!-- 캐러쉘 -->
-      <v-carousel cycle height="auto" hide-delimiter-background show-arrows="hover" class="carousel">
-        <v-carousel-item v-for="slide in slides" :key="slide.id">
-          <v-img :src="slide.imageSrc" :alt="slide.altText" height="100%" contain></v-img>
-        </v-carousel-item>
-      </v-carousel>
+  <!-- 캐러쉘 -->
+  <v-carousel cycle height="auto" hide-delimiter-background show-arrows="hover" class="carousel">
+    <v-carousel-item v-for="slide in slides" :key="slide.id">
+      <v-img :src="slide.imageSrc" :alt="slide.altText" height="100%" contain></v-img>
+    </v-carousel-item>
+  </v-carousel>
   <div class="container">
 
-
-    <v-card class="mx-auto" color="white" max-width="400" elevation="0">
-      <v-card-text>
-        <v-text-field density="compact" variant="solo" append-inner-icon="mdi-magnify" single-line
-          @click:append-inner="showApi" readonly>{{ addr1 }}</v-text-field>
-      </v-card-text>
-    </v-card>
+    <v-text-field class="mx-auto mt-8 mb-5 px-5" max-width="300" density="compact" variant="solo"
+      append-inner-icon="mdi-magnify" single-line elevation="0" @click:append-inner="showApi" readonly>
+    <p>{{ addr1 }}</p>
+    </v-text-field>
+    <p append-inner-icon="mdi-magnify" @click:append-inner="showApi">{{ addr1 }}</p>
 
     <!-- 다음 우편주소API -->
     <div class="daummap">
-      <div ref="embed"></div>
+      <v-card color="white" class="card-with-icon mx-auto my-5" max-width="400" @click="showApi">
+        <div class="d-flex align-center">
+          <p>{{ addr1 }}</p>
+          <v-icon>mdi-magnify</v-icon>
+        </div>
+      </v-card>
+      <!-- <div ref="embed"></div> -->
     </div>
 
     <div class="cards">
@@ -51,7 +55,14 @@
       </div>
     </div>
 
+
   </div>
+      <v-img
+      :width="auto"
+      aspect-ratio="16/9"
+      cover
+      src="..\assets\물결-removebg-preview.png"
+    ></v-img>
 </template>
 
 <script>
@@ -88,6 +99,7 @@ export default {
   },
   mounted() {
     this.userId = localStorage.getItem("userId");
+    this.addr1 = localStorage.getItem('addr1');
   },
   async created() {
     try {
@@ -148,19 +160,23 @@ export default {
   margin-bottom: 10px;
   padding-inline: 0px;
 }
+
 /* 나머지 컨텐츠 */
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding-inline: 20px;
+  padding-inline: 15px;
 }
+
 .cards {
   display: flex;
   justify-content: space-between;
 }
+
 .top {
   margin-bottom: 10px;
 }
+
 .title {
   font-size: 24px;
   font-weight: bold;
@@ -172,7 +188,7 @@ export default {
 }
 
 .contents {
-  background-color: rgba(228, 227, 227, 0.728);
+  background-color: rgba(237, 237, 237, 0.728);
   border-radius: 10px;
   padding: 20px;
   margin-bottom: 20px;
@@ -196,10 +212,12 @@ export default {
   margin-bottom: 5px;
 }
 
-.recommend, .washingTip {
+.recommend,
+.washingTip {
   margin-bottom: 20px;
-  flex-basis: 45%;
+  flex-basis: 47%;
 }
+
 @media screen and (max-width: 599px) {
   .cards {
     flex-direction: column;
