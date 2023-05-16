@@ -130,6 +130,7 @@ const output ={
         const myPage = new MyPage("codus");
         const myPageInfo = await myPage.showMyPageInfo("codus");
         console.log(myPageInfo);
+        console.log(myPageInfo);
         res.json(myPageInfo);
     },
     favoriteList : async (req, res) => {
@@ -345,7 +346,9 @@ const process = {
         const orderComplete = new LaundryOrderComplete(req.body, orderNum, deliveryAddress);
         const orderListRes = await orderComplete.addOrderList();
         const orderCompleteRes = await orderComplete.addOrderCompleteList();
-        res.clearCookie('response');
+        if (req.headers.cookie && req.headers.cookie.includes('response')) {
+            res.clearCookie('response').json({message:"ok"});
+        }
         res.status(200);
     },
 
@@ -372,6 +375,7 @@ const process = {
     review : async (req,res) => {
         const review = new Review(req.body, "codus");
         const response = await review.update();
+        console.lolg(response);
         res.json(response);
     },
     verifyToken : (req,res) => {

@@ -91,7 +91,8 @@ class Review {
       return new Promise ((resolve, reject) => {
         let userId = this.U_ID;
         db.query("USE CAPSTONE", (err, result) => {
-            const queryGetMyReview = "SELECT * FROM REVIEW WHERE U_ID = ?;";
+            const queryGetMyReview = "SELECT * FROM REVIEW\
+                    INNER JOIN STORE on REVIEW.S_ID = STORE.S_ID WHERE U_ID = ?;";
             if (err) reject(err);
             db.query(queryGetMyReview,  userId, (err, data) => {
                 if (err) reject(err);

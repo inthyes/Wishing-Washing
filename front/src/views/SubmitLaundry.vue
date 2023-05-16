@@ -52,12 +52,12 @@
                 <v-row>
                     <v-col cols="12">
                         <!-- <p class="mb-4">요청사항</p> -->
-                        <v-textarea label="요청사항" variant="outlined"></v-textarea>
+                        <v-textarea label="요청사항" variant="outlined" v-model="requestText"></v-textarea>
                     </v-col>
                 </v-row>
                 <v-divider></v-divider>
 
-                <v-btn type="submit" color="primary" class="mt-4">신청하기</v-btn>
+                <v-btn type="submit" color="primary" class="mt-4"> 신청하기</v-btn>
             </v-form>
         </v-card>
     </v-container>
@@ -76,7 +76,8 @@ export default {
             cart: [],
             addr: {},
             selectDate : null,
-            selectTime : null
+            selectTime : null,
+            requestText : null
         };
     },
     async created() {
@@ -116,17 +117,24 @@ export default {
             else  {
                 this.selectTime = '아무떄나'
             }
-
             const data = {
                 date : dateYearMonth + this.selectDate.substring(0,2),
                 time : this.selectTime,
+                request: this.requestText,
             }
             const id = this.$route.params.id;
             await axios.post(`http://localhost:3000/laundry/detail/${id}/complete`, data, {
                 withCredentials: true,
                 headers: {
-                  Cookie: document.cookie
+                    Cookie: document.cookie
                 }
+            })
+            .then((response) => {
+                this.$router.push('/usagehistory');
+                console.log(response);
+            })
+            .catch(error => {
+                console.error(error);
             });
         },
         formatDate(date) {
