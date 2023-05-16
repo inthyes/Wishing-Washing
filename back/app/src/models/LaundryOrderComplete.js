@@ -51,7 +51,7 @@ class LaundryOrderComplete {
         SELECT O_NUM, S_ID, U_ID, DELIVERY DAY, U_PHONE, O_REQUEST, DELEVERY_ADDRESS, ORD_DAY, ORD_TIME, DELIVERY_TIME\
         FROM ORDER_LIST\
         WHERE O_NUM = ?;";
-        let query1 = "UPDATE ORDER_COMPLETE SET DELEVERY_STATE = ? WHERE O_NUM = ?;";
+        let query1 = "UPDATE ORDER_COMPLETE SET DELIVERY_STATE = ? WHERE O_NUM = ?;";
 
         return new Promise ((resolve, reject) => {
         db.query("USE CAPSTONE", (err, result) => {
