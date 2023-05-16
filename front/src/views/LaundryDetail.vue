@@ -7,20 +7,15 @@
                 <v-progress-linear :active="isActive" color="deep-purple" height="4" indeterminate></v-progress-linear>
             </template>
 
-            <v-img cover height="250" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
+            <v-img cover height="250"
+                src="https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8JUVDJTg0JUI4JUVEJTgzJTgxfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60"></v-img>
 
             <v-card-item>
 
                 <v-card-title class="mb-1">{{ laundry.name }}</v-card-title>
 
-
-                <!-- 또는 -->
-                <!-- <v-card-title>{{ laundry.name }}</v-card-title> -->
-
                 <v-card-subtitle>
-
-                    <span class="mb-1">영업시간&nbsp;{{ laundry.opening }} ~ {{ laundry.closing}}</span>
-
+                    <span class="mb-1">영업시간&nbsp;{{ laundry.opening }} ~ {{ laundry.closing }}</span>
                 </v-card-subtitle>
             </v-card-item>
 
@@ -28,7 +23,7 @@
                 <!--별점(리뷰수)-->
                 <v-row align="center" class="mx-0 mb-1">
 
-                    <v-rating :model-value= reviewStar color="amber" density="compact" half-increments readonly
+                    <v-rating :model-value=reviewStar color="amber" density="compact" half-increments readonly
                         size="normal"></v-rating>
 
                     <div class="text-grey ms-2">
@@ -46,10 +41,9 @@
                 </div>
 
                 <!-- 이건 수정할수도 -->
-                    <div class="my-4 text-subtitle-1">
-
-                            {{ laundry.S_ADDR2 }}
-                        </div>
+                <div class="my-4 text-subtitle-1">
+                    {{ laundry.S_ADDR2 }}
+                </div>
 
                 <div class="mt-1 text-subtitle-1">{{ laundry.info }}</div>
 
@@ -69,11 +63,11 @@
                             <v-list-item-content class="d-flex justify-space-between">
                                 <div>{{ pro.PRODUCT_NAME }}</div>
                                 <div>{{ pro.PRODUCT_PRICE }}원&nbsp;&nbsp;&nbsp;
-                                        <v-icon color="deep-purple-lighten-2" @click="decrement(pro)">mdi-minus</v-icon>
+                                    <v-icon color="deep-purple-lighten-2" @click="decrement(pro)">mdi-minus</v-icon>
 
-                                        <span>{{ pro.PRODUCT_QUANTITY }}</span>
+                                    <span>{{ pro.PRODUCT_QUANTITY }}</span>
 
-                                        <v-icon color="deep-purple-lighten-2" @click="increment(pro)">mdi-plus</v-icon>
+                                    <v-icon color="deep-purple-lighten-2" @click="increment(pro)">mdi-plus</v-icon>
                                 </div>
                             </v-list-item-content>
                         </v-list-item>
@@ -81,7 +75,7 @@
                 </v-window-item>
                 <v-window-item value="tab-2">
                     <div class="text-black mx-6 mt-2">
-                        {{review}}
+                        {{ review }}
                     </div>
                 </v-window-item>
             </v-window>
@@ -124,6 +118,7 @@ export default {
         countReview : {},
 
 
+
         tab: 'Appetizers',  // 세탁/수선 & 리뷰 탭
         isWished: false,    // 찜버튼
 
@@ -134,8 +129,8 @@ export default {
             const res = await axios.get(`http://localhost:3000/laundry/detail/${id}`, {
                 withCredentials: true,
                 headers: {
-                 Cookie: document.cookie, // 쿠키를 요청에 추가
-                 },
+                    Cookie: document.cookie, // 쿠키를 요청에 추가
+                },
             });
                 this.laundry = res.data.laundryDetail;
                 this.product = res.data.productDetail;
@@ -154,13 +149,13 @@ export default {
         //     setTimeout(() => (this.loading = false), 2000)
         // },
 
-   
+
         toggleWish(likeStatus) {
             //const laundry = this.laundrys.find(l => l.id === laundryId);
 
             this.likeStatus = likeStatus ? 0 : 1;
 
-            axios.post(`http://localhost:3000/like`,  { laundryId: this.$route.params.id, like: this.likeStatus })
+            axios.post(`http://localhost:3000/like`, { laundryId: this.$route.params.id, like: this.likeStatus })
                 .then(response => {
                     // handle successful response
                     console.log(response);
@@ -180,21 +175,21 @@ export default {
             if (pro.PRODUCT_QUANTITY > 0) {
                 pro.PRODUCT_QUANTITY--;
                 pro.PRODUCT_PRICE_TOTAL = pro.PRODUCT_PRICE_TOTAL - pro.PRODUCT_PRICE;
-       }
+            }
         },
         async submitData() {
             try {
-                    const now = new Date();
-                    const selectedItems = this.product;
-                    const id = this.$route.params.id;
+                const now = new Date();
+                const selectedItems = this.product;
+                const id = this.$route.params.id;
 
-                    const data = { laundryId: id,  date: now.toISOString().substring(0, 10), time: now.toISOString().substring(11, 19)};
-                    selectedItems.forEach(pro => {data[pro.PRODUCT_ID] = pro.PRODUCT_QUANTITY});
-                    const res = await axios.post(`http://localhost:3000/laundry/detail/${id}/order`, data);
-                    //res.data의 orderNum 쿠키처리
-                    this.$cookies.set('response', res.data)
-                    this.$cookies.get('response')
-                    this.$router.push(`/submitlaundry/${id}`);
+                const data = { laundryId: id, date: now.toISOString().substring(0, 10), time: now.toISOString().substring(11, 19) };
+                selectedItems.forEach(pro => { data[pro.PRODUCT_ID] = pro.PRODUCT_QUANTITY });
+                const res = await axios.post(`http://localhost:3000/laundry/detail/${id}/order`, data);
+                //res.data의 orderNum 쿠키처리
+                this.$cookies.set('response', res.data)
+                this.$cookies.get('response')
+                this.$router.push(`/submitlaundry/${id}`);
                 // const selectedItems = this.laundry.items.filter(item => item.quantity > 0);
 
             } catch (e) {
