@@ -58,7 +58,7 @@ class LaundryOrderComplete {
             db.query(query, orderNum, (err, data) => {
                 if (err) reject(err);
                 else {  
-                        db.query(query1, [0, orderNum], (err, data) => {
+                        db.query(query1, [-2, orderNum], (err, data) => {
                             if (err) reject(err);
                             else {
                                 resolve({ success: true }); 

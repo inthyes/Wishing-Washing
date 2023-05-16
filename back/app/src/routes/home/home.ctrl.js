@@ -344,8 +344,8 @@ const process = {
         const cookieValue = req.cookies.response;
         const orderNum = JSON.parse(cookieValue).orderNumber; 
         const orderComplete = new LaundryOrderComplete(req.body, orderNum, deliveryAddress);
-        const orderListRes = await orderComplete.addOrderList();
-        const orderCompleteRes = await orderComplete.addOrderCompleteList();
+        await orderComplete.addOrderList();
+        await orderComplete.addOrderCompleteList();
         if (req.headers.cookie && req.headers.cookie.includes('response')) {
             res.clearCookie('response').json({message:"ok"});
         }
