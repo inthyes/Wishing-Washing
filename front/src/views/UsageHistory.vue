@@ -125,7 +125,7 @@ export default {
 
                 const res = await axios.get('http://localhost:3000/history', {
                     params: {
-                        _sort: 'ORD_DAY',
+                        _sort: 'O_DAY',
                         _order: order
                     },
                     

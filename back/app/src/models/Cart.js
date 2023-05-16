@@ -27,6 +27,11 @@ class Cart {
               let queryGetOrderNum = "SELECT * FROM ORDER_NUM;";
               let queryUpdateOrderNum = "UPDATE ORDER_NUM SET ORDER_NUM = ? WHERE ORDER_NUM = ?;";
               let orderNum;
+              let queryTotalPrice = "SELECT CART.PRODUCT_QUANTITY, PRODUCT.PRODUCT_PRICE FROM CART\
+                                    INNER JOIN PRODUCT ON CART.PRODUCT_ID = PRODUCT.PRODUCT_ID WHERE O_NUM = ?;"
+              let totalPrice = 0;
+              let queryAddTotalPrice = "UPDATE ORDER_LIST SET  O_PRICE = ? WHERE O_NUM = ?;";
+              
               db.query(
                 queryGetOrderNum,
                 (err, result) => {
@@ -55,14 +60,38 @@ class Cart {
                               else {                       
                                 // ORDER_NUM TABLE에 있는 ORDER_NUM 하나 증가해서 UPDATE
                                 db.query(
-                                  queryUpdateOrderNum,
-                                  [orderNum, orderNum-1], 
-                                  (err, data) => {
-                                  if (err) reject(err);
-                                  else {
-                                    resolve({ orderNumber: orderNum }); 
+                                  queryTotalPrice,
+                                  orderNum,
+                                  (err,result) => {
+                                    if (err) reject(err);
+                                    else {
+                                      for (let i = 0; i < result.length; i++) {
+                                        if (result[i].PRODUCT_QUANTITY != 0) {
+                                          totalPrice = totalPrice + result[i].PRODUCT_QUANTITY*result[i].PRODUCT_PRICE
+                                        }
                                       }
-                                  });              
+                                      db.query(
+                                        queryAddTotalPrice,
+                                        [totalPrice,orderNum],
+                                        (err,result) => {
+                                          if (err) reject(err);
+                                          else {
+                                            db.query(
+                                              queryUpdateOrderNum,
+                                              [orderNum, orderNum-1], 
+                                              (err, data) => {
+                                                if (err) reject(data);
+                                                else {
+                                                  resolve({orderNumber : orderNum});
+                                                }
+                                              }
+                                            )
+                                          }
+                                        }
+                                      )
+                                    }
+                                  }
+                                )      
                               }
                             }
                           )

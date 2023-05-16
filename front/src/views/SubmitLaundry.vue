@@ -13,8 +13,8 @@
                     <v-col cols="12">
                         <p class="mb-4">주문상품</p>
                         <!-- <a>{{ submit.id }}</a> -->
-                        <!-- <a>{{ submit.itemName }}</a>
-                        <a> {{ submit.quantity }}개</a> -->
+                        <a>{{totalPrice.O_PRICE}}원</a>
+                        <!-- <a> {{ submit.quantity }}개</a>  -->
                     </v-col>
                 </v-row>
                 <v-divider></v-divider>
@@ -75,6 +75,7 @@ export default {
             laundry: {},
             cart: [],
             addr: {},
+            totalPrice : {},
             selectDate : null,
             selectTime : null,
             requestText : null
@@ -90,6 +91,7 @@ export default {
             this.cart = res.data.cartRes;
             this.addr = res.data.deliveryAddress;
             this.laundry = res.data.laundryDetailRes;
+            this.totalPrice = res.data.totalPriceRes;
         } catch (e) {
             console.error(e);
         }

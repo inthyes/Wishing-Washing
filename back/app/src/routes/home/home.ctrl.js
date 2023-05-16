@@ -301,18 +301,22 @@ const output ={
         const orderNum = JSON.parse(cookieValue).orderNumber; 
         const laundryOrder = new LaundryOrder(orderNum);
         const cartRes = await laundryOrder.showCart();
+        const totalPriceRes = await laundryOrder.getTotalPrice();
 
         const product = new Product(cartRes);
         const productRes = await product.getProductId();
 
         logger.info(`GET /home/laundryOrder 304 " 세탁신청주문 화면으로 이동`);
 
+        console.log(totalPriceRes.O_PRICE);
+
         res.json(
         {
             deliveryAddress : deliveryAddress,
             cartRes : cartRes,
             laundryDetailRes : laundryDetailRes,
-            productRes : productRes
+            productRes : productRes,
+            totalPriceRes : totalPriceRes
         });
     },
 };
