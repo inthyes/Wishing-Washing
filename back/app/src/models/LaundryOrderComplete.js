@@ -16,10 +16,11 @@ class LaundryOrderComplete {
         const request = this.body.request;
         const date = this.body.date;
         const address = this.deliveryAddress + this.body.addressDetail;;
+        const deliveryTime = this.body.time;
 
         let querygetUserId = "SELECT U_ID FROM ORDER_LIST WHERE O_NUM = ?;";
         let querygetUser = "SELECT U_PHONE FROM USERS WHERE U_ID = ?;";
-        let query = "UPDATE ORDER_LIST SET O_DAY = ?, DELEVERY_ADDRESS = ?, O_REQUEST = ?, U_PHONE =? WHERE O_NUM = ?;";
+        let query = "UPDATE ORDER_LIST SET DELIVERY_DAY = ?, DELIVERY_ADDRESS = ?, O_REQUEST = ?, U_PHONE =?, DELIVERY_TIME = ? WHERE O_NUM = ?;";
 
         return new Promise ((resolve, reject) => {
         db.query("USE CAPSTONE", (err, result) => {
@@ -31,7 +32,7 @@ class LaundryOrderComplete {
                             if (err) reject(err);
                             else {
                                 const userPhone = data[0].U_PHONE;
-                                db.query(query, [date, address, request, userPhone, orderNum], (err, data) => {
+                                db.query(query, [date, address, request, userPhone, deliveryTime, orderNum], (err, data) => {
                                     if (err) reject(err);
                                     else {  
                                             resolve({success : true});
@@ -46,18 +47,18 @@ class LaundryOrderComplete {
     }
     async addOrderCompleteList() {
         const orderNum = this.orderNum;
-        let query = "INSERT INTO ORDER_COMPLETE (O_NUM, S_ID, U_ID, O_DAY, U_PHONE, O_REQUEST, DELEVERY_ADDRESS)\
-        SELECT O_NUM, S_ID, U_ID, O_DAY, U_PHONE, O_REQUEST, DELEVERY_ADDRESS\
+        let query = "INSERT INTO ORDER_COMPLETE (O_NUM, S_ID, U_ID, DELIVERY_DAY, U_PHONE, O_REQUEST, DELIVERY_ADDRESS, O_DAY, O_TIME, DELIVERY_TIME, O_PRICE)\
+        SELECT O_NUM, S_ID, U_ID, DELIVERY_DAY, U_PHONE, O_REQUEST, DELIVERY_ADDRESS, O_DAY, O_TIME, DELIVERY_TIME, O_PRICE\
         FROM ORDER_LIST\
         WHERE O_NUM = ?;";
-        let query1 = "UPDATE ORDER_COMPLETE SET DELEVERY_STATE = ? WHERE O_NUM = ?;";
+        let query1 = "UPDATE ORDER_COMPLETE SET DELIVERY_STATE = ? WHERE O_NUM = ?;";
 
         return new Promise ((resolve, reject) => {
         db.query("USE CAPSTONE", (err, result) => {
             db.query(query, orderNum, (err, data) => {
                 if (err) reject(err);
                 else {  
-                        db.query(query1, [0, orderNum], (err, data) => {
+                        db.query(query1, [-2, orderNum], (err, data) => {
                             if (err) reject(err);
                             else {
                                 resolve({ success: true }); 

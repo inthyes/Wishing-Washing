@@ -14,12 +14,11 @@
                     <!-- tab 1 : 진행중인 세탁 -->
                     <v-window-item value="one">
                         <!-- 이용내역 리스트 -->
-
                         <div v-for="(h, index) in InProgress" v-bind:key="h.O_NUM">
-                            <!-- 배송날짜 출력 -->
-                            <div v-if="index === 0 || h.ORD_DAY !== order_complete[index - 1].ORD_DAY">
+                            <!-- 신청날짜 출력 -->
+                            <div v-if="index === 0 || h.O_DAY !== order_complete[index - 1].O_DAY">
                                 <div class="date" id="date">
-                                    <b>{{ h.ORD_DAY }}</b>
+                                    <b>{{ h.O_DAY }}</b>
 
                                 </div>
                             </div>
@@ -30,9 +29,9 @@
                                         <!--  배송상태  -2(수락 대기중) -1(세탁 진행중) 1(배송중) | 2(배송완료) -->
                                         <div id="state">
                                             배송상태&nbsp;|&nbsp;
-                                            <span v-if="h.DELEVERY_STATE === -2" style="color: red">수락 대기중</span>
-                                            <span v-else-if="h.DELEVERY_STATE === -1">세탁 진행중</span>
-                                            <span v-else-if="h.DELEVERY_STATE === 1">배송중</span>
+                                            <span v-if="h.DELIVERY_STATE === -2" style="color: red">수락 대기중</span>
+                                            <span v-else-if="h.DELIVERY_STATE === -1">세탁 진행중</span>
+                                            <span v-else-if="h.DELIVERY_STATE === 1">배송중</span>
                                         </div>
                                         <!-- 세탁비용 -->
                                         <div id="price">세탁비용&nbsp;|&nbsp;&nbsp;{{ h.O_PRICE }}</div>
@@ -57,11 +56,11 @@
                         <!-- 이용내역 리스트 -->
                         <div v-for="(h, index) in completeDelivery" v-bind:key="h.O_NUM">
                             <!-- 배송날짜 출력 -->
-                            <div v-if="index === 0 || h.ORD_DAY !== order_complete[index - 1].ORD_DAY">
+                            <div v-if="index === 0 || h.DELIVERY_DAY !== order_complete[index - 1].DELIVERY_DAY">
                             <!-- 배송날짜 출력 -->
-                            <div v-if="index === 0 || h.ORD_DAY !== order_complete[index - 1].ORD_DAY">
+                            <div v-if="index === 0 || h.DELIVERY_DAY !== order_complete[index - 1].DELIVERY_DAY">
                                 <div class="date" id="date">
-                                    <b>{{ h.ORD_DAY }}</b>
+                                    <b>{{ h.DELIVERY_DAY }}</b>
                                 </div>
                             </div>
                             <!-- 이용내역 리스트 출력 -->
@@ -71,7 +70,7 @@
                                         <!--  배송상태  -2(수락 대기중) -1(진행중) 1(배송중) | 2(배송완료) -->
                                         <div id="state">
                                             배송상태&nbsp;|&nbsp;
-                                            <span v-if="h.DELEVERY_STATE === 2">배송완료 ({{ h.COMPLETE_DATE }})</span>
+                                            <span v-if="h.DELIVERY_STATE === 2">배송완료 ({{ h.COMPLETE_DATE }})</span>
                                         </div>
                                         <!-- 세탁비용 -->
                                         <div id="price">세탁비용&nbsp;|&nbsp;&nbsp;{{ h.O_PRICE }}</div>
@@ -81,7 +80,7 @@
                                         <!-- 세탁소 이름 -->
                                         <a id="laundryName">{{ h.S_NAME }}</a>&nbsp;
                                         <!-- 리뷰버튼 -->
-                                        <v-btn id="reviewBtn" v-bind:to="`/addreview/${h.O_NUM}`">리뷰</v-btn>
+                                        <v-btn id="reviewBtn" v-bind:to="`/addreview/${h.S_ID}/${h.O_NUM}`">리뷰</v-btn>
                                     </v-card-text>
                                 </div>
                             </v-card>
@@ -202,13 +201,13 @@ export default {
     computed: {
         // tap1
         InProgress() {
-            const filteredData = this.order_complete.filter((h) => h.DELEVERY_STATE !== 2);
+            const filteredData = this.order_complete.filter((h) => h.DELIVERY_STATE !== 2);
             console.log(filteredData); // 해당 데이터를 콘솔에 찍음
             return filteredData;
         },
         // tap2 - 배송완료
         completeDelivery() {
-            const filteredData = this.order_complete.filter((h) => h.DELEVERY_STATE === 2);
+            const filteredData = this.order_complete.filter((h) => h.DELIVERY_STATE === 2);
             console.log(filteredData); // 해당 데이터를 콘솔에 찍음
             return filteredData;
         }

@@ -19,12 +19,27 @@ class LaundryOrder {
                 if (err) reject(err);
                 else {
                     const cart = data;
-                    resolve(cart)
-                    }
+                    resolve(cart);
+                }
                 });
               })
         });
     }
+
+    async getTotalPrice() {
+        const orderNum = this.body;
+        const queryGetTotalPrice = "SELECT O_PRICE FROM ORDER_LIST WHERE O_NUM = ?";
+        return new Promise((resolve, reject) => {
+            db.query(queryGetTotalPrice, orderNum, (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result[0]);
+                }
+            });
+        });
+    }
+    
 }
 
 

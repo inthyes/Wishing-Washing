@@ -66,20 +66,19 @@ const output ={
         res.render("home/register");
     },
     laundry : async (req, res) => {
-            logger.info(`GET /laundry 304 "세탁신청 화면으로 이동"`);
+        logger.info(`GET /laundry 304 "세탁신청 화면으로 이동"`);
 
-            const cookieValue = req.headers.cookie;
-            const decodedValue = decodeURIComponent(cookieValue);
+        const cookieValue = req.headers.cookie;
+        const decodedValue = decodeURIComponent(cookieValue);
+        const matches = decodedValue.match(/deliveryAddress1="([^"]+)";\s*deliveryAddress2="([^"]+)"/);
+        const deliveryAddress1 = matches[1];
+        const deliveryAddress2 = matches[2];
 
-            const matches = decodedValue.match(/deliveryAddress1="([^"]+)";\s*deliveryAddress2="([^"]+)"/);
-            const deliveryAddress1 = matches[1];
-            const deliveryAddress2 = matches[2];
+        const laundryList = new LaundryList(req.body, deliveryAddress1, deliveryAddress2);
+        const laundryListRes = await laundryList.getLaundryInfo();
 
-            const laundryList = new LaundryList(req.body, deliveryAddress1, deliveryAddress2);
-            const laundryListRes = await laundryList.getLaundryInfo();
-
-            res.json(laundryListRes);
-        },
+        res.json(laundryListRes);
+    },
     review : (req, res) => {
         logger.info(`GET /laundry 304 "review 화면으로 이동"`);
         res.status(200);
@@ -129,6 +128,7 @@ const output ={
         
         const myPage = new MyPage("codus");
         const myPageInfo = await myPage.showMyPageInfo("codus");
+        console.log(myPageInfo);
         console.log(myPageInfo);
         res.json(myPageInfo);
     },
@@ -260,6 +260,7 @@ const output ={
             const review = new Review(S_ID, "codus");
             const RV = await review.showReview();
             const reviewStar = await review.averageStar(S_ID);
+            const countReview = await review.countReview(S_ID);
 
             const like = new Likes(req.body, "codus");
             const userLike = await like.likeStatus(S_ID, "codus");
@@ -269,7 +270,8 @@ const output ={
               productDetail: productDetailRes,
               review : RV,
               reviewStar : reviewStar,
-              userLike : userLike
+              userLike : userLike,
+              countReview : countReview
             });
 
 
@@ -298,18 +300,22 @@ const output ={
         const orderNum = JSON.parse(cookieValue).orderNumber; 
         const laundryOrder = new LaundryOrder(orderNum);
         const cartRes = await laundryOrder.showCart();
+        const totalPriceRes = await laundryOrder.getTotalPrice();
 
         const product = new Product(cartRes);
         const productRes = await product.getProductId();
 
         logger.info(`GET /home/laundryOrder 304 " 세탁신청주문 화면으로 이동`);
 
+        console.log(totalPriceRes.O_PRICE);
+
         res.json(
         {
             deliveryAddress : deliveryAddress,
             cartRes : cartRes,
             laundryDetailRes : laundryDetailRes,
-            productRes : productRes
+            productRes : productRes,
+            totalPriceRes : totalPriceRes
         });
     },
 };
@@ -332,6 +338,7 @@ const process = {
         res.status(200).json({ message: 'success' });
     },
     orderComplete: async (req, res) => {
+        console.log(req.body);
         const cookieAddress = req.headers.cookie;
         const decodedValue = decodeURIComponent(cookieAddress);
         const matches = decodedValue.match(/deliveryAddress1="([^"]+)";\s*deliveryAddress2="([^"]+)"/);
@@ -340,9 +347,12 @@ const process = {
         const cookieValue = req.cookies.response;
         const orderNum = JSON.parse(cookieValue).orderNumber; 
         const orderComplete = new LaundryOrderComplete(req.body, orderNum, deliveryAddress);
-        const orderListRes = await orderComplete.addOrderList();
-        const orderCompleteRes = await orderComplete.addOrderCompleteList();
-        res.clearCookie('response').redirect('/');
+        await orderComplete.addOrderList();
+        await orderComplete.addOrderCompleteList();
+        if (req.headers.cookie && req.headers.cookie.includes('response')) {
+            res.clearCookie('response').json({message:"ok"});
+        }
+        res.status(200);
     },
 
     //수정중
@@ -368,6 +378,7 @@ const process = {
     review : async (req,res) => {
         const review = new Review(req.body, "codus");
         const response = await review.update();
+        console.lolg(response);
         res.json(response);
     },
     verifyToken : (req,res) => {
@@ -386,7 +397,7 @@ const process = {
 
                 // 검증에 성공한 경우, 클라이언트에게 성공 응답을 보냅니다.
                 console.log(token);
-                return res.status(200).json({ message: '토큰이 유효합니다.', token: token });
+                return res.status(200).json({ message: '토큰이 유효합니다.' });
         });
     },
     // upload : ('/image/:i_id', async (req, res) => {

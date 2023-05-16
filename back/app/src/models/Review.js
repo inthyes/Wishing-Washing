@@ -77,7 +77,7 @@ class Review {
                 for (var i = 0; i < data.length; i++) {
                   reviewStar = reviewStar + data[i].REVIEW_STAR;
                 }
-                starAverage = reviewStar/data.length;
+                starAverage = (reviewStar/data.length).toFixed(1);
                 resolve(
                   starAverage
                 )
@@ -91,7 +91,8 @@ class Review {
       return new Promise ((resolve, reject) => {
         let userId = this.U_ID;
         db.query("USE CAPSTONE", (err, result) => {
-            const queryGetMyReview = "SELECT * FROM REVIEW WHERE U_ID = ?;";
+            const queryGetMyReview = "SELECT * FROM REVIEW\
+                    INNER JOIN STORE on REVIEW.S_ID = STORE.S_ID WHERE U_ID = ?;";
             if (err) reject(err);
             db.query(queryGetMyReview,  userId, (err, data) => {
                 if (err) reject(err);
@@ -103,9 +104,24 @@ class Review {
                 });
             })
         });
-
   }
+
+  async countReview(storeId) {
+    return new Promise ((resolve, reject) => {
+      db.query("USE CAPSTONE", (err, result) => {
+          const queryCountReview = "SELECT * FROM REVIEW WHERE S_ID = ?;";
+          if (err) reject(err);
+          db.query(queryCountReview,  storeId, (err, data) => {
+              if (err) reject(err);
+              else {
+                resolve(data.length)
+                }
+              });
+          })
+      });
 }
+}
+
 
 
 module.exports = Review; 
