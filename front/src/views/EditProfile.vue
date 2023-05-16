@@ -13,14 +13,15 @@
         <br>
 
         <v-form>
-            <v-text-field v-model="user.name" label="이름"></v-text-field>
-            <v-text-field v-model="user.email" label="이메일"></v-text-field>
-            <v-text-field v-model="user.nickname" label="닉네임"></v-text-field>
-            <v-text-field v-model="user.phone" label="연락처"></v-text-field>
-            <v-text-field v-model="user.password" label="현재 비밀번호"></v-text-field>
-            <v-text-field v-model="user.newPassword" label="새 비밀번호"></v-text-field>
-            <v-text-field v-model="user.newPasswordConfirm" label="새 비밀번호 확인"></v-text-field>
-            <v-btn type="submit" color="primary">저장</v-btn>
+            <v-text-field v-model="edit.userId" label="아이디" readonly></v-text-field>
+            <v-text-field v-model="edit.name" label="이름"></v-text-field>
+            <v-text-field v-model="edit.mail" label="이메일"></v-text-field>
+            
+            <v-text-field v-model="edit.phone" label="연락처"></v-text-field>
+            <!-- <v-text-field v-model="edit.password" label="현재 비밀번호"></v-text-field>
+            <v-text-field v-model="edit.newPassword" label="새 비밀번호"></v-text-field>
+            <v-text-field v-model="edit.newPasswordConfirm" label="새 비밀번호 확인"></v-text-field> -->
+            <v-btn type="button" color="primary" @click="save">저장</v-btn>
         </v-form>
     </v-card>
 </template>
@@ -28,66 +29,125 @@
 
 <script>
 import axios from 'axios';
-const baseURL = "http://localhost:3000/myPage/profileEdit";
+// const baseURL = "http://localhost:3000/myPage/profileEdit";
+import jwt_decode from 'jwt-decode';
+
+/* eslint-disable */
 
 export default {
     data() {
         return {
-            user: {
-                id: null,
-                name: '',
-                email: '',
-                nickname: '',
-                phone: '',
-                password: '',
+            edit: {
+                // id: null,
+                userId: '',//아이디
+                name: '',//이름
+                // mail: '',
+                phone: '',//전화번호
+                password: '',//비밀번호
                 newPassword: '',
                 newPasswordConfirm: '',
             },
         }
     },
     async created() {
-        try {
-            const res = await axios.get(`http://localhost:3000/myPage/profileEdit`)
-            console.log(res);
-        } catch (e) {
-            console.error(e);
-        }
+
+        // const token = localStorage.getItem("token");
+
+        //     if (token) {
+        //     this.verifyToken(token)
+        //         .then((isValidToken) => {
+        //             this.fetcheditprofileData();
+        //             console.log(isValidToken);
+        //         })
+        //         .catch((error) => {
+        //         console.error(error);
+        //         this.redirectToLogin();
+        //         });
+        //     } else {
+        //     this.redirectToLogin();
+        //     }
+
+            try {
+                const res = await axios.get(`http://localhost:3000/edit`)
+                console.log(res);
+                console.log(res.data);
+                //     // this.edit.userId = res.data[0].userId;
+                //     this.edit.userId = res.data[0].userId;
+
+                //     console.log(this.edit.userId);
+                // this.fetcheditprofileData();
+
+                if (res.data && res.data.message === 'success') {
+                 
+                        this.edit.userId = res.data.userId;
+                        console.log(this.edit.userId);
+                        this.fetcheditprofileData();
+                  
+                        console.log("메롱~");
+                    }
+            } catch (e) {
+                console.error(e);
+            }
     },
 
     methods: {
         async save() {
-            if (
-                this.rules.required(this.user.name) === true &&
-                this.rules.required(this.user.id) === true &&
-                this.rules.phoneRules(this.user.phone) === true &&
-                this.rules.emailRules(this.user.email) === true &&
-                this.rules.minRules(this.user.password) === true &&
-                this.rules.passwordMatch(this.user.newPasswordConfirm) === true &&
+            const newEdit = {
+                userId : this.edit.userId,
+                name : this.edit.name,
+                phone : this.edit.phone,
+                password : this.edit.password,
+                newPassword : this.edit.newPassword,
+                newPasswordConfirm : this.edit.newPasswordConfirm
+            };
 
-                await this.rules.emailDuplicate(this.user.email) &&
-                await this.rules.ID_Duplicate(this.user.id)
-            ) {
-                try {
-                    const res = await axios.post(baseURL, {
-                        name: this.user.name,
-                        id: this.user.id,
-                        phone: this.user.phone,
-                        email: this.user.email,
-                        password: this.user.password,
-                    });
+            axios.post('http://localhost:3000/edit', newEdit)
+                .then(() => {
+                    this.edit.userId = '';
+                    this.edit.name = '';
+                    this.edit.phone = '';
+                    this.edit.password = '';
+                    this.edit.newPassword = '';
+                    this.edit.newPasswordConfirm = '';
+                    this.$router.push('/mypage');
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        },
+        async verifyToken(token) {
+            try {
+                const response = await axios.post(
+                "http://localhost:3000/verify-token",
+                { token }
+                );
+                const data = response.data;
+                console.log(data);
+                return data.isValid;
+            } catch (error) {
+                throw new Error("토큰 검증 실패");
+            }
+        },
+        async fetcheditprofileData() {
+            try {
+                const res = await axios.get("http://localhost:3000/edit");
+                this.editprofileData = res.data;
+                const token = localStorage.getItem("token");
+                const tokenPayload = jwt_decode(token);
 
-                    axios.put(`${baseURL}/${res.data.id}`, {
-                        name: this.user.name,
-                        id: this.user.id,
-                        phone: this.user.phone,
-                        email: this.user.email,
-                        password: this.user.password,
-                        image: this.$refs.surveyImage.filters,
-                    });
 
-                } catch (e) {
-                    console.error(e);
-                }
+                // this.edit.userId = res.data.userId; // Assign the user ID
+                // this.edit.name = res.data.name; // Assign the user's name from the response data
+
+                console.log("ID:", tokenPayload.id);
+                // console.log("ID:", this.edit.userId);
+                // console.log("name:", this.edit.name);
+                console.log("Token Payload:", tokenPayload);
+
+        
+            } catch (error) {
+                console.error(error);
+                throw new Error("usagehistory 데이터 가져오기 실패");
             }
         },
     }

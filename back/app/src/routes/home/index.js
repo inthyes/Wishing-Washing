@@ -17,6 +17,7 @@ router.get('/history', ctrl.output.history);
 router.get('/myPage', ctrl.output.myPage);
 router.get('/upload', ctrl.output.upload);
 router.get('/review', ctrl.output.review);
+router.get('/edit', ctrl.output.edit);
 // router.get('/review', ctrl.output.review);
 
 router.use("/myPage", require("./myPage"));
@@ -26,6 +27,7 @@ router.use(cookieParser());
 
 router.post("/like", ctrl.process.like);
 router.post("/review", ctrl.process.review);
+router.post("/edit", ctrl.process.edit);
 router.post("/verify-token", ctrl.process.verifyToken);
 // router.post("/upload", ctrl.process.upload);
 
