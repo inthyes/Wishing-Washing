@@ -2,48 +2,55 @@
 <!--서혜린-->
 
 <template>
-  <v-carousel cycle height="250" hide-delimiter-background show-arrows="hover">
-    <v-carousel-item v-for="slide in slides" :key="slide.id">
-      <v-sheet height="100%">
-        <v-img :src="slide.imageSrc" :alt="slide.altText" height="100%" contain></v-img>
-      </v-sheet>
-    </v-carousel-item>
-  </v-carousel>
+      <!-- 캐러쉘 -->
+      <v-carousel cycle height="auto" hide-delimiter-background show-arrows="hover" class="carousel">
+        <v-carousel-item v-for="slide in slides" :key="slide.id">
+          <v-img :src="slide.imageSrc" :alt="slide.altText" height="100%" contain></v-img>
+        </v-carousel-item>
+      </v-carousel>
+  <div class="container">
 
-  <div class="wrapper">
-    <div class="content">
-      <!--추천 세탁소-->
-       <v-card class="mx-auto" color="white" max-width="400" elevation="0">
-        <v-card-text>
-      <v-text-field density="compact" variant="solo" append-inner-icon="mdi-magnify" single-line
-        @click:append-inner="showApi" readonly>{{ addr1 }}</v-text-field>
-    </v-card-text>
-  </v-card>
-  <div class="daummap">
-    <div ref="embed"></div>
-  </div>
+
+    <v-card class="mx-auto" color="white" max-width="400" elevation="0">
+      <v-card-text>
+        <v-text-field density="compact" variant="solo" append-inner-icon="mdi-magnify" single-line
+          @click:append-inner="showApi" readonly>{{ addr1 }}</v-text-field>
+      </v-card-text>
+    </v-card>
+
+    <!-- 다음 우편주소API -->
+    <div class="daummap">
+      <div ref="embed"></div>
+    </div>
+
+    <div class="cards">
+      <!-- 추천 세탁소 -->
       <div class="recommend">
-        <p style="font-size: 18px;"><b>이 세탁소는 어떠세요 ?</b></p>
-        <p style="font-size: 9px; margin-top: -3%;">저희가 추천해드릴게요.</p>
-        <div class="popularLaundry">
-          <p style="font-size: 15px; padding: 8%; padding-top: 6%;"><b>우리 동네 인기 세탁소</b></p>
-          <p style="font-size: 6px; padding-left: 10%; margin-top: -11%; margin-bottom: -1%;">주변에서 인기 있는 세탁소예요!</p>
-          <v-img src="@/assets/images/map.png" style="width: 260px; margin-left: 44px; margin-bottom: 25px; border-radius: 5px;"></v-img>
+        <div class="top">
+          <p class="title">이 세탁소는 어떠세요?</p>
+          <p class="subtitle">{{ userId }}님을 위해 저희가 추천해드릴게요.</p>
+        </div>
+        <div class="contents">
+          <p class="label">우리 동네 인기 세탁소</p>
+          <p class="description">주변에서 인기 있는 세탁소예요!</p>
+          <v-img src="@/assets/images/map.png" class="map-image"></v-img>
         </div>
       </div>
 
-      <!--세탁 Tip-->
+      <!-- 세탁 Tip -->
       <div class="washingTip">
-        <p style="font-size: 18px;"><b>생활 속 세탁 TIP !</b></p>
-        <p style="font-size: 9px; margin-top: -3%;">집에서도 옷을 잘 관리할 수 있게 도와드릴게요.</p>
-        <div class="dryCleaning">
-          <p style="font-size: 15px; padding: 8%; padding-top: 6%;"><b>드라이클리닝</b></p>
-          <p style="font-size: 3px; padding-left: 10%; margin-top: -11%;">
-            손 많이 가는 드라이클리닝 의류, <br>&nbsp; 집에서 어떻게 관리해야 할까 ?</p>
-            <v-img src="@/assets/images/drycleaning.png" style="width: 180px; margin-left: 170px; margin-bottom: 100px; margin-top: -20px;"></v-img>
+        <div class="top">
+          <p class="title">생활 속 세탁 TIP!</p>
+          <p class="subtitle">집에서도 옷을 잘 관리할 수 있게 도와드릴게요.</p>
+        </div>
+        <div class="contents">
+          <p class="label">드라이클리닝</p>
+          <p class="description">손 많이 가는 드라이클리닝 의류, 집에서 어떻게 관리해야 할까?</p>
+          <v-img src="@/assets/images/drycleaning.png" class="drycleaning-image"></v-img>
         </div>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -53,6 +60,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
+      userId: null,
       slides: [
         {
           imageSrc: require('@/assets/images/001.jpg'),
@@ -78,25 +86,27 @@ export default {
       addr1: ''
     }
   },
-
+  mounted() {
+    this.userId = localStorage.getItem("userId");
+  },
   async created() {
-        try {
-            await axios.get(`http://localhost:3000`, {
-                withCredentials: true,
-                headers: {
-                 Cookie: document.cookie, // 쿠키를 요청에 추가
-                 },
-            });
-        } catch (e) {
-            console.error(e);
-        }
-    },
-    methods: {
+    try {
+      await axios.get(`http://localhost:3000`, {
+        withCredentials: true,
+        headers: {
+          Cookie: document.cookie, // 쿠키를 요청에 추가
+        },
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  },
+  methods: {
     showApi() {
       new window.daum.Postcode({
         oncomplete: (data) => {
           let fullRoadAddr = data.roadAddress;
-          let extraRoadAddr = ''; 
+          let extraRoadAddr = '';
           if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
             extraRoadAddr += data.bname;
           }
@@ -119,7 +129,7 @@ export default {
           console.log(encodedValue);
           document.cookie = `deliveryAddress1=${encodedValue}; expires=${date.toUTCString()}; path=/;`;
 
-          const addr = this.addr1; 
+          const addr = this.addr1;
           const jsonValue2 = JSON.stringify(addr);
           const encodedValue2 = encodeURIComponent(jsonValue2);
           console.log(encodedValue2);
@@ -128,27 +138,84 @@ export default {
         // }).embed(this.$refs.embed)
       }).open();
     },
-
-}
+  }
 }
 </script>
 
 <style>
-.recommend {
-  margin: 5.2%;
+/* 캐러쉘 */
+.carousel {
+  margin-bottom: 10px;
+  padding-inline: 0px;
 }
-.popularLaundry {
-  height: 170px;
+/* 나머지 컨텐츠 */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-inline: 20px;
+}
+.cards {
+  display: flex;
+  justify-content: space-between;
+}
+.top {
+  margin-bottom: 10px;
+}
+.title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 12px;
+  /* margin-top: -5px; */
+}
+
+.contents {
   background-color: rgba(228, 227, 227, 0.728);
-  border-radius: 20px;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
 }
-.washingTip {
-  margin: 5.2%;
-  margin-top: 7%;
+
+.map-image {
+  width: 80%;
+  border-radius: 5px;
+  margin-left: 50px;
 }
-.dryCleaning {
-  height: 170px;
+
+.label {
+  font-size: 18px;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
+.description {
+  font-size: 12px;
+  margin-top: -10px;
+  margin-bottom: 5px;
+}
+
+.recommend, .washingTip {
+  margin-bottom: 20px;
+  flex-basis: 45%;
+}
+@media screen and (max-width: 599px) {
+  .cards {
+    flex-direction: column;
+  }
+}
+
+/* .dryCleaning {
   background-color: rgba(228, 227, 227, 0.728);
-  border-radius: 20px;
+  border-radius: 10px;
+  padding: 20px;
+} */
+
+.drycleaning-image {
+  width: 65%;
+  /* margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 40px; */
 }
 </style>
