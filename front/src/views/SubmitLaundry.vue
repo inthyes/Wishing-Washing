@@ -1,10 +1,11 @@
 <template>
-    <v-container>
-        <v-card class="pa-4 mx-auto" max-width="400">
+    <div id="laund-susbmit" class="mt-10 px-3">
+        <v-card class="pa-5 mx-auto" max-width="400" elevation="0">
             <v-form @submit.prevent="submitData">
                 <v-row>
                     <v-col cols="12">
-                        <h2>{{ laundry.name }}</h2>
+                        <h4 class="mb-5">{{ laundry.name }}</h4>
+                        <input class="form-control mb-3" placeholder="상세주소">
                     </v-col>
                 </v-row>
                 <v-divider></v-divider>
@@ -13,7 +14,7 @@
                     <v-col cols="12">
                         <p class="mb-4">주문상품</p>
                         <!-- <a>{{ submit.id }}</a> -->
-                        <a>{{totalPrice.O_PRICE}}원</a>
+                        <a>{{ totalPrice.O_PRICE }}원</a>
                         <!-- <a> {{ submit.quantity }}개</a>  -->
                     </v-col>
                 </v-row>
@@ -26,7 +27,7 @@
                             <v-slide-group-item v-for="(date, index) in getDateRange(14)" :key="index"
                                 v-slot="{ isSelected }">
                                 <v-btn class="ma-0" :color="isSelected ? 'primary' : undefined" rounded
-                                    @click="toggle(index)" elevation="0">
+                                    @click="toggle(index)" elevation="0" >
                                     <div v-html="formatDate(date)"></div>
                                 </v-btn>
                             </v-slide-group-item>
@@ -38,7 +39,7 @@
                 <v-row>
                     <v-col cols="12">
                         <p class="mb-4">시간 선택</p>
-                        <v-chip-group v-model="selection">
+                        <v-chip-group v-model="selection" selected-class="text-light-blue-darken-4" mandatory>
                             <v-chip>5:30</v-chip>
                             <v-chip>7:30</v-chip>
                             <v-chip>8:00</v-chip>
@@ -51,16 +52,16 @@
 
                 <v-row>
                     <v-col cols="12">
-                        <!-- <p class="mb-4">요청사항</p> -->
                         <v-textarea label="요청사항" variant="outlined" v-model="requestText"></v-textarea>
                     </v-col>
                 </v-row>
                 <v-divider></v-divider>
 
-                <v-btn type="submit" color="primary" class="mt-4"> 신청하기</v-btn>
+                <v-btn type="submit" color="light-blue-darken-4" block class="text-none mb-4" size="large" variant="tonal">
+                    세탁 예약하기 </v-btn>
             </v-form>
         </v-card>
-    </v-container>
+    </div>
 </template>
 
 <script>
@@ -70,15 +71,17 @@ export default {
     data() {
         const options = { weekday: 'long', day: 'numeric' };
         return {
+            selection: null,
             options,
             selectedDate: null,
             laundry: {},
             cart: [],
             addr: {},
-            totalPrice : {},
-            selectDate : null,
-            selectTime : null,
-            requestText : null
+            totalPrice: {},
+            selectDate: null,
+            selectTime: null,
+            requestText: null,
+            requestAddr3: null,     // 상세주소 
         };
     },
     async created() {
@@ -86,7 +89,7 @@ export default {
             const id = this.$route.params.id;
             const res = await axios.get(`http://localhost:3000/laundry/detail/${id}/order`, {
                 withCredentials: true,
-                headers: {Cookie: document.cookie}
+                headers: { Cookie: document.cookie }
             });
             this.cart = res.data.cartRes;
             this.addr = res.data.deliveryAddress;
@@ -100,7 +103,7 @@ export default {
         async submitData() {
             const date = new Date();
             const dateYearMonth = date.toISOString().substring(0, 8)
-            
+
             if (this.selection == 0) {
                 this.selectTime = '5:30'
             }
@@ -116,13 +119,14 @@ export default {
             else if (this.selection == 4) {
                 this.selectTime = '10:00'
             }
-            else  {
+            else {
                 this.selectTime = '아무떄나'
             }
             const data = {
-                date : dateYearMonth + this.selectDate.substring(0,2),
-                time : this.selectTime,
+                date: dateYearMonth + this.selectDate.substring(0, 2),
+                time: this.selectTime,
                 request: this.requestText,
+                // requestA: this.requestAddr3     // 상세주소
             }
             const id = this.$route.params.id;
             await axios.post(`http://localhost:3000/laundry/detail/${id}/complete`, data, {
@@ -131,13 +135,13 @@ export default {
                     Cookie: document.cookie
                 }
             })
-            .then((response) => {
-                this.$router.push('/usagehistory');
-                console.log(response);
-            })
-            .catch(error => {
-                console.error(error);
-            });
+                .then((response) => {
+                    this.$router.push('/usagehistory');
+                    console.log(response);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
         },
         formatDate(date) {
             const parts = date.toLocaleDateString(undefined, this.options).split(' ');
@@ -156,7 +160,7 @@ export default {
             this.selectedDate = index;
             if (this.selectedDate !== null) {
                 const selectedDate = this.getDateRange(14)[this.selectedDate];
-                this.selectDate =  selectedDate.toLocaleDateString(undefined, this.options);
+                this.selectDate = selectedDate.toLocaleDateString(undefined, this.options);
             }
         },
     },
