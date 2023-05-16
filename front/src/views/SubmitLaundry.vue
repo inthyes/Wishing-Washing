@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <v-card class="pa-4 mx-auto" max-width="400">
-            <v-form @submit.prevent="submit">
+            <v-form @submit.prevent="submitData">
                 <v-row>
                     <v-col cols="12">
                         <h2>{{ laundry.name }}</h2>
@@ -74,7 +74,9 @@ export default {
             selectedDate: null,
             laundry: {},
             cart: [],
-            addr: {}
+            addr: {},
+            selectDate : null,
+            selectTime : null
         };
     },
     async created() {
@@ -92,6 +94,41 @@ export default {
         }
     },
     methods: {
+        async submitData() {
+            const date = new Date();
+            const dateYearMonth = date.toISOString().substring(0, 8)
+            
+            if (this.selection == 0) {
+                this.selectTime = '5:30'
+            }
+            else if (this.selection == 1) {
+                this.selectTime = '7:30'
+            }
+            else if (this.selection == 2) {
+                this.selectTime = '8:00'
+            }
+            else if (this.selection == 3) {
+                this.selectTime = '9:00'
+            }
+            else if (this.selection == 4) {
+                this.selectTime = '10:00'
+            }
+            else  {
+                this.selectTime = '아무떄나'
+            }
+
+            const data = {
+                date : dateYearMonth + this.selectDate.substring(0,2),
+                time : this.selectTime,
+            }
+            const id = this.$route.params.id;
+            await axios.post(`http://localhost:3000/laundry/detail/${id}/complete`, data, {
+                withCredentials: true,
+                headers: {
+                  Cookie: document.cookie
+                }
+            });
+        },
         formatDate(date) {
             const parts = date.toLocaleDateString(undefined, this.options).split(' ');
             return `${parts[1].slice(0, 1)}<br>${parts[0].replace(/\D/g, '')}`;    // parts[1]: 요일, parts[0]: 날짜
@@ -107,16 +144,20 @@ export default {
         },
         toggle(index) {
             this.selectedDate = index;
-        },
-    },
-    computed: {
-        selectedDateString() {
             if (this.selectedDate !== null) {
                 const selectedDate = this.getDateRange(14)[this.selectedDate];
-                return selectedDate.toLocaleDateString(undefined, this.options);
+                this.selectDate =  selectedDate.toLocaleDateString(undefined, this.options);
             }
-            return '';
         },
     },
+    // computed: {
+    //     selectedDateString() {
+    //         if (this.selectedDate !== null) {
+    //             const selectedDate = this.getDateRange(14)[this.selectedDate];
+    //             return selectedDate.toLocaleDateString(undefined, this.options);
+    //         }
+    //         return '';
+    //     },
+    // },
 };
 </script>

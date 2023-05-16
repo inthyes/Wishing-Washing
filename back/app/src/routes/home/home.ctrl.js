@@ -264,7 +264,7 @@ const output ={
 
             const like = new Likes(req.body, "codus");
             const userLike = await like.likeStatus(S_ID, "codus");
-            
+
             res.json({
               laundryDetail: laundryDetailRes,
               productDetail: productDetailRes,
@@ -334,6 +334,7 @@ const process = {
         res.status(200).json({ message: 'success' });
     },
     orderComplete: async (req, res) => {
+        console.log(req.body);
         const cookieAddress = req.headers.cookie;
         const decodedValue = decodeURIComponent(cookieAddress);
         const matches = decodedValue.match(/deliveryAddress1="([^"]+)";\s*deliveryAddress2="([^"]+)"/);
@@ -344,7 +345,8 @@ const process = {
         const orderComplete = new LaundryOrderComplete(req.body, orderNum, deliveryAddress);
         const orderListRes = await orderComplete.addOrderList();
         const orderCompleteRes = await orderComplete.addOrderCompleteList();
-        res.clearCookie('response').redirect('/');
+        res.clearCookie('response');
+        res.status(200);
     },
 
     //수정중
