@@ -19,11 +19,11 @@ class History {
         db.query("USE CAPSTONE", (err, result) => {
           if (err) reject(err);
           else {
-            const getOrderCompleteList = "SELECT ORDER_COMPLETE.S_ID, O_NUM, S_NAME, ORDER_COMPLETE.S_ID, U_ID, ORD_DAY, DELIVERY_STATE, O_PRICE, O_REQUEST, COMPLETE_DATE\
+            const getOrderCompleteList = "SELECT ORDER_COMPLETE.S_ID, O_NUM, S_NAME, ORDER_COMPLETE.S_ID, U_ID, O_DAY, DELIVERY_STATE, O_PRICE, O_REQUEST, COMPLETE_DATE\
                                           FROM order_complete\
                                           left outer JOIN store ON ORDER_COMPLETE.s_id = store.s_id\
                                           where u_id = ?;"
-            // const notCompleteQuery = "SELECT * FROM ORDER_COMPLETE WHERE U_ID = ? AND DELIVERY_STATE = 0 ORDER BY ORD_DAY DESC";
+            // const notCompleteQuery = "SELECT * FROM ORDER_COMPLETE WHERE U_ID = ? AND DELIVERY_STATE = 0 ORDER BY O_DAY DESC";
             db.query(getOrderCompleteList, [id], (err, orderCompleteList) => {
               if (err) reject(err);
               else {
