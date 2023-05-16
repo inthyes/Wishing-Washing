@@ -16,7 +16,7 @@
                         <!-- 이용내역 리스트 -->
                         <div v-for="(h, index) in InProgress" v-bind:key="h.O_NUM">
                             <!-- 신청날짜 출력 -->
-                            <div v-if="index === 0 || h.O_DAY !== order_complete[index - 1].O_DAY">
+                            <div v-if="index === 0 || Fh.O_DAY !== order_complete[index - 1].O_DAY">
                                 <div class="date" id="date">
                                     <b>{{ h.O_DAY }}</b>
 
@@ -80,7 +80,7 @@
                                         <!-- 세탁소 이름 -->
                                         <a id="laundryName">{{ h.S_NAME }}</a>&nbsp;
                                         <!-- 리뷰버튼 -->
-                                        <v-btn id="reviewBtn" v-bind:to="`/addreview/${h.O_NUM}`">리뷰</v-btn>
+                                        <v-btn id="reviewBtn" v-bind:to="`/addreview/${h.S_ID}/${h.O_NUM}`">리뷰</v-btn>
                                     </v-card-text>
                                 </div>
                             </v-card>
