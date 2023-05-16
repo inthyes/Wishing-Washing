@@ -101,7 +101,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .fixed-bottom {
   position: fixed;
   bottom: 0;
