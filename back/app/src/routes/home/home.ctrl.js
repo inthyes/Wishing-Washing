@@ -18,6 +18,7 @@ const Review = require("../../models/Review");
 const Edit = require("../../models/MyPageEdit");
 // const router = require(".");
 const router = express.Router();
+const MyPageEdit = require("../../models/MyPageEdit")
 
 const jwt = require("jsonwebtoken");
 const secretKey = 'secretKey'; // 비밀 키를 정의합니다.
@@ -106,17 +107,23 @@ const output ={
         console.log(myReviewRes);
         res.json(myReviewRes);
     },
-    edit : (req, res) => 
+    edit : async (req, res) => 
     {   
         logger.info(`GET /myPage/profileEdit 304 "프로필편집 화면으로 이동"`);
         //실제 경로 , 라우팅 경로 : myPage/profileEdit
-        res.status(200).json({ message: 'success'});
+        const myEdit = new MyPageEdit(req.body, "codus");
+        const myEditRes = await myEdit.myEdit();
+
+        console.log(myEditRes);
+        res.json(myEditRes);
     },
 
     myEdit : async (req, res) => {
         logger.info(`GET /myPage 304 "edit 화면으로 이동"`);
+        console.log("dddddfdfd");
         const myEdit = new MyPageEdit(req.body, "codus");
         const myEditRes = await myEdit.myEdit();
+        console.log("ddddsdddddd");
         console.log(myEditRes);
         res.json(myEditRes);
     },
@@ -192,8 +199,8 @@ const output ={
     },
 
     customerService : (req, res) => {
-        const token = req.query.token;
-        const user_id = Vtoken(token);  // 토큰 검증
+        // const token = req.query.token;
+        // const user_id = Vtoken(token);  // 토큰 검증
         console.log("토큰확인: " + token);
         console.log("user_id: " + user_id);
 
@@ -201,8 +208,8 @@ const output ={
         res.render("home/customerService");
     },
     userManagement : (req, res) => {
-        const token = req.query.token;
-        const user_id = Vtoken(token);  // 토큰 검증
+        // const token = req.query.token;
+        // const user_id = Vtoken(token);  // 토큰 검증
         console.log("토큰확인: " + token);
         console.log("user_id: " + user_id);
 
