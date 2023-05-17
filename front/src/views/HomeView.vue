@@ -8,8 +8,8 @@
       <v-img :src="slide.imageSrc" :alt="slide.altText" height="100%" contain></v-img>
     </v-carousel-item>
   </v-carousel>
-  <div class="container">
 
+  <div class="container">
     <v-text-field class="mx-auto mt-8 mb-5 px-5" max-width="300" density="compact" variant="solo"
       append-inner-icon="mdi-magnify" single-line elevation="0" @click:append-inner="showApi" readonly>
     <p>{{ addr1 }}</p>
@@ -94,6 +94,28 @@ export default {
           altText: 'Fifth Slide',
         },
       ],
+      // slides: [
+      //   {
+      //     imageSrc: require('@/assets/images/001A.jpg'),
+      //     altText: 'First Slide',
+      //   },
+      //   {
+      //     imageSrc: require('@/assets/images/002A.jpg'),
+      //     altText: 'Second Slide',
+      //   },
+      //   {
+      //     imageSrc: require('@/assets/images/003A.jpg'),
+      //     altText: 'Third Slide',
+      //   },
+      //   {
+      //     imageSrc: require('@/assets/images/004A.jpg'),
+      //     altText: 'Fourth Slide',
+      //   },
+      //   {
+      //     imageSrc: require('@/assets/images/005A.jpg'),
+      //     altText: 'Fifth Slide',
+      //   },
+      // ],
       addr1: ''
     }
   },
@@ -160,6 +182,7 @@ export default {
   margin-bottom: 10px;
   padding-inline: 0px;
 }
+
 
 /* 나머지 컨텐츠 */
 .container {
