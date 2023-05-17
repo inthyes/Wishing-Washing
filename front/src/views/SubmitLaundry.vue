@@ -5,7 +5,7 @@
                 <v-row>
                     <v-col cols="12">
                         <h4 class="mb-5">{{ laundry.name }}</h4>
-                        <input class="form-control mb-3" placeholder="상세주소">
+                        <input class="form-control mb-3" placeholder="상세주소" v-model="requestAddr3"> <!-- 상세주소 값 넘기는거 기능 추가해야합니다 -->
                     </v-col>
                 </v-row>
                 <v-divider></v-divider>
@@ -71,7 +71,7 @@ export default {
     data() {
         const options = { weekday: 'long', day: 'numeric' };
         return {
-            selection: null,
+            selection: null,        // 시간선택 - 그냥 다자인 요소에요..
             options,
             selectedDate: null,
             laundry: {},
@@ -81,7 +81,7 @@ export default {
             selectDate: null,
             selectTime: null,
             requestText: null,
-            requestAddr3: null,     // 상세주소 
+            // requestAddr3: null,     // 상세주소 - 받아올때 필요합니다 (수정중)
         };
     },
     async created() {
@@ -126,7 +126,7 @@ export default {
                 date: dateYearMonth + this.selectDate.substring(0, 2),
                 time: this.selectTime,
                 request: this.requestText,
-                // requestA: this.requestAddr3     // 상세주소
+                // requestAddr: this.requestAddr3     // 상세주소 - 받아올때 필요합니다 (수정중)
             }
             const id = this.$route.params.id;
             await axios.post(`http://localhost:3000/laundry/detail/${id}/complete`, data, {
