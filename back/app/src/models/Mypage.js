@@ -32,7 +32,7 @@ class MyPage {
           db.query(query, [id], (err, data) => {
               if (err) reject(err);
               else {
-                  // resolve(data)
+                  resolve(data)
                   }
               });
             })

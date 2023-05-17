@@ -48,10 +48,9 @@ export default {
                 //     console.log(this.edit.userId);
                 // this.fetcheditprofileData();
 
-                if (res.data && res.data.message === 'success') {
+                if (res.data && res.data.message === 0) {
                  
                         this.edit.userId = res.data.userId;
-                        console.log(this.edit.userId);
                         this.fetcheditprofileData();
                   
                         console.log("메롱~");
@@ -71,10 +70,11 @@ export default {
             try {
                 const response = await axios.post('http://localhost:3000/edit', newEdit);
                 const data = response.data;
-
-                console.log("Asdf");
+                console.log(this.edit.password);
+                
                 if (data && data.message === 'success') {
                 // 비밀번호가 올바른 경우에만 다음 페이지로 이동
+                console.log("Asdf");
                 this.$router.push('/mypage');
                 } else {
                 // 비밀번호가 올바르지 않은 경우 처리 (예: 에러 메시지 표시)
