@@ -3,6 +3,8 @@
 <template>
     <div id="review-list" class="mt-10 px-5">
         <h5>{{ userId }}님이 작성한 리뷰 </h5>
+        <v-divider></v-divider>
+
         <v-card v-for="r in reviews" :key="r.O_NUM" class="mx-auto mt-4" max-width="400" elevation="0">
             <!-- 세탁소정보 / 별점 / 날짜 -->
             <v-card-body>
@@ -21,12 +23,12 @@
                 <h5 class="card-title mt-3">{{ r.REVIEW_TITLE }}</h5>
                 <p class="card-text mt-2">{{ r.REVIEW_TEXT }}</p>
             </v-card-body>
-            <v-card-actions  class="mx-0 px-0 pt-5">
+            <v-card-actions class="mx-0 px-0 pt-5">
                 <!-- 작성한 사용자만 수정 삭제 가능 -->
-                <v-btn  variant="flat" class="custom-btn flex-grow-1" color="light-blue-darken-4"  v-if="isEditable(r)" >
+                <v-btn variant="flat" class="custom-btn flex-grow-1" color="light-blue-darken-4" v-if="isEditable(r)">
                     수정
                 </v-btn>
-                <v-btn  variant="outlined" class="custom-btn flex-grow-1" color="light-blue-darken-4" v-if="isEditable(r)">
+                <v-btn variant="outlined" class="custom-btn flex-grow-1" color="light-blue-darken-4" v-if="isEditable(r)">
                     삭제
                 </v-btn>
             </v-card-actions>
