@@ -1,6 +1,7 @@
 "use strict";
 const db = require("../config/db");
 const Review = require("./Review");
+const Likes = require("./Likes");
 
 class LaundryList {
     constructor(body, deliveryAddress1, deliveryAddress2) {
@@ -9,10 +10,8 @@ class LaundryList {
     }
 
     async getLaundryInfo() {
-
         // const postNum = parseInt(this.deliveryAddress1);
         const nearPostNum = this.deliveryAddress1.slice(0, 3);
-
         return new Promise((resolve, reject) => {
           db.query("USE CAPSTONE", (err, result) => {
             const query = 

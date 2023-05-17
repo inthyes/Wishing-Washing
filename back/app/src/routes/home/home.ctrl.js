@@ -77,6 +77,7 @@ const output ={
 
         const laundryList = new LaundryList(req.body, deliveryAddress1, deliveryAddress2);
         const laundryListRes = await laundryList.getLaundryInfo();
+        console.log(laundryListRes)
 
         res.json(laundryListRes);
     },
@@ -232,6 +233,7 @@ const output ={
     //     });
     // },
     laundryDetail: async (req, res) => {
+        // userId 가 없을 떄 처리하기 
         try {
           const token = req.headers.cookie; // 헤더에서 토큰 추출
       
