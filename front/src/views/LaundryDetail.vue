@@ -83,13 +83,11 @@
             <v-divider class="mx-1 mb-1"></v-divider>
 
 
-            <v-card-actions>
-
+            <v-card-actions class="mb-2">
                 <v-btn icon @click="toggleWish(likeStatus)">
                     <v-icon :color="likeStatus ? 'red' : ''">{{ likeStatus ? 'mdi-heart' : 'mdi-heart-outline' }}</v-icon>
                 </v-btn>
-                <v-btn color="deep-purple-lighten-2" variant="text" @click="submitData">
-
+                <v-btn class="flex-grow-1 mr-3" color="light-blue-darken-4" size="large" variant="tonal" @click="submitData">
                     세탁신청
                 </v-btn>
                 <!-- <router-link :to="{ name: 'submitlaundry', params: { id: laundry.id } }">
@@ -103,7 +101,6 @@
 <script>
 import axios from 'axios';
 
-
 export default {
     data: () => ({
         loading: false,
@@ -116,8 +113,6 @@ export default {
         reviewStar : {},
         likeStatus : {},
         countReview : {},
-
-
 
         tab: 'Appetizers',  // 세탁/수선 & 리뷰 탭
         isWished: false,    // 찜버튼
@@ -181,6 +176,7 @@ export default {
             try {
                 const now = new Date();
                 const selectedItems = this.product;
+                // const getReviews = this.review;
                 const id = this.$route.params.id;
 
                 const data = { laundryId: id, date: now.toISOString().substring(0, 10), time: now.toISOString().substring(11, 19) };

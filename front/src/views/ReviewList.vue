@@ -6,11 +6,11 @@
         <v-card v-for="r in reviews" :key="r.O_NUM" class="mx-auto mt-4" max-width="400" elevation="0">
             <!-- 세탁소정보 / 별점 / 날짜 -->
             <v-card-body>
-                <p class="card-text my-0">세탁소이름대신아이디 {{ r.S_ID }}></p>
+                <p class="card-text my-0">{{ r.S_NAME }} ></p>
                 <v-row class="mx-0 my-0">
                     <v-rating :model-value=r.REVIEW_STAR color="amber" density="compact" half-increments readonly
                         size="small">{{ r.REVIEW_STAR }}</v-rating>
-                    <p class="text-grey ms-2">{{ r.REGI_DATE.slice(0, 10) }} / {{ r.REGI_DATE.slice(11, 19) }} / {{ getTimeAgo(r.REGI_DATE) }}</p>
+                    <p class="text-grey ms-2">{{ r.REGI_DATE.slice(0, 10) }} ({{ getTimeAgo(r.REGI_DATE) }})</p>
                 </v-row>
             </v-card-body>
             <!-- 리뷰 사진 -->
