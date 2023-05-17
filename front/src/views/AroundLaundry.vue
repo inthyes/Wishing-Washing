@@ -71,10 +71,12 @@ export default {
         })
         .catch((error) => {
           console.error(error);
-          this.redirectToLogin();
+          this.fetchNotLogin();
+        //   this.redirectToLogin();
         });
     } else {
-      this.redirectToLogin();
+    //   this.redirectToLogin();
+    this.fetchNotLogin();
     }
   },
 // async created() {
@@ -140,7 +142,8 @@ export default {
                 },
             });
                 this.laundrys = res.data;
-                console.log("쿠키 확인");
+                
+                console.log("쿠키 확인",res.data);
             } catch (e) {
                 console.error(e);
             }
@@ -154,6 +157,7 @@ export default {
                         Cookie: document.cookie, // 쿠키를 요청에 추가
                     },
                 })
+                
                 this.aroundlaundryData = res.data;
                 const token = localStorage.getItem("token");
                 const tokenPayload = jwt_decode(token);
@@ -165,12 +169,60 @@ export default {
                 // this.mypageData = this.mypageData.filter((mypageData) => mypageData.userName === tokenPayload.userName);
             } catch (error) {
                 console.error(error);
-                throw new Error("마이페이지 데이터 가져오기 실패");
+                throw new Error("주변세탁소 데이터 가져오기 실패");
             }
         },
 
+        // fetchNotLogin() {
+        // try {
+        //     const res = axios.get("http://localhost:3000/laundry", {
+        //     withCredentials: true, // axios에서 서버에 요청할 때 쿠키를 추가하기 위한 작업.
+        //     headers: {
+        //         Cookie: document.cookie, // 쿠키를 요청에 추가
+        //     },
+        //     });
+        //     // console.log(res.data,"fetcharound");
+        //     res.then((response) => {
+        //     this.aroundlaundryData = response.data;
+        //     console.log(response);
+
+        //     }).catch((error) => {
+        //     console.error(error);
+        //     throw new Error("주변세탁소 데이터 가져오기 실패");
+        //     });
+        // } catch (error) {
+        //     console.error(error);
+        //     throw new Error("주변세탁소 데이터 가져오기 실패");
+        // }
+        // },
+            async fetchNotLogin() {
+            try {
+                await axios
+                .get("http://localhost:3000/laundry", {
+                    withCredentials: true,
+                    headers: {
+                    Cookie: document.cookie,
+                    },
+                })
+                .then((response) => {
+                    this.aroundlaundryData = response.data;
+                    console.log(response);
+                })
+                .catch((error) => {
+                    console.error(error);
+                    throw new Error("주변세탁소 데이터 가져오기 실패");
+                });
+            } catch (error) {
+                console.error(error);
+                throw new Error("주변세탁소 데이터 가져오기 실패");
+            }
+            },
+
         redirectToLogin() {
         this.$router.push("/login");
+        },
+        redirectToPage() {
+        this.$router.push("/aroundlaundry");
         },
         
     }

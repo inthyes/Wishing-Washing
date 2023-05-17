@@ -143,9 +143,21 @@ class MyPageEdit {
         .createHash("sha512")
         .update(password + salt)
         .digest("hex");
-      updatedFields.push("U_PW = ?");
-      queryParams.push(hashedPassword);
+      
+      const existingPassword = await MyPageEdit.getPassword(U_ID);
+      if (existingPassword && existingPassword === hashedClientPassword) {
+        // 기존 비밀번호와 일치하는 경우에만 새로운 비밀번호를 작성할 수 있도록 처리
+        const newPassword = generateNewPassword(); // 새로운 비밀번호 생성 로직 구현 필요
+        const newHashedPassword = crypto
+          .createHash("sha512")
+          .update(newPassword + salt)
+          .digest("hex");
+        
+        updatedFields.push("U_PW = ?");
+        queryParams.push(newHashedPassword);
+      }
     }
+
     
 
     if (phone) {
@@ -221,6 +233,37 @@ class MyPageEdit {
       });
     });
   }
+  static async getPassword(U_ID) {
+    return new Promise((resolve, reject) => {
+      db.getConnection((err, conn) => {
+        if (err) {
+          // ...
+          reject(json);
+        }
+
+        // ...
+
+        db.query("USE CAPSTONE", (err, result) => {
+          if (err) reject(err);
+
+          const query = "SELECT U_PW FROM USERS WHERE U_ID = ?";
+
+          db.query(query, [U_ID], (err, data) => {
+            if (err) reject(err);
+            else {
+              if (data.length > 0) {
+                resolve(data[0].U_PW);
+                console.log("성공");
+              } else {
+                resolve(null);
+              }
+            }
+          });
+        });
+      });
+    });
+  }
+  
 }
 
 module.exports = MyPageEdit;

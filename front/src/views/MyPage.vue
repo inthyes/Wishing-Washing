@@ -113,10 +113,10 @@ export default {
         })
         .catch((error) => {
           console.error(error);
-          // this.redirectToLogin();
+          this.redirectToLogin();
         });
     } else {
-      // this.redirectToLogin();
+      this.redirectToLogin();
     }
   },
 
