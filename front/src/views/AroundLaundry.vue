@@ -205,8 +205,9 @@ export default {
                     },
                 })
                 .then((response) => {
-                    this.aroundlaundryData = response.data;
+                    this.laundrys = response.data;
                     console.log(response);
+                    console.log(response.data);
                 })
                 .catch((error) => {
                     console.error(error);
