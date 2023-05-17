@@ -18,9 +18,10 @@
             <v-text-field v-model="edit.mail" label="이메일"></v-text-field>
             
             <v-text-field v-model="edit.phone" label="연락처"></v-text-field>
-            <v-text-field v-model="edit.password" label="현재 비밀번호"></v-text-field>
-            <v-text-field v-model="edit.newPassword" label="새 비밀번호"></v-text-field>
-            <v-text-field v-model="edit.newPasswordConfirm" label="새 비밀번호 확인"></v-text-field>
+            <button @click="goToEditPassword">비밀번호 변경</button>
+           
+            <!-- <v-text-field v-model="edit.newPassword" label="새 비밀번호"></v-text-field>
+            <v-text-field v-model="edit.newPasswordConfirm" label="새 비밀번호 확인"></v-text-field> -->
             <v-btn type="button" color="primary" @click="save">저장</v-btn>
         </v-form>
     </v-card>
@@ -41,7 +42,7 @@ export default {
                 // id: null,
                 userId: '',//아이디
                 name: '',//이름
-                // mail: '',
+                mail: '',
                 phone: '',//전화번호
                 password: '',//비밀번호
                 newPassword: '',
@@ -95,6 +96,7 @@ export default {
             const newEdit = {
                 userId : this.edit.userId,
                 name : this.edit.name,
+                mail : this.edit.mail,
                 phone : this.edit.phone,
                 password : this.edit.password,
                 newPassword : this.edit.newPassword,
@@ -105,6 +107,7 @@ export default {
                 .then(() => {
                     this.edit.userId = '';
                     this.edit.name = '';
+                    this.edit.mail = '';
                     this.edit.phone = '';
                     this.edit.password = '';
                     this.edit.newPassword = '';
@@ -150,6 +153,9 @@ export default {
                 throw new Error("usagehistory 데이터 가져오기 실패");
             }
         },
+        goToEditPassword() {
+        this.$router.push('/EditPassword' )
+        }
     }
 }
 </script>

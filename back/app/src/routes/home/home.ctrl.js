@@ -375,6 +375,14 @@ const process = {
         const response = await edit.update();
         res.json(response);
     },
+    submitPW: async (req, res) => {
+        const { password } = req.body;
+      
+        // Perform any necessary password submission logic here
+      
+        res.status(200).json({ message: "Password submitted successfully" });
+    },
+
     verifyToken : (req,res) => {
         const { token } = req.body;
 

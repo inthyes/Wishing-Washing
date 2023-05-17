@@ -20,6 +20,7 @@ import QnAVue from '@/views/QnA.vue'
 import WWNoticeVue from '@/views/WWNotice.vue'
 import NoticeDetail1Vue from '@/views/NoticeDetail1.vue'
 import NoticeDetail2Vue from '@/views/NoticeDetail2.vue'
+import EditPassword from '@/views/EditPassword.vue'
 
 //test
 import UploadFormVue from '@/views/UploadForm.vue'
@@ -73,6 +74,11 @@ const routes = [
     path: '/signup2',
     name: '회원가입2',
     component: SignUpForm2Vue
+  },
+  {
+    path: '/EditPassword',
+    name: '비밀번호수정',
+    component: EditPassword,
   },
   {
     path: '/addreview/:storeId/:orderNum',
