@@ -3,8 +3,8 @@
   <img src="https://capsule-render.vercel.app/api?type=waving&color=auto&height=200&section=header&text=capstone_DD846_team1&fontSize=50" />
 </div>
 <div align=center>
-	<h3>📚 Tech Stack 📚</h3>
-	<p>✨ Platforms & Languages ✨</p>
+	<h3>✨ Tech Stack ✨</h3>
+	<p>🪄 Platforms & Languages 🪄</p>
 </div>
 <div align="center">
   <img src="https://img.shields.io/badge/Vue-4FC08D?style=flat&logo=vuedotjs&logoColor=white"/>
@@ -23,9 +23,4 @@
   <img src="https://img.shields.io/badge/VSCode-007ACC?style=flat&logo=visualstudiocode&logoColor=white" />
   <img src="https://img.shields.io/badge/Github-181717?style=flat&logo=github&logoColor=white" />
   <img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=notion&logoColor=white" />
-</div>
-  <br>
-<div align="center">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=inthyes&layout=compact"><br><br>
-  <img src="https://github-readme-stats.vercel.app/api?username=inthyes&show_icons=true">
 </div>
