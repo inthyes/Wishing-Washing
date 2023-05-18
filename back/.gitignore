@@ -106,3 +106,4 @@ dist
 
 /app/logs/
 uploads/
+back/app/logs/access.log
