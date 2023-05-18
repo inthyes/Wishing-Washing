@@ -85,19 +85,32 @@ export default {
         };
     },
     async created() {
-        try {
-            const id = this.$route.params.id;
-            const res = await axios.get(`http://localhost:3000/laundry/detail/${id}/order`, {
-                withCredentials: true,
-                headers: { Cookie: document.cookie }
-            });
-            this.cart = res.data.cartRes;
-            this.addr = res.data.deliveryAddress;
-            this.laundry = res.data.laundryDetailRes;
-            this.totalPrice = res.data.totalPriceRes;
-        } catch (e) {
-            console.error(e);
-        }
+        const token = await localStorage.getItem("token");
+
+        if (token) {
+         this.verifyToken(token)
+        .then(async (isValidToken) => {
+            try {
+                const id = this.$route.params.id;
+                console.log(id);
+                const res = await axios.get(`http://localhost:3000/laundry/detail/${id}/order`, {
+                    withCredentials: true,
+                    headers: { Cookie: document.cookie }
+                });
+                this.cart = res.data.cartRes;
+                this.addr = res.data.deliveryAddress;
+                this.laundry = res.data.laundryDetailRes;
+                this.totalPrice = res.data.totalPriceRes;
+
+                console.log("isValidToken",isValidToken);
+            } catch (e) {
+                console.error(e);
+            }
+        });
+    }   else {
+              this.redirectToLogin();
+            // this.fetchNotLogin();
+    }
     },
     methods: {
         async submitData() {
@@ -120,7 +133,7 @@ export default {
                 this.selectTime = '10:00'
             }
             else {
-                this.selectTime = '아무떄나'
+                this.selectTime = '아무때나'
             }
             const data = {
                 date: dateYearMonth + this.selectDate.substring(0, 2),
@@ -161,6 +174,23 @@ export default {
             if (this.selectedDate !== null) {
                 const selectedDate = this.getDateRange(14)[this.selectedDate];
                 this.selectDate = selectedDate.toLocaleDateString(undefined, this.options);
+            }
+        },
+        redirectToLogin() {
+        this.$router.push("/login");
+        },
+        async verifyToken(token) {
+            try {
+                const response = await axios.post(
+                "http://localhost:3000/verify-token",
+                { token }
+                );
+                const data = response.data;
+                console.log(data);
+                console.log(token);
+                return data.isValid;
+            } catch (error) {
+                throw new Error("토큰 검증 실패");
             }
         },
     },
