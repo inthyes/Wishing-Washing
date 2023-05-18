@@ -19,7 +19,7 @@
 </div>
   <br>
 <div align="center">
-  <p>🛠 Tools 🛠</p>
+  <p>✒️ Tools ✒️</p>
   <img src="https://img.shields.io/badge/VSCode-007ACC?style=flat&logo=visualstudiocode&logoColor=white" />
   <a href="https://github.com/inthyes/capstone_DD846_team1">
     <img src="https://img.shields.io/badge/Github-181717?style=flat&logo=github&logoColor=white" />
