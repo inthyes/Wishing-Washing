@@ -15,6 +15,7 @@ router.post("/", (req, res) => {
   console.log("/login 호출됨");
   const id = req.body.id;
   const psword = req.body.psword;
+  const token = req.body.token;
 
   var json = {};
 
@@ -35,7 +36,7 @@ router.post("/", (req, res) => {
     console.log("DB 연결 성공");
 
     const exec = conn.query(
-      "select S_ID, salt, C_PW from CEO where C_ID='" + id + "';",
+      "select  U_PW, salt from users where U_ID='" + id + "';",
       (err, data) => {
         console.log("실행된 SQL: " + exec.sql);
         // sql 오류
@@ -58,27 +59,27 @@ router.post("/", (req, res) => {
             // 동일한 id 가 있으면 비밀번호 일치 확인
             console.log("아이디 존재");
             var salt = data[0].salt;
-            var psword_db = data[0].C_PW;
+            var psword_db = data[0].U_PW;
             console.log("data[0].salt",data[0].salt);
-            console.log("data[0].psword",data[0].psword);
+            console.log("data[0].psword",data[0].U_PW);
             const hash = crypto
               .createHash("sha512")
               .update(psword + salt)
               .digest("hex");
             console.log("hash",hash);
             console.log("psword_db",psword_db);
+            console.log("해시까지 완료");
             
             if (psword_db == hash) {
               var token = jwt.sign(
                 {
                   id: id, 
-                  s_id : data[0].S_ID
                 },
                 "secretKey", 
                 {
-                  subject: "LaundryPlatform jwtToken", 
                   expiresIn: "7d",
                   issuer: "LaundryPlatform",
+                  subject: "LaundryPlatform aqw", 
                 }
               );
                 console.log("토큰 생성",id, token);
@@ -101,4 +102,3 @@ router.post("/", (req, res) => {
 });
 
 module.exports = router;
-
