@@ -21,6 +21,10 @@
 <div align="center">
   <p>🛠 Tools 🛠</p>
   <img src="https://img.shields.io/badge/VSCode-007ACC?style=flat&logo=visualstudiocode&logoColor=white" />
-  <img src="https://img.shields.io/badge/Github-181717?style=flat&logo=github&logoColor=white" />
-  <img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=notion&logoColor=white" />
+  <a href="https://github.com/inthyes/capstone_DD846_team1">
+    <img src="https://img.shields.io/badge/Github-181717?style=flat&logo=github&logoColor=white" />
+  </a>
+  <a href="https://www.notion.so/1-62a7c2fafd9548f2b6776b367ecc50a1?pvs=4">
+    <img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=notion&logoColor=white" />
+  </a>
 </div>
