@@ -1,11 +1,14 @@
 <template>
-    <div id="laund-susbmit" class="mt-10 px-3">
+    <div id="laund-susbmit" class="mt-10 px-5">
         <v-card class="pa-5 mx-auto" max-width="400" elevation="0">
             <v-form @submit.prevent="submitData">
                 <v-row>
                     <v-col cols="12">
                         <h4 class="mb-5">{{ laundry.name }}</h4>
-                        <input class="form-control mb-3" placeholder="상세주소" v-model="requestAddr3"> <!-- 상세주소 값 넘기는거 기능 추가해야합니다 -->
+                        <!-- 쿠키에 저장된 현재주소 -->
+                        <p>{{ address2 }}</p>
+                        <!-- 상세주소 값 넘기는거 기능 추가해야합니다 -->
+                        <input class="form-control mb-3" placeholder="상세주소" v-model="requestAddr3"> 
                     </v-col>
                 </v-row>
                 <v-divider></v-divider>
@@ -57,7 +60,7 @@
                 </v-row>
                 <v-divider></v-divider>
 
-                <v-btn type="submit" color="light-blue-darken-4" block class="text-none mb-4" size="large" variant="tonal">
+                <v-btn type="submit" color="light-blue-darken-4" block class="text-none mb-4" size="x-large" variant="tonal">
                     세탁 예약하기 </v-btn>
             </v-form>
         </v-card>
@@ -71,6 +74,7 @@ export default {
     data() {
         const options = { weekday: 'long', day: 'numeric' };
         return {
+            address2: '',
             selection: null,        // 시간선택 - 그냥 다자인 요소에요..
             options,
             selectedDate: null,
@@ -107,11 +111,24 @@ export default {
                 console.error(e);
             }
         });
-    }   else {
+        }   else {
               this.redirectToLogin();
             // this.fetchNotLogin();
-    }
+        }
     },
+    mounted() {
+    // 'deliveryAddress2' 쿠키 가져오기
+    const deliveryAddress2Cookie = document.cookie
+      .split('; ')
+      .find(cookie => cookie.startsWith('deliveryAddress2='));
+
+    if (deliveryAddress2Cookie) {
+      const encodedValue2 = deliveryAddress2Cookie.split('=')[1];
+      const decodedValue2 = decodeURIComponent(encodedValue2);
+      this.address2 = JSON.parse(decodedValue2);
+      console.log(this.address2);
+    }
+  },
     methods: {
         async submitData() {
             const date = new Date();
