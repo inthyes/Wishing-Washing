@@ -11,7 +11,7 @@
 
   <div class="container">
     <!-- 다음 우편주소API -->
-    <v-field class="mx-auto mt-8 mb-5 px-5 py-2" max-width="300" height="50" density="compact" variant="solo"
+    <v-field class="mx-auto mt-8 mb-5 px-5 py-2" max-width="100" height="50" density="compact" variant="solo"
       append-inner-icon="mdi-magnify" single-line elevation="0" @click:append-inner="showApi" readonly>
       <p class="m-0 p-0">{{ address2 }}</p>
     </v-field>
@@ -45,7 +45,7 @@
       </div>
     </div>
   </div>
-  <v-img class="mt-15" :width="auto" aspect-ratio="16/9" src="..\assets\물결-removebg-preview.png" contain></v-img>
+  <!-- <v-img class="mt-15" :width="auto" aspect-ratio="16/9" src="..\assets\물결-removebg-preview.png" contain></v-img> -->
 </template>
 
 <script>
@@ -185,7 +185,7 @@ export default {
 
 @media only screen and (min-width: 1200px) {
   .carousel_img {
-    height: 680px
+    height: 660px
   }
 }
 @media only screen and (max-width: 477px) {
