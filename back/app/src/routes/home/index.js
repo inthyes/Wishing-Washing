@@ -23,15 +23,12 @@ router.get('/myEdit', ctrl.output.myEdit);
 
 router.use("/myPage", require("./myPage"));
 router.use("/laundry", require("./laundry"));
-router.use("/upload", require("./upload"));
 router.use(cookieParser());
 // router.use("/search", require("./search"));
 
 router.post("/like", ctrl.process.like);
 router.post("/review", ctrl.process.review);
-
 router.post("/edit", ctrl.process.edit);
-
 router.post("/verify-token", ctrl.process.verifyToken);
 // router.post("/upload", ctrl.process.upload);
 
