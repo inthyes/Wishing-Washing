@@ -115,7 +115,7 @@ async submitReview() {
         })
         .then(() => {
             // 리뷰 작성 후 폼 초기화
-            this.review.title = '';
+            // this.review.title = '';
             this.review.content = '';
             this.review.rating = 0;
             this.review.image = null;
