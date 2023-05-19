@@ -60,7 +60,7 @@
                 </v-row>
                 <v-divider></v-divider>
 
-                <v-btn type="submit" color="light-blue-darken-4" block class="text-none mb-4" size="x-large" variant="tonal">
+                <v-btn type="submit" color="light-blue-darken-4" block class="text-none mb-0" size="x-large" variant="tonal">
                     세탁 예약하기 </v-btn>
             </v-form>
         </v-card>
