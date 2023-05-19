@@ -1,20 +1,17 @@
-import { createStore } from 'vuex';
+// import Vue from 'vue';
+// import Vuex from 'vuex';
 
-const store = createStore({
-  state() {
-    return {
-      token: '',
-      id: '',
-    };
-  },
-  mutations: {
-    setToken(state, token) {
-      state.token = token;
-    },
-    setId(state, id) {
-      state.id = id;
-    },
-  },
-});
+// Vue.use(Vuex);
 
-export default store;
+// export default new Vuex.Store({
+//   state: {
+//     address: {
+//       address2: '',
+//     },
+//   },
+//   mutations: {
+//     setAddress2(state, address) {
+//       state.address.address2 = address;
+//     },
+//   },
+// });
