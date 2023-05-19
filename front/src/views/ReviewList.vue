@@ -3,14 +3,16 @@
 <template>
     <div id="review-list" class="mt-10 px-5">
         <h5>{{ userId }}님이 작성한 리뷰 </h5>
+        <v-divider></v-divider>
+
         <v-card v-for="r in reviews" :key="r.O_NUM" class="mx-auto mt-4" max-width="400" elevation="0">
             <!-- 세탁소정보 / 별점 / 날짜 -->
             <v-card-body>
-                <p class="card-text my-0">세탁소이름대신아이디 {{ r.S_ID }}></p>
+                <p class="card-text my-0">{{ r.S_NAME }} ></p>
                 <v-row class="mx-0 my-0">
                     <v-rating :model-value=r.REVIEW_STAR color="amber" density="compact" half-increments readonly
                         size="small">{{ r.REVIEW_STAR }}</v-rating>
-                    <p class="text-grey ms-2">{{ r.REGI_DATE.slice(0, 10) }} / {{ r.REGI_DATE.slice(11, 19) }} / {{ getTimeAgo(r.REGI_DATE) }}</p>
+                    <p class="text-grey ms-2">{{ r.REGI_DATE.slice(0, 10) }} ({{ getTimeAgo(r.REGI_DATE) }})</p>
                 </v-row>
             </v-card-body>
             <!-- 리뷰 사진 -->
@@ -21,12 +23,12 @@
                 <h5 class="card-title mt-3">{{ r.REVIEW_TITLE }}</h5>
                 <p class="card-text mt-2">{{ r.REVIEW_TEXT }}</p>
             </v-card-body>
-            <v-card-actions  class="mx-0 px-0 pt-5">
+            <v-card-actions class="mx-0 px-0 pt-5">
                 <!-- 작성한 사용자만 수정 삭제 가능 -->
-                <v-btn  variant="flat" class="custom-btn flex-grow-1" color="light-blue-darken-4"  v-if="isEditable(r)" >
+                <v-btn variant="flat" class="custom-btn flex-grow-1" color="light-blue-darken-4" v-if="isEditable(r)">
                     수정
                 </v-btn>
-                <v-btn  variant="outlined" class="custom-btn flex-grow-1" color="light-blue-darken-4" v-if="isEditable(r)">
+                <v-btn variant="outlined" class="custom-btn flex-grow-1" color="light-blue-darken-4" v-if="isEditable(r)">
                     삭제
                 </v-btn>
             </v-card-actions>

@@ -1,23 +1,23 @@
 <template>
-        <v-bottom-navigation v-model="value" color="teal" mode="shift" >
-            <v-btn router-link to="/">
+        <v-bottom-navigation class="bt-navbar" v-model="value" color="light-blue-darken-4" mode="shift" grow>
+            <v-btn router-link to="/" class="nav-btn">
                 <v-icon>mdi-home</v-icon>
-                    <span>HOME</span>
+                    <span>&nbsp;&nbsp;HOME&nbsp;&nbsp;</span>
             </v-btn>
 
-            <v-btn to="/aroundlaundry">
+            <v-btn to="/aroundlaundry" class="nav-btn">
                 <v-icon>mdi-washing-machine</v-icon>
                     <span>주변세탁소</span>
             </v-btn>
 
-            <v-btn to="/usagehistory">
+            <v-btn to="/usagehistory" class="nav-btn">
                 <v-icon>mdi-format-list-bulleted</v-icon>
                     <span>이용내역</span>
             </v-btn>
 
-            <v-btn to="/mypage">
+            <v-btn to="/mypage" class="nav-btn">
                 <v-icon>mdi-account-outline</v-icon>
-                    <span>MY</span>
+                    <span>&nbsp;&nbsp;&nbsp;MY&nbsp;&nbsp;&nbsp;</span>
             </v-btn>
         </v-bottom-navigation>
 </template>
@@ -27,12 +27,14 @@ export default {
     data: () => ({ value: null }),
 }
 </script>
-<!-- 
+
 <style scoped>
-/* Add custom styles to adjust spacing */
-.v-btn {
-    margin: 0;
-    padding: 0;
-    /* Add any other custom styles as needed */
+.bt-navbar {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }
-</style> -->
+.nav-btn {
+    width: (100% / 4);
+    padding-inline: 0;
+}
+</style>

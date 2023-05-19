@@ -17,13 +17,13 @@
                 <div class="text-grey ms-2">{{ laundry.stars }}</div>
             </v-row>
 
-            <v-card-subtitle class="pt-0" id="laund-PHONE">
+            <v-card-text class="pt-0 py-2" id="laund-address">
                 <!-- 도로명 주소 --> <!-- 상세주소 -->
-                <div id="laund-address">{{ laundry.S_ADDR2 }}</div>
-                <div id="laund-address">{{ laundry.S_ADDR3 }}</div>
-            </v-card-subtitle>
+                <div id="laund-address2">{{ laundry.S_ADDR2 }}</div>
+                <div id="laund-address3">{{ laundry.S_ADDR3 }}</div>
+            </v-card-text>
 
-            <v-card-text class="py-2">
+            <v-card-text class="pt-0 py-2">
                 <!-- 소개글 -->
                 <div id="laund-comment">{{ laundry.S_COMMENT }}</div>
             </v-card-text>
@@ -205,8 +205,9 @@ export default {
                     },
                 })
                 .then((response) => {
-                    this.aroundlaundryData = response.data;
+                    this.laundrys = response.data;
                     console.log(response);
+                    console.log(response.data);
                 })
                 .catch((error) => {
                     console.error(error);
