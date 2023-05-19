@@ -75,7 +75,20 @@
                 </v-window-item>
                 <v-window-item value="tab-2">
                     <div class="text-black mx-6 mt-2">
-                        {{ review }}
+                     <v-container fluid>
+            <v-row>
+                <v-col v-for="r in review" :key="r.O_NUM" cols="12" md="6" lg="4">
+  <v-card>
+    <v-img v-if="r.imageUrl" :src="r.imageUrl" width="100%" height="auto"></v-img>
+    <v-card-actions>{{ r.REVIEW_STAR }}점</v-card-actions>
+    <v-card-title>{{ r.REVIEW_TITLE }}</v-card-title>
+    <v-card-text>{{ r.REVIEW_TEXT }}</v-card-text>
+  </v-card>
+
+                </v-col>
+            </v-row>
+        </v-container>
+                      
                     </div>
                 </v-window-item>
             </v-window>
@@ -101,6 +114,17 @@
 <script>
 import axios from 'axios';
 
+function arrayBufferToBase64(buffer) {
+  let binary = '';
+  const bytes = new Uint8Array(buffer);
+  const len = bytes.byteLength;
+  for (let i = 0; i < len; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return window.btoa(binary);
+}
+
+
 export default {
     data: () => ({
         loading: false,
@@ -110,16 +134,22 @@ export default {
         submits: [],        // submits.json      
         product: [],
         review: [],
-        reviewStar : {},
-        likeStatus : {},
+
+        reviewStar: {},
+        likeStatus: {},
         countReview : {},
+         imageUrl: "",
+
 
         tab: 'Appetizers',  // 세탁/수선 & 리뷰 탭
         isWished: false,    // 찜버튼
 
     }),
     async created() {
+        
         try {
+            await this.getImageUrl(); // 이미지 URL 가져오기
+            
             const id = this.$route.params.id;
             const res = await axios.get(`http://localhost:3000/laundry/detail/${id}`, {
                 withCredentials: true,
@@ -127,24 +157,51 @@ export default {
                     Cookie: document.cookie, // 쿠키를 요청에 추가
                 },
             });
-                this.laundry = res.data.laundryDetail;
-                this.product = res.data.productDetail;
-                this.review = res.data.review;
-                this.reviewStar = res.data.reviewStar;
-                this.likeStatus = res.data.userLike;
-                this.countReview = res.data.countReview;
+            this.laundry = res.data.laundryDetail;
+            this.product = res.data.productDetail;
+            this.review = res.data.review;
+            this.reviewStar = res.data.reviewStar;
+            this.likeStatus = res.data.userLike;
+            this.countReview = res.data.countReview;
+
+            this.review.forEach((r, index) => {
+            r.imageUrl = this.reviewImages[index];
+            
+        });
         } catch (e) {
             console.error(e);
         }
     },
     methods: {
+   async getImageUrl() {
+  try {
+    const res = await axios.get(`http://localhost:3000/upload/laundryReview/${this.$route.params.id}`);
+    console.log(res);
+
+    this.reviewImages = res.data.map(item => {
+      if (item.review_img) {
+        
+        const base64 = arrayBufferToBase64(item.review_img.data);
+        
+        return `data:image/png;base64,${base64}`;
+      }
+      return null;
+    });
+
+   
+  } catch (error) {
+    console.error(error);
+  }
+   }
+
+
         // reserve() {
         //     this.loading = true
 
         //     setTimeout(() => (this.loading = false), 2000)
         // },
 
-
+        },
         toggleWish(likeStatus) {
             //const laundry = this.laundrys.find(l => l.id === laundryId);
 
@@ -192,7 +249,7 @@ export default {
                 console.error(e);
             }
         }
-    },
-
+    
+    
 };
 </script>

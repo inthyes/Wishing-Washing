@@ -15,7 +15,7 @@
                     <span>이용내역</span>
             </v-btn>
 
-            <v-btn to="/mypage" class="nav-btn">
+            <v-btn to="/mypage2" class="nav-btn">
                 <v-icon>mdi-account-outline</v-icon>
                     <span>&nbsp;&nbsp;&nbsp;MY&nbsp;&nbsp;&nbsp;</span>
             </v-btn>

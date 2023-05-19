@@ -277,6 +277,7 @@ const output ={
             //console.log(req.params.id);
             const review = new Review(S_ID, "codus");
             const RV = await review.showReview();
+
             const reviewStar = await review.averageStar(S_ID);
             const countReview = await review.countReview(S_ID);
 
@@ -288,8 +289,10 @@ const output ={
               productDetail: productDetailRes,
               review : RV,
               reviewStar : reviewStar,
+
               userLike : userLike,
               countReview : countReview
+
             });
 
 
@@ -374,6 +377,7 @@ const process = {
     },
 
     review : async (req,res) => {
+        //console.log(req.body);
         const review = new Review(req.body, "codus");
         const response = await review.update();
         console.log(response);
@@ -384,6 +388,7 @@ const process = {
         const response = await edit.update();
         res.json(response);
     },
+
     verifyToken : (req,res) => {
         const { token } = req.body;
 
