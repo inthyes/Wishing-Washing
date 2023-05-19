@@ -96,7 +96,7 @@ export default {
           this.edit.name = '';
           this.edit.mail = '';
           this.edit.phone = '';
-          this.$router.push('/mypage');
+          this.$router.push('/mypage2');
         })
         .catch(error => {
           console.error(error);
