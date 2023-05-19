@@ -1,31 +1,21 @@
 <!-- 사용자 홈 -->
-<!--서혜린-->
 
 <template>
-  <!-- 캐러쉘 -->
+  <!-- 캐러셀 -->
   <v-carousel cycle height="auto" hide-delimiter-background show-arrows="hover" class="carousel">
-    <v-carousel-item v-for="slide in slides" :key="slide.id">
-      <v-img :src="slide.imageSrc" :alt="slide.altText" height="100%" contain></v-img>
+    <v-carousel-item v-for="slide in slides2" :key="slide.id">
+      <!-- <v-carousel-item v-for="slide in slides2" :key="slide.id"> -->
+      <v-img class="carousel_img" :src="slide.imageSrc" :alt="slide.altText" aspect-ratio="4/3" cover></v-img>
     </v-carousel-item>
   </v-carousel>
+
   <div class="container">
-
-    <v-text-field class="mx-auto mt-8 mb-5 px-5" max-width="300" density="compact" variant="solo"
-      append-inner-icon="mdi-magnify" single-line elevation="0" @click:append-inner="showApi" readonly>
-    <p>{{ addr1 }}</p>
-    </v-text-field>
-    <p append-inner-icon="mdi-magnify" @click:append-inner="showApi">{{ addr1 }}</p>
-
     <!-- 다음 우편주소API -->
-    <div class="daummap">
-      <v-card color="white" class="card-with-icon mx-auto my-5" max-width="400" @click="showApi">
-        <div class="d-flex align-center">
-          <p>{{ addr1 }}</p>
-          <v-icon>mdi-magnify</v-icon>
-        </div>
-      </v-card>
-      <!-- <div ref="embed"></div> -->
-    </div>
+    <v-field class="mx-auto mt-8 mb-5 px-5 py-2" max-width="300" height="50" density="compact" variant="solo"
+      append-inner-icon="mdi-magnify" single-line elevation="0" @click:append-inner="showApi" readonly>
+      <p class="m-0 p-0">{{ address2 }}</p>
+    </v-field>
+
 
     <div class="cards">
       <!-- 추천 세탁소 -->
@@ -54,15 +44,8 @@
         </div>
       </div>
     </div>
-
-
   </div>
-      <v-img
-      :width="auto"
-      aspect-ratio="16/9"
-      cover
-      src="..\assets\물결-removebg-preview.png"
-    ></v-img>
+  <v-img class="mt-15" :width="auto" aspect-ratio="16/9" src="..\assets\물결-removebg-preview.png" contain></v-img>
 </template>
 
 <script>
@@ -72,6 +55,7 @@ export default {
   data() {
     return {
       userId: null,
+      address2: '',
       slides: [
         {
           imageSrc: require('@/assets/images/001.jpg'),
@@ -94,12 +78,48 @@ export default {
           altText: 'Fifth Slide',
         },
       ],
-      addr1: ''
+
+      slides2: [
+        {
+          imageSrc: require('@/assets/images/001A.jpg'),
+          altText: 'First Slide',
+        },
+        {
+          imageSrc: require('@/assets/images/002A.jpg'),
+          altText: 'Second Slide',
+        },
+        {
+          imageSrc: require('@/assets/images/003A.jpg'),
+          altText: 'Third Slide',
+        },
+        {
+          imageSrc: require('@/assets/images/004A.jpg'),
+          altText: 'Fourth Slide',
+        },
+        {
+          imageSrc: require('@/assets/images/005A.jpg'),
+          altText: 'Fifth Slide',
+        },
+      ],
     }
   },
   mounted() {
-    this.userId = localStorage.getItem("userId");
-    this.addr1 = localStorage.getItem('addr1');
+    // this.userId = localStorage.getItem("userId");
+    // this.addr1 = localStorage.getItem('addr1');
+
+    // 'deliveryAddress2' 쿠키 가져오기
+    const deliveryAddress2Cookie = document.cookie
+      .split('; ')
+      .find(cookie => cookie.startsWith('deliveryAddress2='));
+
+    if (deliveryAddress2Cookie) {
+      const encodedValue2 = deliveryAddress2Cookie.split('=')[1];
+      const decodedValue2 = decodeURIComponent(encodedValue2);
+      this.address2 = JSON.parse(decodedValue2);
+      console.log(this.address2);
+
+      // Perform any necessary operations with 'address2'
+    }
   },
   async created() {
     try {
@@ -109,6 +129,7 @@ export default {
           Cookie: document.cookie, // 쿠키를 요청에 추가
         },
       });
+
     } catch (e) {
       console.error(e);
     }
@@ -136,6 +157,7 @@ export default {
 
           const date = new Date();
           date.setTime(date.getTime() + 30 * 24 * 60 * 60 * 1000);
+
           const jsonValue = JSON.stringify(data.zonecode);
           const encodedValue = encodeURIComponent(jsonValue);
           console.log(encodedValue);
@@ -150,15 +172,26 @@ export default {
         // }).embed(this.$refs.embed)
       }).open();
     },
-  }
+  },
 }
 </script>
 
 <style>
-/* 캐러쉘 */
+/* 캐러셀 */
 .carousel {
   margin-bottom: 10px;
   padding-inline: 0px;
+}
+
+@media only screen and (min-width: 1200px) {
+  .carousel_img {
+    height: 680px
+  }
+}
+@media only screen and (max-width: 477px) {
+  .carousel_img {
+    height: 250px
+  }
 }
 
 /* 나머지 컨텐츠 */
@@ -174,24 +207,29 @@ export default {
 }
 
 .top {
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .title {
   font-size: 24px;
   font-weight: bold;
+  margin-top:10px;
+  margin-bottom: 5px;
 }
 
 .subtitle {
-  font-size: 12px;
+  font-size: 15px;
+  margin-bottom: 10px;
   /* margin-top: -5px; */
 }
 
 .contents {
   background-color: rgba(237, 237, 237, 0.728);
   border-radius: 10px;
-  padding: 20px;
-  margin-bottom: 20px;
+  padding-inline: 20px;
+  padding-top: 20px;
+  padding-bottom: 5px;
+  /* margin-bottom: 20px; */
 }
 
 .map-image {

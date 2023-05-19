@@ -11,8 +11,8 @@
           <v-col style="margin-top: 14px;">
             <v-card-text id="userInfo">
               <div id="userName" style="font-size: large;"><b>{{ mypageData.U_NAME }}</b></div>
-              <!-- <div id="userAddr" style="margin-top: 5px;">{{ mypageData.userAddr }}</div> -->
-              <div id="userAddr" style="margin-top: 5px;">{{ mypageData.U_PHONE }}</div>
+              <div id="userPhone" style="margin-top: 5px;">{{ mypageData.U_PHONE }}</div>
+              <div id="userEmail" style="margin-top: 5px;">{{ mypageData.U_MAIL }}</div>
             </v-card-text>
           </v-col>
           <v-col style="margin-top: 30px; margin-right: -35%;">
