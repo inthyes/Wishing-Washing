@@ -2,7 +2,7 @@
   <v-app>
     <!-- 상단 Appbar -->
     <v-app-bar v-if="!isLogin" app class="rounded-bottom" :elevation="1"
-      style="background-color:rgba(97, 151, 202, 0.874)" :style="{ color: '#ffffff' }">
+      style="background-color:rgba(97, 151, 202, 0.874)" :style="{ color: '#ffffff' }" height="75">
 
       <!-- 버튼 : 앱바 맨 왼쪽 고정 -->
       <template v-slot:prepend>
