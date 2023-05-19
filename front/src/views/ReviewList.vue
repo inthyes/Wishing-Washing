@@ -46,6 +46,7 @@ export default {
         reviews: []
     }),
     async created() {
+
         try {
             const res = await axios.get('http://localhost:3000/myPage/review');
             this.reviews = res.data;
