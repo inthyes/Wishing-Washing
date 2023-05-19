@@ -13,12 +13,13 @@ router.post("/", async (req, res) => {
   console.log(req.url, req.method);
 
   const paramId = req.body.id;
+  const parammail = req.body.mail;
   const paramName = req.body.name;
+  const paramPhone = req.body.phone;
+  const paramNum = req.body.num; //사업자번호 받기
+  const paramS_ID = req.body.S_ID; //세탁소ID 찾아서 받기
   const paramPsword = req.body.psword;
   const paramPswordCheck = req.body.confirmPsword;
-  const paramPhone = req.body.phone;
-  const paramMail = req.body.email;
-  console.log("받은 데이터 : ", paramId,paramName,paramPsword, paramPswordCheck);
   
   db.getConnection((err, conn) => {
     if (err) {
@@ -33,7 +34,7 @@ router.post("/", async (req, res) => {
     }
 
     // 중복 검사
-    const query = "SELECT COUNT(*) AS count FROM USERS WHERE U_ID = ?";
+    const query = "SELECT COUNT(*) AS count FROM CEO WHERE C_ID = ?";
     conn.query(query, [paramId], (err, result) => {
       if (err) {
         console.log("SQL 실행 시 오류 발생_아이디 중복 검사");
@@ -79,8 +80,8 @@ router.post("/", async (req, res) => {
 
 
     const exec = conn.query(
-      "insert into USERS (U_ID, U_NAME, U_PW, U_PHONE, U_MAIL, salt) values (?, ?, ?, ?, ?, ?);",
-      [paramId, paramName,hashPsword, paramPhone, paramMail, salt],
+      "insert into CEO (C_ID, S_MAIL, C_NAME, C_PHONE,S_NUM, S_ID, C_PW, SALT) values (?, ?, ?, ?, ?, ? , ?, ?);",
+      [paramId, parammail, paramName,paramPhone,paramNum, paramS_ID, hashPsword, salt],
       
       (err, result) => {
         conn.release();

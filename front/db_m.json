@@ -29,6 +29,16 @@
       "tel": "02-1234-3822",
       "notice": "없음",
       "id": 3
+    },
+    {
+      "laundryName": "ㅁㄴㅇㅎ",
+      "laundryAddr": "ㅎㅎㅁㄴㅇㅎ",
+      "intro": "ㅎㅇㄴㅁㄴㅇㅎㅁㄴㅇㅎ",
+      "openTime": "15:02",
+      "closeTime": "16:02",
+      "tel": "123-2222-4444",
+      "notice": "ㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹ",
+      "id": 4
     }
   ],
   "requests": [
@@ -40,17 +50,7 @@
       "requirement": "드라이클리닝 해주세요",
       "price": "10,000원",
       "userAddr": "경기도 수원시 영통구 경기대학교",
-      "status": "요청중"
-    },
-    {
-      "id": 5,
-      "date": "2023.03.18",
-      "userId": "wlrkdy",
-      "name": "구두",
-      "requirement": "변색 복구해주세요",
-      "price": "8,000원",
-      "userAddr": "경기도 수원시 AA빌라",
-      "status": "배송완료"
+      "status": "배송중"
     }
   ],
   "reviews": [
@@ -62,7 +62,7 @@
       "stars": "5",
       "reviewContent": "깨끗하게 잘해주셨어요",
       "reply": "",
-      "replyValue": ""
+      "replyValue": "ㅁㄴㅇㄹ"
     },
     {
       "id": 2,
