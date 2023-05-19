@@ -16,4 +16,4 @@ const db = mysql.createPool({
 
 // db.connect();
 
-module.exports =db;
+module.exports = db;
