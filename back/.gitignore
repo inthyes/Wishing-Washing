@@ -108,4 +108,4 @@ dist
 uploads/
 
 back/app/logs/access.log
-back/app/src/config/db.js
+# back/app/src/config/db.js
