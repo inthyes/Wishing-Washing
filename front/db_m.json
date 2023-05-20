@@ -80,7 +80,7 @@
       "requirement": "없음",
       "price": "7,000원",
       "userAddr": "경기대학교 기숙사",
-      "status": 2
+      "status": 1
     },
     {
       "laundryId": 1,
@@ -166,7 +166,7 @@
     {
       "id": 1,
       "productImg": "https://source.unsplash.com/featured/?clothes",
-      "productName": "상",
+      "productName": "상의",
       "price": "5000"
     },
     {
