@@ -1,7 +1,8 @@
-const express = require('express');
 //const bodyParser = require('body-parser');
-const multer = require('multer');
+const express = require('express');
 const app = express();
+const multer = require('multer');
+const path = require('path');
 const cors = require('cors');
 app.use(cors());
 
@@ -16,22 +17,36 @@ app.use((req, res, next) => {
   next();
 });
 
-///// 이미지 업로드/////
 
-// multer를 사용하여 이미지 업로드를 처리하는 미들웨어 생성
-const upload = multer({ dest: 'uploads/' });
-// 이미지 업로드 처리 엔드포인트
-app.post('/upload', upload.single('image'), (req, res) => {
-  const file = req.file;
-  if (!file) {
-    return res.status(400).json({ message: '이미지 파일이 없습니다.' });
+///// 이미지 업로드 /////
+
+// 이미지 저장을 위한 multer 설정
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/'); // 이미지를 저장할 폴더 경로
+  },
+  filename: (req, file, cb) => {
+    const fileName = file.originalname;
+    cb(null, fileName); // 이미지 파일명
   }
-  // 업로드 성공 응답
-  const imagePath = `uploads/${file.filename}`;
-  res.status(200).json({ message: '이미지 업로드 성공', imagePath });
 });
-// 서버 포트 설정
-const port = 4000;
-app.listen(port, () => {
-  console.log(`서버가 http://localhost:${port} 에서 실행 중입니다.`);
+
+// 이미지를 받아서 저장하는 미들웨어 생성
+const upload = multer({ storage: storage });
+
+// 이미지 업로드 처리 라우트
+app.post('/upload', upload.single('image'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).send('No file uploaded');
+  }
+  const imagePath = `uploads/${req.file.filename}`;
+  res.status(200).send({imagePath});
+});
+
+// uploads 디렉토리 파일을 정적 파일로 제공
+app.use('/uploads', express.static('uploads'));
+
+// 서버 시작
+app.listen(2000, () => {
+  console.log('Server is running on port 2000');
 });
