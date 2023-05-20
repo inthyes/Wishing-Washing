@@ -4,11 +4,11 @@
 <template>
     <v-card class="mx-auto my-5" max-width="400" elevation="0">
         <v-tabs v-model="tab" stacked grow>
-                    <v-tab value="add" @click="clickAddTab()">세탁소 등록</v-tab>
-                    <v-tab value="edit" @click="clickEditTab()">세탁소 수정</v-tab>
+            <!--<v-tab value="add" @click="clickAddTab()">세탁소 등록</v-tab>-->
+            <v-tab value="edit">세탁소 수정</v-tab>
         </v-tabs>
 
-        <div v-if="tab === 'add'">
+        <!--<div v-if="tab === 'add'">
             <v-container>
                 <v-text-field v-model="laundryName" :rules="[rules.required]" 
                     color="blue" label="세탁소명" placeholder="세탁소 이름을 입력해주세요" variant="underlined"></v-text-field><br>
@@ -36,7 +36,7 @@
                 <v-text-field v-model="notice" :rules="[rules.required]" 
                     color="blue" label="공지사항" placeholder="공지사항을 작성해주세요" variant="underlined"></v-text-field><br>
 
-                <v-file-input v-model="image" :rules="[rules.required]"
+                <v-file-input v-model="image" @change="handleFileUpload" :rules="[rules.required]"
                     color="blue" label="세탁소 이미지" variant="outlined"></v-file-input>
             </v-container>
 
@@ -46,14 +46,17 @@
                 <v-spacer></v-spacer>
                 <v-btn color="#0C70FE" @click="addManageLaundrys()" style="background-color: #e1ecfe;">등록</v-btn>
             </v-card-actions>
-        </div>
+        </div>-->
 
         <div v-if="tab === 'edit'">
-            <v-container>
+            <v-container><br>
                 <v-text-field v-model="laundryName" :rules="[rules.required]" 
                     color="blue" label="세탁소명" placeholder="세탁소 이름을 입력해주세요" variant="underlined"></v-text-field><br>
 
-                <v-text-field v-model="laundryAddr" :rules="[rules.required]" 
+                <v-text-field v-model="laundryAddr1" :rules="[rules.required]" 
+                    color="blue" label="우편번호" placeholder="우편번호를 입력해주세요" variant="underlined"></v-text-field><br>    
+
+                <v-text-field v-model="laundryAddr2" :rules="[rules.required]" 
                     color="blue" label="주소" placeholder="세탁소 주소를 입력해주세요" variant="underlined"></v-text-field><br>    
 
                 <v-text-field v-model="intro" :rules="[rules.minRules]" 
@@ -76,7 +79,7 @@
                 <v-text-field v-model="notice" :rules="[rules.required]" 
                     color="blue" label="공지사항" placeholder="공지사항을 작성해주세요" variant="underlined"></v-text-field><br>
 
-                <v-file-input v-model="image" :rules="[rules.required]"
+                <v-file-input v-model="image" @change="handleFileUpload" :rules="[rules.required]"
                     color="blue" label="세탁소 이미지" variant="outlined"></v-file-input>
             </v-container>
 
@@ -98,13 +101,15 @@ export default {
         return {
             tab: null,
             laundryName: null,
-            laundryAddr: null,
+            laundryAddr1: null,
+            laundryAddr2: null,
             intro: null,
             openTime: null,
             closeTime: null,
             tel: null,
             notice: null,
             image: null,
+            selectedImage: null,
 
             managelaundrys: [],
             rules: {
@@ -114,8 +119,14 @@ export default {
             },
         }
     },
+    created() {
+        this.clickEditTab();
+    },
     methods: {
-        async addManageLaundrys() {
+        handleFileUpload(event) {
+            this.selectedImage = event.target.files[0];
+        },
+        /*async addManageLaundrys() {
             if (
             this.rules.required(this.laundryName) === true && 
             this.rules.required(this.laundryAddr) === true && 
@@ -136,30 +147,25 @@ export default {
                     closeTime: this.closeTime,
                     tel: this.tel,
                     notice: this.notice,
+                    image: '',
                 };
-                    
-                // 이미지 업로드를 위한 폼 데이터
+
+                //이미지 업로드
                 const formData = new FormData();
-                formData.append('image', this.image);
+                formData.append('image', this.selectedImage);
 
                 try {
-                    // 이미지 업로드 API 엔드포인트 호출
-                    axios.post('http://localhost:4000/upload', formData)
-                        .then(response => {
-                            // 이미지 업로드 성공 시 처리 로직
-                            console.log(response.data.message);
-                            console.log('업로드된 이미지 경로:', response.data.imagePath);
+                    // 이미지 업로드
+                    const res = await axios.post('http://localhost:2000/upload', formData);
+                    console.log('Image uploaded successfully');
+                    const imagePath = res.data; // 업로드된 이미지 경로
+                    console.log('업로드된 이미지 경로:', imagePath);
+                    // 이미지 경로를 newLaundry 객체에 추가
+                    newLaundry.image = imagePath.imagePath; // imagePath의 imagePath 프로퍼티를 할당
 
-                            // 이미지 경로를 Vue 컴포넌트에 할당
-                            newLaundry.imagePath = response.data.imagePath;
-                        })
-                        .catch(error => {
-                            // 이미지 업로드 실패 시 처리 로직
-                            console.error(error);
-                        });
-
+                    // 폼 데이터 업로드
                     const response = await axios.post('http://localhost:5001/managelaundrys', newLaundry);
-                    const createdLaundryId = response.data.id; // 생성된 아이디를 저장
+                    const createdLaundryId = response.data.id; // 생성된 아이디 db 저장
                     console.log('데이터가 성공적으로 추가되었습니다.');
                     this.showAlert('세탁소 정보가 등록되었습니다.');
                     console.log('생성된 세탁소 아이디:', createdLaundryId);
@@ -192,7 +198,7 @@ export default {
             } catch (error) {
                 console.error(error);
             }
-        },
+        },*/
         async clickEditTab() {
             try {
                 const response = await axios.get(`http://localhost:5001/managelaundrys/1`);
@@ -200,7 +206,8 @@ export default {
 
                 // 세탁소 정보를 받아와서 폼에 할당
                 this.laundryName = laundryData.laundryName;
-                this.laundryAddr = laundryData.laundryAddr;
+                this.laundryAddr1 = laundryData.laundryAddr1;
+                this.laundryAddr2 = laundryData.laundryAddr2;
                 this.intro = laundryData.intro;
                 this.openTime = laundryData.openTime;
                 this.closeTime = laundryData.closeTime;
@@ -213,7 +220,8 @@ export default {
         async editManageLaundrys() {
             if (
             this.rules.required(this.laundryName) === true && 
-            this.rules.required(this.laundryAddr) === true && 
+            this.rules.required(this.laundryAddr1) === true && 
+            this.rules.required(this.laundryAddr2) === true && 
             this.rules.minRules(this.intro) === true &&
             this.rules.required(this.openTime) === true && 
             this.rules.required(this.closeTime) === true &&
@@ -225,15 +233,26 @@ export default {
                 // 새로운 세탁소 데이터 객체
                 const newLaundry = {
                     laundryName: this.laundryName,
-                    laundryAddr: this.laundryAddr,
+                    laundryAddr1: this.laundryAddr1,
+                    laundryAddr2: this.laundryAddr2,
                     intro: this.intro,
                     openTime: this.openTime,
                     closeTime: this.closeTime,
                     tel: this.tel,
                     notice: this.notice,
+                    image: '',
                 };
 
+                //이미지 업로드
+                const formData = new FormData();
+                formData.append('image', this.selectedImage);
+
                 try {
+                    const res = await axios.post('http://localhost:2000/upload', formData);
+                    console.log('Image uploaded successfully');
+                    const imagePath = res.data;
+                    newLaundry.image = imagePath.imagePath;
+
                     await axios.put('http://localhost:5001/managelaundrys/1', newLaundry);
                     console.log('데이터가 성공적으로 추가되었습니다.');
                     this.showAlert('세탁소 정보가 수정되었습니다.');
