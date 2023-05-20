@@ -172,6 +172,7 @@ export default {
         }
     },
     methods: {
+
         async getImageUrl() {
         try {
             const res = await axios.get(`http://localhost:3000/upload/laundryReview/${this.$route.params.id}`);
@@ -194,13 +195,13 @@ export default {
         },
 
 
+
         // reserve() {
         //     this.loading = true
 
         //     setTimeout(() => (this.loading = false), 2000)
         // },
 
-        
         toggleWish(likeStatus) {
             //const laundry = this.laundrys.find(l => l.id === laundryId);
 
@@ -248,5 +249,6 @@ export default {
                 console.error(e);
             }
         }
-    }}
+    }
+   }
 </script>
