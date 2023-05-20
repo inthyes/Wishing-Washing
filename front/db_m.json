@@ -77,7 +77,6 @@
       "price": "7,000원",
       "userAddr": "경기도 수원시 XX빌라",
       "status": -2
-
     },
     {
       "laundryId": 1,
@@ -186,7 +185,7 @@
     {
       "id": 3,
       "productImg": "https://source.unsplash.com/featured/?shoes",
-      "productName": "신발",
+      "productName": "신",
       "price": "8000"
     }
   ]

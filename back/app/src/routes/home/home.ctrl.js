@@ -36,33 +36,34 @@ const output ={
         logger.info(`GET /laundryAdmin 304 "세탁소관리 화면으로 이동"`);
         res.render("home/laundryAdmin");
     },
-    // productAdmin : async(req, res) => {
-    //     logger.info(`GET /productAdmin 304 "productAdmin 화면으로 이동"`);
-    //     const product = new Product("7", "7"); //세탁소아이디가 7이라고 가정
-    //     const productAdmin = await product.showProduct(); //세탁소상품 보여주기
-    //     console.log(productAdmin);
-    //     res.render("home/productAdmin",{
-    //         productAdmin
-    //     });
-    // },
-    productAdmin: async (req, res) => {
+    productAdmin : async(req, res) => {
         logger.info(`GET /productAdmin 304 "productAdmin 화면으로 이동"`);
-        const S_ID = req.params.S_ID; // 사용자 아이디
-
-
-        // const S_ID = req.params.S_ID;
-        const product = new Product(S_ID); // 세탁소 아이디가 7이라고 가정
-        const productAdmin = await product.showProduct(); // 세탁소 상품 보여주기
+        const product = new Product("7", "7"); //세탁소아이디가 7이라고 가정
+        const productAdmin = await product.showProduct(); // 세탁소상품 보여주기
+        const response = {
+            productAdmin: [productAdmin] // productAdmin을 배열에 담아 응답 데이터 구조 생성
+        };
         console.log(productAdmin);
-        console.log(product);
-        res.json({
-            userId,
-            // productAdmin
-          });
+        res.json(response);
+    },
+    // productAdmin: async (req, res) => {
+    //     logger.info(`GET /productAdmin 304 "productAdmin 화면으로 이동"`);
+    //     const S_ID = req.params.S_ID; // 사용자 아이디
+
+
+    //     // const S_ID = req.params.S_ID;
+    //     const product = new Product(S_ID); // 세탁소 아이디가 7이라고 가정
+    //     const productAdmin = await product.showProduct(); // 세탁소 상품 보여주기
+    //     console.log(productAdmin);
+    //     console.log(product);
+    //     res.json({
+    //         S_ID,
+    //         productAdmin
+    //       });
         // res.render("home/productAdmin", {
         //   productAdmin,
         // });
-      },
+    //   },
       
     // reviewAdmin : (req, res) => {
     //     logger.info(`GET /reviewAdmin 304 "review관리 화면으로 이동"`);
