@@ -20,6 +20,8 @@ import ManageOrder from '../views/ManageOrder.vue'
 import OrderDetails from '../views/OrderDetails.vue'
 import HistoryDetails from '../views/HistoryDetails.vue'
 
+import LoginFormVue from '@/views/LoginForm.vue'
+import SignUpFormVue from '@/views/SignUpForm.vue'
 
 const routes = [
   {
@@ -107,6 +109,17 @@ const routes = [
     name: 'historydetails',
     component: HistoryDetails
   },
+  {
+    path: '/login',
+    name: '로그인',
+    component: LoginFormVue
+  },
+  {
+    path: '/signup',
+    name: '회원가입',
+    component: SignUpFormVue
+  },
+
 ]
 
 const router = createRouter({

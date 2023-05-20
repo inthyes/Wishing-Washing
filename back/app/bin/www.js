@@ -2,7 +2,7 @@
 
 "use strict";
 
-const PORT = 3000;
+const PORT = 4000;
 const logger = require("../src/config/logger");
 const app = require("../app");
 

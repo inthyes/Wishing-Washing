@@ -5,8 +5,13 @@ const Review = require("../../models/Review");
 const Product = require("../../models/Product");
 const Edit = require("../../models/Edit");
 
-const jwt = require('jsonwebtoken');
 const router = require(".");
+
+
+const jwt = require("jsonwebtoken");
+const secretKey = 'secretKey'; // 비밀 키를 정의합니다.
+
+
 
 
 
@@ -145,6 +150,27 @@ const process = {
         // const RV = await review2.showReview();
         // res.render('home/reviewAdmin', { RV: RV });
     },
+
+    verifyToken : (req,res) => {
+        const { token } = req.body;
+
+        // 토큰 검증
+        jwt.verify(token,secretKey, (err, decoded) => {
+            if (err) {
+                // 토큰이 유효하지 않은 경우
+                return res.status(401).json({ message: '토큰이 유효하지 않습니다.' });
+                }
+
+                // 토큰이 유효한 경우
+                // 여기에서 추가적인 검증이나 처리를 수행할 수 있습니다.
+                // 예를 들어, decoded 객체에 저장된 정보를 확인하고 권한 검사를 수행할 수 있습니다.
+
+                // 검증에 성공한 경우, 클라이언트에게 성공 응답을 보냅니다.
+                console.log(token);
+                return res.status(200).json({ message: '토큰이 유효합니다.' });
+        });
+    },
+
 };
 
 module.exports = {

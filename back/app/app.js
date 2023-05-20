@@ -4,6 +4,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
+
+const cors = require('cors');
 // const dotenv = require("dotenv");
 
 
@@ -11,6 +13,15 @@ const app = express();
 // const logger = require("./src/config/logger");
 
 // dotenv.config();
+
+//cors설정
+app.use(cors({
+    origin: 'http://localhost:8081', // 허용할 도메인
+
+    methods: 'GET,POST', // 허용할 HTTP 메서드
+    credentials: true
+}
+));
 
 //라우팅
 const home = require("./src/routes/home");
