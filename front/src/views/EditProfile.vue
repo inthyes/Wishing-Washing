@@ -5,6 +5,14 @@
       </v-card-actions> -->
       <v-form>
         <br>
+        <div class="mb-5">
+                <label for="formFile" class="form-label">사진을 올려주세요</label>
+                <input class="form-control mb-2" type="file" id="edit.image" @change="handleImageUpload" accept="image/*" />
+                <div class="photo-container" :class="{ 'no-image': !selectedPhoto }" >
+                    <v-img :src="selectedPhoto" alt="Selected Photo"
+                        v-if="selectedPhoto" />
+                    <div v-else>No Image</div>
+                </div></div>
         <v-text-field v-model="edit.userId" label="아이디" readonly></v-text-field>
         <v-text-field v-model="edit.name" label="이름" readonly></v-text-field>
         <v-text-field v-model="edit.mail" :rules="[rules.emailRules]" label="이메일"></v-text-field>
@@ -37,7 +45,10 @@ export default {
         name: '', //이름
         mail: '',
         phone: '', //전화번호
+        image : null,
       },
+      
+      selectedPhoto: null,
       rules: {
         // 회원가입 유효성 검사
         required: value => !!value || '반드시 입력하세요',
@@ -53,6 +64,7 @@ export default {
     }
   },
   async created() {
+
     const token = localStorage.getItem("token");
 
     if (token) {
@@ -82,25 +94,63 @@ export default {
     }
   },
   methods: {
+    handleImageUpload(event){
+            const file = event.target.files[0];
+            this.edit.image = file;
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                this.selectedPhoto = e.target.result;
+                
+            };
+
+            reader.readAsDataURL(file);
+        },
     async save() {
       const newEdit = {
         userId: this.edit.userId,
         name: this.edit.name,
         mail: this.edit.mail,
-        phone: this.edit.phone
+        phone: this.edit.phone,
+        image: await this.edit.image,
       };
 
-      axios.post('http://localhost:3000/edit', newEdit)
+      axios.post('http://localhost:3000/edit', {
+            userId: newEdit.userId,
+            name : newEdit.name,
+            mail: newEdit.mail,
+            phone: newEdit.phone,
+            
+        })
         .then(() => {
           this.edit.userId = '';
           this.edit.name = '';
           this.edit.mail = '';
           this.edit.phone = '';
-          this.$router.push('/mypage');
+          this.edit.image = null;
         })
-        .catch(error => {
-          console.error(error);
-        });
+        .then(() => {
+          if (newEdit.image) {
+            const formData = new FormData();
+                formData.append('image', newEdit.image);
+                
+                axios
+                    .post('http://localhost:3000/upload/profile', formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                        },
+                    })
+                    .then(() => {
+                        console.log('이미지 업로드 완료');
+                    })
+                    .catch((error) => {
+                        console.error('이미지 업로드 실패:', error);
+                    });
+          }
+          this.$router.push('/MyPage2');
+            })
+        
+
     },
     async verifyToken(token) {
       try {
