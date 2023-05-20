@@ -23,6 +23,7 @@ router.get('/myEdit', ctrl.output.myEdit);
 
 router.use("/myPage", require("./myPage"));
 router.use("/laundry", require("./laundry"));
+router.use("/upload", require("./upload"));
 router.use(cookieParser());
 // router.use("/search", require("./search"));
 
