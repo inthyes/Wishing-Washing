@@ -31,7 +31,7 @@
                                             <!--  배송상태 : -2(수락 대기중) -1(세탁 진행중) 1(배송중) -->
                                             <div id="state">
                                                 배송상태&nbsp;|&nbsp;
-                                                <span v-if="h.DELIVERY_STATE === -2" style="color: red">수락 대기중</span>
+                                                <span v-if="h.DELIVERY_STATE === -2" style="color: rgb(236, 78, 78)">수락 대기중</span>
                                                 <span v-else-if="h.DELIVERY_STATE === -1">세탁 진행중</span>
                                                 <span v-else-if="h.DELIVERY_STATE === 1">배송중</span>
                                             </div>
@@ -79,7 +79,7 @@
                                         <!--  배송상태 : 2(배송완료) -->
                                         <div id="state">
                                             배송상태&nbsp;|&nbsp;
-                                            <span v-if="h.DELIVERY_STATE === 2">배송완료 ({{ h.COMPLETE_DATE }})</span>
+                                            <span v-if="h.DELIVERY_STATE === 2" style="color: rgb(26, 147, 203)">배송완료 ({{ h.COMPLETE_DATE }})</span>
                                         </div>
                                         <!-- 선택날짜/시간 -->
                                         <div id="select">선택날짜&nbsp;|&nbsp;&nbsp;{{ h.DELIVERY_DAY }} ({{ h.DELIVERY_TIME }})
