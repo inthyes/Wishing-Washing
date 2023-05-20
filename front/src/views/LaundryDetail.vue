@@ -100,7 +100,7 @@
                 <v-btn icon @click="toggleWish(likeStatus)">
                     <v-icon :color="likeStatus ? 'red' : ''">{{ likeStatus ? 'mdi-heart' : 'mdi-heart-outline' }}</v-icon>
                 </v-btn>
-                <v-btn class="flex-grow-1 mr-3" color="light-blue-darken-4" size="large" variant="tonal" @click="submitData">
+                <v-btn class="flex-grow-1 mr-3" color="light-blue-darken-4" size="x-large" variant="tonal" @click="submitData">
                     세탁신청
                 </v-btn>
                 <!-- <router-link :to="{ name: 'submitlaundry', params: { id: laundry.id } }">

@@ -104,7 +104,7 @@ export default {
     }
   },
   mounted() {
-    // this.userId = localStorage.getItem("userId");
+    this.userId = localStorage.getItem("userId");
     // this.addr1 = localStorage.getItem('addr1');
 
     // 'deliveryAddress2' 쿠키 가져오기
