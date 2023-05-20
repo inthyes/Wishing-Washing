@@ -1,18 +1,17 @@
-<!--공지사항 내용-->
+<!--공지사항 내용 2-->
 <!--서혜린-->
 
 <template>
     <div class="notice" style="margin-top: 30px;">
         <v-card class="mx-auto my-5" max-width="500" flat>
-
             <v-row>
               <v-col style="height: 80px;">
                 <v-card-text style="font-size: medium;"><b>리뷰 정책 안내</b></v-card-text>
-                <v-card-text style="margin-top: -20px;">2023.02.01</v-card-text>
+                <v-card-text style="margin-top: -25px;">2023.02.01</v-card-text>
               </v-col>
-              <v-divider class="mx-1 mb-1"></v-divider>
+              <v-divider class="mx-1 mb-1" style="margin-top: 15px;"></v-divider>
 
-              <v-card-text>
+              <v-card-text style="margin-left: 15px; margin-right: 15px; margin-top: -13px;">
                 <br>더욱 편리한 서비스를 위해 리뷰와 관련된 정책이 개편됩니다.
                 <br><br>[리뷰 작성 안내]
                 <br>- 리뷰는 배송 완료 상태에서 작성할 수 있습니다. 상품의 배송상태를 꼭 확인해주세요.
