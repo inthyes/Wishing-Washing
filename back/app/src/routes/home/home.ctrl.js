@@ -70,19 +70,24 @@ const output ={
     },
     laundry : async (req, res) => {
         logger.info(`GET /laundry 304 "세탁신청 화면으로 이동"`);
-        
         const cookieValue = req.headers.cookie;
         const decodedValue = decodeURIComponent(cookieValue);
         const matches = decodedValue.match(/deliveryAddress1="([^"]+)";\s*deliveryAddress2="([^"]+)"/);
-        const deliveryAddress1 = matches[1];
-        const deliveryAddress2 = matches[2];
+        if (matches == null) {
+            res.status(200).json({ message: '주소를 설정하세요' });
+        }
+        else {
+            const deliveryAddress1 = matches[1];
+            const deliveryAddress2 = matches[2];
+    
+            const laundryList = new LaundryList(req.body, deliveryAddress1, deliveryAddress2);
+            const laundryListRes = await laundryList.getLaundryInfo(userId.id);
+            console.log(laundryListRes)
+            res.json(laundryListRes);
+        }
+    }, 
 
-        const laundryList = new LaundryList(req.body, deliveryAddress1, deliveryAddress2);
-        const laundryListRes = await laundryList.getLaundryInfo(userId.id);
-        console.log(laundryListRes)
-
-        res.json(laundryListRes);
-    },
+        
     review : (req, res) => {
         logger.info(`GET /laundry 304 "review 화면으로 이동"`);
         res.status(200);
