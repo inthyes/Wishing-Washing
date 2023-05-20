@@ -103,8 +103,8 @@ export default {
 
         // this.mypageData = this.mypageData.filter((mypageData) => mypageData.userName === tokenPayload.userName);
       } catch (error) {
-        console.error(error);
-        throw new Error("세탁소관리 페이지 가져오기 실패");
+        console.error(error,"세탁소관리 페이지 가져오기 실패");
+        this.redirectToLogin();
       }
     },
 
