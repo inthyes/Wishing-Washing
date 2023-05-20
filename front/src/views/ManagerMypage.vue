@@ -103,7 +103,7 @@
                       </v-col>
                       <v-col>
                         <v-card-actions style="margin-left: -22px;">
-                            <v-btn variant="outlined" style="width: 95%; border-color: #5E5A80; border-radius: 8px;">
+                            <v-btn variant="outlined" style="width: 95%; border-color: #5E5A80; border-radius: 8px;" @click="logout">
                                 로그아웃 <!--연결 필요-->
                             </v-btn>
                         </v-card-actions>
@@ -148,6 +148,25 @@ export default {
                 const reviewNum = reviewData.length;
                 this.reviewCount = reviewNum;
         })
+    },
+    async logout() {
+      try {
+        const response = await axios.post('http://localhost:4000/logout', null, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+        });
+        const data = response.data;
+        console.log(data);
+        alert(data.message);
+
+        localStorage.removeItem("token");
+
+        this.$router.push('/login');
+      } catch (error) {
+        console.log(error);
+        alert('로그아웃 실패');
+      }
     }
 }
 </script>
