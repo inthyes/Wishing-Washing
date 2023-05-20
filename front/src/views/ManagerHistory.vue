@@ -5,7 +5,7 @@
     <div class="wrapper">
         <v-card class="mx-auto my-5" max-width="500" elevation="0">
             <div style="margin-top: -7%;"></div>
-            <div v-for="(request, index) in filteredRequests('배송완료')" v-bind:key="request.id" elevation="0" query="request.id">
+            <div v-for="(request, index) in filteredRequests(2)" v-bind:key="request.id" elevation="0" query="request.id">
                 <div v-if="index === 0 || request.date !== requests[index - 1].date">
                     <div class="date" id="date" style="margin-top: 40px; margin-left: 4%; font-size: 15px;">
                         <b>{{ request.date }}</b>
@@ -62,19 +62,25 @@ import axios from "axios";
 export default {
     data: () => ({
         show: false,
+        managelaundrys: [],
         requests: [],
     }),
     async created() {
         try {
-            const res = await axios.get('http://localhost:5001/requests');
-            this.requests = res.data;
+            const res1 = await axios.get("http://localhost:5001/managelaundrys");
+            const res2 = await axios.get("http://localhost:5001/requests");
+            this.managelaundrys = res1.data;
+            this.requests = res2.data;
         } catch (e) {
             console.error(e);
         }
     },
     methods: {
         filteredRequests(status) {  //배송 상태별로 구분
-            return this.requests.filter(request => request.status === status);
+            return this.requests.filter(request => {
+            const matchingLaundry = this.managelaundrys.find(laundry => laundry.id === 1);
+            return matchingLaundry && matchingLaundry.id === request.laundryId && request.status === status;
+            });
         },
     }
 }

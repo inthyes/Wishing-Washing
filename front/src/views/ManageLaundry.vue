@@ -201,7 +201,7 @@ export default {
         },*/
         async clickEditTab() {
             try {
-                const response = await axios.get(`http://localhost:5001/managelaundrys/1`);
+                const response = await axios.get(`http://localhost:5001/managelaundrys/2`);
                 const laundryData = response.data;
 
                 // 세탁소 정보를 받아와서 폼에 할당

@@ -21,7 +21,7 @@
       "closeTime": "17:00",
       "tel": "031-1232-2222",
       "notice": "할인 이벤트 진행중",
-      "image": "uploads/laundryImg1.jpg",
+      "image": "uploads/laundryImg2.jpg",
       "id": 2
     },
     {
@@ -33,8 +33,18 @@
       "closeTime": "09:00",
       "tel": "02-1234-3822",
       "notice": "없음",
-      "image": "uploads/laundryImg1.jpg",
+      "image": "uploads/laundryImg2.jpg",
       "id": 3
+    },
+    {
+      "laundryName": "ga",
+      "laundryAddr": "a",
+      "intro": "gasss",
+      "openTime": "19:37",
+      "closeTime": "16:40",
+      "tel": "010-5321-1111",
+      "notice": "gas",
+      "id": 4
     }
   ],
   "requests": [
@@ -107,7 +117,8 @@
   ],
   "reviews": [
     {
-      "id": 1,
+      "laundryId": 1,
+      "id": "1",
       "userId": "user123",
       "reviewDate": "2023-03-20",
       "reviewImg": "https://cdn.vuetifyjs.com/images/cards/docks.jpg",
@@ -117,7 +128,8 @@
       "replyValue": "ㅁㄴㅇㄹ"
     },
     {
-      "id": 2,
+      "laundryId": 1,
+      "id": "2",
       "userId": "5678user",
       "reviewDate": "2023-03-20",
       "reviewImg": "https://cdn.vuetifyjs.com/images/cards/docks.jpg",
@@ -127,7 +139,8 @@
       "replyValue": ""
     },
     {
-      "id": 3,
+      "laundryId": 1,
+      "id": "3",
       "userId": "us52er",
       "reviewDate": "2023-03-19",
       "reviewImg": "https://cdn.vuetifyjs.com/images/cards/docks.jpg",
@@ -135,6 +148,48 @@
       "reviewContent": "사장님이 매우 친절하십니다",
       "reply": "",
       "replyValue": ""
+    },
+    {
+      "laundryId": 2,
+      "id": "4",
+      "userId": "gohome",
+      "reviewDate": "2023-03-03",
+      "reviewImg": "https://cdn.vuetifyjs.com/images/cards/docks.jpg",
+      "stars": "5",
+      "reviewContent": "세탁 잘해주셨네요",
+      "reply": "",
+      "replyValue": ""
+    },
+    {
+      "laundryId": 2,
+      "id": "5",
+      "userId": "imimim",
+      "reviewDate": "2023-03-10",
+      "reviewImg": "https://cdn.vuetifyjs.com/images/cards/docks.jpg",
+      "stars": "3",
+      "reviewContent": "그냥 그래요",
+      "reply": "",
+      "replyValue": ""
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "productImg": "https://source.unsplash.com/featured/?clothes",
+      "productName": "상",
+      "price": "5000"
+    },
+    {
+      "id": 2,
+      "productImg": "https://source.unsplash.com/featured/?clothes",
+      "productName": "원피스",
+      "price": "5000"
+    },
+    {
+      "id": 3,
+      "productImg": "https://source.unsplash.com/featured/?shoes",
+      "productName": "신발",
+      "price": "8000"
     }
   ]
 }

@@ -31,7 +31,8 @@ class Product {
         return deleteProduct;
 
       }
-    
+  
+      //
   static async show(S_ID, U_ID) {
     return new Promise ((resolve, reject) => {
     db.query("USE CAPSTONE", (err, result) => {
