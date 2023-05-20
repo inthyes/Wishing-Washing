@@ -6,13 +6,13 @@
         <div class="mx-auto my-5" style="margin-top: 15px; max-width: 500px;">
             <b>&nbsp;&nbsp;세탁물 요청</b>
         </div>
-        <v-card class="mx-auto my-5" max-width="500" v-for="(request, index) in filteredRequests('요청중')" v-bind:key="request.id" elevation="0" query="request.id">
+        <v-card class="mx-auto my-5" max-width="380" v-for="(request, index) in filteredRequests(-2)" v-bind:key="request.id" elevation="0" query="request.id">
             <div v-if="index === 0 || request.date !== requests[index - 1].date" style="margin-bottom: 5px;">
                 <div id="date" style="margin-left: 10px; font-size: 14px;">
                     <b>{{ request.date }}</b>
                 </div>
             </div>
-            <v-card color="#5E5A80" style="color: white;">
+            <v-card color="#5E5A80" style="color: white; border-radius: 10px;">
                 <v-row style="margin-top: -19px; margin-bottom: -18px;">
                     <v-col><v-card-text id="userId" style="margin-top: 4px; font-size: 14px;">
                         <b>{{ request.userId }}&nbsp;&nbsp;|</b>
@@ -38,10 +38,10 @@
         </v-card>
         <v-divider class="mx-1 mb-1" style="margin-top: 30px;"></v-divider>
 
-        <div class="mx-auto my-5" style="margin-top: 15px; max-width: 500px;">
+        <div class="mx-auto my-5" style="margin-top: 15px; max-width: 380px;">
             <div id="beforeDelivery" style="margin-bottom: 10px;"><b>&nbsp;&nbsp;배송전</b></div>
-            <v-card v-for="request in filteredRequests('배송전')" :key="request.id" elevation="0">
-                <v-card color="#5E5A80" style="color: white; margin-bottom: 10px;">
+            <v-card v-for="request in filteredRequests(-1)" :key="request.id" elevation="0">
+                <v-card color="#5E5A80" style="color: white; margin-bottom: 10px; border-radius: 10px;">
                     <v-row style="margin-top: -19px; margin-bottom: -18px;">
                         <v-col><v-card-text id="userId" style="margin-top: 4px; font-size: 14px;">
                             <b>{{ request.userId }}&nbsp;&nbsp;|</b>
@@ -60,10 +60,10 @@
             </v-card>
         </div><v-divider class="mx-1 mb-1" style="margin-top: 30px;"></v-divider>
 
-        <div class="mx-auto my-5" style="margin-top: 15px; max-width: 500px;">
+        <div class="mx-auto my-5" style="margin-top: 15px; max-width: 380px;">
             <div id="onDelivery" style="margin-bottom: 10px;"><b>&nbsp;&nbsp;배송중</b></div>
-            <v-card v-for="request in filteredRequests('배송중')" :key="request.id" elevation="0">
-                <v-card color="#5E5A80" style="color: white; margin-bottom: 10px;">
+            <v-card v-for="request in filteredRequests(1)" :key="request.id" elevation="0">
+                <v-card color="#5E5A80" style="color: white; margin-bottom: 10px; border-radius: 10px;">
                     <v-row style="margin-top: -19px; margin-bottom: -18px;">
                         <v-col><v-card-text id="userId" style="margin-top: 4px; font-size: 14px;">
                             <b>{{ request.userId }}&nbsp;&nbsp;|</b>
@@ -82,10 +82,10 @@
             </v-card>
         </div><v-divider class="mx-1 mb-1" style="margin-top: 30px;"></v-divider>
 
-        <div class="mx-auto my-5" style="margin-top: 15px; max-width: 500px;">
+        <div class="mx-auto my-5" style="margin-top: 15px; max-width: 380px;">
             <div id="completeDelivery" style="margin-bottom: 10px;"><b>&nbsp;&nbsp;배송완료</b></div>
-            <v-card v-for="request in filteredRequests('배송완료')" :key="request.id" elevation="0">
-                <v-card color="#5E5A80" style="color: white; margin-bottom: 10px;">
+            <v-card v-for="request in filteredRequests(2)" :key="request.id" elevation="0">
+                <v-card color="#5E5A80" style="color: white; margin-bottom: 10px; border-radius: 10px;">
                     <v-row style="margin-top: -19px; margin-bottom: -18px;">
                         <v-col><v-card-text id="userId" style="margin-top: 4px; font-size: 14px;">
                             <b>{{ request.userId }}&nbsp;&nbsp;|</b>
@@ -112,13 +112,16 @@ import axios from "axios";
 export default {
     data: () => ({
         show: false,
+        managelaundrys: [],
         requests: [],
         beforeShipping: [],
     }),
     async created() {
         try {
-            const res = await axios.get('http://localhost:5001/requests');
-            this.requests = res.data;
+            const res1 = await axios.get("http://localhost:5001/managelaundrys");
+            const res2 = await axios.get("http://localhost:5001/requests");
+            this.managelaundrys = res1.data;
+            this.requests = res2.data;
         } catch (e) {
             console.error(e);
         }
@@ -133,15 +136,19 @@ export default {
                 console.error(e);
             }
         },
-        filteredRequests(status) {  //배송 상태별로 구분
-            return this.requests.filter(request => request.status === status);
+        filteredRequests(status) {  //배송 상태별로 구분, 세탁소별 할당
+            //return this.requests.filter(request => request.status === status);
+            return this.requests.filter(request => {
+            const matchingLaundry = this.managelaundrys.find(laundry => laundry.id === 1);
+            return matchingLaundry && matchingLaundry.id === request.laundryId && request.status === status;
+            });
         },
         // 수락 버튼 -> 배송전으로 이동
         async clickAccept(requestId) {
             try {
                 const response = await axios.get(`http://localhost:5001/requests/${requestId}`);
                 const request = response.data;
-                request.status = "배송전";  // JSON 데이터의 "status" 값을 "배송전"으로 수정
+                request.status = -1;  // JSON 데이터의 "status" 값을 배송전(-1)으로 수정
                 await axios.put(`http://localhost:5001/requests/${requestId}`, request);
                 window.location.reload(); 
                 this.showAlert("세탁 요청이 수락되었습니다.");
@@ -154,7 +161,7 @@ export default {
             try {
                 const response = await axios.get(`http://localhost:5001/requests/${requestId}`);
                 const request = response.data;
-                request.status = "배송중";
+                request.status = 1;     // status 배송중(1)으로 변경
                 await axios.put(`http://localhost:5001/requests/${requestId}`, request);
                 window.location.reload();
                 this.showAlert("배송이 시작되었습니다.");
@@ -167,7 +174,7 @@ export default {
             try {
                 const response = await axios.get(`http://localhost:5001/requests/${requestId}`);
                 const request = response.data;
-                request.status = "배송완료";
+                request.status = 2;     // status 배송완료(2)로 변경
                 await axios.put(`http://localhost:5001/requests/${requestId}`, request);
                 window.location.reload(); 
                 this.showAlert("배송이 완료되었습니다.");
