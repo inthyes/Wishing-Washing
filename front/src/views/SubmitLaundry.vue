@@ -81,6 +81,7 @@ export default {
             selectDate: null,
             selectTime: null,
             requestText: null,
+            addressDetail : null
             // requestAddr3: null,     // 상세주소 - 받아올때 필요합니다 (수정중)
         };
     },
@@ -139,6 +140,7 @@ export default {
                 date: dateYearMonth + this.selectDate.substring(0, 2),
                 time: this.selectTime,
                 request: this.requestText,
+                addressDetail : this.requestAddr3
                 // requestAddr: this.requestAddr3     // 상세주소 - 받아올때 필요합니다 (수정중)
             }
             const id = this.$route.params.id;
