@@ -126,6 +126,21 @@ console.log(req.file);
       res.json(results);
   })
 }),
+router.get('/laundryReview', (req,res)=> {
+  const u_id = "codus"; // 하드코딩 토큰
+
+  const query = "select review_img FROM review WHERE U_ID = ?";
+  db.query(query,[u_id], (err, results, fields) => {
+    if (err) {
+      console.log(err);
+      res.sendStatus(500);
+      return;
+    }
+    console.log(results);
+    //res.render('home/board', { images: results });
+    res.json(results);
+})
+}),
 
 router.get('/board', (req, res) => {
   // 이미지 목록을 데이터베이스에서 가져옵니다.
