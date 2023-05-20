@@ -23,7 +23,12 @@
                         v-if="selectedPhoto" />
                     <div v-else>No Image</div>
                 </div>
-
+                <!-- <div class="add-review-input-container">
+                <label class="add-review-label" for="image">이미지</label>
+                <input type="file" id="image" @change="handleImageUpload" accept="image/*" />
+        
+                </div> -->
+                
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label mb-0">별점을 선택해주세요</label>

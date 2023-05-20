@@ -2,7 +2,7 @@
   <v-app>
     <!-- 상단 Appbar -->
     <v-app-bar v-if="!isLogin" app class="rounded-bottom" :elevation="1"
-      style="background-color:rgba(97, 151, 202, 0.874)" :style="{ color: '#ffffff' }">
+      style="background-color:rgba(97, 151, 202, 0.874)" :style="{ color: '#ffffff' }" height="75">
 
       <!-- 버튼 : 앱바 맨 왼쪽 고정 -->
       <template v-slot:prepend>
@@ -81,7 +81,7 @@ export default {
     },
     isMain() {
       const path = this.$route.path;
-      return path === '/aroundlaundry' || path === '/usagehistory' || path === '/mypage';
+      return path === '/aroundlaundry' || path === '/usagehistory' || path === '/mypage2';
     },
     isLogin() {
       return this.$route.path === '/login';
@@ -119,7 +119,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .fixed-bottom {
   position: fixed;
   bottom: 0;
@@ -127,9 +127,9 @@ export default {
   right: 0;
 }
 
-.align-center {
+/* .align-center {
   text-align: center;
-}
+} */
 
 .rounded-bottom {
   border-radius: 0 0 80px 80px;

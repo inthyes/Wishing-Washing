@@ -22,6 +22,8 @@ import NoticeDetail1Vue from '@/views/NoticeDetail1.vue'
 import NoticeDetail2Vue from '@/views/NoticeDetail2.vue'
 import EditPassword from '@/views/EditPassword.vue'
 
+import MyPage2 from '@/views/MyPage2.vue'
+
 //test
 import UploadFormVue from '@/views/UploadForm.vue'
 
@@ -45,6 +47,11 @@ const routes = [
     path: '/mypage',
     name: 'Mypage',
     component: MyPageVue
+  },
+  {
+    path: '/mypage2',
+    name: '마이페이지',
+    component: MyPage2
   },
   {
     path: '/laundrydetail/:id',
@@ -87,7 +94,7 @@ const routes = [
   },
   {
     path: '/reviewlist',
-    name: '작성 리뷰',
+    name: '내 작성리뷰',
     component: ReviewListVue
   },
   {
@@ -126,6 +133,7 @@ const routes = [
     name: '업로드',
     component: UploadFormVue
   },
+
 
 ]
 

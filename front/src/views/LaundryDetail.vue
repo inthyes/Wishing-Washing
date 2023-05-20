@@ -172,35 +172,13 @@ export default {
         }
     },
     methods: {
-   async getImageUrl() {
-  try {
-    const res = await axios.get(`http://localhost:3000/upload/laundryReview/${this.$route.params.id}`);
-    console.log(res);
-
-    this.reviewImages = res.data.map(item => {
-      if (item.review_img) {
-        
-        const base64 = arrayBufferToBase64(item.review_img.data);
-        
-        return `data:image/png;base64,${base64}`;
-      }
-      return null;
-    });
-
-   
-  } catch (error) {
-    console.error(error);
-  }
-   },
-
-
         // reserve() {
         //     this.loading = true
 
         //     setTimeout(() => (this.loading = false), 2000)
         // },
 
-        
+
         toggleWish(likeStatus) {
             //const laundry = this.laundrys.find(l => l.id === laundryId);
 
@@ -248,7 +226,7 @@ export default {
                 console.error(e);
             }
         }
-    
-    }
+    },
+
 };
 </script>

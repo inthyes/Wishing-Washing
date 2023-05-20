@@ -64,8 +64,8 @@ export default {
         localStorage.setItem("token", token);
 
         // 임시 -- 영임코드
-        const userId = response.data.id;
-        localStorage.setItem("userId", userId);
+        // const userId = response.data.id;
+        // localStorage.setItem("userId", userId);
         // -- 여기까지 영임코드
 
 

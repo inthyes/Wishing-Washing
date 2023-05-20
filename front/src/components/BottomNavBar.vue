@@ -1,5 +1,5 @@
 <template>
-        <v-bottom-navigation class="bt-navbar" v-model="value" color="light-blue-darken-4" mode="shift" grow>
+        <v-bottom-navigation class="bt-navbar" v-model="value" height="70" color="light-blue-darken-4" mode="shift" grow>
             <v-btn router-link to="/" class="nav-btn">
                 <v-icon>mdi-home</v-icon>
                     <span>&nbsp;&nbsp;HOME&nbsp;&nbsp;</span>
@@ -15,7 +15,7 @@
                     <span>이용내역</span>
             </v-btn>
 
-            <v-btn to="/mypage" class="nav-btn">
+            <v-btn to="/mypage2" class="nav-btn">
                 <v-icon>mdi-account-outline</v-icon>
                     <span>&nbsp;&nbsp;&nbsp;MY&nbsp;&nbsp;&nbsp;</span>
             </v-btn>

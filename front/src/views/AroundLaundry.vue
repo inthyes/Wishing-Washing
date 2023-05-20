@@ -12,9 +12,9 @@
             </v-img>
 
             <v-row align="center" class="mx-3 my-3">
-                <v-rating :model-value=laundry.stars color="amber" density="compact"  half-increments readonly 
+                <v-rating :model-value=laundry.starAverage color="amber" density="compact"  half-increments readonly 
                     size="small"></v-rating>
-                <div class="text-grey ms-2">{{ laundry.stars }}</div>
+                <div class="text-grey ms-2">{{ laundry.starAverage }}</div>
             </v-row>
 
             <v-card-text class="pt-0 py-2" id="laund-address">
