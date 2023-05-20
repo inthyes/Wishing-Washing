@@ -4,6 +4,7 @@
     <div class="wrapper">
 
         <v-card class="mx-auto" max-width="500" elevation="0">
+
             <v-tabs v-model="tab" stacked grow>
                 <v-tab value="one">세탁 진행중</v-tab>
                 <v-tab value="two">지난 이용내역</v-tab>
@@ -25,20 +26,26 @@
                             <v-card v-bind:key="h.id" elevation="0">
                                 <div class="washingStatus">
                                     <v-card-text>
-                                        <!--  배송상태  -2(수락 대기중) -1(세탁 진행중) 1(배송중) | 2(배송완료) -->
-                                        <div id="state">
-                                            배송상태&nbsp;|&nbsp;
-                                            <span v-if="h.DELIVERY_STATE === -2" style="color: red">수락 대기중</span>
-                                            <span v-else-if="h.DELIVERY_STATE === -1">세탁 진행중</span>
-                                            <span v-else-if="h.DELIVERY_STATE === 1">배송중</span>
+                                        <div class="card_top">
+                                            <!--  배송상태 : -2(수락 대기중) -1(세탁 진행중) 1(배송중) -->
+                                            <div id="state">
+                                                배송상태&nbsp;|&nbsp;
+                                                <span v-if="h.DELIVERY_STATE === -2" style="color: red">수락 대기중</span>
+                                                <span v-else-if="h.DELIVERY_STATE === -1">세탁 진행중</span>
+                                                <span v-else-if="h.DELIVERY_STATE === 1">배송중</span>
+                                            </div>
+                                            <!-- 세탁비용 -->
+                                            <div id="price">세탁비용&nbsp;|&nbsp;&nbsp;{{ h.O_PRICE }} 원</div>
+                                            <!-- 요청사항 -->
+                                            <div id="requirement">요청사항&nbsp;|&nbsp;&nbsp;{{ h.O_REQUEST }}</div>
                                         </div>
-                                        <!-- 세탁비용 -->
-                                        <div id="price">세탁비용&nbsp;|&nbsp;&nbsp;{{ h.O_PRICE }} 원</div>
-                                        <!-- 요청사항 -->
-                                        <div id="requirement">요청사항&nbsp;|&nbsp;&nbsp;{{ h.O_REQUEST }}</div>
+
                                         <v-divider></v-divider>
-                                        <!-- 세탁소 이름 -->
-                                        <a id="laundryName">{{ h.S_NAME }}</a>&nbsp;
+
+                                        <div class="card_bottom">
+                                            <!-- 세탁소 이름 -->
+                                            <span id="laundryName">{{ h.S_NAME }}</span>
+                                        </div>
 
                                     </v-card-text>
                                 </div>
@@ -49,7 +56,7 @@
                     <!-- tap 2 : 지난 이용내역 -->
                     <v-window-item value="two">
                         <!-- 최근순 / 오래된순 선택 -->
-                        <v-chip-group filter >
+                        <v-chip-group filter selected-class="text-light-blue-darken-4">
                             <v-chip @click="sortByDate(false)">최근순</v-chip>
                             <v-chip @click="sortByDate(true)">오래된순</v-chip>
                         </v-chip-group>
@@ -66,7 +73,7 @@
                             <v-card v-bind:key="h.id" elevation="0">
                                 <div class="washingStatus">
                                     <v-card-text>
-                                        <!--  배송상태  -2(수락 대기중) -1(진행중) 1(배송중) | 2(배송완료) -->
+                                        <!--  배송상태 : 2(배송완료) -->
                                         <div id="state">
                                             배송상태&nbsp;|&nbsp;
                                             <span v-if="h.DELIVERY_STATE === 2">배송완료 ({{ h.COMPLETE_DATE }})</span>
@@ -75,11 +82,17 @@
                                         <div id="price">세탁비용&nbsp;|&nbsp;&nbsp;{{ h.O_PRICE }} 원</div>
                                         <!-- 요청사항 -->
                                         <div id="requirement">요청사항&nbsp;|&nbsp;&nbsp;{{ h.O_REQUEST }}</div>
+
                                         <v-divider></v-divider>
-                                        <!-- 세탁소 이름 -->
-                                        <a id="laundryName">{{ h.S_NAME }}</a>&nbsp;
-                                        <!-- 리뷰버튼 -->
-                                        <v-btn id="reviewBtn" v-bind:to="`/addreview/${h.S_ID}/${h.O_NUM}`">리뷰</v-btn>
+
+                                        <div class="card_bottom">
+                                            <!-- 세탁소 이름 -->
+                                            <span id="laundryName">{{ h.S_NAME }}</span>
+                                            <!-- 리뷰버튼 -->
+                                            <v-btn id="reviewBtn" rounded="xl" 
+                                            v-bind:to="`/addreview/${h.S_ID}/${h.O_NUM}`">리뷰</v-btn>
+                                        </div>
+
                                     </v-card-text>
                                 </div>
                             </v-card>
@@ -214,7 +227,12 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.card_bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 .myWashing {
     margin-top: 20px;
     font-size: 18px;
@@ -269,19 +287,20 @@ export default {
 }
 
 #reviewBtn {
-    width: 10px;
-    height: 24px;
-    background-color: #5E5A80;
+    /* width: 10px; */
+    /* height: 24px; */
     color: white;
-    border-radius: 10px;
-    margin-top: 1px;
-    box-shadow: none;
+    background-color:rgba(41, 93, 141, 0.678);
+    /* border-radius: 10px; */
+    /* margin-top: 1px; */
+    /* box-shadow: none; */
 }
 
 .delivery {
     color: red;
     text-decoration-line: none;
 }
+
 /* 
 #washingImg {
     width: 85px;

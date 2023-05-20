@@ -44,7 +44,7 @@
             </div>
             <v-divider></v-divider>
             <div class="add-review-btn-container">
-                <v-btn type="submit" color="light-blue-darken-4" block class="text-none mb-4" size="large" variant="tonal">
+                <v-btn type="submit" color="light-blue-darken-4" block class="text-none mb-0" size="x-large" variant="tonal">
                     작성완료 </v-btn>
                 <!-- <button class="add-review-submit-btn" type="submit">작성 완료</button> -->
             </div>
