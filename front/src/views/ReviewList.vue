@@ -21,7 +21,6 @@
                 class="card-img-top" alt="Review Image" style="object-fit: cover; height: 200px;">
             <!-- 리뷰제목 / 리뷰내용 -->
             <v-card-body>
-                <h5 class="card-title mt-3">{{ r.REVIEW_TITLE }}</h5>
                 <p class="card-text mt-2">{{ r.REVIEW_TEXT }}</p>
             </v-card-body>
             <v-card-actions class="mx-0 px-0 pt-5">
