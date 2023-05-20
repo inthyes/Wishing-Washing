@@ -80,7 +80,7 @@
       "requirement": "없음",
       "price": "7,000원",
       "userAddr": "경기대학교 기숙사",
-      "status": 1
+      "status": 2
     },
     {
       "laundryId": 1,
@@ -115,7 +115,7 @@
       "stars": "5",
       "reviewContent": "깨끗하게 잘해주셨어요",
       "reply": "",
-      "replyValue": "ㅁㄴㅇㄹ"
+      "replyValue": "감사합니다"
     },
     {
       "laundryId": 1,
@@ -180,6 +180,22 @@
       "productImg": "https://source.unsplash.com/featured/?shoes",
       "productName": "신발",
       "price": "8000"
+    }
+  ],
+  "managers": [
+    {
+      "laundryId": 1,
+      "id": 1,
+      "managerName": "김경기",
+      "managerEmail": "ww12@naver.com",
+      "managerPhone": "010-2222-1111"
+    },
+    {
+      "laundryId": 2,
+      "id": 2,
+      "managerName": "가나다",
+      "managerEmail": "w22221@naver.com",
+      "managerPhone": "010-2333-7877"
     }
   ]
 }
