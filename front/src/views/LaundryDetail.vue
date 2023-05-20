@@ -124,7 +124,6 @@ function arrayBufferToBase64(buffer) {
   return window.btoa(binary);
 }
 
-
 export default {
     data: () => ({
         loading: false,
@@ -139,7 +138,6 @@ export default {
         likeStatus: {},
         countReview : {},
          imageUrl: "",
-
 
         tab: 'Appetizers',  // 세탁/수선 & 리뷰 탭
         isWished: false,    // 찜버튼
@@ -168,31 +166,34 @@ export default {
             r.imageUrl = this.reviewImages[index];
             
         });
+
         } catch (e) {
             console.error(e);
         }
     },
     methods: {
-   async getImageUrl() {
+
+        async getImageUrl() {
         try {
-          const res = await axios.get(`http://localhost:3000/upload/laundryReview/${this.$route.params.id}`);
-          console.log(res);
-        
-          this.reviewImages = res.data.map(item => {
+            const res = await axios.get(`http://localhost:3000/upload/laundryReview/${this.$route.params.id}`);
+            console.log(res);
+
+            this.reviewImages = res.data.map(item => {
             if (item.review_img) {
-            
-              const base64 = arrayBufferToBase64(item.review_img.data);
-              
-              return `data:image/png;base64,${base64}`;
+                
+                const base64 = arrayBufferToBase64(item.review_img.data);
+                
+                return `data:image/png;base64,${base64}`;
             }
             return null;
-          });
-        
+            });
+
         
         } catch (error) {
-          console.error(error);
+            console.error(error);
         }
-         },
+        },
+
 
 
         // reserve() {
@@ -200,7 +201,6 @@ export default {
 
         //     setTimeout(() => (this.loading = false), 2000)
         // },
-
 
         toggleWish(likeStatus) {
             //const laundry = this.laundrys.find(l => l.id === laundryId);
@@ -249,8 +249,6 @@ export default {
                 console.error(e);
             }
         }
-    
-    
-}
-}
+    }
+   }
 </script>
