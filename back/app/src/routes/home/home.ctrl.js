@@ -79,7 +79,6 @@ const output ={
         else {
             const deliveryAddress1 = matches[1];
             const deliveryAddress2 = matches[2];
-    
             const laundryList = new LaundryList(req.body, deliveryAddress1, deliveryAddress2);
             const laundryListRes = await laundryList.getLaundryInfo(userId.id);
             console.log(laundryListRes)
