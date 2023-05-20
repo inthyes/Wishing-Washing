@@ -35,16 +35,6 @@
       "notice": "없음",
       "image": "uploads/laundryImg2.jpg",
       "id": 3
-    },
-    {
-      "laundryName": "ga",
-      "laundryAddr": "a",
-      "intro": "gasss",
-      "openTime": "19:37",
-      "closeTime": "16:40",
-      "tel": "010-5321-1111",
-      "notice": "gas",
-      "id": 4
     }
   ],
   "requests": [
