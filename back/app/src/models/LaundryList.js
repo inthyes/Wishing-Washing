@@ -18,12 +18,12 @@ class LaundryList {
             "SELECT STORE.S_ID, STORE.S_ADDR2, STORE.S_NAME,STORE.S_COMMENT, LIKES.U_ID\
             FROM STORE\
             left outer JOIN likes ON STORE.S_ID = likes.S_ID\
-            WHERE substr(S_ADDR1, 1, 3) = ? AND U_ID = ?;";
+            WHERE substr(S_ADDR1, 1, 3) = ?;";
 
             const getQuery = "SELECT S_ID FROM STORE WHERE substr(S_ADDR1, 1, 3) = ?;";
 
             if (err) reject(err);
-            db.query(query, [nearPostNum, userId], (err, data) => {
+            db.query(query, [nearPostNum], (err, data) => {
               if (err) reject(err);
               else {
                 for (let i = 0; i < data.length; i++) {
