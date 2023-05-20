@@ -8,8 +8,8 @@
         <v-card v-for="r in reviews" :key="r.O_NUM" class="mx-auto mt-4" max-width="400" elevation="0">
             <!-- 세탁소정보 / 별점 / 날짜 -->
             <v-card-body>
+                <p class="text text-grey m-0">주문번호 {{ r.O_NUM }}</p>
                 <v-btn class="p-0" variant="text" v-bind:to="`/laundrydetail/${r.S_ID}`" >{{ r.S_NAME }} ></v-btn>
-                <!-- <p class="card-text my-0">{{ r.S_NAME }} ></p> -->
                 <v-row class="mx-0 my-0">
                     <v-rating :model-value=r.REVIEW_STAR color="amber" density="compact" half-increments readonly
                         size="small">{{ r.REVIEW_STAR }}</v-rating>
@@ -102,3 +102,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.text {
+    font-size: 13px;
+}
+</style>
