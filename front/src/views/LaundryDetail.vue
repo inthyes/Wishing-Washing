@@ -27,7 +27,7 @@
                         size="normal"></v-rating>
 
                     <div class="text-grey ms-2">
-                        {{ reviewStar }} ({{countReview}})
+                        {{ reviewStar }} ({{ countReview }})
                     </div>
                 </v-row>
 
@@ -74,21 +74,36 @@
                     </v-list>
                 </v-window-item>
                 <v-window-item value="tab-2">
-                    <div class="text-black mx-6 mt-2">
-                     <v-container fluid>
-            <v-row>
-                <v-col v-for="r in review" :key="r.O_NUM" cols="12" md="6" lg="4">
-  <v-card>
-    <v-img v-if="r.imageUrl" :src="r.imageUrl" width="100%" height="auto"></v-img>
-    <v-card-actions>{{ r.REVIEW_STAR }}점</v-card-actions>
-    <v-card-title>{{ r.REVIEW_TITLE }}</v-card-title>
-    <v-card-text>{{ r.REVIEW_TEXT }}</v-card-text>
-  </v-card>
-
-                </v-col>
-            </v-row>
-        </v-container>
-                      
+                    <div class="mx-6 mt-2">
+                        <v-container fluid>
+                            <v-row>
+                                <v-col v-for="r in review" :key="r.O_NUM">
+                                    <div class="review-card">
+                                        <p class="text-black-grey m-0">{{ r.U_ID }}</p>
+                                        <v-row class="mx-0 my-0 mb-4">
+                                            <v-rating :model-value=r.REVIEW_STAR color="amber" density="compact"
+                                                half-increments readonly size="small">{{ r.REVIEW_STAR }}</v-rating>
+                                            <p class="text-grey ms-2 mb-0">
+                                                {{ r.REGI_DATE.slice(0, 10) }} ({{getTimeAgo(r.REGI_DATE) }})</p>
+                                        </v-row>
+                                        <v-img :width="200" cover v-if="r.imageUrl" :src="r.imageUrl" class="mb-3" ></v-img>
+                                        <p class="mb-0">{{ r.REVIEW_TEXT }}</p>
+                                        <v-card-actions class="mx-0 px-0 pt-5">
+                                            <!-- 작성한 사용자만 수정 삭제 가능 -->
+                                            <v-btn variant="flat" class="custom-btn flex-grow-1"
+                                                color="light-blue-darken-3">
+                                                수정
+                                            </v-btn>
+                                            <v-btn variant="outlined" class="custom-btn flex-grow-1"
+                                                color="light-blue-darken-3">
+                                                삭제
+                                            </v-btn>
+                                        </v-card-actions>
+                                        <v-divider :thickness="2"></v-divider>
+                                    </div>
+                                </v-col>
+                            </v-row>
+                        </v-container>
                     </div>
                 </v-window-item>
             </v-window>
@@ -100,12 +115,10 @@
                 <v-btn icon @click="toggleWish(likeStatus)">
                     <v-icon :color="likeStatus ? 'red' : ''">{{ likeStatus ? 'mdi-heart' : 'mdi-heart-outline' }}</v-icon>
                 </v-btn>
-                <v-btn class="flex-grow-1 mr-3" color="light-blue-darken-4" size="large" variant="tonal" @click="submitData">
+                <v-btn class="flex-grow-1 mr-3" color="light-blue-darken-4" size="x-large" variant="tonal"
+                    @click="submitData">
                     세탁신청
                 </v-btn>
-                <!-- <router-link :to="{ name: 'submitlaundry', params: { id: laundry.id } }">
-                <v-btn color="deep-purple-lighten-2">신청하기</v-btn>
-                </router-link> -->
             </v-card-actions>
         </v-card>
     </div>
@@ -115,13 +128,13 @@
 import axios from 'axios';
 
 function arrayBufferToBase64(buffer) {
-  let binary = '';
-  const bytes = new Uint8Array(buffer);
-  const len = bytes.byteLength;
-  for (let i = 0; i < len; i++) {
-    binary += String.fromCharCode(bytes[i]);
-  }
-  return window.btoa(binary);
+    let binary = '';
+    const bytes = new Uint8Array(buffer);
+    const len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+        binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
 }
 
 export default {
@@ -136,18 +149,18 @@ export default {
 
         reviewStar: {},
         likeStatus: {},
-        countReview : {},
-         imageUrl: "",
+        countReview: {},
+        imageUrl: "",
 
         tab: 'Appetizers',  // 세탁/수선 & 리뷰 탭
         isWished: false,    // 찜버튼
 
     }),
     async created() {
-        
+
         try {
             await this.getImageUrl(); // 이미지 URL 가져오기
-            
+
             const id = this.$route.params.id;
             const res = await axios.get(`http://localhost:3000/laundry/detail/${id}`, {
                 withCredentials: true,
@@ -163,9 +176,9 @@ export default {
             this.countReview = res.data.countReview;
 
             this.review.forEach((r, index) => {
-            r.imageUrl = this.reviewImages[index];
-            
-        });
+                r.imageUrl = this.reviewImages[index];
+
+            });
 
         } catch (e) {
             console.error(e);
@@ -173,26 +186,29 @@ export default {
     },
     methods: {
 
-           async getImageUrl() {
-  try {
-    const res = await axios.get(`http://localhost:3000/upload/laundryReview/${this.$route.params.id}`);
-    console.log(res);
+        async getImageUrl() {
+        try {
+            const res = await axios.get(`http://localhost:3000/upload/laundryReview/${this.$route.params.id}`);
+            console.log(res);
 
-    this.reviewImages = res.data.map(item => {
-      if (item.review_img) {
-        
-        const base64 = arrayBufferToBase64(item.review_img.data);
-        
-        return `data:image/png;base64,${base64}`;
-      }
-      return null;
-    });
+            this.reviewImages = res.data.map(item => {
+            if (item.review_img) {
+                
+                const base64 = arrayBufferToBase64(item.review_img.data);
+                
+                return `data:image/png;base64,${base64}`;
+            }
+            return null;
+            });
 
-   
-  } catch (error) {
-    console.error(error);
-  }
-   },
+        
+        } catch (error) {
+            console.error(error);
+        }
+        },
+
+
+
         // reserve() {
         //     this.loading = true
 
@@ -247,7 +263,6 @@ export default {
                 console.error(e);
             }
         }
-    },
-
-};
+    }
+   }
 </script>

@@ -127,7 +127,7 @@ export default {
           this.edit.name = '';
           this.edit.mail = '';
           this.edit.phone = '';
-          this.edit.image = null;
+          this.$router.push('/mypage');
         })
         .then(() => {
           if (newEdit.image) {

@@ -1,7 +1,11 @@
 <!-- 주변 세탁소 -->
 
 <template>
-    <div id="laund-list" class="mt-10 px-2">
+    <div id="laund-list" class="mt-5 px-2">
+        <!-- 다음 우편주소API -->
+        <v-card class="mx-auto mt-4 px-4 py-2" max-width="400" color="white" style="display: flex; align-items: center;" elevation="0">
+          <p class="text-body-2 font-weight-light m-0 pl-0 pr-5"  style="flex: 1; color:gray">{{ address2 }} 주변 세탁소입니다</p>
+        </v-card>
 
         <v-card class="mx-auto mt-4" max-width="400" v-for="laundry in laundrys" :key="laundry.S_ID" elevation="0">
 
@@ -50,6 +54,7 @@ import jwt_decode from 'jwt-decode';
 export default {
     data: () => ({
         show: false,
+        address2: '',
         laundrys: [] // Add this line to initialize the laundry array
     }),
     async created() {
@@ -74,7 +79,24 @@ export default {
     this.fetchNotLogin();
     }
   },
+    mounted() {
+        this.userId = localStorage.getItem("userId");
+        // this.addr1 = localStorage.getItem('addr1');
 
+        // 'deliveryAddress2' 쿠키 가져오기
+        const deliveryAddress2Cookie = document.cookie
+            .split('; ')
+            .find(cookie => cookie.startsWith('deliveryAddress2='));
+
+        if (deliveryAddress2Cookie) {
+            const encodedValue2 = deliveryAddress2Cookie.split('=')[1];
+            const decodedValue2 = decodeURIComponent(encodedValue2);
+            this.address2 = JSON.parse(decodedValue2);
+            console.log(this.address2);
+
+            // Perform any necessary operations with 'address2'
+        }
+    },
 
     methods: {
         // 위시리스트-토글버튼
