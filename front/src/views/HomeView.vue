@@ -17,7 +17,7 @@
       <v-btn icon="mdi-magnify" variant="text" @click:append-inner="showApi"></v-btn>
     </v-text-field> -->
 
-    <v-card class="mx-auto mt-4 px-4 py-2" max-width="700px" color="white" style="display: flex; align-items: center;">
+    <v-card class="mx-auto mt-4 px-4 py-2" max-width="700px" color="white" style="display: flex; align-items: center;" @click="showApi">
       <p class="text-body-2 font-weight-light m-0 pl-0 pr-5" style="flex: 1; color:gray-darken-1">{{ address2 }}</p>
       <v-icon icon="mdi-map-marker" style="color:gray"></v-icon>
     </v-card>
