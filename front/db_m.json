@@ -84,5 +84,25 @@
       "reply": "",
       "replyValue": ""
     }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "productImg": "https://source.unsplash.com/featured/?clothes",
+      "productName": "상의",
+      "price": "5000"
+    },
+    {
+      "id": 2,
+      "productImg": "https://source.unsplash.com/featured/?clothes",
+      "productName": "하의",
+      "price": "6000"
+    },
+    {
+      "id": 3,
+      "productImg": "https://source.unsplash.com/featured/?shoes",
+      "productName": "신발",
+      "price": "8000"
+    }
   ]
 }
