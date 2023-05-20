@@ -15,13 +15,14 @@
                     <!-- tab 1 : 진행중인 세탁 -->
                     <v-window-item value="one">
                         <!-- 이용내역 리스트 -->
-                        <div v-for="(h, index) in InProgress" v-bind:key="h.O_NUM">
+                        <div v-for="h in InProgress" v-bind:key="h.O_NUM">
                             <!-- 신청날짜 출력 -->
-                            <div v-if="index === 0 || h.O_DAY !== order_complete[index - 1].O_DAY">
-                                <div class="date" id="date">
-                                    <b>{{ h.O_DAY }}</b>
-                                </div>
+                            <!-- <div v-if="index === 0 || h.O_DAY !== order_complete[index - 1].O_DAY"> -->
+                            <div class="date" id="date">
+                                <b>{{ h.O_DAY }}</b>
+                                <span class="text text-grey mx-2">주문번호 {{ h.O_NUM }}</span>
                             </div>
+                            <!-- </div> -->
                             <!-- 이용내역 리스트 출력 -->
                             <v-card v-bind:key="h.id" elevation="0">
                                 <div class="washingStatus">
@@ -34,6 +35,9 @@
                                                 <span v-else-if="h.DELIVERY_STATE === -1">세탁 진행중</span>
                                                 <span v-else-if="h.DELIVERY_STATE === 1">배송중</span>
                                             </div>
+                                            <!-- 선택날짜/시간 -->
+                                            <div id="select">선택날짜&nbsp;|&nbsp;&nbsp;{{ h.DELIVERY_DAY }} ({{ h.DELIVERY_TIME
+                                            }})</div>
                                             <!-- 세탁비용 -->
                                             <div id="price">세탁비용&nbsp;|&nbsp;&nbsp;{{ h.O_PRICE }} 원</div>
                                             <!-- 요청사항 -->
@@ -62,12 +66,11 @@
                         </v-chip-group>
 
                         <!-- 이용내역 리스트 -->
-                        <div v-for="(h, index) in completeDelivery" v-bind:key="h.O_NUM">
+                        <div v-for="h in completeDelivery" v-bind:key="h.O_NUM">
                             <!-- 신청날짜 출력 -->
-                            <div v-if="index === 0 || h.O_DAY !== order_complete[index - 1].O_DAY">
-                                <div class="date" id="date">
-                                    <b>{{ h.O_DAY }}</b>
-                                </div>
+                            <div class="date" id="date">
+                                <b>{{ h.O_DAY }}</b>
+                                <span class="text text-grey mx-2">주문번호 {{ h.O_NUM }}</span>
                             </div>
                             <!-- 이용내역 리스트 출력 -->
                             <v-card v-bind:key="h.id" elevation="0">
@@ -78,6 +81,10 @@
                                             배송상태&nbsp;|&nbsp;
                                             <span v-if="h.DELIVERY_STATE === 2">배송완료 ({{ h.COMPLETE_DATE }})</span>
                                         </div>
+                                        <!-- 선택날짜/시간 -->
+                                        <div id="select">선택날짜&nbsp;|&nbsp;&nbsp;{{ h.DELIVERY_DAY }} ({{ h.DELIVERY_TIME }})
+                                        </div>
+                                        <!-- 세탁비용 -->
                                         <!-- 세탁비용 -->
                                         <div id="price">세탁비용&nbsp;|&nbsp;&nbsp;{{ h.O_PRICE }} 원</div>
                                         <!-- 요청사항 -->
@@ -89,8 +96,8 @@
                                             <!-- 세탁소 이름 -->
                                             <span id="laundryName">{{ h.S_NAME }}</span>
                                             <!-- 리뷰버튼 -->
-                                            <v-btn id="reviewBtn" rounded="xl" 
-                                            v-bind:to="`/addreview/${h.S_ID}/${h.O_NUM}`">리뷰</v-btn>
+                                            <v-btn id="reviewBtn" rounded="xl"
+                                                v-bind:to="`/addreview/${h.S_ID}/${h.O_NUM}`">리뷰</v-btn>
                                         </div>
 
                                     </v-card-text>
@@ -180,7 +187,7 @@ export default {
             try {
                 const res = await axios.get('http://localhost:3000/history', {
                     params: {
-                        _sort: 'O_DAY',
+                        _sort: 'O_NUM',
                         _order: order
                     },
                 });
@@ -193,8 +200,8 @@ export default {
 
         sortByDate(isAscending) {
             this.order_complete.sort((a, b) => {
-                const dateA = new Date(a.O_DAY);
-                const dateB = new Date(b.O_DAY);
+                const dateA = new Date(a.O_NUM);
+                const dateB = new Date(b.O_NUM);
                 if (isAscending) {
                     return dateA - dateB;
                 } else {
@@ -233,6 +240,7 @@ export default {
     justify-content: space-between;
     align-items: center;
 }
+
 .myWashing {
     margin-top: 20px;
     font-size: 18px;
@@ -276,6 +284,7 @@ export default {
 }
 
 #name,
+#select,
 #state,
 #price,
 #requirement {
@@ -290,7 +299,7 @@ export default {
     /* width: 10px; */
     /* height: 24px; */
     color: white;
-    background-color:rgba(41, 93, 141, 0.678);
+    background-color: rgba(41, 93, 141, 0.678);
     /* border-radius: 10px; */
     /* margin-top: 1px; */
     /* box-shadow: none; */
