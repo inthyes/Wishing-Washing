@@ -1,4 +1,4 @@
-<!--홈-->
+<!--사장님 홈-->
 <!--서혜린-->
 
 <template>
@@ -10,7 +10,14 @@
     </v-carousel-item>
   </v-carousel><br>
 
-  <div style="font-size: 18px; margin-left: 20px; margin-bottom: 5px; margin-top: 5px;"><b>최신 세탁소 트렌드</b></div>
+  <div class="container">
+    <v-card class="mx-auto mt-4 px-4 py-2" max-width="700px" color="white" style="display: flex; align-items: center;" @click="showApi">
+      <p class="text-body-2 font-weight-light m-0 pl-0 pr-5" style="flex: 1; color:gray-darken-1">{{ address2 }}</p>
+      <v-icon icon="mdi-map-marker" style="color:gray"></v-icon>
+    </v-card>
+  </div>
+
+  <div style="font-size: 18px; margin-left: 20px; margin-bottom: 5px; margin-top: 30px;"><b>최신 세탁소 트렌드</b></div>
   <div style="font-size: 12px; margin-left: 25px;">세탁소의 최신 동향을 알려드려요.</div>
   <v-card style="background-color: gainsboro; border-radius: 15px; margin: 20px; margin-bottom: 30px; box-shadow: none;">
     <v-card-text style="font-size: 15px; margin-left: 10px; margin-top: 5px;"><b>인기 세탁 품목</b></v-card-text>
@@ -64,3 +71,11 @@ export default {
   },
 }
 </script>
+
+<style>
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-inline: 15px;
+}
+</style>
