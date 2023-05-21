@@ -4,6 +4,7 @@
     <div class="wrapper">
 
         <v-card class="mx-auto" max-width="500" elevation="0">
+
             <v-tabs v-model="tab" stacked grow>
                 <v-tab value="one">세탁 진행중</v-tab>
                 <v-tab value="two">지난 이용내역</v-tab>
@@ -14,31 +15,41 @@
                     <!-- tab 1 : 진행중인 세탁 -->
                     <v-window-item value="one">
                         <!-- 이용내역 리스트 -->
-                        <div v-for="(h, index) in InProgress" v-bind:key="h.O_NUM">
+                        <div v-for="h in InProgress" v-bind:key="h.O_NUM">
                             <!-- 신청날짜 출력 -->
-                            <div v-if="index === 0 || h.O_DAY !== order_complete[index - 1].O_DAY">
-                                <div class="date" id="date">
-                                    <b>{{ h.O_DAY }}</b>
-                                </div>
+                            <!-- <div v-if="index === 0 || h.O_DAY !== order_complete[index - 1].O_DAY"> -->
+                            <div class="date" id="date">
+                                <b>{{ h.O_DAY }}</b>
+                                <span class="text text-grey mx-2">주문번호 {{ h.O_NUM }}</span>
                             </div>
+                            <!-- </div> -->
                             <!-- 이용내역 리스트 출력 -->
                             <v-card v-bind:key="h.id" elevation="0">
                                 <div class="washingStatus">
                                     <v-card-text>
-                                        <!--  배송상태  -2(수락 대기중) -1(세탁 진행중) 1(배송중) | 2(배송완료) -->
-                                        <div id="state">
-                                            배송상태&nbsp;|&nbsp;
-                                            <span v-if="h.DELIVERY_STATE === -2" style="color: red">수락 대기중</span>
-                                            <span v-else-if="h.DELIVERY_STATE === -1">세탁 진행중</span>
-                                            <span v-else-if="h.DELIVERY_STATE === 1">배송중</span>
+                                        <div class="card_top">
+                                            <!--  배송상태 : -2(수락 대기중) -1(세탁 진행중) 1(배송중) -->
+                                            <div id="state">
+                                                배송상태&nbsp;|&nbsp;
+                                                <span v-if="h.DELIVERY_STATE === -2" style="color: rgb(236, 78, 78)">수락 대기중</span>
+                                                <span v-else-if="h.DELIVERY_STATE === -1">세탁 진행중</span>
+                                                <span v-else-if="h.DELIVERY_STATE === 1">배송중</span>
+                                            </div>
+                                            <!-- 선택날짜/시간 -->
+                                            <div id="select">선택날짜&nbsp;|&nbsp;&nbsp;{{ h.DELIVERY_DAY }} ({{ h.DELIVERY_TIME
+                                            }})</div>
+                                            <!-- 세탁비용 -->
+                                            <div id="price">세탁비용&nbsp;|&nbsp;&nbsp;{{ h.O_PRICE }} 원</div>
+                                            <!-- 요청사항 -->
+                                            <div id="requirement">요청사항&nbsp;|&nbsp;&nbsp;{{ h.O_REQUEST }}</div>
                                         </div>
-                                        <!-- 세탁비용 -->
-                                        <div id="price">세탁비용&nbsp;|&nbsp;&nbsp;{{ h.O_PRICE }} 원</div>
-                                        <!-- 요청사항 -->
-                                        <div id="requirement">요청사항&nbsp;|&nbsp;&nbsp;{{ h.O_REQUEST }}</div>
+
                                         <v-divider></v-divider>
-                                        <!-- 세탁소 이름 -->
-                                        <a id="laundryName">{{ h.S_NAME }}</a>&nbsp;
+
+                                        <div class="card_bottom">
+                                            <!-- 세탁소 이름 -->
+                                            <span id="laundryName">{{ h.S_NAME }}</span>
+                                        </div>
 
                                     </v-card-text>
                                 </div>
@@ -49,37 +60,46 @@
                     <!-- tap 2 : 지난 이용내역 -->
                     <v-window-item value="two">
                         <!-- 최근순 / 오래된순 선택 -->
-                        <v-chip-group filter >
+                        <v-chip-group filter selected-class="text-light-blue-darken-4">
                             <v-chip @click="sortByDate(false)">최근순</v-chip>
                             <v-chip @click="sortByDate(true)">오래된순</v-chip>
                         </v-chip-group>
 
                         <!-- 이용내역 리스트 -->
-                        <div v-for="(h, index) in completeDelivery" v-bind:key="h.O_NUM">
+                        <div v-for="h in completeDelivery" v-bind:key="h.O_NUM">
                             <!-- 신청날짜 출력 -->
-                            <div v-if="index === 0 || h.O_DAY !== order_complete[index - 1].O_DAY">
-                                <div class="date" id="date">
-                                    <b>{{ h.O_DAY }}</b>
-                                </div>
+                            <div class="date" id="date">
+                                <b>{{ h.O_DAY }}</b>
+                                <span class="text text-grey mx-2">주문번호 {{ h.O_NUM }}</span>
                             </div>
                             <!-- 이용내역 리스트 출력 -->
                             <v-card v-bind:key="h.id" elevation="0">
                                 <div class="washingStatus">
                                     <v-card-text>
-                                        <!--  배송상태  -2(수락 대기중) -1(진행중) 1(배송중) | 2(배송완료) -->
+                                        <!--  배송상태 : 2(배송완료) -->
                                         <div id="state">
                                             배송상태&nbsp;|&nbsp;
-                                            <span v-if="h.DELIVERY_STATE === 2">배송완료 ({{ h.COMPLETE_DATE }})</span>
+                                            <span v-if="h.DELIVERY_STATE === 2" style="color: rgb(26, 147, 203)">배송완료 ({{ h.COMPLETE_DATE }})</span>
                                         </div>
+                                        <!-- 선택날짜/시간 -->
+                                        <div id="select">선택날짜&nbsp;|&nbsp;&nbsp;{{ h.DELIVERY_DAY }} ({{ h.DELIVERY_TIME }})
+                                        </div>
+                                        <!-- 세탁비용 -->
                                         <!-- 세탁비용 -->
                                         <div id="price">세탁비용&nbsp;|&nbsp;&nbsp;{{ h.O_PRICE }} 원</div>
                                         <!-- 요청사항 -->
                                         <div id="requirement">요청사항&nbsp;|&nbsp;&nbsp;{{ h.O_REQUEST }}</div>
+
                                         <v-divider></v-divider>
-                                        <!-- 세탁소 이름 -->
-                                        <a id="laundryName">{{ h.S_NAME }}</a>&nbsp;
-                                        <!-- 리뷰버튼 -->
-                                        <v-btn id="reviewBtn" v-bind:to="`/addreview/${h.S_ID}/${h.O_NUM}`">리뷰</v-btn>
+
+                                        <div class="card_bottom">
+                                            <!-- 세탁소 이름 -->
+                                            <span id="laundryName">{{ h.S_NAME }}</span>
+                                            <!-- 리뷰버튼 -->
+                                            <v-btn id="reviewBtn" rounded="xl"
+                                                v-bind:to="`/addreview/${h.S_ID}/${h.O_NUM}`">리뷰</v-btn>
+                                        </div>
+
                                     </v-card-text>
                                 </div>
                             </v-card>
@@ -167,7 +187,7 @@ export default {
             try {
                 const res = await axios.get('http://localhost:3000/history', {
                     params: {
-                        _sort: 'O_DAY',
+                        _sort: 'O_NUM',
                         _order: order
                     },
                 });
@@ -180,8 +200,8 @@ export default {
 
         sortByDate(isAscending) {
             this.order_complete.sort((a, b) => {
-                const dateA = new Date(a.O_DAY);
-                const dateB = new Date(b.O_DAY);
+                const dateA = new Date(a.O_NUM);
+                const dateB = new Date(b.O_NUM);
                 if (isAscending) {
                     return dateA - dateB;
                 } else {
@@ -214,7 +234,13 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.card_bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .myWashing {
     margin-top: 20px;
     font-size: 18px;
@@ -258,6 +284,7 @@ export default {
 }
 
 #name,
+#select,
 #state,
 #price,
 #requirement {
@@ -269,19 +296,20 @@ export default {
 }
 
 #reviewBtn {
-    width: 10px;
-    height: 24px;
-    background-color: #5E5A80;
+    /* width: 10px; */
+    /* height: 24px; */
     color: white;
-    border-radius: 10px;
-    margin-top: 1px;
-    box-shadow: none;
+    background-color: rgba(41, 93, 141, 0.678);
+    /* border-radius: 10px; */
+    /* margin-top: 1px; */
+    /* box-shadow: none; */
 }
 
 .delivery {
     color: red;
     text-decoration-line: none;
 }
+
 /* 
 #washingImg {
     width: 85px;
