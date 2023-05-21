@@ -17,8 +17,7 @@
                 </v-row>
             </v-card-body>
             <!-- 리뷰 사진 -->
-            <img src="https://t3.ftcdn.net/jpg/03/86/68/44/240_F_386684471_AdlSqWEYArE3ekokUWeFKWb4yPrfw4Rw.jpg"
-                class="card-img-top" alt="Review Image" style="object-fit: cover; height: 200px;">
+            <v-img v-if="r.imageUrl" :src="r.imageUrl" width="100%" height="auto"></v-img>
             <!-- 리뷰제목 / 리뷰내용 -->
             <v-card-body>
                 <p class="card-text mt-2">{{ r.REVIEW_TEXT }}</p>
@@ -40,21 +39,61 @@
 <script>
 import axios from "axios";
 
+function arrayBufferToBase64(buffer) {
+  let binary = '';
+  const bytes = new Uint8Array(buffer);
+  const len = bytes.byteLength;
+  for (let i = 0; i < len; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return window.btoa(binary);
+}
+
 export default {
     data: () => ({
         show: false,
-        reviews: []
+        reviews: [],
+        imageUrl: "",
     }),
     async created() {
 
         try {
+            await this.getImageUrl();
+
             const res = await axios.get('http://localhost:3000/myPage/review');
             this.reviews = res.data;
         } catch (e) {
             console.error(e);
         }
+
+        this.reviews.forEach((r, index) => {
+            r.imageUrl = this.reviewImages[index];
+            
+        });
+
     },
     methods: {
+
+        async getImageUrl() {
+  try {
+    const res = await axios.get(`http://localhost:3000/upload/laundryReview`);
+    console.log(res);
+
+    this.reviewImages = res.data.map(item => {
+      if (item.review_img) {
+        
+        const base64 = arrayBufferToBase64(item.review_img.data);
+        
+        return `data:image/png;base64,${base64}`;
+      }
+      return null;
+    });
+
+   
+  } catch (error) {
+    console.error(error);
+  }
+   },
         getTimeAgo(dateString) {
             const date = new Date(dateString);
             const now = new Date();

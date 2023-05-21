@@ -3,7 +3,9 @@
         <v-card elevation="0">
             <!-- 사진 아이콘 암거나 눌러도 프로필편집으로 이동 -->
             <router-link to="/editprofile"> 
-                <v-img src="@/assets/프로필.jpg" height="160" width="160" class="round-profile-picture"></v-img>
+               
+      <v-img :src="imageUrl" width="100%" height="auto" class="profile-image"></v-img>
+
                 <v-icon class="icon-overlay">mdi-account-edit</v-icon>
             </router-link>
             
@@ -23,16 +25,28 @@
 <script>
 import axios from "axios";
 import jwt_decode from 'jwt-decode';
+function arrayBufferToBase64(buffer) {
+  let binary = '';
+  const bytes = new Uint8Array(buffer);
+  const len = bytes.byteLength;
+  for (let i = 0; i < len; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return window.btoa(binary);
+}
+
 
 export default {
     name: 'MyProfile',
     data: () => ({
         show: false,
         mypageData: {},
-        userName: ""
+        userName: "",
+         imageUrl: "" // 이미지 URL을 저장할 변수 추가
     }),
 
-    created() {
+    async created() {
+        await this.getImageUrl(); // 이미지 URL 가져오기
         const token = localStorage.getItem("token");
 
         if (token) {
@@ -51,6 +65,19 @@ export default {
     },
 
     methods: {
+        async getImageUrl() {
+      try {
+        const res = await axios.get(`http://localhost:3000/upload/profile`);
+        console.log(res);
+        const image = res.data[0];
+        const base64 = arrayBufferToBase64(image.u_img.data);
+        console.log(base64);
+        this.imageUrl = `data:image/png;base64,${base64}`; // 이미지 URL 저장
+        console.log(this.imageUrl);
+      } catch (e) {
+        console.error(e);
+      }
+    },
         async verifyToken(token) {
             try {
                 const response = await axios.post(
@@ -121,4 +148,8 @@ p {
     background-color: rgba(0, 0, 0, 0.436);
     color: white;
     font-size: 30px;
-}</style>
+}
+
+
+
+</style>
