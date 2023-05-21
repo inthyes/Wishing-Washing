@@ -11,6 +11,24 @@ const { upload } = require('../../config/multer.js');
 
 const board = [];
 
+router.get('/laundryReview', (req,res)=> {
+  
+  const s_id = "1"; //하드코딩
+
+  const query = "select review_img FROM review WHERE S_ID = ?";
+  db.query(query,[s_id], (err, results, fields) => {
+    if (err) {
+      console.log(err);
+      res.sendStatus(500);
+      return;
+    }
+    console.log(results);
+    //res.render('home/board', { images: results });
+    res.json(results);
+})
+}),
+
+
 router.post('/', upload.single('imgUpload'), (req, res) => {
 
 

@@ -71,11 +71,11 @@ const output ={
     // },
     reviewAdmin : async (req, res) => {
         logger.info(`GET /laundry 304 "showreview 화면으로 이동"`);
-        const S_ID = "7";//세탁소아이디 불러옴
-        const review = new Review(req.body, "7"); //body는 비어있음 
+        const S_ID = "1";//세탁소아이디 불러옴
+        const review = new Review(req.body, "1"); //body는 비어있음 
         const RV = await review.showReview();
         console.log(RV);
-        res.render("home/reviewAdmin", {RV});
+        res.json({RV});
     },
     orderManage : async (req, res) => {
         logger.info(`GET /orderManage 304 "주문내역 화면으로 이동"`);
@@ -162,10 +162,12 @@ const process = {
         res.render('home/laundry');
     },
     addReviewReply : async (req,res) => {
-        console.log(req.body); //body에 O_NUM과 CEO_COMMENT가담김
-        const review = new Review(req.body, "7");
+        console.log(req.body); //body에 CEO_COMMENT가담김
+        console.log(req.params.id); //O_NUM임
+        
+        const review = new Review(req.body.CEO_COMMENT, req.params.id);
         const response = review.reviewUpdate();
-        res.render('home/laundry');
+        //res.render('home/laundry');
         // const review2 = new Review(req.body, "7"); //body는 비어있음 
         // const RV = await review2.showReview();
         // res.render('home/reviewAdmin', { RV: RV });

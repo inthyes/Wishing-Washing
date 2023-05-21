@@ -17,10 +17,10 @@ class Review {
       }
 
         async reviewUpdate() {
-          const O_NUM= this.body.O_NUM;
-          const CEO_COMMENT= this.body.CEO_COMMENT;
-          const S_ID = this.S_ID;
-          const update = await Review.reviewUpdate(O_NUM, CEO_COMMENT, S_ID);
+          const O_NUM= this.S_ID;
+          const CEO_COMMENT= this.body;
+          //const S_ID = this.S_ID;
+          const update = await Review.reviewUpdate(O_NUM, CEO_COMMENT);
           return update;
         }
     
@@ -42,13 +42,13 @@ class Review {
           })
     });
 }
-static async reviewUpdate(O_NUM, CEO_COMMENT, S_ID) {
+static async reviewUpdate(O_NUM, CEO_COMMENT) {
   return new Promise ((resolve, reject) => {
   db.query("USE CAPSTONE", (err, result) => {
-      const query = "UPDATE REVIEW SET CEO_COMMENT = ?, S_ID=? WHERE O_NUM = ?;";
+      const query = "UPDATE REVIEW SET CEO_COMMENT = ? WHERE O_NUM = ?;";
       if (err) reject(err);
       //const keys = Object.keys(query);
-      db.query(query,  [CEO_COMMENT, S_ID, O_NUM], (err, data) => {
+      db.query(query,  [CEO_COMMENT, O_NUM], (err, data) => {
           if (err) reject(err);
           else {
               resolve({
