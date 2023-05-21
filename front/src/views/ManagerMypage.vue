@@ -73,8 +73,8 @@
                         </v-row>
                        </div>
 
-                        <v-avatar class="ma-3" rounded="0" style="width: 50%; height: 140px;">
-                            <v-img src="https://cdn.vuetifyjs.com/images/cards/docks.jpg" cover
+                        <v-avatar class="ma-3" rounded="0" style="width: 52%; height: 140px;"> <!--src="https://cdn.vuetifyjs.com/images/cards/docks.jpg" cover-->
+                            <v-img :src= "require(`@/plugins/${managelaundry.image}`)"
                                     style="margin-left: -10px;"></v-img>
                         </v-avatar>
                      </div>
@@ -103,7 +103,7 @@
                       </v-col>
                       <v-col>
                         <v-card-actions style="margin-left: -22px;">
-                            <v-btn variant="outlined" style="width: 95%; border-color: #5E5A80; border-radius: 8px;">
+                            <v-btn variant="outlined" style="width: 95%; border-color: #5E5A80; border-radius: 8px;" @click="logout">
                                 로그아웃 <!--연결 필요-->
                             </v-btn>
                         </v-card-actions>
@@ -129,7 +129,6 @@ export default {
         try {
             const res = await axios.get('http://localhost:5001/managelaundrys');
             this.managelaundrys = res.data.filter((laundry) => laundry.id === 1);
-            //this.managelaundrys = res.data;
         } catch (e) {
             console.error(e);
         }
@@ -137,17 +136,43 @@ export default {
         axios.get(`http://localhost:5001/requests`)
             .then(response => {
                 const historyData = response.data;
-                const filteredHistoryData = historyData.filter(item => item.status === '배송완료');
+                const matchingLaundry = this.managelaundrys.find(laundry => laundry.id === 1);  // 세탁소별
+                const filteredHistoryData = historyData.filter(item => {
+                return matchingLaundry && matchingLaundry.id === item.laundryId && item.status === 2;  // 배송상태별
+                });
                 const historyNum = filteredHistoryData.length;
                 this.historyCount = historyNum;
-        })
+            })
         //리뷰 수
         axios.get(`http://localhost:5001/reviews`)
             .then(response => {
                 const reviewData = response.data;
-                const reviewNum = reviewData.length;
+                const filteredReviews = reviewData.filter(review => {
+                    const matchingLaundry = this.managelaundrys.find(laundry => laundry.id === 1);
+                    return matchingLaundry && matchingLaundry.id === review.laundryId;
+                });
+                const reviewNum = filteredReviews.length;
                 this.reviewCount = reviewNum;
         })
+    },
+    async logout() {
+      try {
+        const response = await axios.post('http://localhost:4000/logout', null, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+        });
+        const data = response.data;
+        console.log(data);
+        alert(data.message);
+
+        localStorage.removeItem("token");
+
+        this.$router.push('/login');
+      } catch (error) {
+        console.log(error);
+        alert('로그아웃 실패');
+      }
     }
 }
 </script>

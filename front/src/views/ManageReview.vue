@@ -4,7 +4,7 @@
 <template>
   <v-card class="mx-auto my-5" max-width="400" elevation="0"><br>
     <div style="margin-top: -28px;"></div>
-      <v-card v-for="r in reviews" :key="r.id" elevation="0" style="margin-bottom: 10px;">
+      <v-card v-for="r in getMatchingReviews" :key="r.id" elevation="0" style="margin-bottom: 10px;">
           <v-card-text style="margin-bottom: -5px;">
               <span id="userID" style="font-weight: bold; font-size: 15px;">
                   {{ r.userId }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -44,18 +44,29 @@ import axios from "axios";
 export default {
 data: () => ({
   show: false,
+  managelaundrys: [],
   reviews: [],
   reply: [],
   replyValue: "",
 }),
 async created() {
   try {
-    const res = await axios.get("http://localhost:5001/reviews");
-    this.reviews = res.data;
+    const res1 = await axios.get("http://localhost:5001/managelaundrys");
+    const res2 = await axios.get("http://localhost:5001/reviews");
+    this.managelaundrys = res1.data;
+    this.reviews = res2.data;
   } catch (e) {
     console.error(e);
   }
 },
+  computed: {
+    getMatchingReviews() {  // 세탁소 관리의 세탁소 아이디 = 리뷰 관리의 세탁소 아이디
+      return this.reviews.filter(review => {
+      const matchingLaundry = this.managelaundrys.find(laundry => laundry.id === 1); // 세탁소 아이디 = 1
+      return matchingLaundry && matchingLaundry.id === review.laundryId;
+      });
+    }
+  },
 methods: { 
   async sendReply(reviewId) {
     try {
