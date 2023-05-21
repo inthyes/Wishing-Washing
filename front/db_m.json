@@ -40,17 +40,19 @@
     ],
   "reviews": [
     {
-      "id": 1,
+      "laundryId": 1,
+      "id": "1",
       "userId": "user123",
       "reviewDate": "2023-03-20",
       "reviewImg": "https://cdn.vuetifyjs.com/images/cards/docks.jpg",
       "stars": "5",
       "reviewContent": "깨끗하게 잘해주셨어요",
       "reply": "",
-      "replyValue": "ㅁㄴㅇㄹ"
+      "replyValue": "감사합니다"
     },
     {
-      "id": 2,
+      "laundryId": 1,
+      "id": "2",
       "userId": "5678user",
       "reviewDate": "2023-03-20",
       "reviewImg": "https://cdn.vuetifyjs.com/images/cards/docks.jpg",
@@ -60,7 +62,8 @@
       "replyValue": ""
     },
     {
-      "id": 3,
+      "laundryId": 1,
+      "id": "3",
       "userId": "us52er",
       "reviewDate": "2023-03-19",
       "reviewImg": "https://cdn.vuetifyjs.com/images/cards/docks.jpg",
@@ -68,6 +71,64 @@
       "reviewContent": "사장님이 매우 친절하십니다",
       "reply": "",
       "replyValue": ""
+    },
+    {
+      "laundryId": 2,
+      "id": "4",
+      "userId": "gohome",
+      "reviewDate": "2023-03-03",
+      "reviewImg": "https://cdn.vuetifyjs.com/images/cards/docks.jpg",
+      "stars": "5",
+      "reviewContent": "세탁 잘해주셨네요",
+      "reply": "",
+      "replyValue": ""
+    },
+    {
+      "laundryId": 2,
+      "id": "5",
+      "userId": "imimim",
+      "reviewDate": "2023-03-10",
+      "reviewImg": "https://cdn.vuetifyjs.com/images/cards/docks.jpg",
+      "stars": "3",
+      "reviewContent": "그냥 그래요",
+      "reply": "",
+      "replyValue": ""
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "productImg": "https://source.unsplash.com/featured/?clothes",
+      "productName": "상의",
+      "price": "5000"
+    },
+    {
+      "id": 2,
+      "productImg": "https://source.unsplash.com/featured/?clothes",
+      "productName": "원피스",
+      "price": "5000"
+    },
+    {
+      "id": 3,
+      "productImg": "https://source.unsplash.com/featured/?shoes",
+      "productName": "신",
+      "price": "8000"
+    }
+  ],
+  "managers": [
+    {
+      "laundryId": 1,
+      "id": 1,
+      "managerName": "김경기",
+      "managerEmail": "ww12@naver.com",
+      "managerPhone": "010-2222-1111"
+    },
+    {
+      "laundryId": 2,
+      "id": 2,
+      "managerName": "가나다",
+      "managerEmail": "w22221@naver.com",
+      "managerPhone": "010-2333-7877"
     }
   ]
 }

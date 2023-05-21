@@ -23,6 +23,8 @@ import HistoryDetails from '../views/HistoryDetails.vue'
 import LoginFormVue from '@/views/LoginForm.vue'
 import SignUpFormVue from '@/views/SignUpForm.vue'
 
+import ManagerMypage2 from '../views/ManagerMypage2.vue'
+
 const routes = [
   {
     path: '/',
@@ -119,7 +121,11 @@ const routes = [
     name: '회원가입',
     component: SignUpFormVue
   },
-
+  {
+    path: '/managermypage2',
+    name: 'managermypage2',
+    component: ManagerMypage2
+  },
 ]
 
 const router = createRouter({
