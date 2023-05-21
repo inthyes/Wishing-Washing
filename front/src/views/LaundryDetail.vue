@@ -187,61 +187,34 @@ export default {
     methods: {
 
         async getImageUrl() {
-            try {
-                const res = await axios.get(`http://localhost:3000/upload/laundryReview/${this.$route.params.id}`);
-                console.log(res);
+        try {
+            const res = await axios.get(`http://localhost:3000/upload/laundryReview/${this.$route.params.id}`);
+            console.log(res);
 
-                this.reviewImages = res.data.map(item => {
-                    if (item.review_img) {
-
-                        const base64 = arrayBufferToBase64(item.review_img.data);
-
-                        return `data:image/png;base64,${base64}`;
-                    }
-                    return null;
-                });
-
-
-            } catch (error) {
-                console.error(error);
+            this.reviewImages = res.data.map(item => {
+            if (item.review_img) {
+                
+                const base64 = arrayBufferToBase64(item.review_img.data);
+                
+                return `data:image/png;base64,${base64}`;
             }
+            return null;
+            });
+
+        
+        } catch (error) {
+            console.error(error);
+        }
         },
 
-        getTimeAgo(dateString) {
-            const date = new Date(dateString);
-            const now = new Date();
-            const diffInMilliseconds = now - date;
 
-            // Calculate the difference in minutes, hours, and days
-            const minutesAgo = Math.floor(diffInMilliseconds / (1000 * 60));
-            const hoursAgo = Math.floor(diffInMilliseconds / (1000 * 60 * 60));
-            const daysAgo = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
 
-            // Check if the date is after a week
-            const nextWeek = new Date(date.getTime() + (7 * 24 * 60 * 60 * 1000));
-
-            if (diffInMilliseconds < 0) {
-                // Date is in the future
-                return nextWeek.toLocaleDateString();
-            } else if (minutesAgo < 60) {
-                // Less than an hour ago
-                return `${minutesAgo}분 전`;
-            } else if (hoursAgo < 24) {
-                // Less than a day ago
-                return `${hoursAgo}시간 전`;
-            } else if (daysAgo < 7) {
-                // Less than a week ago
-                return `${daysAgo}일 전`;
-            } else {
-                // After a week
-                return nextWeek.toLocaleDateString();
-            }
-        },
         // reserve() {
         //     this.loading = true
 
         //     setTimeout(() => (this.loading = false), 2000)
         // },
+
 
         toggleWish(likeStatus) {
             //const laundry = this.laundrys.find(l => l.id === laundryId);
@@ -291,5 +264,5 @@ export default {
             }
         }
     }
-}
+   }
 </script>
