@@ -50,7 +50,7 @@
                 <v-btn variant="text" class="custom-btn flex-grow-1 mx-0" color="light-blue-darken-4" @click="logout">
                     로그아웃
                 </v-btn>
-                <v-btn variant="text" class="custom-btn flex-grow-1 mx-0" color="light-blue-darken-4">
+                <v-btn variant="text" class="custom-btn flex-grow-1 mx-0" color="light-blue-darken-4" @click="redirectToRegister">
                     회원탈퇴
                 </v-btn>
             </v-card-actions>
@@ -59,7 +59,7 @@
 </template>
 
 <script>
-/*import axios from "axios";
+import axios from "axios";
 import jwt_decode from 'jwt-decode';
 export default {
     name: 'MyMenu',
@@ -67,28 +67,28 @@ export default {
         mypageData: {},
     }),
     created() {
-        const token = localStorage.getItem("token");
+        // const token = localStorage.getItem("token");
 
-        if (token) {
-            this.verifyToken(token)
-                .then((isValidToken) => {
-                    this.fetchMypageData();
-                    console.log(isValidToken);
-                })
-                .catch((error) => {
-                    console.error(error);
-                    this.redirectToLogin();
-                });
-        } else {
-            this.redirectToLogin();
-        }
+        // if (token) {
+        //     this.verifyToken(token)
+        //         .then((isValidToken) => {
+        //             this.fetchMypageData();
+        //             console.log(isValidToken);
+        //         })
+        //         .catch((error) => {
+        //             console.error(error);
+        //             this.redirectToLogin();
+        //         });
+        // } else {
+        //     this.redirectToLogin();
+        // }
     },
 
     methods: {
         async verifyToken(token) {
             try {
                 const response = await axios.post(
-                    "http://localhost:3000/verify-token",
+                    "http://localhost:4000/verify-token",
                     { token }
                 );
                 const data = response.data;
@@ -101,7 +101,7 @@ export default {
 
         async fetchMypageData() {
             try {
-                const res = await axios.get("http://localhost:3000/myPage");
+                const res = await axios.get("http://localhost:4000/myPage");
                 this.mypageData = res.data;
                 const token = localStorage.getItem("token");
                 const tokenPayload = jwt_decode(token);
@@ -120,10 +120,15 @@ export default {
         redirectToLogin() {
             this.$router.push("/login");
         },
+        redirectToRegister() {
+            if (confirm("회원 탈퇴를 진행하시겠습니까?")) {
+                this.$router.push("/signup");
+            }
+        },
 
         async logout() {
             try {
-                const response = await axios.post('http://localhost:3000/logout', null, {
+                const response = await axios.post('http://localhost:4000/logout', null, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`
                     }
@@ -141,7 +146,7 @@ export default {
             }
         }
     }
-}*/
+}
 </script>
 
 <style scoped>

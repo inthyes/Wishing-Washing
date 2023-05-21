@@ -4,6 +4,7 @@ const logger = require("../../config/logger");
 const Review = require("../../models/Review");
 const Product = require("../../models/Product");
 const Edit = require("../../models/Edit");
+const MyPage = require("../../models/Mypage");
 
 const router = require(".");
 
@@ -38,10 +39,12 @@ const output ={
     },
     productAdmin : async(req, res) => {
         logger.info(`GET /productAdmin 304 "productAdmin 화면으로 이동"`);
-        const product = new Product("7", "7"); //세탁소아이디가 7이라고 가정
+        const S_ID = 7;
+        const product = new Product(S_ID, "7"); //세탁소아이디가 7이라고 가정
         const productAdmin = await product.showProduct(); // 세탁소상품 보여주기
         const response = {
-            productAdmin: [productAdmin] // productAdmin을 배열에 담아 응답 데이터 구조 생성
+            productAdmin: [productAdmin], // productAdmin을 배열에 담아 응답 데이터 구조 생성
+            S_ID: S_ID
         };
         console.log(productAdmin);
         res.json(response);
@@ -87,10 +90,10 @@ const output ={
         const S_ID = console.log(req.params.id);
         res.render("home/addProduct", {S_ID});
     },
-    myPage : (req, res) => {
-        logger.info(`GET /home/myPage 304 "마이페이지 화면으로 이동`);
-        res.render("home/myPage");
-    },
+    // myPage : (req, res) => {
+    //     logger.info(`GET /home/myPage 304 "마이페이지 화면으로 이동`);
+    //     res.render("home/myPage");
+    // },
     //myPage 하위 기능
     profileEdit : (req, res) => {
         logger.info(`GET /myPage/profileEdit 304 "프로필편집 화면으로 이동"`);
@@ -135,6 +138,24 @@ const output ={
         // PRODUCT_ID = req.params.id;
         res.render('home/productAdmin', {PRODUCT_ID});
     },
+    myPage : async (req, res) => {
+        try {
+            logger.info(`GET /home/myPage 304 "마이페이지 화면으로 이동`);
+        
+            const userId = req.params.id; // userId 값을 얻어옵니다. 이 부분에 대한 로직이 필요합니다.
+        
+            const myPage = new MyPage(userId); // userId를 생성자에 전달하여 MyPage 인스턴스를 생성합니다.
+            const myPageInfo = await myPage.showMyPageInfo(); // showMyPageInfo 메서드를 호출하여 마이페이지 정보를 얻습니다.
+        
+            console.log(myPageInfo);
+            console.log(myPageInfo);
+            res.json(myPageInfo);
+          } catch (error) {
+            console.error(error);
+            // 오류 처리 로직을 추가합니다.
+            res.status(500).json({ error: "마이페이지 정보를 가져오는 중에 오류가 발생했습니다." });
+          }
+        },
 };
 
 const process = {
@@ -150,17 +171,21 @@ const process = {
         const response = await edit.laundryUpdate();
         res.render('home/myPage');
     },
-    addProduct : async (req,res) => {
+    addProduct: async (req, res) => {
         console.log(req.body);
-        const add = new Product(req.body, "7"); //세탁소아이디는 토큰으로 받아오기
-        const response = await add.addProduct(); //상품추가메소드
-        res.render('home/laundry');
-    },
-    deleteProduct : async (req,res) => {
+        const { productName, price } = req.body;
+        const add = new Product({ PRODUCT_NAME: productName, PRODUCT_PRICE: price }, "7");
+
+        const response = await add.addProduct(); // 상품 추가 메소드
+        console.log(response);
+        res.render("home/laundry");
+      },
+      deleteProduct: async (req, res) => {
         const deleteProduct = new Product(req.body, req.params.id);
         const response = await deleteProduct.deleteProduct();
-        res.render('home/laundry');
-    },
+        res.render("home/laundry");
+      },
+      
     addReviewReply : async (req,res) => {
         console.log(req.body); //body에 CEO_COMMENT가담김
         console.log(req.params.id); //O_NUM임

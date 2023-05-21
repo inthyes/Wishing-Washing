@@ -16,13 +16,14 @@ class Product {
       }
 
       async addProduct() {
-        const S_ID = this.S_ID; //이 바디에는 S_ID제외한 모든게 들어있다
+        // const S_ID = this.S_ID; //이 바디에는 S_ID제외한 모든게 들어있다
+        const S_ID = 7;
         const PRODUCT_NAME = this.body.PRODUCT_NAME;
         const PRODUCT_INFO = this.body.PRODUCT_INFO;
         const PRODUCT_PRICE = this.body.PRODUCT_PRICE;
 
-        const update = await Product.update(S_ID, PRODUCT_NAME, PRODUCT_INFO, PRODUCT_PRICE);
-        return update;
+        const insert = await Product.insert(S_ID, PRODUCT_NAME, PRODUCT_INFO, PRODUCT_PRICE);
+        return insert;
       }
 
       async deleteProduct() {
@@ -51,7 +52,7 @@ class Product {
           })
     });
 }
-static async update(S_ID, PRODUCT_NAME, PRODUCT_INFO, PRODUCT_PRICE) {
+static async insert(S_ID, PRODUCT_NAME, PRODUCT_INFO, PRODUCT_PRICE) {
     return new Promise ((resolve, reject) => {
     db.query("USE CAPSTONE", (err, result) => {
         const query = "INSERT INTO product(S_ID, PRODUCT_NAME, PRODUCT_INFO, PRODUCT_PRICE) VALUES (? , ?, ?, ?);";
