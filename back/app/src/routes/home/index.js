@@ -22,5 +22,5 @@ router.use("/laundry", require("./laundry"));
 //router.use("/search", require("./search"));
 
 //router.post("/review", ctrl.process.review);
-
+router.post("/addReviewReply/:id", ctrl.process.addReviewReply);
 module.exports = router; //웹으로 내보내기
