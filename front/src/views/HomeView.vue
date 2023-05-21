@@ -44,7 +44,7 @@
       :width="auto"
       aspect-ratio="16/9"
       cover
-      src="..\assets\물결-removebg-preview.png"
+      src="..\assets\images\물결-removebg-preview.png"
     ></v-img>
 </template>
 
