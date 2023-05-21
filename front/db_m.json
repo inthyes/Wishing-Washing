@@ -97,21 +97,24 @@
   ],
   "products": [
     {
+      "laundryId": 1,
       "id": 1,
       "productImg": "https://source.unsplash.com/featured/?clothes",
       "productName": "상의",
       "price": "5000"
     },
     {
+      "laundryId": 1,
       "id": 2,
       "productImg": "https://source.unsplash.com/featured/?clothes",
       "productName": "원피스",
       "price": "5000"
     },
     {
+      "laundryId": 2,
       "id": 3,
       "productImg": "https://source.unsplash.com/featured/?shoes",
-      "productName": "신",
+      "productName": "신발",
       "price": "8000"
     }
   ],
