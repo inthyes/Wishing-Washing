@@ -55,6 +55,8 @@
 
 <script>
 import axios from "axios";
+import jwt_decode from 'jwt-decode';
+
 export default {
     data() {
         return {
@@ -68,12 +70,20 @@ export default {
         };
     },
     async created() {
+        const token = localStorage.getItem("token");
 
-        try {
-            const res = await axios.get(`http://localhost:3000/review`)
-            console.log("res", res);
-        } catch (e) {
-            console.error(e);
+        if (token) {
+        this.verifyToken(token)
+            .then((isValidToken) => {
+                this.fecthAddReview();
+                console.log(isValidToken);
+            })
+            .catch((error) => {
+            console.error(error);
+            this.redirectToLogin();
+            });
+        } else {
+        this.redirectToLogin();
         }
     },
     methods: {
@@ -89,63 +99,96 @@ export default {
 
             reader.readAsDataURL(file);
         },
-async submitReview() {
-    const date = new Date();
-    const dateString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 
-    const newReview = {
-        storeId: this.$route.params.storeId,
-        orderNum: this.$route.params.orderNum,
-        title: this.review.title,
-        content: this.review.content,
-        rating: this.review.rating,
-        date: dateString,
-        image: await this.review.image,
-    };
+        async verifyToken(token) {
+            try {
+                const response = await axios.post(
+                "http://localhost:3000/verify-token",
+                { token }
+                );
+                const data = response.data;
+                console.log("data:",data);
+                return data.isValid;
+            } catch (error) {
+                throw new Error("토큰 검증 실패");
+            }
+        },
+        async fecthAddReview(){
 
-    // 이미지를 제외한 리뷰 데이터를 전송하는 POST 요청
-    axios
-        .post('http://localhost:3000/review', {
-            storeId: newReview.storeId,
-            orderNum: newReview.orderNum,
-            //title: newReview.title,
-            content: newReview.content,
-            rating: newReview.rating,
-            date: dateString
-        })
-        .then(() => {
-            // 리뷰 작성 후 폼 초기화
-            // this.review.title = '';
-            this.review.content = '';
-            this.review.rating = 0;
-            this.review.image = null;
-            // 이미지가 있는 경우 이미지를 전송하는 POST 요청
-            if (newReview.image) {
-                const formData = new FormData();
-                formData.append('image', newReview.image);
-                formData.append('o_id', newReview.orderNum);
+            try {
+                const res = await axios.get(`http://localhost:3000/review`)
+                console.log("res", res);
+                const token = localStorage.getItem("token");
+                const tokenPayload = jwt_decode(token);
+
+                console.log("ID:", tokenPayload.id);
+                console.log("Token Payload:", tokenPayload);
+
+            } catch (e) {
+                console.error(e);
+            }
+        },
+        redirectToLogin() {
+           this.$router.push("/login");
+        },
+
+        async submitReview() {
+            const date = new Date();
+            const dateString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+
+            const newReview = {
+                storeId: this.$route.params.storeId,
+                orderNum: this.$route.params.orderNum,
+                title: this.review.title,
+                content: this.review.content,
+                rating: this.review.rating,
+                date: dateString,
+                image: await this.review.image,
+            };
+
+                // 이미지를 제외한 리뷰 데이터를 전송하는 POST 요청
                 axios
-                    .post('http://localhost:3000/upload/review', formData, {
-                        headers: {
-                            'Content-Type': 'multipart/form-data',
-                        },
+                    .post('http://localhost:3000/review', {
+                        storeId: newReview.storeId,
+                        orderNum: newReview.orderNum,
+                        //title: newReview.title,
+                        content: newReview.content,
+                        rating: newReview.rating,
+                        date: dateString
                     })
                     .then(() => {
-                        console.log('이미지 업로드 완료');
+                        // 리뷰 작성 후 폼 초기화
+                        // this.review.title = '';
+                        this.review.content = '';
+                        this.review.rating = 0;
+                        this.review.image = null;
+                        // 이미지가 있는 경우 이미지를 전송하는 POST 요청
+                        if (newReview.image) {
+                            const formData = new FormData();
+                            formData.append('image', newReview.image);
+                            formData.append('o_id', newReview.orderNum);
+                            axios
+                                .post('http://localhost:3000/upload/review', formData, {
+                                    headers: {
+                                        'Content-Type': 'multipart/form-data',
+                                    },
+                                })
+                                .then(() => {
+                                    console.log('이미지 업로드 완료');
+                                })
+                                .catch((error) => {
+                                    console.error('이미지 업로드 실패:', error);
+                                });
+                        }
+                        // reviewlist.vue로 이동
+                        this.$router.push('/reviewlist');
                     })
                     .catch((error) => {
-                        console.error('이미지 업로드 실패:', error);
+                        console.error('리뷰 작성 실패:', error);
                     });
-            }
-            // reviewlist.vue로 이동
-            this.$router.push('/reviewlist');
-        })
-        .catch((error) => {
-            console.error('리뷰 작성 실패:', error);
-        });
-},
+            },
 
-    }
+                }
 };
 </script>
 
