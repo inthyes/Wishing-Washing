@@ -1,38 +1,39 @@
 <template>
-    <div>
-        <v-card elevation="0">
-            <!-- 사진 아이콘 암거나 눌러도 프로필편집으로 이동 -->
-            <router-link to="/editprofile"> 
-               
-      <v-img :src="imageUrl" width="100%" height="auto" class="profile-image"></v-img>
+  <div>
+    <v-card elevation="0">
+      <!-- 사진 아이콘 암거나 눌러도 프로필편집으로 이동 -->
+      <router-link to="/editprofile">
+        <v-img
+          v-if="imageUrl"
+          :src="imageUrl" height="160" width="160" class="round-profile-picture"></v-img>
+        <v-icon class="icon-overlay">mdi-account-edit</v-icon>
+      </router-link>
 
-                <v-icon class="icon-overlay">mdi-account-edit</v-icon>
-            </router-link>
-            
-            <v-card-text>
-                <v-row>
-                    <v-col class="mt-7">
-                        <p id="name">{{ mypageData.U_NAME }}님, 안녕하세요!</p>
-                        <p id="email">{{ mypageData.U_MAIL }}</p>
-                        <p id="phone">{{ mypageData.U_PHONE }}</p>
-                    </v-col>
-                </v-row>
-            </v-card-text>
-        </v-card>
-    </div>
+      <v-card-text>
+        <v-row>
+          <v-col class="mt-7">
+            <p id="name">{{ mypageData.U_NAME }}님, 안녕하세요!</p>
+            <p id="email">{{ mypageData.U_MAIL }}</p>
+            <p id="phone">{{ mypageData.U_PHONE }}</p>
+          </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
+  </div>
 </template>
 
 <script>
 import axios from "axios";
 import jwt_decode from 'jwt-decode';
+
 function arrayBufferToBase64(buffer) {
-  let binary = '';
-  const bytes = new Uint8Array(buffer);
-  const len = bytes.byteLength;
-  for (let i = 0; i < len; i++) {
-    binary += String.fromCharCode(bytes[i]);
+    let binary = '';
+    const bytes = new Uint8Array(buffer);
+    const len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+        binary += String.fromCharCode(bytes[i]);
   }
-  return window.btoa(binary);
+    return window.btoa(binary);
 }
 
 
@@ -42,7 +43,7 @@ export default {
         show: false,
         mypageData: {},
         userName: "",
-         imageUrl: "" // 이미지 URL을 저장할 변수 추가
+         imageUrl: null // 이미지 URL을 저장할 변수 추가
     }),
 
     async created() {
@@ -66,18 +67,25 @@ export default {
 
     methods: {
         async getImageUrl() {
-      try {
-        const res = await axios.get(`http://localhost:3000/upload/profile`);
-        console.log(res);
-        const image = res.data[0];
-        const base64 = arrayBufferToBase64(image.u_img.data);
-        console.log(base64);
-        this.imageUrl = `data:image/png;base64,${base64}`; // 이미지 URL 저장
-        console.log(this.imageUrl);
-      } catch (e) {
-        console.error(e);
-      }
-    },
+  try {
+    const res = await axios.get(`http://localhost:3000/upload/profile`);
+    console.log(res);
+    if (res.data && res.data.length > 0) {
+      const image = res.data[0];
+      const base64 = arrayBufferToBase64(image.u_img.data);
+      //console.log(base64);
+      this.imageUrl = `data:image/png;base64,${base64}`; // 이미지 URL 저장
+      //console.log(this.imageUrl);
+    } else {
+      this.imageUrl = require('@/assets/프로필.jpg'); // 기본 이미지 URL로 설정
+    }
+  } catch (e) {
+    console.error(e);
+     this.imageUrl = require('@/assets/프로필.jpg');
+  }
+},
+
+
         async verifyToken(token) {
             try {
                 const response = await axios.post(
