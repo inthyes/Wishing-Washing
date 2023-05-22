@@ -33,8 +33,8 @@ export default {
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
 }
-.nav-btn {
+/* .nav-btn {
     width: (100% / 4);
     padding-inline: 0;
-}
+} */
 </style>
