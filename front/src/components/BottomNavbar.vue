@@ -2,7 +2,7 @@
     <v-bottom-navigation class="bt-navbar" v-model="value" height="70" color="light-blue-darken-4" mode="shift" grow>
         <v-btn router-link to="/">
             <v-icon>mdi-home</v-icon>
-            <span>HOME</span>
+            <span>&nbsp;&nbsp;HOME&nbsp;&nbsp;</span>
         </v-btn>
 
         <v-btn to="managemylaundry">
