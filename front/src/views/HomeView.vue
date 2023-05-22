@@ -39,6 +39,13 @@
       </v-cols>
     </v-row>
   </v-card>
+
+  <v-img
+      :width="auto"
+      aspect-ratio="16/9"
+      cover
+      src="..\assets\images\물결-removebg-preview.png"
+    ></v-img>
 </template>
 
 <script>
