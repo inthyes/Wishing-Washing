@@ -5,8 +5,10 @@ import axios from 'axios'
 // import VueCookies from 'vue-cookies'
 
 
-// import "bootstrap";
-// import "bootstrap/dist/css/bootstrap.min.css";
+// import BootstrapVue from 'bootstrap-vue'
+import "bootstrap";
+import 'bootstrap/dist/css/bootstrap.min.css'
+// import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import vuetify from './plugins/vuetify'
 import { loadFonts } from './plugins/webfontloader'
@@ -29,6 +31,7 @@ loadFonts()
 const app = createApp(App);
 app.use(router)
 app.use(vuetify)
+// app.use(BootstrapVue)
 // app.use(VueCookies)
 // app.use(store);
 app.config.globalProperties.axios = axios;

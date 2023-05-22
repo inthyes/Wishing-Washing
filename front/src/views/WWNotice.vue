@@ -28,7 +28,7 @@
     </div>
 </template>
 
-<style>
+<style scoped>
 .notice:hover {
     background-color: none;
     color: black;

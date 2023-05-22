@@ -8,8 +8,9 @@ const db = mysql.createPool({
     // database:  process.env.DB_DATABASE
     host : "localhost",
     user : "root",
+    // password: "d58ed86f!!",
     // password: "0000",
-    password: "d58ed86f!!",
+    password: "1234",
     database:  "CAPSTONE"
 });
 

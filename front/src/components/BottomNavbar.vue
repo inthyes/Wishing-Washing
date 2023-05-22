@@ -1,5 +1,7 @@
 <template>
-    <v-bottom-navigation v-model="value" height="70" color="light-blue-darken-4" mode="shift" grow>
+
+    <v-bottom-navigation class="bt-navbar" v-model="value" height="70" color="light-blue-darken-4" mode="shift" grow>
+
         <v-btn router-link to="/">
             <v-icon>mdi-home</v-icon>
             <span>&nbsp;&nbsp;HOME&nbsp;&nbsp;</span>
@@ -33,8 +35,10 @@ export default {
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
 }
+
 .nav-btn {
     width: (100% / 4);
     padding-inline: 0;
 }
 </style>
+
