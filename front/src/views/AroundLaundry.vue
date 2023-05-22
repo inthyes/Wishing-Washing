@@ -136,8 +136,12 @@ export default {
                 },
             });
                 this.laundrys = res.data;
-                
-                console.log("쿠키 확인",res.data);
+
+                if (res.data.message === '주소를 설정하세요') {
+                    // 예쁘게 바꿔주세요 영짱
+                    alert("주소를 설정하세요.");
+                    this.$router.push("/");
+                }
             } catch (e) {
                 console.error(e);
             }
