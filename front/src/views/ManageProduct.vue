@@ -186,12 +186,23 @@
         }
       },
 
+      computed: {
+  getMatchingReviews() {
+    return this.reviews.filter(review => review.laundryId === 1);
+  }
+},
+    
+
       showAlert(message) {
         alert(message);
       },
     },
   }
 </script>
+
+
+ 
+
 
 <!-- 
 <script>
