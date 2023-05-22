@@ -75,10 +75,16 @@ export default {
 
         async fetchMypageData() {
             try {
-                const res = await axios.get("http://localhost:3000/myPage");
+                const res = await axios.get("http://localhost:3000/myPage"
+                // , {
+                //     headers: {
+                //     Authorization: `Bearer ${token}`,
+                //     },
+                // }
+                );
                 this.mypageData = res.data;
-                const token = localStorage.getItem("token");
-                const tokenPayload = jwt_decode(token);
+                let token = localStorage.getItem("token");
+                let tokenPayload = jwt_decode(token);
 
                 console.log("ID:", tokenPayload.id);
                 console.log("Token Payload:", tokenPayload);

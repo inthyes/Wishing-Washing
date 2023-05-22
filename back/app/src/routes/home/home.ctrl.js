@@ -110,7 +110,8 @@ const output ={
         logger.info(`GET /myPage 304 "review 화면으로 이동"`);
         const myReview = new Review(req.body, userId.id);
         const myReviewRes = await myReview.myReview();
-        console.log(myReviewRes);
+        console.log( userId.id);
+        // console.log(myReviewRes);
         res.json(myReviewRes);
     },
     edit : async (req, res) => 
@@ -382,7 +383,7 @@ const process = {
     },
 
     review : async (req,res) => {
-        const review = new Review(req.body, "codus");
+        const review = new Review(req.body, userId.id);
         const response = await review.update();
         console.log(response);
         res.json(response);
@@ -409,7 +410,8 @@ const process = {
 
                 // 검증에 성공한 경우, 클라이언트에게 성공 응답을 보냅니다.
                 userId = decoded;
-                console.log(token);
+
+                console.log(token,userId);
                 return res.status(200).json({ message: '토큰이 유효합니다.' });
         });
     },

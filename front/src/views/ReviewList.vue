@@ -38,6 +38,7 @@
 
 <script>
 import axios from "axios";
+import jwt_decode from 'jwt-decode';
 
 function arrayBufferToBase64(buffer) {
   let binary = '';
@@ -54,46 +55,80 @@ export default {
         show: false,
         reviews: [],
         imageUrl: "",
+        reviewImages: [] // reviewImages 배열 추가
     }),
     async created() {
+        const token = localStorage.getItem("token");
 
-        try {
-            await this.getImageUrl();
+        if (token) {
+            this.verifyToken(token)
+                .then((isValidToken) => {
+                    this.fetchedReviewList();
+                    console.log(isValidToken);
+                })
+                .catch((error) => {
+                    console.error(error);
 
-            const res = await axios.get('http://localhost:3000/myPage/review');
-            this.reviews = res.data;
-        } catch (e) {
-            console.error(e);
+                    // this.redirectToLogin();
+                });
+        } else {
+            // this.redirectToLogin();
+            // console.err(err);
         }
-
-        this.reviews.forEach((r, index) => {
-            r.imageUrl = this.reviewImages[index];
-            
-        });
-
     },
     methods: {
+        async verifyToken(token) {
+            try {
+            const response = await axios.post("http://localhost:3000/verify-token", { token });
+            const data = response.data;
+            console.log("data:", data);
+            return data.isValid;
+            } catch (error) {
+            throw new Error("토큰 검증 실패");
+            }
+        },
+        async fetchedReviewList() {
+            try {
+                await this.getImageUrl();
+
+                const res = await axios.get('http://localhost:3000/myPage/review');
+                this.reviews = res.data;
+                let token = localStorage.getItem("token");
+                let tokenPayload = jwt_decode(token);
+
+                console.log("ID:", tokenPayload.id);
+                console.log("Token Payload:", tokenPayload);
+                console.log("Token Payload.Id:", tokenPayload.id);
+            } catch (e) {
+                console.error(e);
+            }
+
+            this.reviews.forEach((r, index) => {
+                r.imageUrl = this.reviewImages[index];
+                r.REVIEW_STAR = r.REVIEW_STAR || 0; // REVIEW_STAR가 undefined일 경우 기본값 0으로 설정
+            });
+        },
 
         async getImageUrl() {
-  try {
-    const res = await axios.get(`http://localhost:3000/upload/laundryReview`);
-    console.log(res);
+            try {
+                const res = await axios.get(`http://localhost:3000/upload/laundryReview`);
+                console.log(res);
 
-    this.reviewImages = res.data.map(item => {
-      if (item.review_img) {
-        
-        const base64 = arrayBufferToBase64(item.review_img.data);
-        
-        return `data:image/png;base64,${base64}`;
-      }
-      return null;
-    });
+                this.reviewImages = res.data.map(item => {
+                if (item.review_img) {
+                    
+                    const base64 = arrayBufferToBase64(item.review_img.data);
+                    
+                    return `data:image/png;base64,${base64}`;
+                }
+                return null;
+                });
 
-   
-  } catch (error) {
-    console.error(error);
-  }
-   },
+            
+            } catch (error) {
+                console.error(error);
+            }
+        },
         getTimeAgo(dateString) {
             const date = new Date(dateString);
             const now = new Date();
@@ -124,21 +159,22 @@ export default {
                 return nextWeek.toLocaleDateString();
             }
         }
-    },
-    mounted() {
-        this.userId = localStorage.getItem("userId");
-    },
-    computed: {
-        isEditable() {
-            return (r) => {
-                if (!this.userId) {
-                    return false; // User is not logged in
-                }
-                return r.U_ID === this.userId; // Compare user IDs
-            };
-        }
+        },
+        mounted() {
+            this.userId = localStorage.getItem("userId");
+        },
+        computed: {
+            isEditable() {
+                return (r) => {
+                    if (!this.userId) {
+                        return false; // User is not logged in
+                    }
+                    return r.U_ID === this.userId; // Compare user IDs
+                };
+            }
+        },
+        
     }
-}
 </script>
 
 <style scoped>

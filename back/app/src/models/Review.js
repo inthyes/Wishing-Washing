@@ -88,23 +88,22 @@ class Review {
   }
 
   async myReview() {
-      return new Promise ((resolve, reject) => {
-        let userId = this.U_ID;
-        db.query("USE CAPSTONE", (err, result) => {
-            const queryGetMyReview = "SELECT * FROM REVIEW\
-                    INNER JOIN STORE on REVIEW.S_ID = STORE.S_ID WHERE U_ID = ?;";
-            if (err) reject(err);
-            db.query(queryGetMyReview,  userId, (err, data) => {
-                if (err) reject(err);
-                else {
-                  resolve(
-                    data
-                  )
-                  }
-                });
-            })
+    return new Promise((resolve, reject) => {
+      let userId = this.U_ID;
+      db.query("USE CAPSTONE", (err, result) => {
+        const queryGetMyReview = "SELECT * FROM REVIEW INNER JOIN STORE ON REVIEW.S_ID = STORE.S_ID WHERE U_ID = ?;";
+        if (err) reject(err);
+        db.query(queryGetMyReview, userId, (err, data) => {
+          if (err) reject(err);
+          else {
+            console.log("왜아노디지");
+            resolve(data);
+          }
         });
+      });
+    });
   }
+  
 
   async countReview(storeId) {
     return new Promise ((resolve, reject) => {

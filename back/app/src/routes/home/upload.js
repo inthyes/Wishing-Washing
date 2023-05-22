@@ -7,13 +7,14 @@ const db = require("../../config/db");
 // const static = require('serve-static');
 var express = require("express");
 var router = express.Router();
+const homeCtrl = require('./home.ctrl');
 const { upload } = require('../../config/multer.js');
 
 
 const board = [];
+// const userId = res.userId;
 
 router.post('/', upload.single('imgUpload'), (req, res) => {
-
 
     db.getConnection((err, conn) => {
         //db 연결 실패
@@ -60,8 +61,10 @@ router.post('/', upload.single('imgUpload'), (req, res) => {
   });
   router.post('/profile', upload.single('image'), (req, res) => {
     console.log(req.file);
-    const u_id = "codus"; //하드코딩
-        
+    
+    const u_id = userId; //하드코딩
+
+ 
         db.getConnection((err, conn) => {
           //db 연결 실패
           if (err) {
@@ -88,6 +91,7 @@ router.post('/', upload.single('imgUpload'), (req, res) => {
     
       //const query = "INSERT INTO review (review_img, o_num) VALUES (?, ?)";
       const query = "UPDATE users SET u_img = ? where u_id = ? "
+      
       db.query(query, [imageBuffer, u_id], (err, results, fields) => {
         if (err) {
           console.log(err);
@@ -175,7 +179,7 @@ console.log(req.file);
   })
 }),
 router.get('/laundryReview', (req,res)=> {
-  const u_id = "codus"; // 하드코딩 토큰
+  const u_id = userId; // 하드코딩 토큰
 
   const query = "select review_img FROM review WHERE U_ID = ?";
   db.query(query,[u_id], (err, results, fields) => {
@@ -191,7 +195,8 @@ router.get('/laundryReview', (req,res)=> {
 }),
 
 router.get('/profile', (req,res)=> {
-  const u_id = "codus";
+  const u_id = userId;
+  // console.log("asdf",u_id);
   const query = "select u_img FROM users WHERE u_id = ?";
   db.query(query,[u_id], (err, results, fields) => {
     if (err) {
