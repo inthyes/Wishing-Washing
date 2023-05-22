@@ -1,5 +1,5 @@
 <template>
-    <v-bottom-navigation v-model="value" color="teal" mode="shift">
+    <v-bottom-navigation class="bt-navbar" v-model="value" height="70" color="light-blue-darken-4" mode="shift" grow>
         <v-btn router-link to="/">
             <v-icon>mdi-home</v-icon>
             <span>HOME</span>
@@ -17,7 +17,7 @@
 
         <v-btn to="managermypage2">
             <v-icon>mdi-account-outline</v-icon>
-            <span>MY</span>
+            <span>&nbsp;&nbsp;&nbsp;MY&nbsp;&nbsp;&nbsp;</span>
         </v-btn>
     </v-bottom-navigation>
 </template>
@@ -27,3 +27,10 @@ export default {
     data: () => ({ value: null }),
 }
 </script>
+
+<style scoped>
+.bt-navbar {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+</style>
