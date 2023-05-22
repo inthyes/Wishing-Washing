@@ -9,7 +9,7 @@
     </v-main>
 
     <!-- 하단 navbar -->
-    <v-footer class="fixed-bottom">
+    <v-footer>
       <bottom-navbar />
     </v-footer>
 
@@ -25,12 +25,3 @@ export default {
   name: 'App',
 }
 </script>
-
-<style scoped>
-.fixed-bottom {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-</style>
