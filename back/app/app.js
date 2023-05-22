@@ -55,7 +55,15 @@ app.use("/logout",logoutRouter);
 const uploadRouter = require("./src/routes/home/upload");
 app.use("/upload",uploadRouter);
 
-
+// app.use('/upload', (req, res, next) => {
+//     // tokenPayload.id 값을 가져와서 upload.js 모듈로 전달
+//     const tokenPayload = { id: '사용자 아이디' }; // 예시로 임의의 값을 설정했습니다.
+    
+//     req.tokenPayload = tokenPayload;
+//     console.log("/upload/",req.tokenPayload);
+//     next();
+//   }, require('./src/routes/home/upload'));
+  
 
 
 module.exports = app;
