@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <!-- 상단 Appbar -->
+
     <v-app-bar v-if="!isLogin" app class="rounded-bottom" :elevation="1"
       style="background-color:rgba(97, 151, 202, 0.874)" :style="{ color: '#ffffff' }">
 
@@ -35,6 +36,7 @@
       </v-list>
     </v-navigation-drawer>
 
+
     <!-- 메인 -->
     <v-main style="background-color:  rgba(255, 255, 255, 0.689)">
       <router-view />
@@ -54,6 +56,7 @@
 </template>
 
 <script>
+
 import BottomNavBar from './components/BottomNavbar.vue'
 import axios from 'axios'
 
@@ -116,6 +119,7 @@ export default {
       }
     }
   },
+
 }
 </script>
 

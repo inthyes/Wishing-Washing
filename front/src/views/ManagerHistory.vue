@@ -31,7 +31,7 @@
     </div>
 </template>
 
-<style>
+<style scoped>
 .washingHistory {
     height: 110px;
     border-radius: 13px;
