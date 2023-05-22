@@ -39,6 +39,13 @@
       </v-cols>
     </v-row>
   </v-card>
+
+  <v-img
+      :width="auto"
+      aspect-ratio="16/9"
+      cover
+      src="..\assets\images\물결-removebg-preview.png"
+    ></v-img>
 </template>
 
 <script>
@@ -72,7 +79,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .container {
   max-width: 1200px;
   margin: 0 auto;

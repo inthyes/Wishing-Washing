@@ -4,7 +4,7 @@
 <template>
     <div class="manageorder">
         <div class="mx-auto my-5" style="margin-top: 15px; max-width: 500px;">
-            <b>&nbsp;&nbsp;세탁물 요청</b>
+            <b>&nbsp;&nbsp;&nbsp;세탁물 요청</b>
         </div>
         <v-card class="mx-auto my-5" max-width="380" v-for="(request, index) in filteredRequests(-2)" v-bind:key="request.id" elevation="0" query="request.id">
             <div v-if="index === 0 || request.date !== requests[index - 1].date" style="margin-bottom: 5px;">
@@ -12,7 +12,7 @@
                     <b>{{ request.date }}</b>
                 </div>
             </div>
-            <v-card style="background-color: gainsboro; border-radius: 10px; box-shadow: none;">
+            <v-card style="background-color: rgba(97, 151, 202, 0.874); color: white; border-radius: 10px; box-shadow: none;">
                 <v-row style="margin-top: -19px; margin-bottom: -18px;">
                     <v-col><v-card-text id="userId" style="margin-top: 4px; font-size: 14px;">
                         <b>{{ request.userId }}&nbsp;&nbsp;|</b>
@@ -41,7 +41,7 @@
         <div class="mx-auto my-5" style="margin-top: 15px; max-width: 380px;">
             <div id="beforeDelivery" style="margin-bottom: 10px;"><b>&nbsp;&nbsp;배송전</b></div>
             <v-card v-for="request in filteredRequests(-1)" :key="request.id" elevation="0">
-                <v-card style="background-color: gainsboro; border-radius: 10px; box-shadow: none; margin-bottom: 7px;"> <!--#5E5A80-->
+                <v-card style="background-color: whitesmoke; border-radius: 10px; box-shadow: none; margin-bottom: 7px;"> <!--#5E5A80-->
                     <v-row style="margin-top: -19px; margin-bottom: -18px;">
                         <v-col><v-card-text id="userId" style="margin-top: 4px; font-size: 14px;">
                             <b>{{ request.userId }}&nbsp;&nbsp;|</b>
@@ -63,7 +63,7 @@
         <div class="mx-auto my-5" style="margin-top: 15px; max-width: 380px;">
             <div id="onDelivery" style="margin-bottom: 10px;"><b>&nbsp;&nbsp;배송중</b></div>
             <v-card v-for="request in filteredRequests(1)" :key="request.id" elevation="0">
-                <v-card style="background-color: gainsboro; border-radius: 10px; box-shadow: none; margin-bottom: 7px;">
+                <v-card style="background-color: whitesmoke; border-radius: 10px; box-shadow: none; margin-bottom: 7px;">
                     <v-row style="margin-top: -19px; margin-bottom: -18px;">
                         <v-col><v-card-text id="userId" style="margin-top: 4px; font-size: 14px;">
                             <b>{{ request.userId }}&nbsp;&nbsp;|</b>
@@ -85,7 +85,7 @@
         <div class="mx-auto my-5" style="margin-top: 15px; max-width: 380px;">
             <div id="completeDelivery" style="margin-bottom: 10px;"><b>&nbsp;&nbsp;배송완료</b></div>
             <v-card v-for="request in filteredRequests(2)" :key="request.id" elevation="0">
-                <v-card style="background-color: gainsboro; border-radius: 10px; box-shadow: none; margin-bottom: 7px;">
+                <v-card style="background-color: whitesmoke; border-radius: 10px; box-shadow: none; margin-bottom: 7px;">
                     <v-row style="margin-top: -19px; margin-bottom: -18px;">
                         <v-col><v-card-text id="userId" style="margin-top: 4px; font-size: 14px;">
                             <b>{{ request.userId }}&nbsp;&nbsp;|</b>

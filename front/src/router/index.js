@@ -28,27 +28,27 @@ import ManagerMypage2 from '../views/ManagerMypage2.vue'
 const routes = [
   {
     path: '/',
-    name: 'home',
+    name: 'WW',
     component: HomeView
   },
   {
     path: '/managemylaundry',
-    name: 'managemylaundry',
+    name: '내세탁소 관리',
     component: ManageMylaundry
   },
   {
     path: '/managelaundry',
-    name: 'managelaundry',
+    name: '세탁소관리',
     component: ManageLaundry
   },
   {
     path: '/manageproduct',
-    name: 'manageproduct',
+    name: '상품관리',
     component: ManageProduct
   },
   {
     path: '/managereview',
-    name: 'managereview',
+    name: '리뷰관리',
     component: ManageReview
   },
   {
@@ -58,32 +58,32 @@ const routes = [
   },
   {
     path: '/editmanagerprofile',
-    name: 'editmanagerprofile',
+    name: '프로필편집',
     component: EditManagerProfile
   },
   {
     path: '/managerhistory',
-    name: 'managerhistory',
+    name: '판매내역',
     component: ManagerHistory
   },
   {
     path: '/checkreviewlist',
-    name: 'checkreviewlist',
+    name: '리뷰확인',
     component: CheckReviewList
   },
   {
     path: '/qna',
-    name: 'qna',
+    name: 'Q&A',
     component: QnA
   },
   {
     path: '/mylaundry',
-    name: 'mylaundry',
+    name: '내세탁소',
     component: MyLaundry
   },
   {
     path: '/wwnotice',
-    name: 'wwnotice',
+    name: '공지사항',
     component: WWNotice
   },
   {
@@ -98,12 +98,12 @@ const routes = [
   },
   {
     path: '/manageorder',
-    name: 'manageorder',
+    name: '세탁 주문',
     component: ManageOrder
   },
   {
     path: '/orderdetails',
-    name: 'orderdetails',
+    name: '주문 상세정보',
     component: OrderDetails
   },
   {
@@ -123,7 +123,7 @@ const routes = [
   },
   {
     path: '/managermypage2',
-    name: 'managermypage2',
+    name: '마이페이지',
     component: ManagerMypage2
   },
 ]
