@@ -1,17 +1,8 @@
-// import Vue from 'vue';
-// import Vuex from 'vuex';
+import { createStore } from 'vuex';
+import loginStore from '@/store/modules/login.js';
 
-// Vue.use(Vuex);
-
-// export default new Vuex.Store({
-//   state: {
-//     address: {
-//       address2: '',
-//     },
-//   },
-//   mutations: {
-//     setAddress2(state, address) {
-//       state.address.address2 = address;
-//     },
-//   },
-// });
+export default createStore({
+	modules: {
+		loginStore: loginStore
+	}
+});
