@@ -9,7 +9,7 @@
             </v-img>
             <v-card-subtitle class="pt-3" id="laund-sub-title">tel. {{ managelaundry.tel }}</v-card-subtitle>
             <v-card-text>
-                <div id="laund-address"><a style="color: darkgray;">주소</a>&nbsp;&nbsp;&nbsp;{{ managelaundry.laundryAddr }}</div>
+                <div id="laund-address"><a style="color: darkgray;">주소</a>&nbsp;&nbsp;&nbsp;{{ managelaundry.laundryAddr2 }}</div>
                 <div id="laund-info"><a style="color: darkgray;">소개</a>&nbsp;&nbsp;&nbsp;{{ managelaundry.intro }}</div>
                 <div id="laund-info"><a style="color: darkgray;">운영</a>&nbsp;&nbsp;&nbsp;{{ managelaundry.openTime }} - {{ managelaundry.closeTime }}</div>
                 <div id="laund-notice"><a style="color: darkgray;">공지</a>&nbsp;&nbsp;&nbsp;{{ managelaundry.notice }}</div>

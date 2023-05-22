@@ -12,7 +12,7 @@
                     <v-col style="margin-top: 14px;">
                         <v-card-text id="managerInfo">
                             <div id="managerName" style="font-size: large;"><b>XXX 사장님</b></div>
-                            <div id="laundryInfo" style="margin-top: 5px;">{{ managelaundry.laundryName }} / {{ managelaundry.laundryAddr }}</div>
+                            <div id="laundryInfo" style="margin-top: 5px;">{{ managelaundry.laundryName }} / {{ managelaundry.laundryAddr2 }}</div>
                         </v-card-text>
                     </v-col>
                     <v-col style="margin-top: 30px; margin-right: -35%;">
@@ -64,7 +64,7 @@
 
                         <v-card-subtitle>
                             <div id="laundryName">{{ managelaundry.laundryName }}</div>
-                            <div id="laundryAddr">{{ managelaundry.laundryAddr }}</div>
+                            <div id="laundryAddr">{{ managelaundry.laundryAddr2 }}</div>
                         </v-card-subtitle>
                         
                         <v-row class="mx-0">

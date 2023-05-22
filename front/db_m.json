@@ -1,117 +1,43 @@
 {
+
   "managelaundrys": [
-    {
-      "laundryName": "인생 세탁소",
-      "laundryAddr": "경기도 수원시",
-      "intro": "반갑습니다. 인생 세탁소입니다.",
-      "openTime": "08:00",
-      "closeTime": "19:00",
-      "tel": "031-2341-2121",
-      "notice": "연중무휴",
-      "image": "uploads/laundryImg1.jpg",
-      "id": 1
-    },
-    {
-      "laundryName": "가나 세탁소",
-      "laundryAddr": "경기도 수원시",
-      "intro": "깔끔하게 세탁해드립니다.",
-      "openTime": "09:00",
-      "closeTime": "17:00",
-      "tel": "031-1232-2222",
-      "notice": "할인 이벤트 진행중",
-      "image": "uploads/laundryImg2.jpg",
-      "id": 2
-    },
-    {
-      "laundryName": "심야 세탁소",
-      "laundryAddr": "서울시 강남구",
-      "intro": "심야에만 운영합니다.",
-      "openTime": "00:00",
-      "closeTime": "09:00",
-      "tel": "02-1234-3822",
-      "notice": "없음",
-      "image": "uploads/laundryImg2.jpg",
-      "id": 3
-    },
-    {
-      "laundryName": "ga",
-      "laundryAddr": "a",
-      "intro": "gasss",
-      "openTime": "19:37",
-      "closeTime": "16:40",
-      "tel": "010-5321-1111",
-      "notice": "gas",
-      "id": 4
-    }
-  ],
-  "requests": [
-    {
-      "laundryId": 1,
-      "id": 1,
-      "date": "2023.03.21",
-      "userId": "user12",
-      "name": "코트",
-      "requirement": "드라이클리닝 해주세요",
-      "price": "10,000원",
-      "userAddr": "경기도 수원시 영통구 경기대학교",
-      "status": -2
-    },
-    {
-      "laundryId": 1,
-      "id": 2,
-      "date": "2023.03.21",
-      "userId": "1us2er",
-      "name": "니트",
-      "requirement": "없음",
-      "price": "8,000원",
-      "userAddr": "경기도 수원시 OO아파트",
-      "status": -2
-    },
-    {
-      "laundryId": 1,
-      "id": 3,
-      "date": "2023.03.20",
-      "userId": "imuser",
-      "name": "운동화",
-      "requirement": "얼룩 지워주세요",
-      "price": "7,000원",
-      "userAddr": "경기도 수원시 XX빌라",
-      "status": -2
-    },
-    {
-      "laundryId": 1,
-      "id": 4,
-      "date": "2023.03.19",
-      "userId": "usser",
-      "name": "종합세탁물",
-      "requirement": "없음",
-      "price": "7,000원",
-      "userAddr": "경기대학교 기숙사",
-      "status": 2
-    },
-    {
-      "laundryId": 1,
-      "id": 5,
-      "date": "2023.03.18",
-      "userId": "wlrkdy",
-      "name": "구두",
-      "requirement": "변색 복구해주세요",
-      "price": "8,000원",
-      "userAddr": "경기도 수원시 AA빌라",
-      "status": 2
-    },
-    {
-      "laundryId": 2,
-      "id": 6,
-      "date": "2023.03.18",
-      "userId": "imim",
-      "name": "종합세탁물",
-      "requirement": "없음",
-      "price": "7,000원",
-      "userAddr": "경기도 수원시",
-      "status": -2
-    }
-  ],
+      {
+        "laundryName": "인생 세탁소",
+        "laundryAddr1": "33333",
+        "laundryAddr2": "경기도 수원시",
+        "intro": "반갑습니다. 인생 세탁소입니다.",
+        "openTime": "08:00",
+        "closeTime": "19:00",
+        "tel": "031-2341-2121",
+        "notice": "연중무휴",
+        "image": "uploads/laundryImg1.jpg",
+        "id": 1
+      },
+      {
+        "laundryName": "가나 세탁소",
+        "laundryAddr1": "22222",
+        "laundryAddr2": "경기도 수원시",
+        "intro": "깔끔하게 세탁해드립니다.",
+        "openTime": "09:00",
+        "closeTime": "17:00",
+        "tel": "031-1232-2222",
+        "notice": "할인 이벤트 진행중",
+        "image": "uploads/laundryImg1.jpg",
+        "id": 2
+      },
+      {
+        "laundryName": "심야 세탁소",
+        "laundryAddr1": "31627",
+        "laundryAddr2": "서울시 강남구",
+        "intro": "심야에만 운영합니다.",
+        "openTime": "00:00",
+        "closeTime": "09:00",
+        "tel": "02-1234-3822",
+        "notice": "없음",
+        "image": "uploads/laundryImg1.jpg",
+        "id": 3
+      }
+    ],
   "reviews": [
     {
       "laundryId": 1,
@@ -122,7 +48,7 @@
       "stars": "5",
       "reviewContent": "깨끗하게 잘해주셨어요",
       "reply": "",
-      "replyValue": "ㅁㄴㅇㄹ"
+      "replyValue": "감사합니다"
     },
     {
       "laundryId": 1,
@@ -173,7 +99,7 @@
     {
       "id": 1,
       "productImg": "https://source.unsplash.com/featured/?clothes",
-      "productName": "상",
+      "productName": "상의",
       "price": "5000"
     },
     {
@@ -187,6 +113,22 @@
       "productImg": "https://source.unsplash.com/featured/?shoes",
       "productName": "신",
       "price": "8000"
+    }
+  ],
+  "managers": [
+    {
+      "laundryId": 1,
+      "id": 1,
+      "managerName": "김경기",
+      "managerEmail": "ww12@naver.com",
+      "managerPhone": "010-2222-1111"
+    },
+    {
+      "laundryId": 2,
+      "id": 2,
+      "managerName": "가나다",
+      "managerEmail": "w22221@naver.com",
+      "managerPhone": "010-2333-7877"
     }
   ]
 }
