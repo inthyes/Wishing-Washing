@@ -409,7 +409,8 @@ const process = {
 
                 // 검증에 성공한 경우, 클라이언트에게 성공 응답을 보냅니다.
                 userId = decoded;
-                console.log(token);
+
+                console.log(token,userId);
                 return res.status(200).json({ message: '토큰이 유효합니다.' });
         });
     },
