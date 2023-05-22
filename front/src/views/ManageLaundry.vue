@@ -165,7 +165,8 @@ export default {
                         S_ANNOUNCE: newLaundry.notice,
                 })
                 .then(() => {
-                    console.log(newLaundry.image);
+                    
+                    
                 if (newLaundry.image) {
                     
                     const formData = new FormData();
@@ -186,16 +187,14 @@ export default {
             })
             .then(() => {
                 console.log('데이터가 성공적으로 추가되었습니다.');
-                this.showAlert('세탁소 정보가 수정되었습니다.');
+                
                 this.$router.push('/');
              })
             .catch((error) => {
             console.error('업로드 실패:', error);
         });
         },
-        showAlert(message) {
-            alert(message);
-        },
+        
     },
 };
 </script>
