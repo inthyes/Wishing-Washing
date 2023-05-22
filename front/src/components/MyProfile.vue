@@ -21,8 +21,11 @@
 </template>
 
 <script>
+
 import axios from "axios";
+
 import jwt_decode from 'jwt-decode';
+
 function arrayBufferToBase64(buffer) {
   let binary = '';
   const bytes = new Uint8Array(buffer);
@@ -39,17 +42,24 @@ export default {
         show: false,
         mypageData: {},
         ceoName: "",
-        imageUrl: "" // 이미지 URL을 저장할 변수 추가
+        imageUrl: null // 이미지 URL을 저장할 변수 추가
     }),
     async created() {
         await this.getImageUrl(); // 이미지 URL 가져오기
 
+        // const userId = localStorage.getItem("userId");
+        // console.log("userId",userId);
+
         const token = localStorage.getItem("token");
+        // this.userId = localStorage.getItem("userId");
+        console.log(this.userId);
+
         if (token) {
             this.verifyToken(token)
                 .then((isValidToken) => {
                     this.fetchMypageData();
                     console.log(isValidToken);
+                    
                 })
                 .catch((error) => {
                     console.error(error);
@@ -68,6 +78,8 @@ export default {
                 );
                 const data = response.data;
                 console.log("data:", data);
+                
+                
                 return data.isValid;
             } catch (error) {
                 throw new Error("토큰 검증 실패");
@@ -76,14 +88,18 @@ export default {
 
         async fetchMypageData() {
             try {
-                const res = await axios.get("http://localhost:4000/myPage");
+                // const userId = this.userId; // 수정: this.userId 대신에 userId 변수를 사용
+                const res = await axios.get("http://localhost:4000/myPage")
                 this.mypageData = res.data;
                 const token = localStorage.getItem("token");
                 const tokenPayload = jwt_decode(token);
 
+                // this.mypageData.C_NAME = tokenPayload.id;
+
                 console.log("ID:", tokenPayload.id);
                 console.log("Token Payload:", tokenPayload);
-                console.log(this.mypageData);
+                // console.log("userId:", userId);
+                // console.log(res.data.name);
 
 
                 // this.mypageData = this.mypageData.filter((mypageData) => mypageData.userName === tokenPayload.userName);
@@ -96,6 +112,8 @@ export default {
         redirectToLogin() {
             this.$router.push("/login");
         },
+
+        
 
         async getImageUrl() {
             try {

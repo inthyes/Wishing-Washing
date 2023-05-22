@@ -16,13 +16,15 @@ router.get('/orderManage', ctrl.output.orderManage);
 router.get('/myPage', ctrl.output.myPage);
 router.get('/upload', ctrl.output.upload);
 router.get('/laundryAdmin', ctrl.output.laundryAdmin);
+router.get('/edit', ctrl.output.edit);
+router.get('/myEdit', ctrl.output.myEdit);
 
-
-router.use("/myPage", require("./myPage"));
+// router.use("/myPage", require("./myPage"));
 router.use("/laundry", require("./laundry"));
 //router.use("/search", require("./search"));
 
 router.post("/verify-token", ctrl.process.verifyToken);
 //router.post("/review", ctrl.process.review);
 router.post("/addReviewReply/:id", ctrl.process.addReviewReply);
+router.post("/edit", ctrl.process.edit);
 module.exports = router; //웹으로 내보내기

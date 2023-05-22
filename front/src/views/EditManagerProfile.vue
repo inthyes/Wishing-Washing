@@ -1,114 +1,195 @@
 <!--프로필 편집-->
-<!--이시언-->
-
 <template>
     <v-card class="mx-auto my-5" max-width="400" title="프로필편집" elevation="0">
-        <v-container>
-            <v-text-field v-model="name" :rules="[rules.required]" color="blue" label="이름" placeholder="이름을 입력하세요"
-                variant="underlined"></v-text-field>
-
-            <v-text-field v-model="email" :rules="[rules.required, rules.emailRules]" color="blue" label="이메일"
-                placeholder="이메일을 입력하세요" variant="underlined"></v-text-field>
-
-
-            <v-text-field v-model="id" :rules="[rules.required]" color="blue" label="닉네임" placeholder="닉네임을 입력하세요"
-                variant="underlined"></v-text-field>
-
-            <v-text-field v-model="phone" :rules="[rules.required, rules.phoneRules]" color="blue" label="연락처"
-                placeholder="연락처를 입력하세요" variant="underlined"></v-text-field>
-
-            <v-text-field v-model="password" :rules="[rules.required, rules.minRules]" :type="show1 ? 'text' : 'password'"
-                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" @click:append="show1 = !show1" color="blue" label="비밀번호"
-                placeholder="비밀번호를 입력하세요" variant="underlined"></v-text-field>
-
-            <v-text-field v-model="PasswordCheck" :rules="[rules.required, rules.passwordMatch]"
-                :type="show2 ? 'text' : 'password'" :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
-                @click:append="show2 = !show2" color="blue" label="비밀번호 확인" placeholder="한번 더 비밀번호를 입력하세요"
-                variant="underlined">
-            </v-text-field>
-
-            <div>프로필 사진 편집</div>
-            <br>
-            <div>
-                <input multiple @change="'onInputImage()'" ref="surveyImage" type="file">
-            </div>
-
-            <v-checkbox v-model="terms" color="secondary" label="동의합니다"></v-checkbox>
-        </v-container>
-
-        <v-divider></v-divider>
-
-        <v-card-actions>
-            <v-spacer></v-spacer>
-
-            <v-btn color="success" @click="addUsers">
-                수정 완료
-                <v-icon icon="mdi-chevron-right" end></v-icon>
-            </v-btn>
-        </v-card-actions>
+      <!-- <v-card-actions>
+      </v-card-actions> -->
+      <v-form>
+        <br>
+        <div class="mb-5">
+                <label for="formFile" class="form-label">사진을 올려주세요</label>
+                <input class="form-control mb-2" type="file" id="edit.image" @change="handleImageUpload" accept="image/*" />
+                <div class="photo-container" :class="{ 'no-image': !selectedPhoto }" >
+                    <v-img :src="selectedPhoto" alt="Selected Photo"
+                        v-if="selectedPhoto" />
+                    <div v-else>No Image</div>
+                </div></div>
+        <v-text-field v-model="edit.userId" label="아이디" readonly></v-text-field>
+        <v-text-field v-model="edit.name" label="이름" readonly></v-text-field>
+        <v-text-field v-model="edit.mail" :rules="[rules.emailRules]" label="이메일"></v-text-field>
+              
+        <v-text-field v-model="edit.phone" :rules="[rules.phoneRules]" label="연락처"></v-text-field>
+        <!-- <button @click="goToEditPassword">비밀번호 변경</button> -->
+        <!-- <div style="color: gray;">프로필 사진 편집</div>
+        <div>
+        <input multiple @change="onInputImage" ref="surveyImage" type="file">
+        </div> -->
+        <!-- <v-text-field v-model="edit.newPassword" label="새 비밀번호"></v-text-field>
+        <v-text-field v-model="edit.newPasswordConfirm" label="새 비밀번호 확인"></v-text-field> -->
+        <v-btn type="button" color="primary" @click="save">저장</v-btn>
+      </v-form>
     </v-card>
-</template>
+  </template>
 
 <script>
 import axios from 'axios';
-const baseURL = "http://localhost:5000/users";  // 사용자 users.json 포트 5000번으로 변경해서 여기도 변경했어요!
+// const baseURL = "http://localhost:4000/myPage/profileEdit";
+import jwt_decode from 'jwt-decode';
+
+/* eslint-disable */
 export default {
-    data() {
-        return {
-            name: null,
-            id: null,
-            phone: null,
-            email: null,
-            password: null,
-            PasswordCheck: null,
-            image: null,
-            terms: false,
-            show1: false,
-            show2: false,
-            users: [],
-            rules: {    // 유효성 검사 규칙
-                required: value => !!value || '반드시 입력하세요',
-                phoneRules: value => {
-                    const pattern = /^(\+)?([0-9]{3})?[-]?([0-9]{3,4})?[-]?([0-9]{4})$/
-                    return pattern.test(value) || '번호를 정확히 입력하세요'
-                },
-                emailRules: value => {
-                    const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                    return pattern.test(value) || '이메일 형식으로 입력하세요'
-                },
-                minRules: value => value.length >= 8 || '8자 이상 입력하세요',
-                passwordMatch: value => value === this.password || '비밀번호가 일치하지 않습니다',
-            },
+  data() {
+    return {
+      edit: {
+        // id: null,
+        userId: '', //아이디
+        name: '', //이름
+        mail: '',
+        phone: '', //전화번호
+        image : null,
+      },
+      
+      selectedPhoto: null,
+      rules: {
+        // 회원가입 유효성 검사
+        required: value => !!value || '반드시 입력하세요',
+        phoneRules: value => {
+          const pattern = /^(\+)?([0-9]{3})?[-]?([0-9]{4})?[-]?([0-9]{4,})$/
+          return pattern.test(value) || '번호를 정확히 입력하세요'
+        },
+        emailRules: value => {
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          return pattern.test(value) || '이메일 형식으로 입력하세요'
+        },
+      },
+    }
+  },
+  async created() {
+
+    const token = localStorage.getItem("token");
+    console.log("token",token);
+    const userId = localStorage.getItem("userId");
+    console.log("userId",userId);
+
+    if (token) {
+      try {
+        const isValidToken = await this.verifyToken(token);
+        if (isValidToken) {
+          const res = await axios.get(`http://localhost:4000/edit`);
+          console.log(res);
+          console.log(res.data);
+
+          if 
+          (res.data && res.data.message === 'success') {
+            this.edit.userId = res.data.userId;
+            console.log(this.edit.userId);
+            this.fetcheditprofileData();
+            
+          }
+        } 
+        else {
+            this.fetcheditprofileData();
         }
-    },
-    methods: {
-        onInputImage() {
-            this.input.image = this.$refs.serveyImage.filters
-            console.log("this.input.image")
+      } catch (e) {
+        console.error(e);
+      }
+    } else {
+      this.redirectToLogin();
+    }
+  },
+  methods: {
+    handleImageUpload(event){
+            const file = event.target.files[0];
+            this.edit.image = file;
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                this.selectedPhoto = e.target.result;
+                
+            };
+
+            reader.readAsDataURL(file);
         },
-        async addUsers() {
-            if (
-                this.rules.required(this.name) === true &&
-                this.rules.required(this.id) === true &&
-                this.rules.phoneRules(this.phone) === true &&
-                this.rules.emailRules(this.email) === true &&
-                this.rules.minRules(this.password) === true &&
-                this.rules.passwordMatch(this.PasswordCheck) === true
-            ) {
-                try {
-                    const res = await axios.post(baseURL, {
-                        name: this.name,
-                        id: this.id,
-                        phone: this.phone,
-                        email: this.email,
-                        password: this.password,
+    async save() {
+      const newEdit = {
+        userId: this.edit.userId,
+        name: this.edit.name,
+        mail: this.edit.mail,
+        phone: this.edit.phone,
+        image: await this.edit.image,
+      };
+
+      axios.post('http://localhost:4000/edit', {
+            userId: newEdit.userId,
+            name : newEdit.name,
+            mail: newEdit.mail,
+            phone: newEdit.phone,
+            
+        })
+        .then(() => {
+          this.edit.userId = '';
+          this.edit.name = '';
+          this.edit.mail = '';
+          this.edit.phone = '';
+          this.$router.push('/mypage');
+        })
+        .then(() => {
+          if (newEdit.image) {
+            const formData = new FormData();
+                formData.append('image', newEdit.image);
+                
+                axios
+                    .post('http://localhost:4000/upload/profile', formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                        },
+                    })
+                    .then(() => {
+                        console.log('이미지 업로드 완료');
+                    })
+                    .catch((error) => {
+                        console.error('이미지 업로드 실패:', error);
                     });
-                    this.users = [...this.users, res.data];
-                } catch (e) {
-                    console.error(e);
-                }
-            }
-        },
+          }
+          this.$router.push('/MyPage2');
+            })
+        
+
     },
-};
+    async verifyToken(token) {
+      try {
+        const response = await axios.post(
+          "http://localhost:4000/verify-token",
+          { token }
+        );
+        const data = response.data;
+        console.log(data);
+        return data.isValid;
+      } catch (error) {
+        throw new Error("토큰 검증 실패");
+      }
+    },
+    async fetcheditprofileData() {
+      try {
+        const res = await axios.get("http://localhost:4000/edit");
+        this.editprofileData = res.data;
+        const token = localStorage.getItem("token");
+        const tokenPayload = jwt_decode(token);
+
+        // console.log(res.data.U_ID);
+        this.edit.userId = res.data.U_ID;
+        this.edit.name = res.data.U_NAME;
+
+        console.log("ID:", tokenPayload.id);
+        console.log("Token Payload:", tokenPayload);
+      } catch (error) {
+        console.error(error);
+        throw new Error("editprofile 데이터 가져오기 실패");
+      }
+    },
+    // redirectToLogin() {
+    //     this.$router.push("/login");
+    //     },
+
+  }
+}
 </script>
