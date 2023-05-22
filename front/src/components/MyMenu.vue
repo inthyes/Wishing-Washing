@@ -37,44 +37,27 @@
                 </v-list-item-content>
             </v-list-item>
 
-            <v-card-actions class="mt-5 px-16">
+            <!-- <v-card-actions class="mt-5 px-16">
                 <v-btn variant="text" class="custom-btn flex-grow-1 mx-0" color="light-blue-darken-4" @click="logout">
                     로그아웃
                 </v-btn>
                 <v-btn variant="text" class="custom-btn flex-grow-1 mx-0" color="light-blue-darken-4">
                     회원탈퇴
                 </v-btn>
-            </v-card-actions>
+            </v-card-actions> -->
         </v-list>
     </div>
 </template>
 
-<script>
+<!-- <script>
 import axios from "axios";
 import jwt_decode from 'jwt-decode';
 export default {
     name: 'MyMenu',
     data: () => ({
-        mypageData: {},
+        // mypageData: {},
     }),
-    created() {
-        const token = localStorage.getItem("token");
-
-        if (token) {
-            this.verifyToken(token)
-                .then((isValidToken) => {
-                    this.fetchMypageData();
-                    console.log(isValidToken);
-                })
-                .catch((error) => {
-                    console.error(error);
-                    this.redirectToLogin();
-                });
-        } else {
-            this.redirectToLogin();
-        }
-    },
-
+    
     methods: {
         async verifyToken(token) {
             try {
@@ -111,29 +94,9 @@ export default {
         redirectToLogin() {
             this.$router.push("/login");
         },
-
-        async logout() {
-            try {
-                const response = await axios.post('http://localhost:3000/logout', null, {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem("token")}`
-                    }
-                });
-                const data = response.data;
-                console.log(data);
-                alert(data.message);
-
-                localStorage.removeItem("token");
-
-                this.$router.push('/login');
-            } catch (error) {
-                console.log(error);
-                alert('로그아웃 실패');
-            }
-        }
     }
 }
-</script>
+</script> -->
 
 <style scoped>
 /* 큰 화면 적용 */

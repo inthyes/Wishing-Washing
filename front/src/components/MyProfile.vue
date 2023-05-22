@@ -38,9 +38,7 @@ function arrayBufferToBase64(buffer) {
 export default {
   name: 'MyProfile',
   data: () => ({
-    show: false,
     mypageData: {},
-    userName: "",
     imageUrl: null // 이미지 URL을 저장할 변수 추가
   }),
 
@@ -83,7 +81,6 @@ export default {
       }
     },
 
-
     async verifyToken(token) {
       try {
         const response = await axios.post(
@@ -116,9 +113,9 @@ export default {
       }
     },
 
-    redirectToLogin() {
-      this.$router.push("/login");
-    },
+    // redirectToLogin() {
+    //   this.$router.push("/login");
+    // },
   }
 }
 </script>
