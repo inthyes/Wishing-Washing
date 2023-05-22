@@ -110,7 +110,8 @@ const output ={
         logger.info(`GET /myPage 304 "review 화면으로 이동"`);
         const myReview = new Review(req.body, userId.id);
         const myReviewRes = await myReview.myReview();
-        console.log(myReviewRes);
+        console.log( userId.id);
+        // console.log(myReviewRes);
         res.json(myReviewRes);
     },
     edit : async (req, res) => 
