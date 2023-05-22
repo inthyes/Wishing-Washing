@@ -33,7 +33,7 @@ class Product {
       }
   
       //
-  static async show(S_ID, U_ID) {
+  static async show(S_ID) {
     return new Promise ((resolve, reject) => {
     db.query("USE CAPSTONE", (err, result) => {
         const query = "SELECT * FROM Product where S_ID = ?;";

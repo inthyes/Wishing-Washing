@@ -32,9 +32,14 @@ const output ={
         logger.info(`GET /laundry 304 "내세탁소 화면으로 이동"`);
         res.render("home/laundry");
     },
-    laundryAdmin : (req, res) => {
+    laundryAdmin : async(req, res) => {
         logger.info(`GET /laundryAdmin 304 "세탁소관리 화면으로 이동"`);
-        res.render("home/laundryAdmin");
+        //세탁소 정보 띄우기
+        const s_id = "1"; //하드코딩
+        const edit = new Edit(req.body, "1"); //req.body는 사용x , 세탁소아이디만 사용
+        const data = await edit.showLaundry(); //laundry의 정보 data로 불러오기
+        //console.log(data);
+        res.json(data);
     },
     productAdmin : async(req, res) => {
         logger.info(`GET /productAdmin 304 "productAdmin 화면으로 이동"`);
@@ -145,10 +150,10 @@ const process = {
         res.render('home/myPage');
     },
     LaundryEdit : async (req,res) => {
-        console.log(req.body);
-        const edit = new Edit(req.body, "7");
+        //console.log(req.body);
+        const edit = new Edit(req.body, "1");
         const response = await edit.laundryUpdate();
-        res.render('home/myPage');
+        res.json(response);
     },
     addProduct : async (req,res) => {
         console.log(req.body);

@@ -14,12 +14,13 @@ router.get("/register", ctrl.output.register);
 router.get('/laundry', ctrl.output.laundry);
 router.get('/orderManage', ctrl.output.orderManage);
 router.get('/myPage', ctrl.output.myPage);
-router.get('/upload', ctrl.output.upload);
+//router.get('/upload', ctrl.output.upload);
 router.get('/laundryAdmin', ctrl.output.laundryAdmin);
 
 
 router.use("/myPage", require("./myPage"));
 router.use("/laundry", require("./laundry"));
+router.use("/upload", require("./upload"));
 //router.use("/search", require("./search"));
 
 router.post("/verify-token", ctrl.process.verifyToken);
