@@ -12,6 +12,7 @@
     <v-footer class="fixed-bottom">
       <bottom-navbar />
     </v-footer>
+
   </v-app>
 </template>
 
@@ -22,20 +23,10 @@ import BottomNavbar from './components/BottomNavbar.vue';
 export default {
   components: { AppBar, BottomNavbar },
   name: 'App',
-
-
-  data: () => ({
-    drawer: false,
-    group: null,
-  }),
-  watch: {
-    group() {
-      this.drawer = false
-    },
-  },
 }
 </script>
-<style>
+
+<style scoped>
 .fixed-bottom {
   position: fixed;
   bottom: 0;
