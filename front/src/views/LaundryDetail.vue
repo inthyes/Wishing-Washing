@@ -82,7 +82,7 @@
                                             <div v-if="isEditable(r)" class="flex-container">
                                                 <button  class="flex-item">수정</button>
                                                 <span class="flex-item">|</span>
-                                                <button  class="flex-item">삭제</button>
+                                                <button  class="flex-item" @click="deleteReview(r.O_NUM)">삭제</button>
                                             </div>
                                         </v-row>
 
@@ -200,6 +200,19 @@ export default {
             } catch (error) {
                 console.error(error);
             }
+        },
+
+         async deleteReview(orderNum) {
+            const review = {
+                orderNum: orderNum,
+            };
+                axios
+                    .post('http://localhost:3000/mypage/review/delete', {
+                        orderNum: review.orderNum,
+                    })
+                    .catch((error) => {
+                        console.error('리뷰 삭제 실패:', error);
+                    });
         },
 
 
