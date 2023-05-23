@@ -6,13 +6,13 @@ class Edit {
     constructor(body, S_ID) {
         this.body = body;
         this.S_ID = S_ID;
-        this.C_ID = C_ID;
+        //this.C_ID = C_ID;
       }
 
       async update() {
         const phone = this.body.phone;
         const mail = this.body.mail;
-        const C_ID = this.C_ID;
+        const C_ID = this.S_ID;
         // const name = this.body.name;
         const Sname = this.body.Sname;
     

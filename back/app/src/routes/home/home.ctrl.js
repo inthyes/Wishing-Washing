@@ -12,8 +12,8 @@ const router = require(".");
 const jwt = require("jsonwebtoken");
 const secretKey = 'secretKey'; // 비밀 키를 정의합니다.
 const MyPageEdit = require("../../models/Edit");
-let userId;
-
+let c_id;
+let s_id;
 
 
 
@@ -37,20 +37,19 @@ const output ={
     laundryAdmin : async(req, res) => {
         logger.info(`GET /laundryAdmin 304 "세탁소관리 화면으로 이동"`);
         //세탁소 정보 띄우기
-        const s_id = "1"; //하드코딩
-        const edit = new Edit(req.body, "1"); //req.body는 사용x , 세탁소아이디만 사용
+        const edit = new Edit(req.body, s_id); //req.body는 사용x , 세탁소아이디만 사용
         const data = await edit.showLaundry(); //laundry의 정보 data로 불러오기
         //console.log(data);
         res.json(data);
     },
     productAdmin : async(req, res) => {
         logger.info(`GET /productAdmin 304 "productAdmin 화면으로 이동"`);
-        const S_ID = 7;
-        const product = new Product(S_ID, "7"); //세탁소아이디가 7이라고 가정
+        console.log(s_id);
+        const product = new Product(s_id, s_id); 
         const productAdmin = await product.showProduct(); // 세탁소상품 보여주기
         const response = {
             productAdmin: [productAdmin], // productAdmin을 배열에 담아 응답 데이터 구조 생성
-            S_ID: S_ID
+            S_ID: s_id
         };
         console.log(productAdmin);
         res.json(response);
@@ -80,8 +79,8 @@ const output ={
     // },
     reviewAdmin : async (req, res) => {
         logger.info(`GET /laundry 304 "showreview 화면으로 이동"`);
-        const S_ID = "1";//세탁소아이디 불러옴
-        const review = new Review(req.body, "1"); //body는 비어있음 
+        console.log(s_id);
+        const review = new Review(req.body, s_id); //body는 비어있음 
         const RV = await review.showReview();
         console.log(RV);
         res.json({RV});
@@ -109,7 +108,7 @@ const output ={
 
     myEdit : async (req, res) => {
         logger.info(`GET /myPage 304 "edit 화면으로 이동"`);
-        const myEdit = new Edit(req.body, userId.id);
+        const myEdit = new Edit(req.body, s_id);
         const myEditRes = await myEdit.myEdit();
         console.log(myEditRes);
         res.json(myEditRes);
@@ -158,8 +157,8 @@ const output ={
           logger.info(`GET /home/myPage 304 "마이페이지 화면으로 이동`);
     
         //   const userId = req.params.userId; // userId 값을 얻어옵니다. 이 부분에 대한 로직이 필요합니다.
-          const myPage = new MyPage(req.body, userId.id); // userId를 생성자에 전달하여 MyPage 인스턴스를 생성합니다.
-          const myPageInfo = await myPage.showMyPageInfo(userId.id);
+          const myPage = new MyPage(req.body, c_id); // userId를 생성자에 전달하여 MyPage 인스턴스를 생성합니다.
+          const myPageInfo = await myPage.showMyPageInfo(c_id);
 
           console.log("myPageInfo",myPageInfo);
         //   console.log(myPageInfo);
@@ -175,20 +174,20 @@ const output ={
 const process = {
     ProfileEdit : async (req,res) => {
         console.log(req.body);
-        const edit = new Edit(req.body, "7");
+        const edit = new Edit(req.body, s_id);
         const response = await edit.profileUpdate();
         res.render('home/myPage');
     },
     LaundryEdit : async (req,res) => {
         //console.log(req.body);
-        const edit = new Edit(req.body, "1");
+        const edit = new Edit(req.body, s_id);
         const response = await edit.laundryUpdate();
         res.json(response);
     },
     addProduct: async (req, res) => {
         console.log(req.body);
         const { productName, price } = req.body;
-        const add = new Product({ PRODUCT_NAME: productName, PRODUCT_PRICE: price }, "7");
+        const add = new Product({ PRODUCT_NAME: productName, PRODUCT_PRICE: price }, s_id);
 
         const response = await add.addProduct(); // 상품 추가 메소드
         console.log(response);
@@ -212,7 +211,7 @@ const process = {
         // res.render('home/reviewAdmin', { RV: RV });
     },
     edit : async (req,res) => {
-        const edit = new Edit(req.body, userId.id);
+        const edit = new Edit(req.body, c_id);
         const response = await edit.update();
         res.json(response);
     },
@@ -232,9 +231,12 @@ const process = {
 
                 // 검증에 성공한 경우, 클라이언트에게 성공 응답을 보냅니다.
                 console.log({token});
+                console.log(decoded);
                 // const userId = decoded.id;
-                userId = decoded;
-                console.log(token,userId);
+                c_id = decoded.id;
+                s_id = decoded.s_id;
+
+                console.log(token,c_id);
                 return res.status(200).json({ message: '토큰이 유효합니다.' });
         });
     },
