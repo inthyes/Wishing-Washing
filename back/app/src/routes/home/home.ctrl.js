@@ -118,8 +118,7 @@ const output ={
         logger.info(`GET /myPage 304 "review 화면으로 이동"`);
         const myReview = new Review(req.body, global.userId.id);
         const myReviewRes = await myReview.myReview();
-        console.log( global.userId.id);
-        // console.log(myReviewRes);
+        console.log(myReviewRes);
         res.json(myReviewRes);
     },
     edit : async (req, res) => 
@@ -158,46 +157,9 @@ const output ={
         res.json(myPageInfo);
     },
     favoriteList : async (req, res) => {
-        // const token = req.query.token;
-        // const user_id = Vtoken(token);  // 토큰 검증
-        // console.log("토큰확인: " + token);
-        // console.log("user_id: " + user_id);
-
         logger.info(`GET /myPage/favoriteList 304 "프로필편집 화면으로 이동"`);
-        //실제 경로 , 라우팅 경로 : myPage/favoriteList
-        /* var user;
-         //클라이언트가 HTTP요청 헤더에 토큰 받아서 보낼거임
-        const token = req.headers.authorization.split(" ")[1];
-        jwt.verify(token, "secretKey", (err, decoded) => {
-          if (err) {
-            console.log("토큰 만료 오류");
-            const json = {
-              code : 401,
-              message : "로그인 후 이용해주세요." 
-            }
-            return res.status(401).send(json);
-          }
-          try {
-            // JWT 토큰 검증을 수행한다.
-            const decoded = jwt.verify(token, 'secretKey');
-            // 검증이 완료된 경우, 요청 객체에 인증 정보를 추가한다.
-            //디코드한 유저를 변수로 저장.
-            console.log(decoded);
-           user = decoded.id;
-          } catch (err) {
-            // JWT 토큰 검증 실패 시, 403 Forbidden 에러를 반환한다.
-            const json = {
-              code: 403,
-              message: '잘못된 인증 정보입니다.'
-            };
-            return res.status(403).send(json);
-          }
-        }); */
-        //토큰 받아오면 하드코딩 해제
         const favorite = new MyPage(global.userId.id);
-
         const response = await favorite.showFavoriteList();
-        //const response1 = await cart.addOrderList();
         res.json(response);
     },
 
@@ -219,28 +181,6 @@ const output ={
         logger.info(`GET /home/myPage/userManagement 304 "탈퇴/로그아웃 화면으로 이동`);
         res.render("home/userManagement");
     },
-    // 세탁소 세부페이지 
-    // laundryDetail: async(req, res) => {
-    //     // const token = req.query.token;
-    //     // const user_id = Vtoken(token);  // 토큰 검증
-    //     // console.log("토큰확인: " + token);
-    //     // console.log("user_id: " + user_id);
-
-    //     logger.info(`GET /laundry/detail/id 304 "세탁신청 세부 화면으로 이동`);
-    //     const laundry = new Laundry(req.params.id);
-    //     const product = new Product(req.params.id);
-        
-    //     //db에서 찾아온 내용 보여주기.
-    //     // response로 json 형태로 데이터가 전달.
-    //     const laundryDetailRes = await laundry.showDetail();
-    //     const productDetailRes = await product.showDetail();
-    //     console.log(laundryDetailRes);
-    //     console.log(productDetailRes); 
-    //     res.json({
-    //         laundryDetail: laundryDetailRes, 
-    //         productDetail: productDetailRes
-    //     });
-    // },
     laundryDetail: async (req, res) => {
         // userId 가 없을 떄 처리하기 
         try {
@@ -287,12 +227,7 @@ const output ={
                   countReview : countReview
     
                 });
-    
             }
-
-           
-
-
         } catch (error) {
           console.error(error);
           res.status(500).json({ error: 'Internal Server Error' });
@@ -323,9 +258,6 @@ const output ={
         const productRes = await product.getProductId();
 
         logger.info(`GET /home/laundryOrder 304 " 세탁신청주문 화면으로 이동`);
-
-        console.log(totalPriceRes.O_PRICE);
-
         res.json(
         {
             deliveryAddress : deliveryAddress,
@@ -339,10 +271,6 @@ const output ={
 
 const process = {
     addCart: async (req, res) => {
-        // const token = req.query.token;
-        // const user_id = Vtoken(token);  // 토큰 검증
-        // console.log("토큰확인: " + token);
-        // console.log("user_id: " + user_id);
         const cart = new Cart(req.body, global.userId.id);
         const response = await cart.add();
         res.json(response)
@@ -355,7 +283,6 @@ const process = {
         res.status(200).json({ message: 'success' });
     },
     orderComplete: async (req, res) => {
-        console.log(req.body);
         const cookieAddress = req.headers.cookie;
         const decodedValue = decodeURIComponent(cookieAddress);
         const matches = decodedValue.match(/deliveryAddress1="([^"]+)";\s*deliveryAddress2="([^"]+)"/);
@@ -374,9 +301,20 @@ const process = {
 
     review : async (req,res) => {
         const review = new Review(req.body, global.userId.id);
+        const response = await review.write();
+        console.log(response);
+        res.json(response);
+    },
+    reviewUpdate : async (req,res) => {
+        const review = new Review(req.body, global.userId.id);
         const response = await review.update();
         console.log(response);
         res.json(response);
+    },
+    reviewDelete : async (req,res) => {
+        const review = new Review();
+        const response = await review.delete(req.body.orderNum);
+        res.status(200).json({message : "ok"});
     },
     edit : async (req,res) => {
         const edit = new Edit(req.body, global.userId.id);
