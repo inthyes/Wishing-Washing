@@ -15,7 +15,6 @@ router.post("/", (req, res) => {
   console.log("/login 호출됨");
   const id = req.body.id;
   const psword = req.body.psword;
-  const token = req.body.token;
 
   var json = {};
 
@@ -61,29 +60,30 @@ router.post("/", (req, res) => {
             var salt = data[0].salt;
             var psword_db = data[0].C_PW;
             console.log("data[0].salt",data[0].salt);
-            console.log("data[0].psword",data[0].C_PW);
+            console.log("data[0].psword",data[0].psword);
             const hash = crypto
               .createHash("sha512")
               .update(psword + salt)
               .digest("hex");
             console.log("hash",hash);
             console.log("psword_db",psword_db);
-            console.log("해시까지 완료");
-            
+            console.log("s_id",data[0].S_ID );
             if (psword_db == hash) {
               var token = jwt.sign(
                 {
                   id: id, 
+                  s_id : data[0].S_ID
                 },
                 "secretKey", 
                 {
+                  subject: "LaundryPlatform jwtToken", 
                   expiresIn: "7d",
                   issuer: "LaundryPlatform",
-                  subject: "LaundryPlatform aqw", 
                 }
               );
                 console.log("토큰 생성",id, token);
                 json.id = id;
+                //json.s_id = data[0].S_ID;
                 json.token = token;
     
                 return(res.status(200).json(json));
@@ -102,3 +102,4 @@ router.post("/", (req, res) => {
 });
 
 module.exports = router;
+
