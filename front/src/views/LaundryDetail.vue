@@ -81,7 +81,7 @@
                                             <span>{{ r.U_ID }}</span>
                                             <div v-if="isEditable(r)" class="flex-container">
                                                 <button  class="flex-item">수정</button>
-                                                <span>|</span>
+                                                <span class="flex-item">|</span>
                                                 <button  class="flex-item">삭제</button>
                                             </div>
                                         </v-row>
@@ -302,7 +302,7 @@ export default {
 .flex-item {
     flex-grow: 1;
     padding-inline: 0;
-    margin-inline: 5px;
+    margin-inline: 4px;
     color: gray;
     text-decoration: none;
 }
