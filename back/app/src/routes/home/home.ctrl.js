@@ -93,9 +93,11 @@ const output ={
             res.json(laundryListRes);
         }
     }, 
-    review : (req, res) => {
+    review : async (req, res) => {
         logger.info(`GET /laundry 304 "review 화면으로 이동"`);
-        res.status(200);
+        const laundryInfo = new Laundry(req.params.storeId);
+        const laundryDetailRes = await laundryInfo.showDetail();
+        res.json(laundryDetailRes);
     },
     //update로 들어갔을때 기존 작성했던 리뷰가 보여짐
     reviewUpdate : async (req, res) => {
