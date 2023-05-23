@@ -47,26 +47,39 @@ class LaundryList {
         });
       }
 
-      // async searchLaundry() {
-      //   const searchData = this.body;
-      //   const value = searchData.search;
-      //   return new Promise((resolve, reject) => {
-      //     db.query("USE CAPSTONE", (err, result) => {
-      //       const query = "SELECT * FROM STORE where S_ADDRESS LIKE '%" + value + "%';";
-      //       //const query = "SELECT * FROM store_list;";
-      //       //console.log(query);
-      //       if (err) reject(err);
-      //       db.query(query, [value], (err, data) => {
-      //         if (err) reject(err);
-      //         else {
-      //           resolve(data);
-      //         }
-      //       });
-      //     });
-      //   });
-      // }
+    //userId가 없을 때 사용할 함수 예외처리
+    async getLaundryInfoNoUserId() {
+      const nearPostNum = this.deliveryAddress1.slice(0, 3);
+      return new Promise((resolve, reject) => {
+        db.query("USE CAPSTONE", (err, result) => {
+          const query = 
+          "SELECT STORE.S_ID, STORE.S_ADDR2, STORE.S_NAME,STORE.S_COMMENT\
+          FROM STORE\
+          left outer JOIN likes ON STORE.S_ID = likes.S_ID\
+          WHERE substr(S_ADDR1, 1, 3) = ?;";
 
-    
+          const getQuery = "SELECT S_ID FROM STORE WHERE substr(S_ADDR1, 1, 3) = ?;";
+
+          if (err) reject(err);
+
+          db.query(query, [nearPostNum], (err, data) => {
+            if (err) reject(err);
+            else {
+                db.query(getQuery, nearPostNum, async (err, result) => {
+                  for (let i = 0; i < result.length; i++) {
+                    const review = new Review(result[i].S_ID);
+                    const starAverage = await review.averageStar(result[i].S_ID);
+                    if (!isNaN(starAverage)) {
+                      data[i].starAverage = starAverage;
+                    }
+                  }
+                  resolve(data);
+                })
+              }
+            })
+          })
+        });
+      }
 }
 
 module.exports = LaundryList;

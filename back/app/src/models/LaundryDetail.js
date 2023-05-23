@@ -31,6 +31,32 @@ class LaundryDetail {
               })
         });
     }
+
+    static getLaundryDetailNoUserId(id) {
+        return new Promise ((resolve, reject) => {
+        db.query("USE CAPSTONE", (err, result) => {
+            const query = "SELECT * FROM STORE where S_ID = ?;";
+            if (err) reject(err);
+            db.query(query, [id], (err, data) => {
+                if (err) reject(err);
+                else {
+                    const laundry = data[0];
+                    resolve({
+                        id: laundry.S_ID,
+                        name: laundry.S_NAME,
+                        phone : laundry.S_PHONE,
+                        postAddress : laundry.S_ADDR1,
+                        doroAddress : laundry.S_ADDR2,
+                        detailAddress : laundry.S_ADDR3,
+                        info : laundry.S_COMMENT,
+                        opening : laundry.S_OPENING,
+                        closing : laundry.S_CLOSING
+                    })
+                    }
+                });
+              })
+        });
+    }
 }
 
 module.exports = LaundryDetail;
