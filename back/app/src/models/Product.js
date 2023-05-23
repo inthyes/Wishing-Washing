@@ -10,7 +10,8 @@ class Product {
         this.S_ID = S_ID;
       }
       async showProduct() {
-        const S_ID = this.body; //이 바디에는 S_ID가 들어있고
+        const S_ID = this.S_ID; //이 바디에는 S_ID가 들어있고
+        console.log(S_ID);
         const show = await Product.show(S_ID);
         return show;
       }
@@ -34,7 +35,7 @@ class Product {
       }
   
       //
-  static async show(S_ID, U_ID) {
+  static async show(S_ID) {
     return new Promise ((resolve, reject) => {
     db.query("USE CAPSTONE", (err, result) => {
         const query = "SELECT * FROM Product where S_ID = ?;";

@@ -7,7 +7,7 @@ const ctrl = require("./home.ctrl");
 
 router.get("/", ctrl.output.myPage);
 
-router.get("/profileEdit", ctrl.output.profileEdit);
+//router.get("/profileEdit", ctrl.output.profileEdit);
 //router.get("/laundryAdmin", ctrl.output.laundryAdmin);
 router.get("/reviewAdmin", ctrl.output.reviewAdmin);
 
