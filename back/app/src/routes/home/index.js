@@ -28,6 +28,7 @@ router.use(cookieParser());
 // router.use("/search", require("./search"));
 
 router.post("/like", ctrl.process.like);
+router.post("/review", ctrl.process.review);
 
 router.post("/edit", ctrl.process.edit);
 
