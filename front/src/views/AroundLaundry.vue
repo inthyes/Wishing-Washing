@@ -185,6 +185,10 @@ export default {
                     this.laundrys = response.data;
                     console.log(response);
                     console.log(response.data);
+                    if (response.data.message === '주소를 설정하세요') {
+                        alert("주소를 설정하세요.");
+                        this.$router.push("/");
+                    }                    
                 })
                 .catch((error) => {
                     console.error(error);
