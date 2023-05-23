@@ -9,7 +9,7 @@
             <!-- 세탁소정보 / 별점 / 날짜 -->
             <v-card-body>
                 <p class="text text-grey m-0">주문번호 {{ r.O_NUM }}</p>
-                <v-btn class="p-0" variant="text" v-bind:to="`/laundrydetail/${r.S_ID}`" >{{ r.S_NAME }} ></v-btn>
+                <v-btn class="p-0" variant="text" v-bind:to="`/laundrydetail/${r.S_ID}`" >{{ r.S_NAME }} </v-btn>
                 <v-row class="mx-0 my-0">
                     <v-rating :model-value=r.REVIEW_STAR color="amber" density="compact" half-increments readonly
                         size="small">{{ r.REVIEW_STAR }}</v-rating>
@@ -27,7 +27,8 @@
                 <v-btn variant="flat" class="custom-btn flex-grow-1" color="light-blue-darken-4" v-if="isEditable(r)">
                     수정
                 </v-btn>
-                <v-btn variant="outlined" class="custom-btn flex-grow-1" color="light-blue-darken-4" v-if="isEditable(r)">
+                <v-btn variant="outlined" class="custom-btn flex-grow-1" color="light-blue-darken-4" v-if="isEditable(r)"
+                @click="deleteReview(r.O_NUM)" >
                     삭제
                 </v-btn>
             </v-card-actions>
@@ -108,6 +109,37 @@ export default {
                 r.REVIEW_STAR = r.REVIEW_STAR || 0; // REVIEW_STAR가 undefined일 경우 기본값 0으로 설정
             });
         },
+
+        async deleteReview(orderNum) {
+            const review = {
+                orderNum: orderNum,
+            };
+                axios
+                    .post('http://localhost:3000/mypage/review/delete', {
+                        orderNum: review.orderNum,
+                    })
+                    .then(() => {
+                        this.$router.push('/reviewlist');
+                    })
+                    .catch((error) => {
+                        console.error('리뷰 삭제 실패:', error);
+                    });
+        },
+        async updateReview(orderNum) {
+            const review = {
+                orderNum: orderNum,
+            };
+                axios
+                    .post('http://localhost:3000/mypage/review/update', {
+                        orderNum: review.orderNum,
+                    })
+                    .then(() => {
+                        this.$router.push('/reviewlist');
+                    })
+                    .catch((error) => {
+                        console.error('리뷰 작성 실패:', error);
+                    });
+        },        
 
         async getImageUrl() {
             try {

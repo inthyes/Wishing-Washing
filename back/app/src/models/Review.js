@@ -14,7 +14,7 @@ class Review {
         const show = await Review.show(S_ID);
         return show;
       }
-      async update() {
+      async write() {
         const S_ID = this.body.storeId;
         const title = this.body.title;
         const content = this.body.content;
@@ -25,8 +25,42 @@ class Review {
 
         const RV = await Review.review(O_NUM, S_ID, title, content, rating, U_ID, date);
         return RV;
-        
-    }
+      }
+
+      // 리뷰 삭제
+      async delete(orderNumber) {
+        return new Promise ((resolve, reject) => {
+          db.query("USE CAPSTONE", (err, result) => {
+              const query = "DELETE FROM REVIEW WHERE O_NUM = ?";
+              if (err) reject(err);
+              db.query(query,  orderNumber, (err, data) => {
+                  if (err) reject(err);
+                  else {
+                      resolve({
+                        success: true
+                      })
+                      }
+                  });
+                })
+          });  
+      }
+      // 리뷰 수정
+      async update(orderNumber) {
+        return new Promise ((resolve, reject) => {
+          db.query("USE CAPSTONE", (err, result) => {
+              const query = "UPDATE FROM REVIEW WHERE O_NUM = ?";
+              if (err) reject(err);
+              db.query(query,  orderNumber, (err, data) => {
+                  if (err) reject(err);
+                  else {
+                      resolve({
+                        success: true
+                      })
+                      }
+                  });
+                })
+          });  
+      }
     
     static async review(O_NUM, S_ID, title, content, rating, U_ID, date) {
       return new Promise ((resolve, reject) => {
@@ -96,7 +130,6 @@ class Review {
         db.query(queryGetMyReview, userId, (err, data) => {
           if (err) reject(err);
           else {
-            console.log("왜아노디지");
             resolve(data);
           }
         });

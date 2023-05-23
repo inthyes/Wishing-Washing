@@ -118,8 +118,7 @@ const output ={
         logger.info(`GET /myPage 304 "review 화면으로 이동"`);
         const myReview = new Review(req.body, global.userId.id);
         const myReviewRes = await myReview.myReview();
-        console.log( global.userId.id);
-        // console.log(myReviewRes);
+        console.log(myReviewRes);
         res.json(myReviewRes);
     },
     edit : async (req, res) => 
@@ -302,9 +301,20 @@ const process = {
 
     review : async (req,res) => {
         const review = new Review(req.body, global.userId.id);
+        const response = await review.write();
+        console.log(response);
+        res.json(response);
+    },
+    reviewUpdate : async (req,res) => {
+        const review = new Review(req.body, global.userId.id);
         const response = await review.update();
         console.log(response);
         res.json(response);
+    },
+    reviewDelete : async (req,res) => {
+        const review = new Review();
+        const response = await review.delete(req.body.orderNum);
+        res.status(200).json({message : "ok"});
     },
     edit : async (req,res) => {
         const edit = new Edit(req.body, global.userId.id);

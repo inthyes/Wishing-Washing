@@ -20,5 +20,7 @@ router.get("/favoriteList", ctrl.output.favoriteList);
 // router.get("/userManagement", ctrl.output.userManagement);
 // router.get("/edit", ctrl.output.myEdit);
 // router.post("/edit", ctrl.process.edit);
+router.post("/review/update", ctrl.process.reviewUpdate);
+router.post("/review/delete", ctrl.process.reviewDelete)
 
 module.exports = router; //웹으로 내보내기
