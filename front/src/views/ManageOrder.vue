@@ -30,8 +30,7 @@
                       <v-btn id="cancel" icon="mdi-close" variant="outlined" size="32px" style="border-radius: 15%;" @click="rejectRequest(request.id)"></v-btn>
                     </v-card-actions>
                     <v-card-actions style="margin-right: 17px;">
-                      <v-btn id="moreInfo" icon="mdi-plus" variant="outlined" size="32px" style="border-radius: 15%;"
-                            v-bind:to="{ name: 'orderdetails', query: { id: request.id } }"></v-btn>
+                      <v-btn id="moreInfo" icon="mdi-plus" variant="outlined" size="32px" style="border-radius: 15%;"></v-btn>
                     </v-card-actions>
                 </v-row>
             </v-card>
@@ -118,7 +117,8 @@ export default {
     }),
     async created() {
         try {
-            const res1 = await axios.get("http://localhost:5001/managelaundrys");
+            const res1 = await axios.get("http://localhost:4000/history");
+            console.log(res1);
             const res2 = await axios.get("http://localhost:5001/requests");
             this.managelaundrys = res1.data;
             this.requests = res2.data;
