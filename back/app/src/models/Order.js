@@ -23,7 +23,7 @@ class Order {
         db.query(queryGetUser, [S_ID], (err, data) => {
           if (err) reject(err);
           else {
-            resolve(data[0]);
+            resolve(data);
           }
         });
       });

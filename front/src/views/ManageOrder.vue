@@ -107,6 +107,7 @@
 
 <script>
 import axios from "axios";
+// import { Script } from "vm";
 
 export default {
     data: () => ({
@@ -114,87 +115,55 @@ export default {
         managelaundrys: [],
         requests: [],
         beforeShipping: [],
+        one: [],
+        two: [],
+        thr: [],
+        fou: [],
     }),
     async created() {
-        try {
-            const res1 = await axios.get("http://localhost:4000/history");
-            console.log(res1);
-            const res2 = await axios.get("http://localhost:5001/requests");
-            this.managelaundrys = res1.data;
-            this.requests = res2.data;
-        } catch (e) {
-            console.error(e);
-        }
-    },
-    methods: {
-        async rejectRequest(requestId) {
-            try {
-                await axios.delete(`http://localhost:5001/requests/${requestId}`);
-                window.location.reload(); // 페이지 새로고침 (= this.$router.go();)
-                this.showAlert("세탁 요청이 거절되었습니다.");
-            } catch (e) {
-                console.error(e);
-            }
-        },
-        filteredRequests(status) {  //배송 상태별로 구분, 세탁소별 할당
-            //return this.requests.filter(request => request.status === status);
-            return this.requests.filter(request => {
-            const matchingLaundry = this.managelaundrys.find(laundry => laundry.id === 1);
-            return matchingLaundry && matchingLaundry.id === request.laundryId && request.status === status;
-            });
-        },
-        // 수락 버튼 -> 배송전으로 이동
-        async clickAccept(requestId) {
-            try {
-                const response = await axios.get(`http://localhost:5001/requests/${requestId}`);
-                const request = response.data;
-                request.status = -1;  // JSON 데이터의 "status" 값을 배송전(-1)으로 수정
-                await axios.put(`http://localhost:5001/requests/${requestId}`, request);
-                window.location.reload(); 
-                this.showAlert("세탁 요청이 수락되었습니다.");
-            } catch (e) {
-                console.error(e);
-            }
-        },
-        // 배송시작 버튼 -> 배송중으로 이동
-        async clickStartDelivery(requestId) {
-            try {
-                const response = await axios.get(`http://localhost:5001/requests/${requestId}`);
-                const request = response.data;
-                request.status = 1;     // status 배송중(1)으로 변경
-                await axios.put(`http://localhost:5001/requests/${requestId}`, request);
-                window.location.reload();
-                this.showAlert("배송이 시작되었습니다.");
-            } catch (e) {
-                console.error(e);
-            }
-        },
-        // 배송완료 버튼 -> 배송완료로 이동
-        async clickCompleteDelivery(requestId) {
-            try {
-                const response = await axios.get(`http://localhost:5001/requests/${requestId}`);
-                const request = response.data;
-                request.status = 2;     // status 배송완료(2)로 변경
-                await axios.put(`http://localhost:5001/requests/${requestId}`, request);
-                window.location.reload(); 
-                this.showAlert("배송이 완료되었습니다.");
-            } catch (e) {
-                console.error(e);
-            }
-        },
-        // 삭제 버튼 -> 해당 기록 삭제
-        async clickDelete(requestId) {
-            try {
-                await axios.delete(`http://localhost:5001/requests/${requestId}`);
-                window.location.reload();
-                this.showAlert("완료 항목이 삭제되었습니다.");
-            } catch (e) {
-                console.error(e);
-            }
-        },
-        showAlert(message) {
-            alert(message);
-        },
-    },
+
+  try {
+    // const laundryId = 1; // 세탁소 아이디
+
+    // 주문 완료 내역 가져오기
+    const res = await axios.get(`http://localhost:4000/history`);
+
+    console.log(res);
+
+    // delivery_state 값에 따라 배열로 분류
+    const one = [];
+    const two = [];
+    const thr = [];
+    const fou = [];
+
+    res.data.forEach(order => {
+      if (order.delivery_state === -2) {
+        one.push(order);
+      } else if (order.delivery_state === -1) {
+        two.push(order);
+      } else if (order.delivery_state === 1) {
+        thr.push(order);
+      } else if (order.delivery_state === 2) {
+        fou.push(order);
+      }
+    });
+
+    // 분류된 배열 사용 예시
+    console.log(one);
+    console.log(two);
+    console.log(thr);
+    console.log(fou);
+
+    // 분류된 배열을 컴포넌트의 데이터로 할당하거나 처리할 수 있습니다.
+    this.one = one;
+    this.two = two;
+    this.thr = thr;
+    this.fou = fou;
+  } catch (error) {
+    console.error(error);
+
 }
-</script>
+},
+
+};
+  </script>
