@@ -43,7 +43,6 @@ global.userId;
 //   };
 
 const output ={
-    
     home: async (req, res) => {
         if (req.headers.cookie && req.headers.cookie.includes('response')) {
                   const cookies = req.headers.cookie.split('; ');
@@ -93,27 +92,10 @@ const output ={
             res.json(laundryListRes);
         }
     }, 
-
-        
     review : (req, res) => {
         logger.info(`GET /laundry 304 "review 화면으로 이동"`);
         res.status(200);
     },
-
-    // showReview : async (req, res) => {
-    //     logger.info(`GET /laundry 304 "showreview 화면으로 이동"`);
-    //     const S_ID = req.params.id; //세탁소아이디 불러옴
-    //     //console.log(req.params.id);
-    //     const review = new Review(S_ID, "codus");
-    //     const RV = await review.showReview();
-    //     console.log("RV:");
-    //     console.log(RV);
-    //     res.json(
-    //     {
-    //         RV
-    //     });
-    // },
-
     myReview : async (req, res) => {
         logger.info(`GET /myPage 304 "review 화면으로 이동"`);
         const myReview = new Review(req.body, global.userId.id);
@@ -150,6 +132,7 @@ const output ={
     },
     myPage : async (req, res) => {
         logger.info(`GET /home/myPage 304 "마이페이지 화면으로 이동`);
+        console.log("들어옴");
         const myPage = new MyPage(global.userId.id);
         const myPageInfo = await myPage.showMyPageInfo(global.userId.id);
         console.log(myPageInfo);
@@ -162,29 +145,17 @@ const output ={
         const response = await favorite.showFavoriteList();
         res.json(response);
     },
-
     customerService : (req, res) => {
-        // const token = req.query.token;
-        // const user_id = Vtoken(token);  // 토큰 검증
-        // console.log("토큰확인: " + token);
-        // console.log("user_id: " + user_id);
-
         logger.info(`GET /home/myPage/customerService 304 "고객센터 화면으로 이동`);
         res.render("home/customerService");
     },
     userManagement : (req, res) => {
-        // const token = req.query.token;
-        // const user_id = Vtoken(token);  // 토큰 검증
-        // console.log("토큰확인: " + token);
-        // console.log("user_id: " + user_id);
-
         logger.info(`GET /home/myPage/userManagement 304 "탈퇴/로그아웃 화면으로 이동`);
         res.render("home/userManagement");
     },
     laundryDetail: async (req, res) => {
         // userId 가 없을 떄 처리하기 
-        try {
-          const token = req.headers.cookie; // 헤더에서 토큰 추출     
+        try {    
             // 뒤로가기 실행시 if 쿠키가 존재 -> 쿠키삭제 + cart랑 orderList에서 ordernum관련 내용 삭제
             if (req.headers.cookie && req.headers.cookie.includes('response')) {
                 const cookieValue = req.cookies.response;

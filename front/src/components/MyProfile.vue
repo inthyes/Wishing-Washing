@@ -47,13 +47,12 @@ export default {
     }),
 
     async created() {
-        await this.getImageUrl(); // 이미지 URL 가져오기
         const token = localStorage.getItem("token");
-
         if (token) {
             this.verifyToken(token)
                 .then((isValidToken) => {
                     this.fetchMypageData();
+                    this.getImageUrl(); // 이미지 URL 가져오기
                     console.log(isValidToken);
                 })
                 .catch((error) => {
