@@ -249,9 +249,16 @@ export default {
                 selectedItems.forEach(pro => { data[pro.PRODUCT_ID] = pro.PRODUCT_QUANTITY });
                 const res = await axios.post(`http://localhost:3000/laundry/detail/${id}/order`, data);
                 //res.data의 orderNum 쿠키처리
-                this.$cookies.set('response', res.data)
-                this.$cookies.get('response')
-                this.$router.push(`/submitlaundry/${id}`);
+                if (res.data.message === "login") {
+                    this.$router.push(`/submitlaundry/${id}`);
+                    console.log(res.data);
+                }
+                else {
+                    this.$cookies.set('response', res.data)
+                    this.$cookies.get('response')
+                    this.$router.push(`/submitlaundry/${id}`);
+                }
+                
                 // const selectedItems = this.laundry.items.filter(item => item.quantity > 0);
 
             } catch (e) {

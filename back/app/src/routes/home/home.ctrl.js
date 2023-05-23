@@ -21,6 +21,7 @@ const router = express.Router();
 const MyPageEdit = require("../../models/MyPageEdit")
 
 const jwt = require("jsonwebtoken");
+const { json } = require("body-parser");
 const secretKey = 'secretKey'; // 비밀 키를 정의합니다.
 global.userId;
 
@@ -242,16 +243,26 @@ const output ={
 
 const process = {
     addCart: async (req, res) => {
-        const cart = new Cart(req.body, global.userId.id);
-        const response = await cart.add();
-        res.json(response)
+        if (global.userId === undefined) {
+            res.status(200).json({message:"login"})
+        }
+        else {
+            const cart = new Cart(req.body, global.userId.id);
+            const response = await cart.add();
+            res.json(response)
+        }
     },
 
     like: async (req,res) => {
         //req.body -> 1과 0 리턴 
-        const like = new Likes(req.body, global.userId.id);
-        const response = await like.insert();
-        res.status(200).json({ message: 'success' });
+        if (global.userId === undefined) {
+            res.status(200).json({message : "ok"})
+        }
+        else {
+            const like = new Likes(req.body, global.userId.id);
+            const response = await like.insert();
+            res.status(200).json({ message: 'success' });
+        }
     },
     orderComplete: async (req, res) => {
         const cookieAddress = req.headers.cookie;
