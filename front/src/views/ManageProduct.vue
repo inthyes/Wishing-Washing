@@ -1,42 +1,31 @@
 <!--상품관리-->
 <!--이시언-->
-<!-- 
 <template>
-  <v-card class="mx-auto my-5" max-width="400" title="상품 관리" elevation="0">
-    <br/>
-    <v-divider></v-divider>
-  </v-card>
-
-  <v-card v-for="pro in products" :key="pro.id" elevation="0" style="margin-bottom: 10px;">
-    <v-img class="align-end" id="productImg" height="150" :src="pro.productImg" cover style="width: 85px; height: 80px; float: left; margin-left: 15px; margin-top: 15px; margin-right: 17px; border-radius: 5px;"></v-img>
+  <v-card v-for="product in products" :key="product.PRODUCT_ID" elevation="0" style="margin-bottom: 10px;">
     <v-card-text style="margin-bottom: -5px;">
-  <span id="productName" style="font-weight: bold; font-size: 15px; display: inline-block; text-align: right; width: 20%;">
-    {{ pro.productName }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  </span>
-  <span id="price" style="font-weight: bold; font-size: 15px; display: inline-block; text-align: right; width: 17%;">
-    {{ pro.price }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  </span>
-</v-card-text>
+      <span id="productName" style="font-weight: bold; font-size: 15px; display: inline-block; text-align: right; width: 20%;">
+        {{ product.PRODUCT_NAME }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </span>
+      <span id="price" style="font-weight: bold; font-size: 15px; display: inline-block; text-align: right; width: 17%;">
+        {{ product.PRODUCT_PRICE }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </span>
+    </v-card-text>
 
-
-<v-row>
-  <v-col cols="5" class="text-right pr-2">
-    <v-text-field v-model="pro.productName" :placeholder="pro.productName" variant="outlined"></v-text-field>
-  </v-col>
-  <v-col cols="5" class="pl-2">
-    <v-text-field v-model="pro.price" :placeholder="pro.price" variant="outlined" class="no-right-margin"></v-text-field>
-  </v-col>
-</v-row>
-
-
-
+    <v-row>
+      <v-col cols="5" class="text-right pr-2">
+        <v-text-field v-model="product.PRODUCT_NAME" :placeholder="product.PRODUCT_NAME" variant="outlined"></v-text-field>
+      </v-col>
+      <v-col cols="5" class="pl-2">
+        <v-text-field v-model="product.PRODUCT_PRICE" :placeholder="product.PRODUCT_PRICE" variant="outlined" class="no-right-margin"></v-text-field>
+      </v-col>
+    </v-row>
 
     <v-row>
       <v-card-actions style="margin-left: 255px; margin-top: -10px;">
-        <v-btn icon="mdi-check" @click="sendProductNameAndPrice(pro, pro.productName, pro.price)" style="margin-top: -30px;"><v-icon></v-icon></v-btn>
+        <v-btn icon="mdi-check" @click="save(product, product.PRODUCT_NAME, product.PRODUCT_PRICE)" style="margin-top: -30px;"><v-icon></v-icon></v-btn>
       </v-card-actions>
       <v-card-actions style="margin-left: 20px; margin-top: -10px;">
-        <v-btn id="delete" icon="mdi-delete" style="margin-top: -30px;" @click="deleteproduct(pro.id)"><v-icon></v-icon></v-btn>
+        <v-btn id="delete" icon="mdi-delete" style="margin-top: -30px;" @click="deleteProduct(product.PRODUCT_ID)"><v-icon></v-icon></v-btn>
       </v-card-actions>
     </v-row>
   </v-card>
@@ -52,64 +41,13 @@
 
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn color="#0C70FE" @click="addProduct">
-        <v-btn type="submit">추가</v-btn>
-      </v-btn>
-    </v-card-actions>
-  </v-card>
-
-</template> -->
-
-<template>
-  <v-card v-for="product in products" :key="product.PRODUCT_ID" elevation="0" style="margin-bottom: 10px;">
-  <!-- <v-img class="align-end" id="productImg" height="150" :src="product.PRODUCT_IMG" cover style="width: 85px; height: 80px; float: left; margin-left: 15px; margin-top: 15px; margin-right: 17px; border-radius: 5px;"></v-img> -->
-  <v-card-text style="margin-bottom: -5px;">
-    <span id="productName" style="font-weight: bold; font-size: 15px; display: inline-block; text-align: right; width: 20%;">
-      {{ addProduct.PRODUCT_NAME }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    </span>
-    <span id="price" style="font-weight: bold; font-size: 15px; display: inline-block; text-align: right; width: 17%;">
-      {{ addProduct.PRODUCT_PRICE }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    </span>
-  </v-card-text>
-
-  <v-row>
-    <v-col cols="5" class="text-right pr-2">
-      <v-text-field v-model="product.PRODUCT_NAME" :placeholder="product.PRODUCT_NAME" variant="outlined"></v-text-field>
-    </v-col>
-    <v-col cols="5" class="pl-2">
-      <v-text-field v-model="product.PRODUCT_PRICE" :placeholder="product.PRODUCT_PRICE" variant="outlined" class="no-right-margin"></v-text-field>
-    </v-col>
-  </v-row>
-
-  <v-row>
-    <v-card-actions style="margin-left: 255px; margin-top: -10px;">
-      <v-btn icon="mdi-check" @click="sendProductNameAndPrice(product, product.PRODUCT_NAME, product.PRODUCT_PRICE)" style="margin-top: -30px;"><v-icon></v-icon></v-btn>
-    </v-card-actions>
-    <v-card-actions style="margin-left: 20px; margin-top: -10px;">
-      <v-btn id="delete" icon="mdi-delete" style="margin-top: -30px;" @click="deleteProduct(product[0].PRODUCT_ID)"><v-icon></v-icon></v-btn>
-    </v-card-actions>
-  </v-row>
-</v-card>
-
-
-
-  <v-card class="mx-auto my-5" max-width="400" elevation="0">
-    <v-container>
-      <v-text-field v-model="add_name" :rules="[rules.required]" color="blue" label="상품 이름" variant="underlined"></v-text-field>
-      <br/>
-      <v-text-field v-model="add_price" :rules="[rules.required]" color="blue" label="가격" variant="underlined"></v-text-field>
-      <br/>
-    </v-container>
-    <v-divider></v-divider>
-
-    <v-card-actions>
-      <v-spacer></v-spacer>
-      <v-btn color="#0C70FE" @click="addProduct">
-        <v-btn type="submit">추가</v-btn>
+      <v-btn color="#0C70FE" @click="save">
+        <v-btn type="submit">저장</v-btn>
       </v-btn>
     </v-card-actions>
   </v-card>
 </template>
+
 
 <script>
   import axios from "axios";
@@ -117,6 +55,7 @@
   export default {
     data() {
       return {
+        S_ID : "",
         show: false,
         products: [],
         add_name: null,
@@ -132,35 +71,57 @@
         const response = await axios.get("http://localhost:4000/laundry/productAdmin");
         // this.products = response.data.productAdmin[0];
         this.products = response.data.productAdmin[0];
+        this.S_ID = response.data.S_ID; // S_ID 값을 받아옴
 
-        console.log(response.data);
-        console.log(this.products);
+        console.log(this.S_ID);
+        // console.log(this.products);
       } catch (error) {
         console.error(error);
       }
     },
 
     methods: {
-      async sendProductNameAndPrice(pro, productName, price) {
-        try {
-          pro.productName = productName || pro.productName;
-          pro.price = price || pro.price;
-          await axios.put(`http://localhost:5001/products/${pro.id}`, pro);
-          this.showAlert("상품 정보가 변경되었습니다.");
-        } catch (error) {
-          console.error(error);
-        }
-      },
+      // async sendProductNameAndPrice(pro, productName, price) {
+      //   try {
+      //     pro.productName = productName || pro.productName;
+      //     pro.price = price || pro.price;
+      //     await axios.put(`http://localhost:4000/laundry/productAdmin`, pro);
+      //     this.showAlert("상품 정보가 변경되었습니다.");
+      //   } catch (error) {
+      //     console.error(error);
+      //   }
+      // },
+      async save(product) {
+      try {
+        // 수정된 정보를 서버로 전송할 데이터 객체 생성
+        const data = {
+          // S_ID : this.S_ID,
+          PRODUCT_NAME: product.PRODUCT_NAME,
+          PRODUCT_INFO: product.PRODUCT_INFO,
+          PRODUCT_PRICE: product.PRODUCT_PRICE
+        };
+        const response = await axios.post(`http://localhost:4000/laundry/productAdmin`, data);
+        console.log(response.data);
+        
+        // 서버 응답을 받아 처리하는 로직 추가
+        
+      } catch (error) {
+        console.error(error);
+      }
+    },
 
-      async deleteProduct(deleteId) {
-        try {
-          await axios.delete(`http://localhost:5001/products/${deleteId}`);
-          window.location.reload();
-          this.showAlert("상품이 삭제되었습니다.");
-        } catch (error) {
-          console.error(error);
-        }
-      },
+    //${product.PRODUCT_ID}
+      
+
+      // async deleteProduct(deleteId) {
+      //   try {
+      //     await axios.delete(`http://localhost:5001/products/${deleteId}`);
+      //     window.location.reload();
+      //     this.showAlert("상품이 삭제되었습니다.");
+      //   } catch (error) {
+      //     console.error(error);
+      //   }
+      // },
 
       async addProduct() {
         if (

@@ -4,13 +4,15 @@ const logger = require("../../config/logger");
 const Review = require("../../models/Review");
 const Product = require("../../models/Product");
 const Edit = require("../../models/Edit");
+const MyPage = require("../../models/Mypage");
 
 const router = require(".");
 
 
 const jwt = require("jsonwebtoken");
 const secretKey = 'secretKey'; // 비밀 키를 정의합니다.
-
+const MyPageEdit = require("../../models/Edit");
+let userId;
 
 
 
@@ -38,10 +40,12 @@ const output ={
     },
     productAdmin : async(req, res) => {
         logger.info(`GET /productAdmin 304 "productAdmin 화면으로 이동"`);
-        const product = new Product("7", "7"); //세탁소아이디가 7이라고 가정
+        const S_ID = 7;
+        const product = new Product(S_ID, "7"); //세탁소아이디가 7이라고 가정
         const productAdmin = await product.showProduct(); // 세탁소상품 보여주기
         const response = {
-            productAdmin: [productAdmin] // productAdmin을 배열에 담아 응답 데이터 구조 생성
+            productAdmin: [productAdmin], // productAdmin을 배열에 담아 응답 데이터 구조 생성
+            S_ID: S_ID
         };
         console.log(productAdmin);
         res.json(response);
@@ -87,16 +91,25 @@ const output ={
         const S_ID = console.log(req.params.id);
         res.render("home/addProduct", {S_ID});
     },
-    myPage : (req, res) => {
-        logger.info(`GET /home/myPage 304 "마이페이지 화면으로 이동`);
-        res.render("home/myPage");
-    },
-    //myPage 하위 기능
-    profileEdit : (req, res) => {
+    edit : async (req, res) => 
+    {   
         logger.info(`GET /myPage/profileEdit 304 "프로필편집 화면으로 이동"`);
-        
-        res.render("home/profileEdit");
+        //실제 경로 , 라우팅 경로 : myPage/profileEdit
+        const myEdit = new Edit(req.body, userId.id);
+        const myEditRes = await myEdit.myEdit();
+
+        console.log(myEditRes);
+        res.json(myEditRes);
     },
+
+    myEdit : async (req, res) => {
+        logger.info(`GET /myPage 304 "edit 화면으로 이동"`);
+        const myEdit = new Edit(req.body, userId.id);
+        const myEditRes = await myEdit.myEdit();
+        console.log(myEditRes);
+        res.json(myEditRes);
+    },
+
 
     customerService : (req, res) => {
         logger.info(`GET /home/myPage/customerService 304 "고객센터 화면으로 이동`);
@@ -135,6 +148,23 @@ const output ={
         // PRODUCT_ID = req.params.id;
         res.render('home/productAdmin', {PRODUCT_ID});
     },
+    myPage: async (req, res) => {
+        try {
+          logger.info(`GET /home/myPage 304 "마이페이지 화면으로 이동`);
+    
+        //   const userId = req.params.userId; // userId 값을 얻어옵니다. 이 부분에 대한 로직이 필요합니다.
+          const myPage = new MyPage(req.body, userId.id); // userId를 생성자에 전달하여 MyPage 인스턴스를 생성합니다.
+          const myPageInfo = await myPage.showMyPageInfo(userId.id);
+
+          console.log("myPageInfo",myPageInfo);
+        //   console.log(myPageInfo);
+          res.json(myPageInfo);
+        } catch (error) {
+          console.error(error);
+          // 오류 처리 로직을 추가합니다.
+          res.status(500).json({ error: "마이페이지 정보를 가져오는 중에 오류가 발생했습니다." });
+        }
+        },
 };
 
 const process = {
@@ -150,17 +180,21 @@ const process = {
         const response = await edit.laundryUpdate();
         res.render('home/myPage');
     },
-    addProduct : async (req,res) => {
+    addProduct: async (req, res) => {
         console.log(req.body);
-        const add = new Product(req.body, "7"); //세탁소아이디는 토큰으로 받아오기
-        const response = await add.addProduct(); //상품추가메소드
-        res.render('home/laundry');
-    },
-    deleteProduct : async (req,res) => {
+        const { productName, price } = req.body;
+        const add = new Product({ PRODUCT_NAME: productName, PRODUCT_PRICE: price }, "7");
+
+        const response = await add.addProduct(); // 상품 추가 메소드
+        console.log(response);
+        res.render("home/laundry");
+      },
+      deleteProduct: async (req, res) => {
         const deleteProduct = new Product(req.body, req.params.id);
         const response = await deleteProduct.deleteProduct();
-        res.render('home/laundry');
-    },
+        res.render("home/laundry");
+      },
+      
     addReviewReply : async (req,res) => {
         console.log(req.body); //body에 CEO_COMMENT가담김
         console.log(req.params.id); //O_NUM임
@@ -172,7 +206,11 @@ const process = {
         // const RV = await review2.showReview();
         // res.render('home/reviewAdmin', { RV: RV });
     },
-
+    edit : async (req,res) => {
+        const edit = new Edit(req.body, userId.id);
+        const response = await edit.update();
+        res.json(response);
+    },
     verifyToken : (req,res) => {
         const { token } = req.body;
 
@@ -188,7 +226,10 @@ const process = {
                 // 예를 들어, decoded 객체에 저장된 정보를 확인하고 권한 검사를 수행할 수 있습니다.
 
                 // 검증에 성공한 경우, 클라이언트에게 성공 응답을 보냅니다.
-                console.log(token);
+                console.log({token});
+                // const userId = decoded.id;
+                userId = decoded;
+                console.log(token,userId);
                 return res.status(200).json({ message: '토큰이 유효합니다.' });
         });
     },
