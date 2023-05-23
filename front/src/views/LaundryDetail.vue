@@ -32,12 +32,10 @@
                 </v-row>
 
                 <div class="mt-3">
-
                     {{ laundry.doroAddress }}
                 </div>
                 <div class="mt-0">
                     {{ laundry.postAddress }}
-
                 </div>
 
                 <!-- 이건 수정할수도 -->
@@ -79,26 +77,23 @@
                             <v-row>
                                 <v-col v-for="r in review" :key="r.O_NUM">
                                     <div class="review-card">
-                                        <p class="text-black-grey m-0">{{ r.U_ID }}</p>
+                                        <v-row class="mx-0 my-0 mb-1">
+                                            <span>{{ r.U_ID }}</span>
+                                            <div v-if="isEditable(r)" class="flex-container">
+                                                <button  class="flex-item">수정</button>
+                                                <span>|</span>
+                                                <button  class="flex-item">삭제</button>
+                                            </div>
+                                        </v-row>
+
                                         <v-row class="mx-0 my-0 mb-4">
                                             <v-rating :model-value=r.REVIEW_STAR color="amber" density="compact"
                                                 half-increments readonly size="small">{{ r.REVIEW_STAR }}</v-rating>
                                             <p class="text-grey ms-2 mb-0">
-                                                {{ r.REGI_DATE.slice(0, 10) }} ({{getTimeAgo(r.REGI_DATE) }})</p>
+                                                {{ r.REGI_DATE.slice(0, 10) }} ({{ getTimeAgo(r.REGI_DATE) }})</p>
                                         </v-row>
-                                        <v-img :width="200" cover v-if="r.imageUrl" :src="r.imageUrl" class="mb-3" ></v-img>
+                                        <v-img :width="200" cover v-if="r.imageUrl" :src="r.imageUrl" class="mb-3"></v-img>
                                         <p class="mb-0">{{ r.REVIEW_TEXT }}</p>
-                                        <v-card-actions class="mx-0 px-0 pt-5">
-                                            <!-- 작성한 사용자만 수정 삭제 가능 -->
-                                            <v-btn variant="flat" class="custom-btn flex-grow-1"
-                                                color="light-blue-darken-3">
-                                                수정
-                                            </v-btn>
-                                            <v-btn variant="outlined" class="custom-btn flex-grow-1"
-                                                color="light-blue-darken-3">
-                                                삭제
-                                            </v-btn>
-                                        </v-card-actions>
                                         <v-divider :thickness="2"></v-divider>
                                     </div>
                                 </v-col>
@@ -187,24 +182,24 @@ export default {
     methods: {
 
         async getImageUrl() {
-        try {
-            const res = await axios.get(`http://localhost:3000/upload/laundryReview/${this.$route.params.id}`);
-            console.log(res);
+            try {
+                const res = await axios.get(`http://localhost:3000/upload/laundryReview/${this.$route.params.id}`);
+                console.log(res);
 
-            this.reviewImages = res.data.map(item => {
-            if (item.review_img) {
-                
-                const base64 = arrayBufferToBase64(item.review_img.data);
-                
-                return `data:image/png;base64,${base64}`;
+                this.reviewImages = res.data.map(item => {
+                    if (item.review_img) {
+
+                        const base64 = arrayBufferToBase64(item.review_img.data);
+
+                        return `data:image/png;base64,${base64}`;
+                    }
+                    return null;
+                });
+
+
+            } catch (error) {
+                console.error(error);
             }
-            return null;
-            });
-
-        
-        } catch (error) {
-            console.error(error);
-        }
         },
 
 
@@ -281,7 +276,40 @@ export default {
                 return `${days}일 전`;
             }
         }
-
-    }
-   }
+    },
+    mounted() {
+        this.userId = localStorage.getItem("userId");
+    },
+    computed: {
+        isEditable() {
+            return (r) => {
+                if (!this.userId) {
+                    return false; // User is not logged in
+                }
+                return r.U_ID === this.userId; // Compare user IDs
+            };
+        }
+    },
+}
 </script>
+
+<style scoped>
+.flex-container {
+    display: flex;
+    margin-left: 10px;
+}
+
+.flex-item {
+    flex-grow: 1;
+    padding-inline: 0;
+    margin-inline: 5px;
+    color: gray;
+    text-decoration: none;
+}
+
+.flex-item:hover,
+.flex-item:active {
+  color: rgb(112, 190, 239);
+  /* cursor: pointer; */
+}
+</style>
