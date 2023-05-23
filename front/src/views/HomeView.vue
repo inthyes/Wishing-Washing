@@ -11,13 +11,8 @@
 
   <div class="container">
     <!-- 다음 우편주소API -->
-    <!-- <v-text-field class="mx-auto mt-8 mb-5 px-5 py-2" max-width="100" height="50" variant="solo"
-      append-inner-icon="mdi-magnify" elevation="0" @click:append-inner="showApi" readonly>
-      <p class="m-0 p-0">{{ address2 }}</p>
-      <v-btn icon="mdi-magnify" variant="text" @click:append-inner="showApi"></v-btn>
-    </v-text-field> -->
-
-    <v-card class="mx-auto mt-4 px-4 py-2" max-width="700px" color="white" style="display: flex; align-items: center;" @click="showApi">
+    <v-card class="mx-auto mt-4 px-4 py-2" max-width="700px" color="white" style="display: flex; align-items: center;"
+      @click="showApi">
       <p class="text-body-2 font-weight-light m-0 pl-0 pr-5" style="flex: 1; color:gray-darken-1">{{ address2 }}</p>
       <v-icon icon="mdi-map-marker" style="color:gray"></v-icon>
     </v-card>
