@@ -25,7 +25,7 @@
             <v-card-actions class="mx-0 px-0 pt-5">
                 <!-- 작성한 사용자만 수정 삭제 가능 -->
                 <v-btn variant="flat" class="custom-btn flex-grow-1" color="light-blue-darken-4" v-if="isEditable(r)"
-                @click="updateReview(r.O_NUM)">
+                @click="updateReview(r.S_ID, r.O_NUM)">
                     수정
                 </v-btn>
                 <v-btn variant="outlined" class="custom-btn flex-grow-1" color="light-blue-darken-4" v-if="isEditable(r)"
@@ -126,20 +126,23 @@ export default {
                         console.error('리뷰 삭제 실패:', error);
                     });
         },
-        async updateReview(orderNum) {
-            const review = {
-                orderNum: orderNum,
-            };
-                axios
-                    .post('http://localhost:3000/mypage/review/update', {
-                        orderNum: review.orderNum,
-                    })
-                    .then(() => {
-                        this.$router.push('/reviewlist');
-                    })
-                    .catch((error) => {
-                        console.error('리뷰 작성 실패:', error);
-                    });
+        async updateReview(storeId, orderNum) {
+            this.$router.push(`/addreview/${storeId}/${orderNum}`)
+            console.log(storeId, orderNum)
+            // const review = {
+            //     orderNum : orderNum,
+            //     storeId : storeId
+            // };
+                // axios
+                //     .post('http://localhost:3000/mypage/review/update', {
+                //         orderNum: review.orderNum,
+                //     })
+                //     .then(() => {
+                //         this.$router.push('/reviewlist');
+                //     })
+                //     .catch((error) => {
+                //         console.error('리뷰 작성 실패:', error);
+                //     });
         },        
 
         async getImageUrl() {

@@ -97,6 +97,13 @@ const output ={
         logger.info(`GET /laundry 304 "review 화면으로 이동"`);
         res.status(200);
     },
+    //update로 들어갔을때 기존 작성했던 리뷰가 보여짐
+    reviewUpdate : async (req, res) => {
+        logger.info(`GET /laundry 304 "review 화면으로 이동"`);
+        const reviewInfo = new Review();
+        const reviewInfoRes = await reviewInfo.getUpdateInfo(req.params.orderNum, req.params.storeId);
+        res.json(reviewInfoRes);
+    },
     myReview : async (req, res) => {
         logger.info(`GET /myPage 304 "review 화면으로 이동"`);
         const myReview = new Review(req.body, global.userId.id);
@@ -280,16 +287,17 @@ const process = {
         }
         res.status(200);
     },
-
     review : async (req,res) => {
+        console.log(req.body);
         const review = new Review(req.body, global.userId.id);
         const response = await review.write();
         console.log(response);
         res.json(response);
     },
     reviewUpdate : async (req,res) => {
-        const review = new Review(req.body, global.userId.id);
-        const response = await review.update();
+        const review = new Review(req.body);
+        console.log(req.body);
+        const response = await review.update(req.params.orderNum);
         console.log(response);
         res.json(response);
     },
