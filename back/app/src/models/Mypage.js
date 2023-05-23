@@ -15,8 +15,6 @@ class MyPage {
         db.query(queryGetUser, [userId], (err, data) => {
           if (err) reject(err);
           else {
-            console.log("ㅁㄴㅇㄹㅁ",userId);
-            // console.log(this.userId);
             resolve(data[0]);
             
           }

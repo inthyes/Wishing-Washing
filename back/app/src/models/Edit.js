@@ -2,40 +2,39 @@
 const db = require("../config/db");
 const crypto = require("crypto");
 
-class MyPageEdit {
-  constructor(body, U_ID) {
+class Edit {
+  constructor(body, C_ID) {
     this.body = body;
-    this.U_ID = U_ID;
+    this.C_ID = C_ID;
   }
 
   async update() {
-    // const password = this.body.password;
     const phone = this.body.phone;
-    const address = this.body.address;
     const mail = this.body.mail;
-    const U_ID = this.U_ID;
-    const name = this.body.name;
+    const C_ID = this.C_ID;
+    // const name = this.body.name;
+    const Sname = this.body.Sname;
 
     let updatedFields = [];
     let queryParams = [];
 
     if (mail) {
-      updatedFields.push("U_MAIL = ?");
+      updatedFields.push("S_MAIL = ?");
       queryParams.push(mail);
     }
 
     if (phone) {
-      updatedFields.push("U_PHONE = ?");
+      updatedFields.push("C_PHONE = ?");
       queryParams.push(phone);
     }
 
-    if (name) {
-      updatedFields.push("U_NAME = ?");
-      queryParams.push(name);
+    if (Sname) {
+      updatedFields.push("S_NAME = ?");
+      queryParams.push(Sname);
     }
 
     try {
-      await MyPageEdit.updateProfile(updatedFields, queryParams, U_ID);
+      await Edit.updateProfile(updatedFields, queryParams, C_ID);
 
     } catch (error) {
       console.error(error);
@@ -43,7 +42,7 @@ class MyPageEdit {
     }
   }
 
-  static updateProfile(updatedFields, queryParams, U_ID) {
+  static updateProfile(updatedFields, queryParams, C_ID) {
     return new Promise((resolve, reject) => {
       const json = {
         code: 404,
@@ -63,9 +62,13 @@ class MyPageEdit {
         db.query("USE CAPSTONE", (err, result) => {
           if (err) reject(err);
 
-          const query = `UPDATE USERS SET ${updatedFields.join(", ")} WHERE U_ID = ?`;
+          const query = `UPDATE CEO
+          JOIN STORE ON CEO.S_ID = STORE.S_ID
+          SET ${updatedFields.join(", ")}
+          WHERE CEO.C_ID = ?`;
 
-          queryParams.push(U_ID);
+
+          queryParams.push(C_ID);
 
           db.query(query, queryParams, (err, data) => {
             if (err) reject(err);
@@ -78,24 +81,29 @@ class MyPageEdit {
     });
   }
 
-  async myEdit() {
-    const userId = this.U_ID;
-    return new Promise ((resolve, reject) => {
-      db.query("USE CAPSTONE", (err, result) => {
-          const queryUserInfo = "SELECT * FROM CEO JOIN STORE ON CEO.S_ID = STORE.S_ID WHERE CEO.C_ID = ?";
+
+    async myEdit() {
+      const userId = this.C_ID;
+      return new Promise((resolve, reject) => {
+        db.query("USE CAPSTONE", (err, result) => {
           if (err) reject(err);
-          db.query(queryUserInfo,  userId, (err, data) => {
-              if (err) reject(err);
-              else {
-                console.log(data[0]);
-                  resolve(data[0])
-                  
-                }
-              });
-          })
+          
+          const queryUserInfo = "SELECT * FROM CEO JOIN STORE ON CEO.S_ID = STORE.S_ID WHERE CEO.C_ID = ?";
+          // const queryParams = [userId]; // 쿼리 매개변수를 배열로 전달
+    
+          db.query(queryUserInfo, [userId], (err, data) => {
+            if (err) reject(err);
+            else {
+              console.log("asdfasdf");
+              console.log(userId);
+              resolve(data[0]);
+            }
+          });
+        });
       });
-  }
+    }
+  
 
 }
 
-module.exports = MyPageEdit;
+module.exports = Edit;

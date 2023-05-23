@@ -17,7 +17,7 @@
             <span>주문관리</span>
         </v-btn>
 
-        <v-btn to="managermypage">
+        <v-btn to="managermypage2">
             <v-icon>mdi-account-outline</v-icon>
             <span>&nbsp;&nbsp;&nbsp;MY&nbsp;&nbsp;&nbsp;</span>
         </v-btn>

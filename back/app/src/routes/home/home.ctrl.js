@@ -95,8 +95,7 @@ const output ={
     {   
         logger.info(`GET /myPage/profileEdit 304 "프로필편집 화면으로 이동"`);
         //실제 경로 , 라우팅 경로 : myPage/profileEdit
-        const userId = req.params.id; 
-        const myEdit = new MyPageEdit(req.body, userId);
+        const myEdit = new Edit(req.body, userId.id);
         const myEditRes = await myEdit.myEdit();
 
         console.log(myEditRes);
@@ -105,8 +104,7 @@ const output ={
 
     myEdit : async (req, res) => {
         logger.info(`GET /myPage 304 "edit 화면으로 이동"`);
-        const userId = req.params.id; 
-        const myEdit = new MyPageEdit(req.body, userId);
+        const myEdit = new Edit(req.body, userId.id);
         const myEditRes = await myEdit.myEdit();
         console.log(myEditRes);
         res.json(myEditRes);

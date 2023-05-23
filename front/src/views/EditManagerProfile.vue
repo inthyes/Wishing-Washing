@@ -15,8 +15,8 @@
                 </div></div>
         <v-text-field v-model="edit.userId" label="아이디" readonly></v-text-field>
         <v-text-field v-model="edit.name" label="이름" readonly></v-text-field>
-        <v-text-field v-model="edit.mail" :rules="[rules.emailRules]" label="이메일"></v-text-field>
-              
+        <v-text-field v-model="edit.Sname" label="세탁소 이름" ></v-text-field>
+        <!-- <v-text-field v-model="edit.mail" :rules="[rules.emailRules]" label="이메일"></v-text-field> -->     
         <v-text-field v-model="edit.phone" :rules="[rules.phoneRules]" label="연락처"></v-text-field>
         <!-- <button @click="goToEditPassword">비밀번호 변경</button> -->
         <!-- <div style="color: gray;">프로필 사진 편집</div>
@@ -43,6 +43,7 @@ export default {
         // id: null,
         userId: '', //아이디
         name: '', //이름
+        Sname: '',
         mail: '',
         phone: '', //전화번호
         image : null,
@@ -67,8 +68,8 @@ export default {
 
     const token = localStorage.getItem("token");
     console.log("token",token);
-    const userId = localStorage.getItem("userId");
-    console.log("userId",userId);
+    // const userId = localStorage.getItem("userId");
+    // console.log("userId",userId);
 
     if (token) {
       try {
@@ -81,7 +82,7 @@ export default {
           if 
           (res.data && res.data.message === 'success') {
             this.edit.userId = res.data.userId;
-            console.log(this.edit.userId);
+            // console.log("ㅁㄴㅇㄹ",this.edit.userId);
             this.fetcheditprofileData();
             
           }
@@ -109,10 +110,12 @@ export default {
 
             reader.readAsDataURL(file);
         },
+
     async save() {
       const newEdit = {
         userId: this.edit.userId,
         name: this.edit.name,
+        Sname: this.edit.Sname,
         mail: this.edit.mail,
         phone: this.edit.phone,
         image: await this.edit.image,
@@ -121,6 +124,7 @@ export default {
       axios.post('http://localhost:4000/edit', {
             userId: newEdit.userId,
             name : newEdit.name,
+            Sname : newEdit.Sname,
             mail: newEdit.mail,
             phone: newEdit.phone,
             
@@ -128,6 +132,7 @@ export default {
         .then(() => {
           this.edit.userId = '';
           this.edit.name = '';
+          this.edit.Sname = '';
           this.edit.mail = '';
           this.edit.phone = '';
           this.$router.push('/mypage');
@@ -176,8 +181,10 @@ export default {
         const tokenPayload = jwt_decode(token);
 
         // console.log(res.data.U_ID);
-        this.edit.userId = res.data.U_ID;
-        this.edit.name = res.data.U_NAME;
+        this.edit.userId = res.data.C_ID;
+        this.edit.name = res.data.C_NAME;
+        this.edit.Sname = res.data.S_NAME;
+        this.edit.phone = res.data.C_PHONE;
 
         console.log("ID:", tokenPayload.id);
         console.log("Token Payload:", tokenPayload);
