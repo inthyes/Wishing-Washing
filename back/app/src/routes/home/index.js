@@ -12,6 +12,7 @@ router.get("/", ctrl.output.home);
 router.get("/login", ctrl.output.login);
 router.get("/register", ctrl.output.register);
 router.get('/laundry', ctrl.output.laundry);
+router.get('/history', ctrl.output.history);
 router.get('/orderManage', ctrl.output.orderManage);
 //router.get('/myPage', ctrl.output.myPage);
 //router.get('/upload', ctrl.output.upload);

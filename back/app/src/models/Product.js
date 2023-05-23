@@ -18,7 +18,7 @@ class Product {
 
       async addProduct() {
         // const S_ID = this.S_ID; //이 바디에는 S_ID제외한 모든게 들어있다
-        const S_ID = 7;
+        const S_ID = this.S_ID;
         const PRODUCT_NAME = this.body.PRODUCT_NAME;
         const PRODUCT_INFO = this.body.PRODUCT_INFO;
         const PRODUCT_PRICE = this.body.PRODUCT_PRICE;

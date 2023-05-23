@@ -1,5 +1,3 @@
-<!--상품관리-->
-<!--이시언-->
 <template>
   <v-card v-for="product in products" :key="product.PRODUCT_ID" elevation="0" style="margin-bottom: 10px;">
     <v-card-text style="margin-bottom: -5px;">
@@ -22,7 +20,7 @@
 
     <v-row>
       <v-card-actions style="margin-left: 255px; margin-top: -10px;">
-        <v-btn icon="mdi-check" @click="save(product, product.PRODUCT_NAME, product.PRODUCT_PRICE)" style="margin-top: -30px;"><v-icon></v-icon></v-btn>
+        <v-btn icon="mdi-check" @click="updateProduct(product)" style="margin-top: -30px;"><v-icon></v-icon></v-btn>
       </v-card-actions>
       <v-card-actions style="margin-left: 20px; margin-top: -10px;">
         <v-btn id="delete" icon="mdi-delete" style="margin-top: -30px;" @click="deleteProduct(product.PRODUCT_ID)"><v-icon></v-icon></v-btn>
@@ -36,13 +34,15 @@
       <br/>
       <v-text-field v-model="add_price" :rules="[rules.required]" color="blue" label="가격" variant="underlined"></v-text-field>
       <br/>
+      <v-text-field v-model="add_info" :rules="[rules.required]" color="blue" label="상품 소개" variant="underlined"></v-text-field>
+      <br/>
     </v-container>
     <v-divider></v-divider>
 
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn color="#0C70FE" @click="save">
-        <v-btn type="submit">저장</v-btn>
+      <v-btn color="#0C70FE" @click="addProduct">
+        <v-btn type="submit">추가</v-btn>
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -60,6 +60,7 @@
         products: [],
         add_name: null,
         add_price: null,
+        add_info: null,
         rules: {
           required: (value) => !!value || "반드시 입력하세요",
         },
@@ -91,16 +92,16 @@
       //     console.error(error);
       //   }
       // },
-      async save(product) {
+      async addProduct() {
       try {
         // 수정된 정보를 서버로 전송할 데이터 객체 생성
         const data = {
-          // S_ID : this.S_ID,
-          PRODUCT_NAME: product.PRODUCT_NAME,
-          PRODUCT_INFO: product.PRODUCT_INFO,
-          PRODUCT_PRICE: product.PRODUCT_PRICE
+          S_ID : this.S_ID,
+          PRODUCT_NAME: this.add_name,
+          PRODUCT_INFO: this.add_info,
+          PRODUCT_PRICE: this.add_price
         };
-        const response = await axios.post(`http://localhost:4000/laundry/productAdmin`, data);
+        const response = await axios.post(`http://localhost:4000/laundry/addProduct`, data);
         console.log(response.data);
         
         // 서버 응답을 받아 처리하는 로직 추가
@@ -113,17 +114,17 @@
     //${product.PRODUCT_ID}
       
 
-      // async deleteProduct(deleteId) {
-      //   try {
-      //     await axios.delete(`http://localhost:5001/products/${deleteId}`);
-      //     window.location.reload();
-      //     this.showAlert("상품이 삭제되었습니다.");
-      //   } catch (error) {
-      //     console.error(error);
-      //   }
-      // },
+       async deleteProduct(deleteId) { //일단 구현안함
+         try {
+           await axios.delete(`http://localhost:5001/products/${deleteId}`);
+           window.location.reload();
+           this.showAlert("상품이 삭제되었습니다.");
+         } catch (error) {
+           console.error(error);
+         }
+       },
 
-      async addProduct() {
+      async addProduct2() {
         if (
           this.rules.required(this.add_name) === true &&
           this.rules.required(this.add_price) === true

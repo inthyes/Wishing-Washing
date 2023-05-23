@@ -5,6 +5,7 @@ const Review = require("../../models/Review");
 const Product = require("../../models/Product");
 const Edit = require("../../models/Edit");
 const MyPage = require("../../models/Mypage");
+const Order = require("../../models/Order");
 
 const router = require(".");
 
@@ -99,7 +100,7 @@ const output ={
     {   
         logger.info(`GET /myPage/profileEdit 304 "프로필편집 화면으로 이동"`);
         //실제 경로 , 라우팅 경로 : myPage/profileEdit
-        const myEdit = new Edit(req.body, userId.id);
+        const myEdit = new Edit(req.body, c_id);
         const myEditRes = await myEdit.myEdit();
 
         console.log(myEditRes);
@@ -125,26 +126,17 @@ const output ={
     },
 
     // 세탁소 세부페이지 
-    laundryDetail: async(req, res) => {
-        logger.info(`GET /laundry/detail/id 304 "세탁신청 세부 화면으로 이동`);
-        console.log(req.body);
-        const laundry = new Laundry(req.params.id);
-        const product = new Product(req.params.id);
-        
-        //db에서 찾아온 내용 보여주기.
-        // response로 json 형태로 데이터가 전달.
-        const laundryDetailRes = await laundry.showDetail();
-        const productDetailRes = await product.showDetail();
-        console.log(laundryDetailRes, productDetailRes)
-        res.render("home/LaundryDetail", 
-        {
-            laundryDetail : laundryDetailRes,
-            productDetail : productDetailRes
-        });
-    },
     upload : async(req, res) =>{
         logger.info(`GET /home/upload 304 "upload 화면으로 이동`);
         res.render('home/upload');
+    },
+    history : async(req, res) =>{
+        logger.info(`GET /home/upload 304 "ManageOrder 화면으로 이동`);
+        console.log(s_id);
+        const history = new Order(s_id);
+        const response = await history.showOrder();
+        console.log(response);
+        res.json(response);
     },
     deleteProduct : async(req, res) =>{
         logger.info(`GET /home/upload 304 "Product 화면으로 이동`);
@@ -186,12 +178,13 @@ const process = {
     },
     addProduct: async (req, res) => {
         console.log(req.body);
-        const { productName, price } = req.body;
-        const add = new Product({ PRODUCT_NAME: productName, PRODUCT_PRICE: price }, s_id);
+        console.log("s_id",s_id);
+        const { PRODUCT_NAME, PRODUCT_INFO, PRODUCT_PRICE } = req.body;
+        const add = new Product({ PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_INFO}, s_id);
 
         const response = await add.addProduct(); // 상품 추가 메소드
         console.log(response);
-        res.render("home/laundry");
+        res.json(response);
       },
       deleteProduct: async (req, res) => {
         const deleteProduct = new Product(req.body, req.params.id);
