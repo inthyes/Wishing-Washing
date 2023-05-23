@@ -53,6 +53,7 @@ router.post("/", (req, res) => {
       return res.status(401).send(json);
     }
     console.log("토큰 만료 성공");
+    global.userId = undefined;
 
     // 새로운 버전 정보 생성
     const newTokenVersion = "new_version";
