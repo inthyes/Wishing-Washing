@@ -179,6 +179,10 @@
       "laundryId": 1,
       "id": 1,
       "managerName": "김경기",
+      "managerId":"kyonggi",
+      "businessnum":"11111111",
+      "managerpsword":"aaaa1111",
+      "S_ID":"kyonggis",
       "managerEmail": "ww12@naver.com",
       "managerPhone": "010-2222-1111"
     },
@@ -186,6 +190,10 @@
       "laundryId": 2,
       "id": 2,
       "managerName": "가나다",
+      "managerId":"abc",
+      "businessnum":"22222222",
+      "managerpsword":"aaaa2222",
+      "S_ID":"abcs",
       "managerEmail": "w22221@naver.com",
       "managerPhone": "010-2333-7877"
     }
