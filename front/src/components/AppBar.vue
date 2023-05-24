@@ -1,5 +1,6 @@
 <template>
     <!-- 상단 Appbar -->
+    <!-- 로그인 화면에선 앱바 안보임 -->
     <v-app-bar v-if="!isLogin" app class="rounded-bottom1" :elevation="1" style="background-color:rgba(97, 151, 202, 0.874)"
         :style="{ color: '#ffffff' }" height="75">
 
@@ -25,9 +26,17 @@
     </v-app-bar>
 
     <!-- 앱바 드롭다운 메뉴 : 왼쪽에서  -->
-    <v-navigation-drawer v-model="drawer" location="left" temporary width="200">
+    <v-navigation-drawer v-model="drawer" location="left" temporary width="240">
         <v-list>
-            <v-list-item class="text-left px-5" @click="logout">
+
+            <v-list-item v-if="!token" class="text-left px-5" to="/login">
+                로그인
+            </v-list-item>
+            <v-list-item v-else class="text-left px-5">
+                안녕하세요 {{ userId }}님
+            </v-list-item>
+            <v-list-item v-if="token" class="text-left px-5" @click="logout">
+                <!-- <p class="mx-0 my-1">안녕하세요 {{ userId }}님</p> -->
                 로그아웃
             </v-list-item>
         </v-list>
@@ -39,6 +48,9 @@ import axios from 'axios'
 
 export default {
     data: () => ({
+        userId: null,
+        token: null,
+
         drawer: false,
         group: null,
     }),
@@ -57,7 +69,12 @@ export default {
         },
         isLogin() {
             return this.$route.path === '/login';
-        }
+        },
+
+    },
+    mounted() {
+        this.userId = localStorage.getItem("userId");
+        this.token = localStorage.getItem('token');
     },
     methods: {
         goBack() {
@@ -79,14 +96,14 @@ export default {
                 this.snackbar = true;
 
                 localStorage.removeItem("token");
-
+                localStorage.removeItem("userId");
 
                 this.$router.push('/login');
             } catch (error) {
                 console.log(error);
                 alert('로그아웃 실패');
             }
-        }
+        },
     }
 }
 </script>

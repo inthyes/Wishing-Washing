@@ -14,7 +14,7 @@
     </v-snackbar>
     
     <!-- 하단 navbar -->
-    <v-footer class="fixed-bottom">
+    <v-footer>
       <bottom-nav-bar />
     </v-footer>
 
@@ -37,16 +37,3 @@ export default {
   }),
 }
 </script>
-
-<style scoped>
-.fixed-bottom {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-
-/* .align-center {
-  text-align: center;
-} */
-</style>

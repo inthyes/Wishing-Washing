@@ -126,20 +126,12 @@ export default {
     }),
 
     async created() {
-        try {
-            // this.order_complete = await this.fetchOrderComplete('asc');    // 기본값은 과거순으로 설정 
-            this.order_complete = await this.fetchOrderComplete('desc');    // 기본값은 최신순으로 설정 
-            // this.order_complete = res.data;
-        } catch (e) {
-            console.error(e);
-        }
-
         const token = localStorage.getItem("token");
 
         if (token) {
             this.verifyToken(token)
                 .then((isValidToken) => {
-                    this.fetchhistoryData();
+                    this.fetchOrderComplete('desc'); 
                     console.log(isValidToken);
                 })
                 .catch((error) => {
@@ -166,22 +158,22 @@ export default {
                 throw new Error("토큰 검증 실패");
             }
         },
-        async fetchhistoryData() {
-            try {
-                const res = await axios.get("http://localhost:3000/history");
-                this.historyData = res.data;
-                const token = localStorage.getItem("token");
-                const tokenPayload = jwt_decode(token);
+        // async fetchhistoryData() {
+        //     try {
+        //         const res = await axios.get("http://localhost:3000/history");
+        //         this.historyData = res.data;
+        //         const token = localStorage.getItem("token");
+        //         const tokenPayload = jwt_decode(token);
 
-                console.log("ID:", tokenPayload.id);
-                console.log("Token Payload:", tokenPayload);
+        //         console.log("ID:", tokenPayload.id);
+        //         console.log("Token Payload:", tokenPayload);
 
 
-            } catch (error) {
-                console.error(error);
-                throw new Error("usagehistory 데이터 가져오기 실패");
-            }
-        },
+        //     } catch (error) {
+        //         console.error(error);
+        //         throw new Error("usagehistory 데이터 가져오기 실패");
+        // //     }
+        // },
 
         async fetchOrderComplete(order) {
             try {
@@ -191,6 +183,9 @@ export default {
                         _order: order
                     },
                 });
+                const token = localStorage.getItem("token");
+                const tokenPayload = jwt_decode(token);
+                console.log(tokenPayload);
                 console.log(res.data);
                 return res.data;
             } catch (e) {
