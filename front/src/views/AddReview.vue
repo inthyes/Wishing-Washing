@@ -121,13 +121,12 @@ export default {
                 
                 console.log(storeId)
                 const res = await axios.get(`http://localhost:3000/review/${storeId}/${orderNum}`)
-                console.log("res", res);
-                const token = localStorage.getItem("token");
-                const tokenPayload = jwt_decode(token);
+                    console.log("res", res);
+                    const token = localStorage.getItem("token");
+                    const tokenPayload = jwt_decode(token);
 
-                console.log("ID:", tokenPayload.id);
-                console.log("Token Payload:", tokenPayload);
-
+                    console.log("ID:", tokenPayload.id);
+                    console.log("Token Payload:", tokenPayload);
             } catch (e) {
                 console.error(e);
             }

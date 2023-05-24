@@ -95,8 +95,10 @@ const output ={
     }, 
     review : async (req, res) => {
         logger.info(`GET /laundry 304 "review 화면으로 이동"`);
-        const laundryInfo = new Laundry(req.params.storeId);
-        const laundryDetailRes = await laundryInfo.showDetail();
+        const laundry = new Laundry(req.params.storeId);
+        const laundryDetailRes = await laundry.showDetail();
+        const orderComplete = new LaundryOrderComplete();
+        const orderCompleteRes = await orderComplete.orderCompleteInfo(req.params.orderNum);
         res.json(laundryDetailRes);
     },
     //update로 들어갔을때 기존 작성했던 리뷰가 보여짐
@@ -142,7 +144,6 @@ const output ={
     },
     myPage : async (req, res) => {
         logger.info(`GET /home/myPage 304 "마이페이지 화면으로 이동`);
-        console.log("들어옴");
         const myPage = new MyPage(global.userId.id);
         const myPageInfo = await myPage.showMyPageInfo(global.userId.id);
         console.log(myPageInfo);
@@ -290,7 +291,6 @@ const process = {
         res.status(200);
     },
     review : async (req,res) => {
-        console.log(req.body);
         const review = new Review(req.body, global.userId.id);
         const response = await review.write();
         console.log(response);
@@ -335,6 +335,18 @@ const process = {
                 return res.status(200).json({ message: '토큰이 유효합니다.' });
         });
     },
+    reviewExist: async (req, res) => {
+        const review = new Review();
+        const reviewExist = await review.isReviewexist(req.body.orderNum);
+        try {
+            if (reviewExist.O_NUM != null) {
+                console.log(await review.isReviewexist(req.body.orderNum))
+                res.status(200).json({message:"이미 작성한 리뷰입니다."})
+            }
+        } catch(e) {
+            res.status(200).json({message:"리뷰 작성 페이지로 이동합니다."})
+        }
+    }
     // upload : ('/image/:i_id', async (req, res) => {
     //     const i_id = req.params.i_id;
         
