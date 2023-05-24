@@ -41,21 +41,19 @@ export default {
     mypageData: {},
     imageUrl: null // 이미지 URL을 저장할 변수 추가
   }),
-
-  async created() {
-    await this.getImageUrl(); // 이미지 URL 가져오기
-    const token = localStorage.getItem("token");
-
-    if (token) {
-      this.verifyToken(token)
-        .then((isValidToken) => {
-          this.fetchMypageData();
-          console.log(isValidToken);
-        })
-        .catch((error) => {
-          console.error(error);
-          this.redirectToLogin();
-        });
+    async created() {
+        const token = localStorage.getItem("token");
+        if (token) {
+            this.verifyToken(token)
+                .then((isValidToken) => {
+                    this.fetchMypageData();
+                    this.getImageUrl(); // 이미지 URL 가져오기
+                    console.log(isValidToken);
+                })
+                .catch((error) => {
+                    console.error(error);
+                    this.redirectToLogin();
+                });
     } else {
       this.redirectToLogin();
     }
@@ -113,9 +111,9 @@ export default {
       }
     },
 
-    // redirectToLogin() {
-    //   this.$router.push("/login");
-    // },
+    redirectToLogin() {
+      this.$router.push("/login");
+    },
   }
 }
 </script>

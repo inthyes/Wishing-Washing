@@ -123,6 +123,7 @@ export default {
 
         sortOption: 'recent', // 최근순이 기본값
         order_complete: [],
+        orderComplete: [],
     }),
 
     async created() {
@@ -131,8 +132,11 @@ export default {
         if (token) {
             this.verifyToken(token)
                 .then((isValidToken) => {
-                    this.fetchOrderComplete('desc'); 
-                    console.log(isValidToken);
+                    this.fetchOrderComplete('desc')
+                    .then((data) => {
+                        this.order_complete = data;
+                        console.log(isValidToken);
+                    })
                 })
                 .catch((error) => {
                     console.error(error);

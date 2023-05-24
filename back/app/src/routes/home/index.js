@@ -16,7 +16,7 @@ router.get('/laundry', ctrl.output.laundry);
 router.get('/history', ctrl.output.history);
 router.get('/myPage', ctrl.output.myPage);
 router.get('/upload', ctrl.output.upload);
-router.get('/review', ctrl.output.review);
+router.get('/review/:storeId/:orderNum', ctrl.output.review);
 router.get('/edit', ctrl.output.edit);
 router.get('/myEdit', ctrl.output.myEdit);
 // router.get('/review', ctrl.output.review);
@@ -28,6 +28,7 @@ router.use(cookieParser());
 // router.use("/search", require("./search"));
 
 router.post("/like", ctrl.process.like);
+router.post("/review", ctrl.process.review);
 
 router.post("/edit", ctrl.process.edit);
 
