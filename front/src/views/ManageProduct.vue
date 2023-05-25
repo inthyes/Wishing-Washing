@@ -121,9 +121,11 @@
             PRODUCT_PRICE: this.add_price
           };
           const response = await axios.post(`http://localhost:4000/laundry/addProduct`, data);
+          window.location.reload();
           console.log(response.data);
           
           // 서버 응답을 받아 처리하는 로직 추가
+          
           
         } catch (error) {
           console.error(error);
