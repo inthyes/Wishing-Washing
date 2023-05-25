@@ -57,7 +57,7 @@ export default {
     },
     isMain() {
       const path = this.$route.path;
-      return path === '/managemylaundry' || path === '/manageorder' || path === '/managermypage2';
+      return path === '/manage' || path === '/order' || path === '/mypage2';
     },
     isLogin() {
       return this.$route.path === '/login';

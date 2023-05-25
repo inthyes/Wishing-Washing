@@ -29,11 +29,11 @@
                 <v-divider class="mx-1 mb-1"></v-divider>
 
                 <v-row style="margin-bottom: 10px; margin-top: 5px;">
-                    <v-col>
+                    <!-- <v-col>
                         <v-card-actions>
-                          <v-btn id="back" to="manageorder" style="border-radius: 10px;">&lt; 이전</v-btn>
+                          <v-btn id="back" to="orderlist" style="border-radius: 10px;">&lt; 이전</v-btn>
                         </v-card-actions>
-                    </v-col>
+                    </v-col> -->
                     <v-col>
                         <v-card-actions style="margin-left: 120px;">
                           <v-btn id="accept" variant="outlined" style="border-radius: 10px;" @click="clickAccept()">수락</v-btn>
@@ -80,7 +80,7 @@ export default {
             } catch (e) {
                 console.error(e);
             }
-            this.$router.push("/manageorder"); // 관리 페이지로 이동
+            this.$router.push("/order"); // 관리 페이지로 이동
         },
 
         // 수락 버튼 -> 배송전으로 이동
@@ -91,7 +91,7 @@ export default {
                 request.status = "배송전";    // JSON 데이터의 "status" 값을 "배송전"으로 수정
                 await axios.put(`http://localhost:5001/requests/${requestId}`, request);
                 this.showAlert("세탁 요청이 수락되었습니다.");
-                this.$router.push("/manageorder"); // 관리 페이지로 이동
+                this.$router.push("/order"); // 관리 페이지로 이동
             } catch (e) {
                 console.error(e);
             }

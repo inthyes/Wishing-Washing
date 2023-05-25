@@ -2,8 +2,8 @@
 <!--서혜린-->
 
 <template>
-    <div id="laund-list">
-        <v-card class="mx-auto my-5" max-width="500" v-for="managelaundry in managelaundrys" :key="managelaundry.id" elevation="0">
+    <div id="laund-list" class="px-5">
+        <v-card class="mx-auto my-5" max-width="400" v-for="managelaundry in managelaundrys" :key="managelaundry.id" elevation="0">
             <v-img class="align-end text-white" id="laundryImg" :src="imageUrl" cover></v-img>
 
                 <v-card-title id="laund-title">{{ managelaundry.laundryName }}</v-card-title>

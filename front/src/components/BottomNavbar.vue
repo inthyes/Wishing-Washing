@@ -5,17 +5,17 @@
             <span>&nbsp;&nbsp;HOME&nbsp;&nbsp;</span>
         </v-btn>
 
-        <v-btn to="managemylaundry">
+        <v-btn to="manage">
             <v-icon>mdi-washing-machine</v-icon>
             <span>내세탁소</span>
         </v-btn>
 
-        <v-btn to="manageorder">
+        <v-btn to="orderlist">
             <v-icon>mdi-format-list-bulleted</v-icon>
             <span>주문관리</span>
         </v-btn>
 
-        <v-btn to="managermypage2">
+        <v-btn to="mypage">
             <v-icon>mdi-account-outline</v-icon>
             <span>&nbsp;&nbsp;&nbsp;MY&nbsp;&nbsp;&nbsp;</span>
         </v-btn>

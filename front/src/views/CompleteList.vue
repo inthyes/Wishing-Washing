@@ -11,7 +11,7 @@
                         <b>{{ request.date }}</b>
                     </div>
                 </div>
-                <v-card v-bind:key="request.id" elevation="0" v-bind:to="{ path: '/historydetails', query: { id: request.id } }">
+                <v-card v-bind:key="request.id" elevation="0" v-bind:to="{ path: '/completelist/details', query: { id: request.id } }">
                     <div class="washingHistory">
                         <v-img id="washingImg" src="https://images.unsplash.com/photo-1603400521630-9f2de124b33b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80" cover></v-img>
                         <v-card-text>

@@ -6,24 +6,25 @@ import ManageLaundry from '../views/ManageLaundry.vue'
 import ManageProduct from '../views/ManageProduct.vue'
 import ManageReview from '../views/ManageReview.vue'
 
-import ManagerMypage from '../views/ManagerMypage.vue'
+// import ManagerMypage from '../views/ManagerMypage.vue'
 import EditManagerProfile from '../views/EditManagerProfile.vue'
-import ManagerHistory from '../views/ManagerHistory.vue'
-import CheckReviewList from '../views/CheckReviewList.vue'
+// import CheckReviewList from '../views/CheckReviewList.vue'
 import QnA from '../views/QnA.vue'
 import MyLaundry from '../views/MyLaundry.vue'
 import WWNotice from '../views/WWNotice.vue'
 import NoticeDetail1 from '../views/NoticeDetail1.vue'
 import NoticeDetail2 from '../views/NoticeDetail2.vue'
 
-import ManageOrder from '../views/ManageOrder.vue'
+import OrderList from '../views/OrderList.vue'
 import OrderDetails from '../views/OrderDetails.vue'
-import HistoryDetails from '../views/HistoryDetails.vue'
+
+import CompleteList from '../views/CompleteList.vue'
+import CompleteDetails from '../views/CompleteDetails.vue'
 
 import LoginFormVue from '@/views/LoginForm.vue'
 import SignUpFormVue from '@/views/SignUpForm.vue'
 
-import ManagerMypage2 from '../views/ManagerMypage2.vue'
+import MyPage from '@/views/MyPage.vue'
 
 const routes = [
   {
@@ -32,45 +33,50 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/managemylaundry',
-    name: '내세탁소 관리',
+    path: '/manage',
+    name: '내 세탁소 관리',
     component: ManageMylaundry
   },
   {
-    path: '/managelaundry',
+    path: '/manage/laundry',
     name: '세탁소관리',
     component: ManageLaundry
   },
   {
-    path: '/manageproduct',
+    path: '/manage/product',
     name: '상품관리',
     component: ManageProduct
   },
   {
-    path: '/managereview',
+    path: '/manage/review',
     name: '리뷰관리',
     component: ManageReview
   },
+  // {
+  //   path: '/managermypage',
+  //   name: 'managermypage',
+  //   component: ManagerMypage
+  // },
   {
-    path: '/managermypage',
-    name: 'managermypage',
-    component: ManagerMypage
-  },
-  {
-    path: '/editmanagerprofile',
+    path: '/mypage/editprofile',
     name: '프로필편집',
     component: EditManagerProfile
   },
   {
-    path: '/managerhistory',
-    name: '주문내역',
-    component: ManagerHistory
+    path: '/completelist',
+    name: '완료된 주문',
+    component: CompleteList
   },
   {
-    path: '/checkreviewlist',
-    name: '리뷰확인',
-    component: CheckReviewList
+    path: '/completelist/details',
+    name: '완료주문 상세',
+    component: CompleteDetails
   },
+  // {
+  //   path: '/checkreviewlist',
+  //   name: '리뷰확인',
+  //   component: CheckReviewList
+  // },
   {
     path: '/qna',
     name: 'Q&A',
@@ -97,19 +103,14 @@ const routes = [
     component: NoticeDetail2
   },
   {
-    path: '/manageorder',
+    path: '/orderlist',
     name: '주문관리',
-    component: ManageOrder
+    component: OrderList
   },
   {
     path: '/orderdetails',
-    name: '주문 상세정보',
+    name: '주문 상세',
     component: OrderDetails
-  },
-  {
-    path: '/historydetails',
-    name: '주문내역 상세',
-    component: HistoryDetails
   },
   {
     path: '/login',
@@ -122,9 +123,9 @@ const routes = [
     component: SignUpFormVue
   },
   {
-    path: '/managermypage2',
+    path: '/mypage',
     name: '마이페이지',
-    component: ManagerMypage2
+    component: MyPage
   },
 ]
 
