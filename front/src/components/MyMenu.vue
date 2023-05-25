@@ -10,7 +10,7 @@
                 </v-list-item-content>
             </v-list-item>
 
-            <v-list-item link class="ltem-list" to="ordercompleted">
+            <v-list-item link class="ltem-list" to="completelist">
                     <v-list-item-content class="item-icon">
                         <v-list-item-icon>
                             <v-icon>mdi-receipt</v-icon>
