@@ -4,28 +4,28 @@
     <v-card class="mx-auto" max-width="400" elevation="0">
         <v-container>
             <v-form ref="form" v-model="form" class="pa-4 pt-10">
-                <v-text-field v-model="name" :rules="[rules.required]" color="blue" label="이름" placeholder="이름을 입력하세요"
+                <v-text-field v-model="managerName" :rules="[rules.required]" color="blue" label="이름" placeholder="이름을 입력하세요"
                     variant="underlined" clearable></v-text-field>
 
-                <v-text-field v-model="email" :rules="[rules.required, rules.emailRules, rules.emailDuplicate]" color="blue"
-                    label="이메일" placeholder="이메일을 입력하세요" variant="underlined" clearable></v-text-field>
+                <v-text-field v-model="managerId" :rules="[rules.required, rules.ID_Duplicate]" color="blue" label="아이디"
+                    placeholder="아이디를 입력하세요" variant="underlined" clearable></v-text-field>
 
-                <v-text-field v-model="id" :rules="[rules.required, rules.ID_Duplicate]" color="blue" label="닉네임"
-                    placeholder="닉네임을 입력하세요" variant="underlined" clearable></v-text-field>
+                <v-text-field v-model="businessnum" :rules="[rules.required]" color="blue" label="사업자번호"
+                    placeholder="사업자번호를 입력하세요" variant="underlined" clearable></v-text-field>
 
-                <v-text-field v-model="phone" :rules="[rules.required, rules.phoneRules]" color="blue" label="연락처"
-                    placeholder="연락처를 입력하세요" variant="underlined" clearable></v-text-field>
-
-                <v-text-field v-model="password" :rules="[rules.required, rules.minRules]"
+                <v-text-field v-model="managerpsword" :rules="[rules.required, rules.minRules]"
                     :type="show1 ? 'text' : 'password'" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                     @click:append="show1 = !show1" color="blue" label="비밀번호" placeholder="비밀번호를 입력하세요" variant="underlined"
                     clearable></v-text-field>
 
-                <v-text-field v-model="PasswordCheck" :rules="[rules.required, rules.passwordMatch]"
+                <v-text-field v-model="managerPswordCheck" :rules="[rules.required, rules.passwordMatch]"
                     :type="show2 ? 'text' : 'password'" :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
                     @click:append="show2 = !show2" color="blue" label="비밀번호 확인" placeholder="한번 더 비밀번호를 입력하세요"
                     variant="underlined" clearable>
                 </v-text-field>
+
+                <v-text-field v-model="S_ID" :rules="[rules.required, rules.ID_Duplicate]" color="blue" label="사장님아이디"
+                    placeholder="사장님아이디를 입력하세요" variant="underlined" clearable></v-text-field>
 
                 <v-checkbox v-model="terms" :rules="[rules.agree]" color="light-blue-darken-4" label="약관동의"></v-checkbox>
             </v-form>
@@ -56,12 +56,12 @@ const baseURL = "http://localhost:3000/register";
 export default {
     data() {
         return {
-            name: null,
-            id: null,
-            phone: null,
-            email: null,
-            password: null,
-            PasswordCheck: null,
+            managerName: null,
+            managerId: null,
+            businessnum: null,
+            S_ID: null,
+            managerpsword: null,
+            managerPswordCheck: null,
 
             terms: false,
             show1: false,
@@ -70,7 +70,7 @@ export default {
             form: false,
             isLoading: false,
 
-            users: [],
+            managers: [],
 
 
             rules: {
@@ -85,7 +85,7 @@ export default {
                     return pattern.test(value) || '이메일 형식으로 입력하세요'
                 },
                 minRules: value => value.length >= 8 || '8자 이상 입력하세요',
-                passwordMatch: value => value === this.password || '비밀번호가 일치하지 않습니다',
+                passwordMatch: value => value === this.managerpsword || '비밀번호가 일치하지 않습니다',
 
 
                 // 회원가입 이메일 중복검사
@@ -131,14 +131,14 @@ export default {
     },
     // 회원가입 저장
     methods: {
-        async addUsers() {
+        async addManagers() {
             if (
-                this.rules.required(this.name) === true &&
-                this.rules.required(this.id) === true &&
-                this.rules.phoneRules(this.phone) === true &&
-                this.rules.emailRules(this.email) === true &&
-                this.rules.minRules(this.password) === true &&
-                this.rules.passwordMatch(this.PasswordCheck) === true 
+                this.rules.required(this.managerName) === true &&
+                this.rules.required(this.managerId) === true &&
+                this.rules.required(this.businessnum) === true &&
+                this.rules.required(this.S_ID) === true &&
+                this.rules.minRules(this.managerpsword) === true &&
+                this.rules.passwordMatch(this.managerPswordCheck) === true 
                 // &&
 
                 // await this.rules.emailDuplicate(this.email) &&
@@ -146,15 +146,15 @@ export default {
             ) {
                 try {
                     const res = await axios.post(baseURL, {
-                        name: this.name,
-                        id: this.id,
-                        phone: this.phone,
-                        email: this.email,
-                        psword: this.password,
-                        confirmPsword: this.PasswordCheck,
+                        managerName: this.managerName,
+                        managerId: this.managerId,
+                        businessnum: this.businessnum,
+                        S_ID: this.S_ID,
+                        managerpsword: this.managerpsword,
+                        confirmPsword: this.managerPswordCheck,
                     });
 
-                    this.users = [...this.users, res.data];
+                    this.managers = [...this.managers, res.data];
                 } catch (e) {
                     console.error(e);
                 }
