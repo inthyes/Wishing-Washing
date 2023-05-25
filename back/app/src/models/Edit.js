@@ -3,10 +3,10 @@ const db = require("../config/db");
 const crypto = require("crypto");
 
 class Edit {
-    constructor(body, S_ID) {
+    constructor(body, C_ID, S_ID) {
         this.body = body;
         this.S_ID = S_ID;
-        //this.C_ID = C_ID;
+        this.C_ID = C_ID;
       }
 
       async update() {
@@ -170,6 +170,7 @@ class Edit {
 
     async myEdit() {
       const userId = this.C_ID;
+      const storeId = this.S_ID || null;
       return new Promise((resolve, reject) => {
         db.query("USE CAPSTONE", (err, result) => {
           if (err) reject(err);

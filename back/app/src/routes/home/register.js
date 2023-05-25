@@ -80,7 +80,7 @@ router.post("/", async (req, res) => {
 
 
     const exec = conn.query(
-      "insert into CEO (C_ID, S_MAIL, C_NAME, C_PHONE,S_NUM, S_ID, C_PW, SALT) values (?, ?, ?, ?, ?, ? , ?, ?);",
+      "insert into CEO (C_ID, S_MAIL, C_NAME, C_PHONE, S_NUM, S_ID, C_PW, SALT) values (?, ?, ?, ?, ?, ? , ?, ?);",
       [paramId, parammail, paramName,paramPhone,paramNum, paramS_ID, hashPsword, salt],
       
       (err, result) => {
