@@ -229,7 +229,7 @@ const process = {
                 c_id = decoded.id;
                 s_id = decoded.s_id;
 
-                console.log(token,c_id);
+                console.log(token,s_id);
                 return res.status(200).json({ message: '토큰이 유효합니다.' });
         });
     },

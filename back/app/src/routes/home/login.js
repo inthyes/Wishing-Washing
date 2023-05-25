@@ -72,7 +72,7 @@ router.post("/", (req, res) => {
               var token = jwt.sign(
                 {
                   id: id, 
-                  // s_id : data[0].S_ID
+                  s_id : data[0].S_ID
                 },
                 "secretKey", 
                 {
@@ -102,4 +102,3 @@ router.post("/", (req, res) => {
 });
 
 module.exports = router;
-
