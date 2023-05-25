@@ -14,17 +14,17 @@
                             <v-img src="https://cdn.vuetifyjs.com/images/cards/docks.jpg" cover style="align-items: center;"></v-img>
                         </v-avatar></p><br>
                     <p><b style="color: #adb5bd">요청날짜</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                        {{ request.date }}</p><br>
+                        {{ requests.O_DAY }}</p><br>
                     <p><b style="color: #adb5bd">고객아이디</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                        {{ request.userId }}</p><br>
-                    <p><b style="color: #adb5bd">세탁품목</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                        {{ request.name }}</p><br>
+                        {{ requests.U_ID }}</p><br>
+                    <!-- <p><b style="color: #adb5bd">세탁품목</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                        {{ requests.name }}</p><br> -->
                     <p><b style="color: #adb5bd">요청사항</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                        {{ request.requirement }}</p><br>
+                        {{ requests.O_REQUEST }}</p><br>
                     <p><b style="color: #adb5bd">세탁가격</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                        {{ request.price }}</p><br>
+                        {{ requests.O_PRICE }}</p><br>
                     <p><b style="color: #adb5bd">배달주소</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                        {{ request.userAddr }}</p>
+                        {{ requests.DELIVERY_ADDRESS }}</p>
                 </v-card-text>
                 <v-divider class="mx-1 mb-1"></v-divider>
 
@@ -56,7 +56,7 @@ import axios from "axios";
 export default {
   data() {
     return {
-      request: [],
+      requests: [],
       beforeShipping: [],
     }
   },
