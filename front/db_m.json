@@ -47,7 +47,7 @@
       "requirement": "드라이클리닝 해주세요",
       "price": "10,000원",
       "userAddr": "경기도 수원시 영통구 경기대학교",
-      "status": -2
+      "status": 2
     },
     {
       "laundryId": 1,
@@ -58,7 +58,7 @@
       "requirement": "얼룩 지워주세요",
       "price": "7,000원",
       "userAddr": "경기도 수원시 XX빌라",
-      "status": -1
+      "status": 2
     },
     {
       "laundryId": 1,
