@@ -44,7 +44,7 @@ class Edit {
       }
 
       async showLaundry() {
-        const S_ID = this.S_ID;
+        const S_ID = this.C_ID;
         const data = await Edit.show(S_ID);
         return data;
       }
@@ -71,7 +71,8 @@ class Edit {
       const close = this.body.S_CLOSING;
       const info = this.body.S_COMMENT;
       const announce = this.body.S_ANNOUNCE;
-      const S_ID = this.S_ID;
+      //여기 변경해야함
+      const S_ID = this.C_ID;
       const update = await Edit.laundry(S_ID,phone,S_ADDR1,S_ADDR2,S_ADDR3,open,close,info,announce);
     }
     

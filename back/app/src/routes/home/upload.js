@@ -14,7 +14,7 @@ const board = [];
 
 router.get('/laundryReview', (req,res)=> {
   
-  const s_id = "1"; //하드코딩
+  const s_id = global.s_id; //하드코딩
 
   const query = "select review_img FROM review WHERE S_ID = ?";
   db.query(query,[s_id], (err, results, fields) => {
@@ -31,7 +31,7 @@ router.get('/laundryReview', (req,res)=> {
 
 router.get('/laundryImg', (req,res)=> {
   
-  const s_id = "1"; //하드코딩
+  const s_id = global.s_id; //하드코딩
 
   const query = "select s_image FROM store WHERE S_ID = ?";
   db.query(query,[s_id], (err, results, fields) => {
@@ -68,7 +68,7 @@ router.post('/laundryImg', upload.single('image'), (req, res) => {
     
     const { filename, destination } = req.file;
     console.log(filename,destination);
-    const s_id = '1'; //하드코딩
+    const s_id = global.s_id; //하드코딩
     const filePath = `/${filename}`;
   
     const imagePath = path.join(destination, filename);  // 파일 경로를 지정합니다.
