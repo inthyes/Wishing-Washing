@@ -160,23 +160,6 @@ export default {
                 throw new Error("토큰 검증 실패");
             }
         },
-        // async fetchhistoryData() {
-        //     try {
-        //         const res = await axios.get("http://localhost:3000/history");
-        //         this.historyData = res.data;
-        //         const token = localStorage.getItem("token");
-        //         const tokenPayload = jwt_decode(token);
-
-        //         console.log("ID:", tokenPayload.id);
-        //         console.log("Token Payload:", tokenPayload);
-
-
-        //     } catch (error) {
-        //         console.error(error);
-        //         throw new Error("usagehistory 데이터 가져오기 실패");
-        // //     }
-        // },
-
         async fetchOrderComplete(order) {
             try {
                 const res = await axios.get('http://localhost:3000/history', {

@@ -25,24 +25,6 @@ const { json } = require("body-parser");
 const secretKey = 'secretKey'; // 비밀 키를 정의합니다.
 global.userId;
 
-
-
-// const verifyToken = (req, res, next) => {
-//     const token = req.headers.authorization; // 토큰을 쿼리 파라미터로 전달 받음
-  
-//     // 토큰 검증 로직
-//     jwt.verify(token, "secretKey", (err, decoded) => {
-//       if (err) {
-//         // 토큰이 유효하지 않은 경우
-//         return res.status(401).json({ message: "유효하지 않은 토큰입니다." });
-//       }
-  
-//       // 토큰이 유효한 경우
-//       req.user_id = decoded.id; // 토큰에서 추출한 사용자 ID를 요청 객체에 추가
-//       next(); // 다음 미들웨어로 이동
-//     });
-//   };
-
 const output ={
     home: async (req, res) => {
         if (req.headers.cookie && req.headers.cookie.includes('response')) {
@@ -347,34 +329,6 @@ const process = {
             res.status(200).json({message:"리뷰 작성 페이지로 이동합니다."})
         }
     }
-    // upload : ('/image/:i_id', async (req, res) => {
-    //     const i_id = req.params.i_id;
-        
-    //     try {
-    //       // 특정 i_id에 해당하는 이미지 데이터를 데이터베이스에서 조회
-    //       const query = "SELECT i_data FROM IMAGE WHERE i_id = ?";
-    //       const results = await db.query(query, [i_id]);
-      
-    //       if (results.length === 0) {
-    //         res.sendStatus(404);
-    //         return;
-    //       }
-      
-    //       const imageBuffer = results[0].i_data;
-          
-    //       // 이미지를 클라이언트로 전송
-    //       res.writeHead(200, {
-    //         'Content-Type': 'image/jpeg',
-    //         'Content-Length': imageBuffer.length
-    //       });
-    //       res.end(imageBuffer);
-    //     } catch (error) {
-    //       console.error(error);
-    //       res.sendStatus(500);
-    //     }
-    // }),
-    
-      
 };
 
 module.exports = {
