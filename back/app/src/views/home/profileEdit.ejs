@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>프로필 편집</h1>
+<form method="POST" action="/MyPage/edit">
+  <div>
+    <label for="password">새로운 비밀번호</label>
+    <input type="password" id="password" name="password">
+  </div>
+  <div>
+    <label for="phone">새로운 연락처</label>
+    <input type="text" id="phone" name="phone">
+  </div>
+  <div>
+    <label for="email">새로운 이메일주소</label>
+    <input type="text" id="email" name="email">
+  </div>
+  
+  <button type="submit" id = "edit">프로필 수정</button>
+</form>
+</body>
+</html>

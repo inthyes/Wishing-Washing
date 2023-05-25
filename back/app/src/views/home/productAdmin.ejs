@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    여기는 productAdmin 상품관리 페이지입니다
+    세탁소<%= productAdmin[0].S_ID %>번의 상품리스트
+    <br>
+    <% for (var i = 0; i < productAdmin.length; i++) { %>
+        <tr>
+            <td>PRODUCT_ID : <%= productAdmin[i].PRODUCT_ID %></td>
+            <td>PRODUCT_NAME : <%= productAdmin[i].PRODUCT_NAME %></td>
+            <td>PRODUCT_PRICE : <%= productAdmin[i].PRODUCT_PRICE %></td>
+            <td>
+                <form action="/laundry/deleteProduct/<%=productAdmin[i].PRODUCT_ID%>" method="POST">
+                    <input type="hidden" name="productId" value="<%= productAdmin[i].PRODUCT_ID %>">
+                    <button type="submit">삭제</button>
+                </form>
+            </td>
+        </tr>
+        <br>
+    <% } %>
+    <a href="/laundry/productAdmin/<%= productAdmin[0].S_ID %>">상품추가</a>
+        
+    </form>
+</body>
+</html>
