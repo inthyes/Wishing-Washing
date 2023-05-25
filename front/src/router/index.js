@@ -28,7 +28,7 @@ import ManagerMypage2 from '../views/ManagerMypage2.vue'
 const routes = [
   {
     path: '/',
-    name: 'WW',
+    name: 'WsWs 사장님',
     component: HomeView
   },
   {
@@ -63,7 +63,7 @@ const routes = [
   },
   {
     path: '/managerhistory',
-    name: '판매내역',
+    name: '주문내역',
     component: ManagerHistory
   },
   {
@@ -88,17 +88,17 @@ const routes = [
   },
   {
     path: '/noticedetail1',
-    name: 'noticedetail1',
+    name: '공지사항1',
     component: NoticeDetail1
   },
   {
     path: '/noticedetail2',
-    name: 'noticedetail2',
+    name: '공지사항2',
     component: NoticeDetail2
   },
   {
     path: '/manageorder',
-    name: '세탁 주문',
+    name: '주문관리',
     component: ManageOrder
   },
   {
@@ -108,7 +108,7 @@ const routes = [
   },
   {
     path: '/historydetails',
-    name: 'historydetails',
+    name: '주문내역 상세',
     component: HistoryDetails
   },
   {
