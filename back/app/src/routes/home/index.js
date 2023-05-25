@@ -10,12 +10,9 @@ const cookieParser = require('cookie-parser');
 const ctrl = require("./home.ctrl");
 
 router.get("/", ctrl.output.home);
-router.get("/login", ctrl.output.login);
-router.get("/register", ctrl.output.register);
 router.get('/laundry', ctrl.output.laundry);
 router.get('/history', ctrl.output.history);
 router.get('/myPage', ctrl.output.myPage);
-router.get('/upload', ctrl.output.upload);
 router.get('/review/:storeId/:orderNum', ctrl.output.review);
 router.get('/edit', ctrl.output.edit);
 router.get('/myEdit', ctrl.output.myEdit);

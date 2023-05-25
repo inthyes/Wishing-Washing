@@ -42,14 +42,6 @@ const output ={
                 res.status(200).json({ message: 'success' });
         }
     },
-    login : (req,res) => {
-        logger.info(`GET /login 304 "로그인 화면으로 이동"`);
-        res.render("home/login");
-    },
-    register : (req, res) => {
-        logger.info(`GET /register 304 "회원가입 화면으로 이동"`);
-        res.render("home/register");
-    },
     laundry : async (req, res) => {
         logger.info(`GET /laundry 304 "세탁신청 화면으로 이동"`);
         const cookieValue = req.headers.cookie;
@@ -138,14 +130,6 @@ const output ={
         const response = await favorite.showFavoriteList();
         res.json(response);
     },
-    customerService : (req, res) => {
-        logger.info(`GET /home/myPage/customerService 304 "고객센터 화면으로 이동`);
-        res.render("home/customerService");
-    },
-    userManagement : (req, res) => {
-        logger.info(`GET /home/myPage/userManagement 304 "탈퇴/로그아웃 화면으로 이동`);
-        res.render("home/userManagement");
-    },
     laundryDetail: async (req, res) => {
         // userId 가 없을 떄 처리하기 
         try {    
@@ -197,12 +181,6 @@ const output ={
           res.status(500).json({ error: 'Internal Server Error' });
         }
       },
-
-    //사장님 기능 & 리뷰 사진 올릴 때 사용
-    upload : async(req, res) =>{
-        logger.info(`GET /home/upload 304 "upload 화면으로 이동`);
-        res.render('home/upload');
-    },
     orderPage : async (req, res) => {
         const laundry = new Laundry(req.params.id);
         const laundryDetailRes = await laundry.showDetail();
