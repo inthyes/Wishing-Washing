@@ -3,8 +3,8 @@
 
 <template>
     <div class="manageorder">
-        <div class="mx-auto my-5" style="margin-top: 15px; max-width: 500px;">
-            <b>&nbsp;&nbsp;&nbsp;세탁물 요청</b>
+        <div class="mx-auto my-5" style="margin-top: 15px; max-width: 380px;">
+            <div id="requestDelivery" style="margin-bottom: 10px;"><b>&nbsp;&nbsp;세탁물 요청</b></div>
         </div>
         <v-card class="mx-auto my-5" max-width="380" v-for="order in one.data" v-bind:key="order.O_NUM" elevation="0">
             <!-- <div v-if="index === 0 || request.date !== requests[index - 1].date" style="margin-bottom: 5px;"> -->

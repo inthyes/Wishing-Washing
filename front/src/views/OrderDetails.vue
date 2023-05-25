@@ -3,11 +3,11 @@
 
 <template>
     <div class="orderdetails">
-        <v-card class="mx-auto my-5" max-width="500" elevation="0" color="#5E5A80" style="color: white;">
-            <div style="text-align: center; font-size: 18px; margin-top: 20px; margin-bottom: 15px;">
+        <v-card class="mx-auto my-5" max-width="500" elevation="0" color="white">
+            <!--<div style="text-align: center; font-size: 18px; margin-top: 20px; margin-bottom: 15px;">
                 <a>상세 정보</a>
                 <v-divider class="mx-1 mb-1" style="margin-top: 4%;"></v-divider>
-            </div>
+            </div>-->
                 <v-card-text style="margin-left: 10px; margin-bottom: 10px;">
                     <p><b style="color: #adb5bd">세탁물이미지</b>
                         <v-avatar class="ma-3" rounded="0" style="width: 80%; height: 200px;">

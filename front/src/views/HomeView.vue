@@ -8,14 +8,7 @@
         <v-img :src="slide.imageSrc" :alt="slide.altText" height="100%" contain></v-img>
       </v-sheet>
     </v-carousel-item>
-  </v-carousel><br>
-
-  <div class="container">
-    <v-card class="mx-auto mt-4 px-4 py-2" max-width="700px" color="white" style="display: flex; align-items: center;" @click="showApi">
-      <p class="text-body-2 font-weight-light m-0 pl-0 pr-5" style="flex: 1; color:gray-darken-1">{{ address2 }}</p>
-      <v-icon icon="mdi-map-marker" style="color:gray"></v-icon>
-    </v-card>
-  </div>
+  </v-carousel>
 
   <div style="font-size: 18px; margin-left: 20px; margin-bottom: 5px; margin-top: 30px;"><b>최신 세탁소 트렌드</b></div>
   <div style="font-size: 12px; margin-left: 25px;">세탁소의 최신 동향을 알려드려요.</div>
