@@ -108,7 +108,7 @@ const routes = [
     component: OrderList
   },
   {
-    path: '/orderdetails',
+    path: '/orderlist/details',
     name: '주문 상세',
     component: OrderDetails
   },
