@@ -10,23 +10,23 @@
                 </v-list-item-content>
             </v-list-item>
 
-            <v-list-item link class="ltem-list" to="managerhistory">
+            <v-list-item link class="ltem-list" to="ordercompleted">
                     <v-list-item-content class="item-icon">
                         <v-list-item-icon>
                             <v-icon>mdi-receipt</v-icon>
                         </v-list-item-icon>
-                        <v-list-item-title class="item-title">판매내역</v-list-item-title>
+                        <v-list-item-title class="item-title">완료된 주문</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
 
-            <v-list-item link class="ltem-list" to="checkreviewlist">
+            <!-- <v-list-item link class="ltem-list" to="checkreviewlist">
                 <v-list-item-content class="item-icon">
                     <v-list-item-icon>
                         <v-icon>mdi-star</v-icon>
                     </v-list-item-icon>
                     <v-list-item-title class="item-title">리뷰확인</v-list-item-title>
                 </v-list-item-content>
-            </v-list-item>
+            </v-list-item> -->
             
             <v-list-item link class="ltem-list" to="wwnotice">
                 <v-list-item-content class="item-icon">

@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-card elevation="0">
-            <router-link to="editmanagerprofile"> 
+            <router-link to="/mypage/editprofile"> 
                 <v-img src="@/assets/images/profile.png" height="160" width="160" class="round-profile-picture"></v-img>
                 <v-icon class="icon-overlay">mdi-account-edit</v-icon>
             </router-link>

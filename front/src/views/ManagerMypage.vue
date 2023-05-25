@@ -16,7 +16,7 @@
                         </v-card-text>
                     </v-col>
                     <v-col style="margin-top: 30px; margin-right: -35%;">
-                        <v-btn icon="mdi-wrench" color="white" size="40" to="editmanagerprofile"></v-btn>
+                        <v-btn icon="mdi-wrench" color="white" size="40" to="editprofile"></v-btn>
                     </v-col>
                 </v-row>
                 <v-divider class="mx-1 mb-1"></v-divider><br>
@@ -30,7 +30,7 @@
                         <v-col xs3 style="margin-left: 20px;">
                             <v-card-subtitle>판매내역</v-card-subtitle>
                             <v-card-actions>
-                              <v-btn class="text-h5" id="countHistory" style="margin-left: 2px;" color="white" to="managerhistory">
+                              <v-btn class="text-h5" id="countHistory" style="margin-left: 2px;" color="white" to="orderhistory">
                                 {{ historyCount }}
                               </v-btn>
                             </v-card-actions>

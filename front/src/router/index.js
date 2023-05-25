@@ -23,7 +23,7 @@ import HistoryDetails from '../views/HistoryDetails.vue'
 import LoginFormVue from '@/views/LoginForm.vue'
 import SignUpFormVue from '@/views/SignUpForm.vue'
 
-import ManagerMypage2 from '../views/ManagerMypage2.vue'
+import MyPage from '@/views/MyPage.vue'
 
 const routes = [
   {
@@ -32,22 +32,22 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/managemylaundry',
-    name: '내세탁소 관리',
+    path: '/manage',
+    name: '내 세탁소 관리',
     component: ManageMylaundry
   },
   {
-    path: '/managelaundry',
+    path: '/manage/laundry',
     name: '세탁소관리',
     component: ManageLaundry
   },
   {
-    path: '/manageproduct',
+    path: '/manage/product',
     name: '상품관리',
     component: ManageProduct
   },
   {
-    path: '/managereview',
+    path: '/manage/review',
     name: '리뷰관리',
     component: ManageReview
   },
@@ -57,14 +57,19 @@ const routes = [
     component: ManagerMypage
   },
   {
-    path: '/editmanagerprofile',
+    path: '/mypage/editprofile',
     name: '프로필편집',
     component: EditManagerProfile
   },
   {
-    path: '/managerhistory',
-    name: '주문내역',
+    path: '/ordercompleted',
+    name: '완료된 주문',
     component: ManagerHistory
+  },
+  {
+    path: '/ordercompleted/details',
+    name: '완료주문 상세',
+    component: HistoryDetails
   },
   {
     path: '/checkreviewlist',
@@ -97,19 +102,14 @@ const routes = [
     component: NoticeDetail2
   },
   {
-    path: '/manageorder',
+    path: '/orderlist',
     name: '주문관리',
     component: ManageOrder
   },
   {
     path: '/orderdetails',
-    name: '주문 상세정보',
+    name: '주문 상세',
     component: OrderDetails
-  },
-  {
-    path: '/historydetails',
-    name: '주문내역 상세',
-    component: HistoryDetails
   },
   {
     path: '/login',
@@ -122,9 +122,9 @@ const routes = [
     component: SignUpFormVue
   },
   {
-    path: '/managermypage2',
+    path: '/mypage',
     name: '마이페이지',
-    component: ManagerMypage2
+    component: MyPage
   },
 ]
 

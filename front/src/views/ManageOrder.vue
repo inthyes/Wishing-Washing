@@ -2,7 +2,7 @@
 <!--서혜린-->
 
 <template>
-    <div class="manageorder">
+    <div class="order">
         <div class="mx-auto my-5" style="margin-top: 15px; max-width: 380px;">
             <div id="requestDelivery" style="margin-bottom: 10px;"><b>&nbsp;&nbsp;세탁물 요청</b></div>
         </div>
