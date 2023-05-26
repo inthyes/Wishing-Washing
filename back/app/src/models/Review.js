@@ -23,7 +23,27 @@ class Review {
         const O_NUM = this.body.orderNum;
         const date = this.body.date;
 
-        const RV = await Review.review(O_NUM, S_ID, title, content, rating, U_ID, date);
+        const RV = await Review.writeReview(O_NUM, S_ID, title, content, rating, U_ID, date);
+        return RV;
+      }
+      async update(orderNum) {
+        const content = this.body.content;
+        const rating = this.body.rating;
+
+        const O_NUM = orderNum;
+        const date = this.body.date;
+
+        const RV = await Review.updateReview(O_NUM, content, rating, date);
+        return RV;
+      }
+      async updateInfo() {
+        const content = this.body.content;
+        const rating = this.body.rating;
+        
+        const O_NUM = this.body.orderNum;
+        const date = this.body.date;
+
+        const RV = await Review.getUpdateInfo(O_NUM);
         return RV;
       }
 
@@ -45,12 +65,12 @@ class Review {
           });  
       }
       // 리뷰 수정
-      async update(orderNumber) {
+      static async updateReview(O_NUM, content, rating, date) {
         return new Promise ((resolve, reject) => {
           db.query("USE CAPSTONE", (err, result) => {
-              const query = "UPDATE FROM REVIEW WHERE O_NUM = ?";
+              const query = "UPDATE REVIEW SET REVIEW_TEXT = ?, REGI_DATE = ?, REVIEW_STAR = ? WHERE O_NUM = ?;"
               if (err) reject(err);
-              db.query(query,  orderNumber, (err, data) => {
+              db.query(query,  [content, date, rating, O_NUM], (err, data) => {
                   if (err) reject(err);
                   else {
                       resolve({
@@ -61,8 +81,22 @@ class Review {
                 })
           });  
       }
-    
-    static async review(O_NUM, S_ID, title, content, rating, U_ID, date) {
+      //리뷰 수정 폼에 get요청 됨 => 리뷰 정보 가져옴
+      async getUpdateInfo(O_NUM, S_ID) {
+        return new Promise ((resolve, reject) => {
+          db.query("USE CAPSTONE", (err, result) => {
+              const query = "SELECT * FROM REVIEW INNER JOIN STORE ON REVIEW.S_ID = STORE.S_ID WHERE O_NUM = ?;"
+              if (err) reject(err);
+              db.query(query,  O_NUM, (err, data) => {
+                  if (err) reject(err);
+                  else {
+                      resolve(data[0])
+                      }
+                  });
+                })
+          });  
+      }
+    static async writeReview(O_NUM, S_ID, title, content, rating, U_ID, date) {
       return new Promise ((resolve, reject) => {
       db.query("USE CAPSTONE", (err, result) => {
           const query = "INSERT INTO REVIEW (O_NUM, S_ID, REVIEW_TITLE, REVIEW_TEXT, REVIEW_STAR, U_ID, REGI_DATE) VALUES (?, ?,?,?,?,?,?);";
@@ -151,7 +185,23 @@ class Review {
               });
           })
       });
-}
+  }
+
+  async isReviewexist(orderNum) {
+    return new Promise ((resolve, reject) => {
+      db.query("USE CAPSTONE", (err, result) => {
+          const queryReviewExist = "SELECT O_NUM FROM REVIEW WHERE O_NUM = ?;";
+          if (err) reject(err);
+          db.query(queryReviewExist,  orderNum, (err, data) => {
+              if (err) reject(err);
+              else {
+                resolve(data[0])
+                }
+              });
+          })
+      });
+  }
+
 }
 
 

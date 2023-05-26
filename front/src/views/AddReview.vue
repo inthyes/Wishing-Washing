@@ -116,14 +116,17 @@ export default {
         async fecthAddReview(){
 
             try {
-                const res = await axios.get(`http://localhost:3000/review`)
-                console.log("res", res);
-                const token = localStorage.getItem("token");
-                const tokenPayload = jwt_decode(token);
+                const storeId = this.$route.params.storeId
+                const orderNum = this.$route.params.orderNum
+                
+                console.log(storeId)
+                const res = await axios.get(`http://localhost:3000/review/${storeId}/${orderNum}`)
+                    console.log("res", res);
+                    const token = localStorage.getItem("token");
+                    const tokenPayload = jwt_decode(token);
 
-                console.log("ID:", tokenPayload.id);
-                console.log("Token Payload:", tokenPayload);
-
+                    console.log("ID:", tokenPayload.id);
+                    console.log("Token Payload:", tokenPayload);
             } catch (e) {
                 console.error(e);
             }

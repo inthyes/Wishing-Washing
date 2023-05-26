@@ -21,6 +21,7 @@ const router = express.Router();
 const MyPageEdit = require("../../models/MyPageEdit")
 
 const jwt = require("jsonwebtoken");
+const { json } = require("body-parser");
 const secretKey = 'secretKey'; // 비밀 키를 정의합니다.
 global.userId;
 
@@ -43,7 +44,6 @@ global.userId;
 //   };
 
 const output ={
-    
     home: async (req, res) => {
         if (req.headers.cookie && req.headers.cookie.includes('response')) {
                   const cookies = req.headers.cookie.split('; ');
@@ -93,27 +93,21 @@ const output ={
             res.json(laundryListRes);
         }
     }, 
-
-        
-    review : (req, res) => {
+    review : async (req, res) => {
         logger.info(`GET /laundry 304 "review 화면으로 이동"`);
-        res.status(200);
+        const laundry = new Laundry(req.params.storeId);
+        const laundryDetailRes = await laundry.showDetail();
+        const orderComplete = new LaundryOrderComplete();
+        const orderCompleteRes = await orderComplete.orderCompleteInfo(req.params.orderNum);
+        res.json(laundryDetailRes);
     },
-
-    // showReview : async (req, res) => {
-    //     logger.info(`GET /laundry 304 "showreview 화면으로 이동"`);
-    //     const S_ID = req.params.id; //세탁소아이디 불러옴
-    //     //console.log(req.params.id);
-    //     const review = new Review(S_ID, "codus");
-    //     const RV = await review.showReview();
-    //     console.log("RV:");
-    //     console.log(RV);
-    //     res.json(
-    //     {
-    //         RV
-    //     });
-    // },
-
+    //update로 들어갔을때 기존 작성했던 리뷰가 보여짐
+    reviewUpdate : async (req, res) => {
+        logger.info(`GET /laundry 304 "review 화면으로 이동"`);
+        const reviewInfo = new Review();
+        const reviewInfoRes = await reviewInfo.getUpdateInfo(req.params.orderNum, req.params.storeId);
+        res.json(reviewInfoRes);
+    },
     myReview : async (req, res) => {
         logger.info(`GET /myPage 304 "review 화면으로 이동"`);
         const myReview = new Review(req.body, global.userId.id);
@@ -162,29 +156,17 @@ const output ={
         const response = await favorite.showFavoriteList();
         res.json(response);
     },
-
     customerService : (req, res) => {
-        // const token = req.query.token;
-        // const user_id = Vtoken(token);  // 토큰 검증
-        // console.log("토큰확인: " + token);
-        // console.log("user_id: " + user_id);
-
         logger.info(`GET /home/myPage/customerService 304 "고객센터 화면으로 이동`);
         res.render("home/customerService");
     },
     userManagement : (req, res) => {
-        // const token = req.query.token;
-        // const user_id = Vtoken(token);  // 토큰 검증
-        // console.log("토큰확인: " + token);
-        // console.log("user_id: " + user_id);
-
         logger.info(`GET /home/myPage/userManagement 304 "탈퇴/로그아웃 화면으로 이동`);
         res.render("home/userManagement");
     },
     laundryDetail: async (req, res) => {
         // userId 가 없을 떄 처리하기 
-        try {
-          const token = req.headers.cookie; // 헤더에서 토큰 추출     
+        try {    
             // 뒤로가기 실행시 if 쿠키가 존재 -> 쿠키삭제 + cart랑 orderList에서 ordernum관련 내용 삭제
             if (req.headers.cookie && req.headers.cookie.includes('response')) {
                 const cookieValue = req.cookies.response;
@@ -271,16 +253,26 @@ const output ={
 
 const process = {
     addCart: async (req, res) => {
-        const cart = new Cart(req.body, global.userId.id);
-        const response = await cart.add();
-        res.json(response)
+        if (global.userId === undefined) {
+            res.status(200).json({message:"login"})
+        }
+        else {
+            const cart = new Cart(req.body, global.userId.id);
+            const response = await cart.add();
+            res.json(response)
+        }
     },
 
     like: async (req,res) => {
         //req.body -> 1과 0 리턴 
-        const like = new Likes(req.body, global.userId.id);
-        const response = await like.insert();
-        res.status(200).json({ message: 'success' });
+        if (global.userId === undefined) {
+            res.status(200).json({message : "ok"})
+        }
+        else {
+            const like = new Likes(req.body, global.userId.id);
+            const response = await like.insert();
+            res.status(200).json({ message: 'success' });
+        }
     },
     orderComplete: async (req, res) => {
         const cookieAddress = req.headers.cookie;
@@ -298,7 +290,6 @@ const process = {
         }
         res.status(200);
     },
-
     review : async (req,res) => {
         const review = new Review(req.body, global.userId.id);
         const response = await review.write();
@@ -306,8 +297,9 @@ const process = {
         res.json(response);
     },
     reviewUpdate : async (req,res) => {
-        const review = new Review(req.body, global.userId.id);
-        const response = await review.update();
+        const review = new Review(req.body);
+        console.log(req.body);
+        const response = await review.update(req.params.orderNum);
         console.log(response);
         res.json(response);
     },
@@ -343,6 +335,18 @@ const process = {
                 return res.status(200).json({ message: '토큰이 유효합니다.' });
         });
     },
+    reviewExist: async (req, res) => {
+        const review = new Review();
+        const reviewExist = await review.isReviewexist(req.body.orderNum);
+        try {
+            if (reviewExist.O_NUM != null) {
+                console.log(await review.isReviewexist(req.body.orderNum))
+                res.status(200).json({message:"이미 작성한 리뷰입니다."})
+            }
+        } catch(e) {
+            res.status(200).json({message:"리뷰 작성 페이지로 이동합니다."})
+        }
+    }
     // upload : ('/image/:i_id', async (req, res) => {
     //     const i_id = req.params.i_id;
         

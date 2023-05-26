@@ -61,7 +61,8 @@ router.post('/', upload.single('imgUpload'), (req, res) => {
   router.post('/profile', upload.single('image'), (req, res) => {
     console.log(req.file);
     
-    const u_id = userId; //하드코딩
+    const u_id = global.userId.id; //하드코딩
+
 
  
         db.getConnection((err, conn) => {
@@ -178,7 +179,9 @@ console.log(req.file);
   })
 }),
 router.get('/laundryReview', (req,res)=> {
-  const u_id = userId; // 하드코딩 토큰
+
+  const u_id = global.userId.id; // 하드코딩 토큰
+
 
   const query = "select review_img FROM review WHERE U_ID = ?";
   db.query(query,[u_id], (err, results, fields) => {
@@ -194,7 +197,9 @@ router.get('/laundryReview', (req,res)=> {
 }),
 
 router.get('/profile', (req,res)=> {
-  const u_id = userId;
+
+  const u_id = global.userId.id;
+
   // console.log("asdf",u_id);
   const query = "select u_img FROM users WHERE u_id = ?";
   db.query(query,[u_id], (err, results, fields) => {

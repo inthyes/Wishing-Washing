@@ -96,8 +96,7 @@
                                             <!-- 세탁소 이름 -->
                                             <span id="laundryName">{{ h.S_NAME }}</span>
                                             <!-- 리뷰버튼 -->
-                                            <v-btn id="reviewBtn" rounded="xl"
-                                                v-bind:to="`/addreview/${h.S_ID}/${h.O_NUM}`">리뷰</v-btn>
+                                            <v-btn id="reviewBtn" rounded="xl" @click="writeReview(h)">리뷰</v-btn>
                                         </div>
 
                                     </v-card-text>
@@ -131,8 +130,11 @@ export default {
         if (token) {
             this.verifyToken(token)
                 .then((isValidToken) => {
-                    this.fetchOrderComplete('desc'); 
-                    console.log(isValidToken);
+                    this.fetchOrderComplete('desc')
+                    .then((data) => {
+                        this.order_complete = data;
+                        console.log(isValidToken);
+                    })
                 })
                 .catch((error) => {
                     console.error(error);
@@ -204,6 +206,19 @@ export default {
                 }
             });
             this.order_complete = [...this.order_complete];
+        },
+
+        async writeReview(h) {
+            const res = await axios.post('http://localhost:3000/reviewExist', {
+                        orderNum : h.O_NUM
+                    })
+                    if (res.data.message === "이미 작성한 리뷰입니다.") {
+                        alert(res.data.message);
+                        this.$router.push("/usagehistory")
+                    }
+                    else {
+                        this.$router.push(`/addreview/${h.S_ID}/${h.O_NUM}`);
+                    }
         },
 
         redirectToLogin() {
