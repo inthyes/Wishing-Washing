@@ -155,7 +155,7 @@ export default {
                         console.error('이미지 업로드 실패:', error);
                     });
           }
-          this.$router.push('/MyPage2');
+          this.$router.push('/mypage');
             })
         
 
