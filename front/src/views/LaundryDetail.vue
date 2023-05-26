@@ -210,6 +210,9 @@ export default {
                     .post('http://localhost:3000/mypage/review/delete', {
                         orderNum: review.orderNum,
                     })
+                    .then(() => {
+                        window.location.reload();
+                    })
                     .catch((error) => {
                         console.error('리뷰 삭제 실패:', error);
                     });
