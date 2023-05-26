@@ -120,7 +120,7 @@ export default {
                         orderNum: review.orderNum,
                     })
                     .then(() => {
-                        this.$router.push('/reviewlist');
+                        window.location.reload();
                     })
                     .catch((error) => {
                         console.error('리뷰 삭제 실패:', error);

@@ -97,8 +97,9 @@ export default {
 
                 localStorage.removeItem("token");
                 localStorage.removeItem("userId");
-
+                location.reload()
                 this.$router.push('/login');
+                location.reload()
             } catch (error) {
                 console.log(error);
                 alert('로그아웃 실패');

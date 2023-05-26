@@ -168,6 +168,7 @@ export default {
           const encodedValue2 = encodeURIComponent(jsonValue2);
           console.log(encodedValue2);
           document.cookie = `deliveryAddress2=${encodedValue2}; expires=${date.toUTCString()}; path=/;`;
+          location.reload()
         }
         // }).embed(this.$refs.embed)
       }).open();
