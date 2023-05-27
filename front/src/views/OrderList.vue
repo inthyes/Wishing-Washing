@@ -160,9 +160,11 @@ export default {
         //console.log(id);
         const res = await axios.post(`http://localhost:4000/orderUpdate1/${id}`);
         console.log(res.data);
+        location.reload();
       } catch (error) {
         console.error(error);
       }
+      
     },
     async rejectRequest(id) {
       try {
@@ -172,6 +174,7 @@ export default {
       } catch (error) {
         console.error(error);
       }
+       
     },
 
     async clickAccept2(id) {
@@ -179,6 +182,7 @@ export default {
         //console.log(id);
         const res = await axios.post(`http://localhost:4000/orderUpdate2/${id}`);
         console.log(res.data);
+        location.reload();
       } catch (error) {
         console.error(error);
       }
@@ -189,9 +193,11 @@ export default {
         //console.log(id);
         const res = await axios.post(`http://localhost:4000/orderUpdate3/${id}`);
         console.log(res.data);
+        location.reload();
       } catch (error) {
         console.error(error);
       }
+      
     },
 
     // 다른 메소드들도 정의할 수 있습니다.
