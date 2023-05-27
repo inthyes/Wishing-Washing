@@ -96,8 +96,7 @@
                                             <!-- 세탁소 이름 -->
                                             <span id="laundryName">{{ h.S_NAME }}</span>
                                             <!-- 리뷰버튼 -->
-                                            <v-btn id="reviewBtn" rounded="xl"
-                                                v-bind:to="`/addreview/${h.S_ID}/${h.O_NUM}`">리뷰</v-btn>
+                                            <v-btn id="reviewBtn" rounded="xl" @click="writeReview(h)">리뷰</v-btn>
                                         </div>
 
                                     </v-card-text>
@@ -123,7 +122,6 @@ export default {
 
         sortOption: 'recent', // 최근순이 기본값
         order_complete: [],
-        orderComplete: [],
     }),
 
     async created() {
@@ -162,23 +160,6 @@ export default {
                 throw new Error("토큰 검증 실패");
             }
         },
-        // async fetchhistoryData() {
-        //     try {
-        //         const res = await axios.get("http://localhost:3000/history");
-        //         this.historyData = res.data;
-        //         const token = localStorage.getItem("token");
-        //         const tokenPayload = jwt_decode(token);
-
-        //         console.log("ID:", tokenPayload.id);
-        //         console.log("Token Payload:", tokenPayload);
-
-
-        //     } catch (error) {
-        //         console.error(error);
-        //         throw new Error("usagehistory 데이터 가져오기 실패");
-        // //     }
-        // },
-
         async fetchOrderComplete(order) {
             try {
                 const res = await axios.get('http://localhost:3000/history', {
@@ -208,6 +189,19 @@ export default {
                 }
             });
             this.order_complete = [...this.order_complete];
+        },
+
+        async writeReview(h) {
+            const res = await axios.post('http://localhost:3000/reviewExist', {
+                        orderNum : h.O_NUM
+                    })
+                    if (res.data.message === "이미 작성한 리뷰입니다.") {
+                        alert(res.data.message);
+                        this.$router.push("/usagehistory")
+                    }
+                    else {
+                        this.$router.push(`/addreview/${h.S_ID}/${h.O_NUM}`);
+                    }
         },
 
         redirectToLogin() {

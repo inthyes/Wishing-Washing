@@ -2,6 +2,7 @@
 
 const {response} = require("express");
 const db = require("../config/db");
+const { rejections } = require("winston");
 
 
 class LaundryOrderComplete {
@@ -68,6 +69,20 @@ class LaundryOrderComplete {
                 });
             })
         });
+    }
+
+    async orderCompleteInfo(orderNum) {
+        let query = "SELECT * FROM ORDER_COMPLETE WHERE O_NUM = ?"
+        return new Promise ((resolve, reject) => {
+            db.query("USE CAPSTONE", (err, result) => {
+                db.query(query, orderNum, (err, data) => {
+                    if (err) reject(err)
+                    else {
+                        resolve(data[0]);
+                    }
+                })
+            })
+        })
     }
 }
 

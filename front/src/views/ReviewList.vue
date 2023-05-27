@@ -117,16 +117,16 @@ export default {
             const review = {
                 orderNum: orderNum,
             };
-            axios
-                .post('http://localhost:3000/mypage/review/delete', {
-                    orderNum: review.orderNum,
-                })
-                .then(() => {
-                    this.$router.push('/reviewlist');
-                })
-                .catch((error) => {
-                    console.error('리뷰 삭제 실패:', error);
-                });
+                axios
+                    .post('http://localhost:3000/mypage/review/delete', {
+                        orderNum: review.orderNum,
+                    })
+                    .then(() => {
+                        window.location.reload();
+                    })
+                    .catch((error) => {
+                        console.error('리뷰 삭제 실패:', error);
+                    });
         },
         async updateReview(storeId, orderNum) {
             this.$router.push(`/addreview/${storeId}/${orderNum}`)

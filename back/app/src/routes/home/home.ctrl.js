@@ -25,24 +25,6 @@ const { json } = require("body-parser");
 const secretKey = 'secretKey'; // 비밀 키를 정의합니다.
 global.userId;
 
-
-
-// const verifyToken = (req, res, next) => {
-//     const token = req.headers.authorization; // 토큰을 쿼리 파라미터로 전달 받음
-  
-//     // 토큰 검증 로직
-//     jwt.verify(token, "secretKey", (err, decoded) => {
-//       if (err) {
-//         // 토큰이 유효하지 않은 경우
-//         return res.status(401).json({ message: "유효하지 않은 토큰입니다." });
-//       }
-  
-//       // 토큰이 유효한 경우
-//       req.user_id = decoded.id; // 토큰에서 추출한 사용자 ID를 요청 객체에 추가
-//       next(); // 다음 미들웨어로 이동
-//     });
-//   };
-
 const output ={
     home: async (req, res) => {
         if (req.headers.cookie && req.headers.cookie.includes('response')) {
@@ -59,14 +41,6 @@ const output ={
                   res.clearCookie('response');
                 res.status(200).json({ message: 'success' });
         }
-    },
-    login : (req,res) => {
-        logger.info(`GET /login 304 "로그인 화면으로 이동"`);
-        res.render("home/login");
-    },
-    register : (req, res) => {
-        logger.info(`GET /register 304 "회원가입 화면으로 이동"`);
-        res.render("home/register");
     },
     laundry : async (req, res) => {
         logger.info(`GET /laundry 304 "세탁신청 화면으로 이동"`);
@@ -95,8 +69,10 @@ const output ={
     }, 
     review : async (req, res) => {
         logger.info(`GET /laundry 304 "review 화면으로 이동"`);
-        const laundryInfo = new Laundry(req.params.storeId);
-        const laundryDetailRes = await laundryInfo.showDetail();
+        const laundry = new Laundry(req.params.storeId);
+        const laundryDetailRes = await laundry.showDetail();
+        const orderComplete = new LaundryOrderComplete();
+        const orderCompleteRes = await orderComplete.orderCompleteInfo(req.params.orderNum);
         res.json(laundryDetailRes);
     },
     //update로 들어갔을때 기존 작성했던 리뷰가 보여짐
@@ -142,7 +118,6 @@ const output ={
     },
     myPage : async (req, res) => {
         logger.info(`GET /home/myPage 304 "마이페이지 화면으로 이동`);
-        console.log("들어옴");
         const myPage = new MyPage(global.userId.id);
         const myPageInfo = await myPage.showMyPageInfo(global.userId.id);
         console.log(myPageInfo);
@@ -154,14 +129,6 @@ const output ={
         const favorite = new MyPage(global.userId.id);
         const response = await favorite.showFavoriteList();
         res.json(response);
-    },
-    customerService : (req, res) => {
-        logger.info(`GET /home/myPage/customerService 304 "고객센터 화면으로 이동`);
-        res.render("home/customerService");
-    },
-    userManagement : (req, res) => {
-        logger.info(`GET /home/myPage/userManagement 304 "탈퇴/로그아웃 화면으로 이동`);
-        res.render("home/userManagement");
     },
     laundryDetail: async (req, res) => {
         // userId 가 없을 떄 처리하기 
@@ -214,12 +181,6 @@ const output ={
           res.status(500).json({ error: 'Internal Server Error' });
         }
       },
-
-    //사장님 기능 & 리뷰 사진 올릴 때 사용
-    upload : async(req, res) =>{
-        logger.info(`GET /home/upload 304 "upload 화면으로 이동`);
-        res.render('home/upload');
-    },
     orderPage : async (req, res) => {
         const laundry = new Laundry(req.params.id);
         const laundryDetailRes = await laundry.showDetail();
@@ -290,7 +251,6 @@ const process = {
         res.status(200);
     },
     review : async (req,res) => {
-        console.log(req.body);
         const review = new Review(req.body, global.userId.id);
         const response = await review.write();
         console.log(response);
@@ -335,34 +295,18 @@ const process = {
                 return res.status(200).json({ message: '토큰이 유효합니다.' });
         });
     },
-    // upload : ('/image/:i_id', async (req, res) => {
-    //     const i_id = req.params.i_id;
-        
-    //     try {
-    //       // 특정 i_id에 해당하는 이미지 데이터를 데이터베이스에서 조회
-    //       const query = "SELECT i_data FROM IMAGE WHERE i_id = ?";
-    //       const results = await db.query(query, [i_id]);
-      
-    //       if (results.length === 0) {
-    //         res.sendStatus(404);
-    //         return;
-    //       }
-      
-    //       const imageBuffer = results[0].i_data;
-          
-    //       // 이미지를 클라이언트로 전송
-    //       res.writeHead(200, {
-    //         'Content-Type': 'image/jpeg',
-    //         'Content-Length': imageBuffer.length
-    //       });
-    //       res.end(imageBuffer);
-    //     } catch (error) {
-    //       console.error(error);
-    //       res.sendStatus(500);
-    //     }
-    // }),
-    
-      
+    reviewExist: async (req, res) => {
+        const review = new Review();
+        const reviewExist = await review.isReviewexist(req.body.orderNum);
+        try {
+            if (reviewExist.O_NUM != null) {
+                console.log(await review.isReviewexist(req.body.orderNum))
+                res.status(200).json({message:"이미 작성한 리뷰입니다."})
+            }
+        } catch(e) {
+            res.status(200).json({message:"리뷰 작성 페이지로 이동합니다."})
+        }
+    }
 };
 
 module.exports = {

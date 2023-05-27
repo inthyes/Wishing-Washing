@@ -185,7 +185,23 @@ class Review {
               });
           })
       });
-}
+  }
+
+  async isReviewexist(orderNum) {
+    return new Promise ((resolve, reject) => {
+      db.query("USE CAPSTONE", (err, result) => {
+          const queryReviewExist = "SELECT O_NUM FROM REVIEW WHERE O_NUM = ?;";
+          if (err) reject(err);
+          db.query(queryReviewExist,  orderNum, (err, data) => {
+              if (err) reject(err);
+              else {
+                resolve(data[0])
+                }
+              });
+          })
+      });
+  }
+
 }
 
 

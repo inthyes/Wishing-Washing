@@ -23,21 +23,10 @@ class History {
                                           FROM order_complete\
                                           left outer JOIN store ON ORDER_COMPLETE.s_id = store.s_id\
                                           where u_id = ?;"
-            // const notCompleteQuery = "SELECT * FROM ORDER_COMPLETE WHERE U_ID = ? AND DELIVERY_STATE = 0 ORDER BY O_DAY DESC";
             db.query(getOrderCompleteList, [id], (err, orderCompleteList) => {
               if (err) reject(err);
               else {
                 resolve(orderCompleteList);
-                // db.query(notCompleteQuery, [id], (err, notCompleteData) => {
-                //   if (err) reject(err);
-                //   else {
-                //     const completeList = completeData;
-                //     const notCompleteList = notCompleteData;
-                //     resolve({
-                //       completeList, notCompleteList
-                //     });
-                //   }
-                // });
               }
             });
           }
