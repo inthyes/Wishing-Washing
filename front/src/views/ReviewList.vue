@@ -9,7 +9,7 @@
             <!-- 세탁소정보 / 별점 / 날짜 -->
             <v-card-body>
                 <p class="text text-grey m-0">주문번호 {{ r.O_NUM }}</p>
-                <v-btn class="p-0" variant="text" v-bind:to="`/laundrydetail/${r.S_ID}`" >{{ r.S_NAME }} ></v-btn>
+                <v-btn class="p-0" variant="text" v-bind:to="`/laundrydetail/${r.S_ID}`">{{ r.S_NAME }} ></v-btn>
                 <v-row class="mx-0 my-0">
                     <v-rating :model-value=r.REVIEW_STAR color="amber" density="compact" half-increments readonly
                         size="small">{{ r.REVIEW_STAR }}</v-rating>
@@ -25,14 +25,16 @@
             <v-card-actions class="mx-0 px-0 pt-5">
                 <!-- 작성한 사용자만 수정 삭제 가능 -->
                 <v-btn variant="flat" class="custom-btn flex-grow-1" color="light-blue-darken-4" v-if="isEditable(r)"
-                @click="updateReview(r.S_ID, r.O_NUM)">
+                    @click="updateReview(r.S_ID, r.O_NUM)">
                     수정
                 </v-btn>
                 <v-btn variant="outlined" class="custom-btn flex-grow-1" color="light-blue-darken-4" v-if="isEditable(r)"
-                @click="deleteReview(r.O_NUM)" >
+                    @click="deleteReview(r.O_NUM)">
                     삭제
                 </v-btn>
             </v-card-actions>
+            <p class="card-text mt-2">사장님 답글: {{ r.CEO_COMMENT }}</p>
+
             <v-divider class="py-0"></v-divider>
         </v-card>
     </div>
@@ -43,13 +45,13 @@ import axios from "axios";
 import jwt_decode from 'jwt-decode';
 
 function arrayBufferToBase64(buffer) {
-  let binary = '';
-  const bytes = new Uint8Array(buffer);
-  const len = bytes.byteLength;
-  for (let i = 0; i < len; i++) {
-    binary += String.fromCharCode(bytes[i]);
-  }
-  return window.btoa(binary);
+    let binary = '';
+    const bytes = new Uint8Array(buffer);
+    const len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+        binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
 }
 
 export default {
@@ -81,12 +83,12 @@ export default {
     methods: {
         async verifyToken(token) {
             try {
-            const response = await axios.post("http://localhost:3000/verify-token", { token });
-            const data = response.data;
-            console.log("data:", data);
-            return data.isValid;
+                const response = await axios.post("http://localhost:3000/verify-token", { token });
+                const data = response.data;
+                console.log("data:", data);
+                return data.isValid;
             } catch (error) {
-            throw new Error("토큰 검증 실패");
+                throw new Error("토큰 검증 실패");
             }
         },
         async fetchedReviewList() {
@@ -133,17 +135,17 @@ export default {
             //     orderNum : orderNum,
             //     storeId : storeId
             // };
-                // axios
-                //     .post('http://localhost:3000/mypage/review/update', {
-                //         orderNum: review.orderNum,
-                //     })
-                //     .then(() => {
-                //         this.$router.push('/reviewlist');
-                //     })
-                //     .catch((error) => {
-                //         console.error('리뷰 작성 실패:', error);
-                //     });
-        },        
+            // axios
+            //     .post('http://localhost:3000/mypage/review/update', {
+            //         orderNum: review.orderNum,
+            //     })
+            //     .then(() => {
+            //         this.$router.push('/reviewlist');
+            //     })
+            //     .catch((error) => {
+            //         console.error('리뷰 작성 실패:', error);
+            //     });
+        },
 
         async getImageUrl() {
             try {
@@ -151,16 +153,16 @@ export default {
                 console.log(res);
 
                 this.reviewImages = res.data.map(item => {
-                if (item.review_img) {
-                    
-                    const base64 = arrayBufferToBase64(item.review_img.data);
-                    
-                    return `data:image/png;base64,${base64}`;
-                }
-                return null;
+                    if (item.review_img) {
+
+                        const base64 = arrayBufferToBase64(item.review_img.data);
+
+                        return `data:image/png;base64,${base64}`;
+                    }
+                    return null;
                 });
 
-            
+
             } catch (error) {
                 console.error(error);
             }
@@ -195,22 +197,22 @@ export default {
                 return nextWeek.toLocaleDateString();
             }
         }
-        },
-        mounted() {
-            this.userId = localStorage.getItem("userId");
-        },
-        computed: {
-            isEditable() {
-                return (r) => {
-                    if (!this.userId) {
-                        return false; // User is not logged in
-                    }
-                    return r.U_ID === this.userId; // Compare user IDs
-                };
-            }
-        },
-        
-    }
+    },
+    mounted() {
+        this.userId = localStorage.getItem("userId");
+    },
+    computed: {
+        isEditable() {
+            return (r) => {
+                if (!this.userId) {
+                    return false; // User is not logged in
+                }
+                return r.U_ID === this.userId; // Compare user IDs
+            };
+        }
+    },
+
+}
 </script>
 
 <style scoped>

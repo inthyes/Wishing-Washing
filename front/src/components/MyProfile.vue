@@ -3,7 +3,7 @@
     <v-card elevation="0">
       <!-- 사진 아이콘 암거나 눌러도 프로필편집으로 이동 -->
       <router-link to="/editprofile">
-        <v-img v-if="imageUrl" :src="imageUrl" height="160" width="160" class="round-profile-picture" cover></v-img>
+        <v-img v-if="imageUrl" :src="imageUrl" height="180" width="180" class="round-profile-picture" cover></v-img>
         <v-icon class="icon-overlay">mdi-account-edit</v-icon>
       </router-link>
 
@@ -71,11 +71,11 @@ export default {
           this.imageUrl = `data:image/png;base64,${base64}`; // 이미지 URL 저장
           //console.log(this.imageUrl);
         } else {
-          this.imageUrl = require('@/assets/프로필.jpg'); // 기본 이미지 URL로 설정
+          this.imageUrl = require('@/assets/profile.png'); // 기본 이미지 URL로 설정
         }
       } catch (e) {
         console.error(e);
-        this.imageUrl = require('@/assets/프로필.jpg');
+        this.imageUrl = require('@/assets/profile.png');
       }
     },
 
@@ -143,10 +143,10 @@ p {
 .icon-overlay {
   border-radius: 25%;
   position: absolute;
-  top: 39%;
-  left: 60%;
+  top: 40%;
+  left: 61%;
   /* transform: translate(110%, 110%); */
-  background-color: rgba(0, 0, 0, 0.436);
+  background-color: rgba(0, 0, 0, 0.293);
   color: white;
   font-size: 30px;
 }

@@ -6,15 +6,11 @@
             <!-- 여기에 이용내역에 대한 정보 들어갔으면 좋겠어요
             예를들어 세탁소이름, 선택한 메뉴, 배송완료날짜 -->
             <div class="mb-3">
-                <h4 class="mb-3">세탁소 이름</h4>
-                <p class="mb-2" id="deli_date">배송완료날짜</p>
-                <!-- 이용내역은 for문으로 가져옵시다 -->
-                <div class="mb-3">
-                    <P class="my-1" id="order_list">이용내역 test1</P>
-                    <P class="my-1" id="order_list">이용내역 test2</P>
-                </div>
+                <!-- <h4 class="mb-3">세탁소 이름</h4>
+                <p class="mb-2" id="deli_date">배송완료날짜</p> -->
+                <!-- <v-divider></v-divider> -->
+
             </div>
-            <v-divider></v-divider>
             <div class="mb-5">
                 <label for="formFile" class="form-label">사진을 올려주세요</label>
                 <input class="form-control mb-2" type="file" id="image" @change="handleImageUpload" accept="image/*" />
@@ -201,7 +197,8 @@ export default {
     margin: 0 auto;
     margin-block: 10px;
     padding-inline: 30px;
-    padding-block: 10px;
+    padding-top: 25px;
+    
     /* border-radius: 10px; */
 }
 

@@ -12,7 +12,7 @@
 
             <v-card-item>
 
-                <v-card-title class="mb-1">{{ laundry.name }}</v-card-title>
+                <v-card-title class="font-weight-medium mb-1">{{ laundry.name }}</v-card-title>
 
                 <v-card-subtitle>
                     <span class="mb-1">영업시간&nbsp;{{ laundry.opening }} ~ {{ laundry.closing }}</span>
@@ -31,23 +31,21 @@
                     </div>
                 </v-row>
 
-                <div class="mt-3">
-                    {{ laundry.doroAddress }}
-                </div>
-                <div class="mt-0">
-                    {{ laundry.postAddress }}
-                </div>
+                <!-- 주소 -->
+                <div class="mt-3">{{ laundry.doroAddress }}</div>
+                <div class="mt-0 mb-5">{{ laundry.postAddress }}</div>
 
-                <!-- 이건 수정할수도 -->
-                <div class="my-4 text-subtitle-1">
-                    {{ laundry.S_ADDR2 }}
-                </div>
+                <v-divider></v-divider>
 
-                <div class="mt-1 text-subtitle-1">{{ laundry.info }}</div>
+                <!-- 공지사항 -->
+                <!-- <div class="text-subtitle-1" ></div> -->
+                <div class="text-subtitle-1 font-weight-medium" >* {{ laundry.anno }} *</div>
+                <!-- 소개글 -->
+                <div class="mt-2 text-subtitle-1" style="color: #01579B">{{ laundry.info }}</div>
 
             </v-card-text>
 
-            <v-divider class="mx-4 mb-1"></v-divider>
+            <v-divider class="mx-1"></v-divider>
 
             <v-tabs class="mx-4" v-model="tab" align-tabs="center" stacked grow>
                 <v-tab value="tab-1">세탁/수선</v-tab>
