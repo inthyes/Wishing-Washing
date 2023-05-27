@@ -197,10 +197,15 @@ export default {
                     return null;
                 });
                 const image = response.data[0];
-                const base64 = arrayBufferToBase64(image.s_image.data);
-                console.log(base64);
-                this.image = `data:image/png;base64,${base64}`; // 이미지 URL 저장
+                if (image) {
+                  const base64 = arrayBufferToBase64(image.s_image.data);
+                  console.log(base64);
+                  this.image = `data:image/png;base64,${base64}`; // 이미지 URL 저장
+                } else {
+                  this.image = "https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8JUVDJTg0JUI4JUVEJTgzJTgxfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60"; // 기본 이미지 URL 저장
+                }
                 console.log(this.image);
+
 
 
             } catch (error) {
