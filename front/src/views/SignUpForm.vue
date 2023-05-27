@@ -10,8 +10,8 @@
                 <v-text-field v-model="email" :rules="[rules.required, rules.emailRules, rules.emailDuplicate]" color="blue"
                     label="이메일" placeholder="이메일을 입력하세요" variant="underlined" clearable></v-text-field>
 
-                <v-text-field v-model="id" :rules="[rules.required, rules.ID_Duplicate]" color="blue" label="닉네임"
-                    placeholder="닉네임을 입력하세요" variant="underlined" clearable></v-text-field>
+                <v-text-field v-model="id" :rules="[rules.required, rules.ID_Duplicate]" color="blue" label="아이디"
+                    placeholder="아이디를 입력하세요" variant="underlined" clearable></v-text-field>
 
                 <v-text-field v-model="phone" :rules="[rules.required, rules.phoneRules]" color="blue" label="연락처"
                     placeholder="연락처를 입력하세요" variant="underlined" clearable></v-text-field>
