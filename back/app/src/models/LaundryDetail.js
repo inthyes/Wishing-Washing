@@ -23,6 +23,7 @@ class LaundryDetail {
                         doroAddress : laundry.S_ADDR2,
                         detailAddress : laundry.S_ADDR3,
                         info : laundry.S_COMMENT,
+                        anno: laundry.S_ANNOUNCE,
                         opening : laundry.S_OPENING,
                         closing : laundry.S_CLOSING
                     })
@@ -49,6 +50,7 @@ class LaundryDetail {
                         doroAddress : laundry.S_ADDR2,
                         detailAddress : laundry.S_ADDR3,
                         info : laundry.S_COMMENT,
+                        anno: laundry.S_ANNOUNCE,
                         opening : laundry.S_OPENING,
                         closing : laundry.S_CLOSING
                     })
