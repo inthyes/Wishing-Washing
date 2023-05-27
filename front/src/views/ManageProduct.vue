@@ -263,11 +263,6 @@ export default {
 }
 </script>
   
-<style scoped>
-#edit-list {
-  /* background-color:rgba(81, 142, 234, 0.284); */
-  /* color: white; */
-}
-</style>
+
 
   

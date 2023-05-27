@@ -20,8 +20,8 @@
                 <v-text-field v-model="businessnum" :rules="[rules.required]" color="blue" label="사업자번호"
                     placeholder="사업자번호를 입력하세요" variant="underlined" clearable></v-text-field>
 
-                <v-text-field v-model="S_ID" :rules="[rules.required, rules.ID_Duplicate]" color="blue" label="사장님아이디"
-                    placeholder="사장님아이디를 입력하세요" variant="underlined" clearable></v-text-field>
+                <v-text-field v-model="S_ID" :rules="[rules.required, rules.ID_Duplicate]" color="blue" label="세탁소번호"
+                    placeholder="세탁소 번호를 입력하세요" variant="underlined" clearable></v-text-field>
 
                 <v-text-field v-model="managerpsword" :rules="[rules.required, rules.minRules]"
                     :type="show1 ? 'text' : 'password'" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
