@@ -214,6 +214,24 @@ router.get('/profile', (req,res)=> {
 })
 }),
 
+router.get('/laundry/:id', (req,res)=> {
+
+  //const u_id = global.userId.id;
+  const s_id = parseInt(req.params.id);
+  // console.log("asdf",u_id);
+  const query = "select s_image FROM store WHERE s_id = ?";
+  db.query(query,[s_id], (err, results, fields) => {
+    if (err) {
+      console.log(err);
+      res.sendStatus(500);
+      return;
+    }
+    console.log(results);
+    //res.render('home/board', { images: results });
+    res.json(results);
+})
+}),
+
 
 router.get('/board', (req, res) => {
   // 이미지 목록을 데이터베이스에서 가져옵니다.
@@ -229,5 +247,7 @@ router.get('/board', (req, res) => {
     res.render('board', { images: results });
   });
 });
+
+
 
   module.exports = router; //웹으로 내보내기

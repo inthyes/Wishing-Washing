@@ -7,8 +7,7 @@
                 <v-progress-linear :active="isActive" color="deep-purple" height="4" indeterminate></v-progress-linear>
             </template>
 
-            <v-img cover height="250"
-                src="https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8JUVDJTg0JUI4JUVEJTgzJTgxfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60"></v-img>
+           <v-img :src="image" width="100%" height="auto"></v-img>
 
             <v-card-item>
 
@@ -146,6 +145,7 @@ export default {
         likeStatus: {},
         countReview: {},
         imageUrl: "",
+        image: "",
 
         tab: 'Appetizers',  // 세탁/수선 & 리뷰 탭
         isWished: false,    // 찜버튼
@@ -184,6 +184,7 @@ export default {
         async getImageUrl() {
             try {
                 const res = await axios.get(`http://localhost:3000/upload/laundryReview/${this.$route.params.id}`);
+                const response = await axios.get(`http://localhost:3000/upload/laundry/${this.$route.params.id}`);
                 console.log(res);
 
                 this.reviewImages = res.data.map(item => {
@@ -195,6 +196,11 @@ export default {
                     }
                     return null;
                 });
+                const image = response.data[0];
+                const base64 = arrayBufferToBase64(image.s_image.data);
+                console.log(base64);
+                this.image = `data:image/png;base64,${base64}`; // 이미지 URL 저장
+                console.log(this.image);
 
 
             } catch (error) {
