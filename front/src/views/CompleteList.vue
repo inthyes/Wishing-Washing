@@ -64,15 +64,24 @@ export default {
         show: false,
         managelaundrys: [],
         requests: [],
+        one : []
     }),
     async created() {
         try {
-            const res1 = await axios.get("http://localhost:5001/managelaundrys");
-            const res2 = await axios.get("http://localhost:5001/requests");
-            this.managelaundrys = res1.data;
-            this.requests = res2.data;
-        } catch (e) {
-            console.error(e);
+            const res = await axios.get("http://localhost:4000/history");
+            
+            this.requests = res.data;
+          const one = [];
+         this.requests.forEach(requests => {
+        if (requests.O_NUM === parseInt(this.$route.query.id)) {
+                    one.push(requests);
+                    console.log("-2",one);
+                    
+                } 
+         });
+        this.one = await one;
+      }catch (error) {
+            console.error(error);
         }
     },
     methods: {

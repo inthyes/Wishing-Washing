@@ -15,6 +15,13 @@ class Product {
         const show = await Product.show(S_ID);
         return show;
       }
+      async showProduct() {
+        const O_ID = this.body; //이 바디에는 S_ID가 들어있고
+        console.log(O_ID);
+        const show = await Product.showOrderProduct(O_ID);
+        return show;
+      }
+
 
       async addProduct() {
         // const S_ID = this.S_ID; //이 바디에는 S_ID제외한 모든게 들어있다
@@ -89,6 +96,26 @@ static async delete(P_ID) {
           })
     });
 }
+static async showOrderProduct(O_NUM) {
+  return new Promise((resolve, reject) => {
+    db.query("USE CAPSTONE", (err, result) => {
+      const query = "SELECT c.product_id, c.product_quantity, p.product_name " +
+        "FROM cart c " +
+        "JOIN product p ON c.product_id = p.product_id " +
+        "WHERE c.O_NUM = ?";
+      if (err) reject(err);
+      db.query(query, [O_NUM], (err, data) => {
+        if (err) reject(err);
+        else {
+          const show = data;
+          resolve(show);
+        }
+      });
+    });
+  });
+}
+
+
       
 }
 
