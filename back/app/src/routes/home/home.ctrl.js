@@ -131,10 +131,17 @@ const output ={
         logger.info(`GET /home/upload 304 "upload 화면으로 이동`);
         res.render('home/upload');
     },
+    showProduct : async(req, res) =>{
+        logger.info(`GET /home/upload 304 "upload 화면으로 이동`);
+        const product = new Product(req.params.id, global.s_id);
+        const response = await product.showProduct();
+        console.log(response);
+        res.json(response);
+    },
     history : async(req, res) =>{
         logger.info(`GET /home/upload 304 "ManageOrder 화면으로 이동`);
         console.log(global.s_id);
-        const history = new Order(global.s_id);
+        const history = new Order(req.body,global.s_id);
         const response = await history.showOrder();
         console.log(response);
         res.json(response);
@@ -208,6 +215,28 @@ const process = {
     edit : async (req,res) => {
         const edit = new Edit(req.body, global.c_id);
         const response = await edit.update();
+        res.json(response);
+    },
+    orderUpdate1 : async (req,res) => {
+        console.log("o_id",req.params.id);
+        const order = new Order(req.params.id, global.s_id);
+        const response = await order.update1();
+        res.json(response);
+    },
+    orderDelete : async (req,res) => {
+        console.log("o_id",req.params.id);
+        const order = new Order(req.params.id, global.s_id);
+        const response = await order.orderDelete();
+        res.json(response);
+    },
+    orderUpdate2 : async (req,res) => {
+        const order = new Order(req.params.id, global.s_id);
+        const response = await order.update2();
+        res.json(response);
+    },
+    orderUpdate3 : async (req,res) => {
+        const order = new Order(req.params.id, global.s_id);
+        const response = await order.update3();
         res.json(response);
     },
     verifyToken : (req,res) => {
