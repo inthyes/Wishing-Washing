@@ -57,47 +57,47 @@ export default {
       userId: null,
       address2: '',
       slides: [
-        {
-          imageSrc: require('@/assets/images/001.jpg'),
+{
+          imageSrc: require('@/assets/images/027.jpg'),
           altText: 'First Slide',
         },
         {
-          imageSrc: require('@/assets/images/002.jpg'),
+          imageSrc: require('@/assets/images/001.jpg'),
           altText: 'Second Slide',
         },
         {
-          imageSrc: require('@/assets/images/005.jpg'),
+          imageSrc: require('@/assets/images/002.jpg'),
           altText: 'Third Slide',
         },
         {
-          imageSrc: require('@/assets/images/004.jpg'),
+          imageSrc: require('@/assets/images/005.jpg'),
           altText: 'Fourth Slide',
         },
         {
-          imageSrc: require('@/assets/images/007.jpg'),
+          imageSrc: require('@/assets/images/003.jpg'),
           altText: 'Fifth Slide',
         },
       ],
 
       slides2: [
         {
-          imageSrc: require('@/assets/images/001.jpg'),
+          imageSrc: require('@/assets/images/027.jpg'),
           altText: 'First Slide',
         },
         {
-          imageSrc: require('@/assets/images/002.jpg'),
+          imageSrc: require('@/assets/images/001.jpg'),
           altText: 'Second Slide',
         },
         {
-          imageSrc: require('@/assets/images/005.jpg'),
+          imageSrc: require('@/assets/images/002.jpg'),
           altText: 'Third Slide',
         },
         {
-          imageSrc: require('@/assets/images/004.jpg'),
+          imageSrc: require('@/assets/images/005.jpg'),
           altText: 'Fourth Slide',
         },
         {
-          imageSrc: require('@/assets/images/007.jpg'),
+          imageSrc: require('@/assets/images/003.jpg'),
           altText: 'Fifth Slide',
         },
       ],
