@@ -9,16 +9,17 @@
         size="small"></v-rating>
       <p id="reviewContent">{{ review.REVIEW_TEXT }}</p>
 
-      <div v-if="!review.CEO_COMMENT" class="horizontal-container"> <!-- 추가된 부분 -->
-        <p>⮡ </p>
-        <v-text-field class="ml-4" v-model="review.replyValue" placeholder="답글을 남겨주세요" variant="outlined"></v-text-field>
-        <v-btn icon="mdi-check" variant="text" color="info" @click="sendReply(review.O_NUM)"></v-btn>
+      <!-- 추가된 부분 --> <!-- 답글 없을 경우 답글 달기 -->
+      <div v-if="!review.CEO_COMMENT" class="horizontal-container"> 
+        <!-- <p>⮡ </p> -->
+        <v-icon size="large" icon="mdi-arrow-right" class="mb-5"></v-icon>
+        <v-textarea class="ml-4" v-model="review.replyValue" 
+        placeholder="답글을 남겨주세요" variant="outlined" auto-grow rows="1" row-height="15"></v-textarea>
+        <v-btn icon="mdi-check" variant="text" color="info" class="mb-5" @click="sendReply(review.O_NUM)"></v-btn>
       </div>
-      <div v-else> <!-- 추가된 부분 -->
-        <!-- <v-col cols="1"></v-col> -->
-        <!-- <v-col cols="11"> -->
-        <span class="px-0">⮡ &nbsp;{{ review.CEO_COMMENT }}</span>
-        <!-- </v-col> -->
+      <!-- 추가된 부분 --> <!-- 답글이 있을 경우 -->
+      <div v-else> 
+        <span class="px-0"><v-icon class="mr-2" size="small" icon="mdi-arrow-right"></v-icon>{{ review.CEO_COMMENT }}</span>
       </div>
       <v-divider class="mx-1 mb-1"></v-divider>
     </v-card>
