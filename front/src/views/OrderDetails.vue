@@ -8,44 +8,29 @@
                 <a>상세 정보</a>
                 <v-divider class="mx-1 mb-1" style="margin-top: 4%;"></v-divider>
             </div>-->
-                <v-card-text style="margin-left: 10px; margin-bottom: 10px;">
-                    <p><b style="color: #adb5bd">세탁물이미지</b>
-                        <v-avatar class="ma-3" rounded="0" style="width: 80%; height: 200px;">
-                            <v-img src="https://cdn.vuetifyjs.com/images/cards/docks.jpg" cover style="align-items: center;"></v-img>
-                        </v-avatar></p><br>
-                    <p><b style="color: #adb5bd">요청날짜</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                        {{ request.date }}</p><br>
-                    <p><b style="color: #adb5bd">고객아이디</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                        {{ request.userId }}</p><br>
-                    <p><b style="color: #adb5bd">세탁품목</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                        {{ request.name }}</p><br>
-                    <p><b style="color: #adb5bd">요청사항</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                        {{ request.requirement }}</p><br>
-                    <p><b style="color: #adb5bd">세탁가격</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                        {{ request.price }}</p><br>
-                    <p><b style="color: #adb5bd">배달주소</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                        {{ request.userAddr }}</p>
-                </v-card-text>
-                <v-divider class="mx-1 mb-1"></v-divider>
+            <v-card-text style="margin-left: 10px; margin-bottom: 10px;" v-if="one.length > 0">
+                <div v-for="item in product" :key="item.product_id">
+                    <p>상품 이름 :{{ item.product_name }}</p>
+                    <p>상품 개수 : {{ item.product_quantity }}</p>
+                    <hr />
+                </div>
+                <p><b style="color: #adb5bd">요청날짜&nbsp; </b>
+                    {{ one[0].O_DAY }}</p>
+                <p><b style="color: #adb5bd">고객아이디&nbsp; </b>
+                    {{ one[0].U_ID }}</p>
+                <!-- <p><b style="color: #adb5bd">세탁품목</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                        {{ one.name }}</p><br> -->
+                <p><b style="color: #adb5bd">요청사항&nbsp; </b>
+                    {{ one[0].O_REQUEST }}</p>
+                <p><b style="color: #adb5bd">세탁가격&nbsp; </b> 
+                    {{ one[0].O_PRICE }}</p>
+                <p><b style="color: #adb5bd">배달주소&nbsp; </b> 
+                    {{ one[0].DELIVERY_ADDRESS }}</p>
+            </v-card-text>
+            <v-divider class="mx-1 mb-1"></v-divider>
 
-                <v-row style="margin-bottom: 10px; margin-top: 5px;">
-                    <!-- <v-col>
-                        <v-card-actions>
-                          <v-btn id="back" to="orderlist" style="border-radius: 10px;">&lt; 이전</v-btn>
-                        </v-card-actions>
-                    </v-col> -->
-                    <v-col>
-                        <v-card-actions style="margin-left: 120px;">
-                          <v-btn id="accept" variant="outlined" style="border-radius: 10px;" @click="clickAccept()">수락</v-btn>
-                        </v-card-actions>
-                    </v-col>
-                    <v-col>
-                        <v-card-actions style="margin-left: -30px;">
-                          <v-btn id="cancel" variant="outlined" style="border-radius: 10px;" @click="rejectRequest(index)">거절</v-btn>
-                        </v-card-actions>
-                    </v-col>
-                </v-row>
-                
+
+
         </v-card>
     </div>
 </template>
@@ -54,42 +39,53 @@
 import axios from "axios";
 
 export default {
-  data() {
-    return {
-      request: [],
-      beforeShipping: [],
-    }
-  },
-  created() {
-    const requestId = this.$route.query.id;     // requestId를 사용하여 데이터를 가져옴
-    axios.get(`http://localhost:5001/requests/${requestId}`)    // 요청 ID와 일치하는 데이터를 가져옴
-      .then(response => {
-        this.request = response.data;
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  },
-  methods: {
-        async rejectRequest(index) {
+    data() {
+        return {
+            requests: [],
+            beforeShipping: [],
+            one: [],
+            product: []
+        }
+    },
+    async created() {
+        //const requestId = this.$route.query.id;     // requestId를 사용하여 데이터를 가져옴
+        try {
+            const response = await axios.get(`http://localhost:4000/showProduct/${this.$route.query.id}`);
+            console.log(response);
+            this.product = response.data;
+            console.log(this.$route.query.id);
+            const res = await axios.get(`http://localhost:4000/history`); // 요청 ID와 일치하는 데이터를 가져옴
+            console.log(res.data);
+            this.requests = res.data;
+            const one = [];
+            this.requests.forEach(requests => {
+                if (requests.O_NUM === parseInt(this.$route.query.id)) {
+                    one.push(requests);
+                    console.log("-2", one);
+
+                }
+            });
+            this.one = await one;
+        } catch (error) {
+            console.error(error);
+        }
+
+    },
+    methods: {
+        async rejectRequest(id) {
             try {
-                const requestId = this.request.id;
-                await axios.delete(`http://localhost:5001/requests/${requestId}`);
-                this.showAlert("세탁 요청이 거절되었습니다.");
-                this.requests.splice(index, 1);
-            } catch (e) {
-                console.error(e);
+                //console.log(id);
+                const res = await axios.post(`http://localhost:4000/orderDelete/${id}`);
+                console.log(res.data);
+            } catch (error) {
+                console.error(error);
             }
-            this.$router.push("/order"); // 관리 페이지로 이동
         },
 
         // 수락 버튼 -> 배송전으로 이동
-        async clickAccept() {
+        async clickAccept(id) {
             try {
-                const requestId = this.request.id;
-                const request = this.request;
-                request.status = "배송전";    // JSON 데이터의 "status" 값을 "배송전"으로 수정
-                await axios.put(`http://localhost:5001/requests/${requestId}`, request);
+                await axios.post(`http://localhost:4000/orderUpdate1/${id}`);
                 this.showAlert("세탁 요청이 수락되었습니다.");
                 this.$router.push("/order"); // 관리 페이지로 이동
             } catch (e) {

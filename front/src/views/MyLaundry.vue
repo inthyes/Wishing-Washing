@@ -62,6 +62,7 @@ export default {
             openTime: resData.S_OPENING,
             closeTime: resData.S_CLOSING,
             notice: resData.S_ANNOUNCE,
+            tel: resData.S_PHONE
             };
 
       this.managelaundrys.push(managelaundry);
