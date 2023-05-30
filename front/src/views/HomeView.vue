@@ -9,8 +9,8 @@
   </v-carousel>
 
   <div class="container">
-  <div class="cards">
-    <div class="trend">
+    <div class="cards">
+      <div class="trend">
         <div class="top">
           <p class="title">최신 세탁소 트렌드</p>
           <p class="subtitle">세탁소의 최신 동향을 알려드려요.</p>
@@ -31,13 +31,13 @@
           <p class="label">세탁소 인기 올리기</p>
           <p class="description">SNS를 활용하여 나의 세탁소를 홍보해보세요.</p>
           <v-row>
-          <v-col>
-            <v-img src="@/assets/images/instaLaundry.png" style="width: 60%; margin-left: 50px; margin-top: 20px; margin-bottom: 20px; border-radius: 5px;"></v-img>
-          </v-col>
-          <v-col>
-            <v-img src="@/assets/images/snsLogo.png" style=" width: 60%; margin-left: 10px; margin-top: 40px; margin-bottom: 25px; border-radius: 5px;"></v-img>
-          </v-col>
-        </v-row>
+            <v-col>
+              <v-img src="@/assets/images/instaLaundry.png" style="width: 60%; margin-left: 50px; margin-top: 20px; margin-bottom: 20px; border-radius: 5px;"></v-img>
+            </v-col>
+            <v-col>
+              <v-img src="@/assets/images/snsLogo.png" style=" width: 60%; margin-left: 10px; margin-top: 40px; margin-bottom: 25px; border-radius: 5px;"></v-img>
+            </v-col>
+          </v-row>
         </div>
       </div>
     </div>
@@ -149,7 +149,6 @@ export default {
     flex-direction: column;
   }
 }
-
 .drycleaning-image {
   width: 65%;
 }
