@@ -71,8 +71,7 @@ export default {
 
         console.log(user);
         console.log(token);
-        location.reload()
-        // alert('로그인 성공');
+        location.reload();
         this.$router.push('/');   // 알람 뜨는 대신 홈화면으로 이동
 
       } catch (error) {

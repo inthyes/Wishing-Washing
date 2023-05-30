@@ -30,7 +30,7 @@ import UploadFormVue from '@/views/UploadForm.vue'
 const routes = [
   {
     path: '/',
-    name: 'WishingWasing',
+    name: 'WishingWashing',
     component: HomeView
   },
   {
