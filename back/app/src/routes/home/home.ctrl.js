@@ -48,7 +48,7 @@ const output ={
         logger.info(`GET /productAdmin 304 "productAdmin 화면으로 이동"`);
         console.log(global.s_id);
         const product = new Product(global.s_id, global.s_id); 
-        const productAdmin = await product.showProduct(); // 세탁소상품 보여주기
+        const productAdmin = await product.showStroeProduct(); // 세탁소상품 보여주기
         const response = {
             productAdmin: [productAdmin], // productAdmin을 배열에 담아 응답 데이터 구조 생성
             S_ID: global.s_id

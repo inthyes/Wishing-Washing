@@ -9,7 +9,7 @@ class Product {
         this.body = body;
         this.S_ID = S_ID;
       }
-      async showProduct() {
+      async showStroeProduct() {
         const S_ID = this.S_ID; //이 바디에는 S_ID가 들어있고
         console.log(S_ID);
         const show = await Product.show(S_ID);
