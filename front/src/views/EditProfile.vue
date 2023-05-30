@@ -133,6 +133,7 @@ methods: {
         if (newEdit.image) {
           const formData = new FormData();
               formData.append('image', newEdit.image);
+              formData.append('userId', newEdit.userId);
               
               axios
                   .post('http://localhost:3000/upload/profile', formData, {

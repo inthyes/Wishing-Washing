@@ -10,7 +10,6 @@ var router = express.Router();
 const homeCtrl = require('./home.ctrl');
 const { upload } = require('../../config/multer.js');
 
-
 const board = [];
 // const userId = res.userId;
 
@@ -63,6 +62,7 @@ router.post('/', upload.single('imgUpload'), (req, res) => {
     console.log(req.file);
     
     const u_id = global.userId.id; //하드코딩
+
 
  
         db.getConnection((err, conn) => {
@@ -179,7 +179,9 @@ console.log(req.file);
   })
 }),
 router.get('/laundryReview', (req,res)=> {
+
   const u_id = global.userId.id; // 하드코딩 토큰
+
 
   const query = "select review_img FROM review WHERE U_ID = ?";
   db.query(query,[u_id], (err, results, fields) => {
@@ -195,10 +197,30 @@ router.get('/laundryReview', (req,res)=> {
 }),
 
 router.get('/profile', (req,res)=> {
+
   const u_id = global.userId.id;
+
   // console.log("asdf",u_id);
   const query = "select u_img FROM users WHERE u_id = ?";
   db.query(query,[u_id], (err, results, fields) => {
+    if (err) {
+      console.log(err);
+      res.sendStatus(500);
+      return;
+    }
+    console.log(results);
+    //res.render('home/board', { images: results });
+    res.json(results);
+})
+}),
+
+router.get('/laundry/:id', (req,res)=> {
+
+  //const u_id = global.userId.id;
+  const s_id = parseInt(req.params.id);
+  // console.log("asdf",u_id);
+  const query = "select s_image FROM store WHERE s_id = ?";
+  db.query(query,[s_id], (err, results, fields) => {
     if (err) {
       console.log(err);
       res.sendStatus(500);
@@ -225,5 +247,7 @@ router.get('/board', (req, res) => {
     res.render('board', { images: results });
   });
 });
+
+
 
   module.exports = router; //웹으로 내보내기
