@@ -79,7 +79,7 @@
                                         <!--  배송상태 : 2(배송완료) -->
                                         <div id="state">
                                             배송상태&nbsp;|&nbsp;
-                                            <span v-if="h.DELIVERY_STATE === 2" style="color: rgb(26, 147, 203)">배송완료 ({{ h.COMPLETE_DATE }})</span>
+                                            <span v-if="h.DELIVERY_STATE === 2" style="color: rgb(26, 147, 203)">배송완료 ({{ h.DELIVERY_DAY }})</span>
                                         </div>
                                         <!-- 선택날짜/시간 -->
                                         <div id="select">선택날짜&nbsp;|&nbsp;&nbsp;{{ h.DELIVERY_DAY }} ({{ h.DELIVERY_TIME }})
