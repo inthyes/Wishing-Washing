@@ -1,6 +1,3 @@
-<!--상품관리-->
-<!--이시언-->
-
 <template>
   <div class="mt-10 mx-0 px-0">
 
@@ -265,7 +262,3 @@ export default {
   }
 }
 </script>
-  
-
-
-  
